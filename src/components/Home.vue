@@ -25,6 +25,9 @@
     <div>
       <SearchBox></SearchBox>
     </div>
+    <div>
+
+    </div>
   </div>
 </template>
 
