@@ -56,6 +56,7 @@
             </div>
             </div>
 
+            <!--私信-->
             <div v-if="nowActive=='2'">
               <el-container>
                 <el-header></el-header>
