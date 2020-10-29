@@ -65,7 +65,7 @@
               <el-container style="height: 590px;">
                 <el-aside width="220px" style="">
                   <div style="margin-top: 10px;font-size: 20px;">
-                    消息中心
+                    最近消息
                   </div>
                   <div>
                     <van-cell v-for="(item,index) in recentMessage" :key="index" clickable @click="openChats(item)">
@@ -74,8 +74,35 @@
                   </div>
                 </el-aside>
                 <el-main>
-                  <div class="message2">
-                    大家好，我是小胡<br>个人主页：hlz.space<br>个人服务网站：www.loveconvert.com
+                  <div v-for="(item,index) in chats" :key="index">
+                    <van-row v-if="item.sender==userId">
+                      <van-col span="20">
+                        <div class="message1">
+                          {{item.msg}}
+                        </div>
+                      </van-col>
+                      <van-col span="4">
+                        <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                          <template v-slot:loading>
+                            <van-loading type="spinner" size="20" />
+                          </template>
+                        </van-image>
+                      </van-col>
+                    </van-row>
+                    <van-row v-if="item.sender!=userId">
+                      <van-col span="4">
+                        <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                          <template v-slot:loading>
+                            <van-loading type="spinner" size="20" />
+                          </template>
+                        </van-image>
+                      </van-col>
+                      <van-col span="20">
+                        <div class="message2">
+                          {{item.msg}}
+                        </div>
+                      </van-col>
+                    </van-row>
                   </div>
                 </el-main>
               </el-container>
@@ -96,6 +123,8 @@
       name: "Message",
       data(){
           return{
+            userId:'aaa',
+            userImage:require('../../static/logo2.png'),
             nowActive:'1',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
@@ -162,12 +191,9 @@
 <style>
   .message2 {
     float:left;
-    width: 200px;
-    height: 80px;
-    margin: 50px;
     background-color: skyblue;
     border-bottom-color: skyblue;
-    color: #fff;
+    color: black;
     font-size: 12px;
     line-height: 18px;
     padding: 5px 12px 5px 12px;
@@ -179,11 +205,33 @@
   .message2::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -5px;
-    width: 10px;
-    height: 10px;
-    margin-top: -10px;
+    left: -4px;
+    width: 8px;
+    height: 8px;
+    margin-top: 3px;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+  .message1 {
+    float:right;
+    background-color: lightgrey;
+    border-bottom-color: skyblue;
+    color: black;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 5px 12px 5px 12px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    position: relative;
+    word-break: break-all;
+  }
+  .message1::before {
+    content: '';
+    position: absolute;
+    right: -4px;
+    width: 8px;
+    height: 8px;
+    margin-top: 3px;
     background: inherit;
     transform: rotate(45deg);
   }
