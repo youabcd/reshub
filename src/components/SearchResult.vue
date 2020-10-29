@@ -2,11 +2,11 @@
   <div>
     <!--    <el-container>-->
     <TopBar></TopBar>
-    <SearchBox style="position: absolute;top: 5%;left: 8%;width: 84%;height: 10%"></SearchBox>
+    <SearchBox></SearchBox>
     <el-container style="height: 100%" >
       <!--        style="background-color: #f0f2f5"-->
-      <el-aside width="20%">
-        <div style=";background-color: white;position: fixed;left: 2%;top: 18%;width: 12%;display: inline;">
+      <el-aside width="15%">
+        <div style=";background-color: white;width: 12%;display: inline;">
           <!--            border: solid 2px #666666-->
           <h5>专业分类</h5>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
@@ -21,19 +21,19 @@
           </el-menu>
         </div>
       </el-aside>
-      <el-main style="width: 80%">
-        <div>
-          <div style="background-color: white;border-width: 1px;border-color: #666666;position: absolute;left: 16%;top: 25%;width: 60%;display: inline;">
+      <el-main style="width: 85%">
+        <div style="position: relative">
+          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 75%;position: relative">
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                <el-menu-item index="1" style="width: 125px">●全部</el-menu-item>
-                <el-menu-item index="2" style="width: 125px">●期刊</el-menu-item>
-                <el-menu-item index="3" style="width: 125px">●会议</el-menu-item>
-                <el-menu-item index="4" style="width: 125px">●科技报告</el-menu-item>
-                <el-menu-item index="5" style="width: 125px">●专利</el-menu-item>
-                <el-menu-item index="6" style="width: 125px">●成果</el-menu-item>
-                <el-menu-item index="7" style="width: 125px">●代码</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●全部</el-menu-item>
+                <el-menu-item index="2" style="width: 120px">●期刊</el-menu-item>
+                <el-menu-item index="3" style="width: 120px">●会议</el-menu-item>
+                <el-menu-item index="4" style="width: 120px">●科技报告</el-menu-item>
+                <el-menu-item index="5" style="width: 120px">●专利</el-menu-item>
+                <el-menu-item index="6" style="width: 120px">●成果</el-menu-item>
+                <el-menu-item index="7" style="width: 120px">●代码</el-menu-item>
               </el-menu>
             </div>
             <div>
@@ -86,7 +86,7 @@
             </div>
           </div>
 
-          <div style="position: absolute;left: 78%;top: 25%;width: 20%;display: inline;">
+          <div style="position: absolute;left: 78%;top: 0;width: 20%;display: inline;">
             <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
             <el-card class="box-card" shadow="hover">
               <div v-for="o in 5" :key="o" class="text item" style="height: 120px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
