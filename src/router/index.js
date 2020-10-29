@@ -17,6 +17,8 @@ import SearchRecord from '@/components/SearchRecord'
 import MyCollection from '@/components/MyCollection'
 import BottomBar from "../components/BottomBar";
 import SearchBox from "../components/SearchBox";
+import MyConcern from "../components/MyConcern";
+import BrowseRecord from "../components/BrowseRecord";
 
 Vue.use(Router)
 
@@ -106,6 +108,16 @@ export default new Router({
       path: '/SearchBox',
       name: 'SearchBox',
       component: SearchBox
+    },
+    {
+      path: '/MyConcern',
+      name: 'MyConcern',
+      component: MyConcern
+    },
+    {
+      path: '/BrowseRecord',
+      name: 'BrowseRecord',
+      component: BrowseRecord
     },
   ]
 })

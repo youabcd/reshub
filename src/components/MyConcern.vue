@@ -1,18 +1,15 @@
 <template>
   <div>
     <TopBar></TopBar>
-    搜索记录
+    我的关注
   </div>
 </template>
 
 <script>
     import TopBar from "./TopBar";
-
     export default {
-      name: "SearchRecord",
-      components:{
-        TopBar
-      },
+        name: "MyConcern",
+      components: {TopBar}
     }
 </script>
 
