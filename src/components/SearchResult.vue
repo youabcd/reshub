@@ -2,7 +2,7 @@
   <div>
     <!--    <el-container>-->
     <TopBar></TopBar>
-    <SearchBox></SearchBox>
+    <SearchBox style="position: relative;top: -15px"></SearchBox>
     <el-container style="height: 100%" >
       <!--        style="background-color: #f0f2f5"-->
       <el-aside width="15%">
