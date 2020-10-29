@@ -1,0 +1,15 @@
+首页：Home
+登入：Login
+注册：Register
+找回密码：FindPassword
+检索结果显示：SearchResult
+分栏页面：Profession
+个人门户：PersonalPortal
+科研机构门户：ResearchInstitute
+门户认领：CatchPortal
+热点分析：HotspotAnalysis
+消息界面：Message
+我的收藏：MyCollection
+历史记录：SearchRecord
+顶栏：TopBar
+底栏：BottomBar

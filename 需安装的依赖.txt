@@ -1,0 +1,5 @@
+1.npm install
+2.npm i element-ui -S
+3.npm i vant -S
+4.npm install @jiaminghi/charts
+5.npm install @jiaminghi/data-view
