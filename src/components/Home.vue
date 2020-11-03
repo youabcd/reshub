@@ -20,7 +20,7 @@
     name: "Home",
     data() {
       return {
-        imgSrc:require('../assets/watchSky01.jpeg'),
+        imgSrc:require('../assets/background01.jpg'),
       }
     },
     methods:{
