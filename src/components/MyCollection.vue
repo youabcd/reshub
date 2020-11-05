@@ -42,9 +42,12 @@
 
               <div>
                 <div style="position: absolute;left: 0;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
-                <el-tag type="info" style="position: absolute;right: 150px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                <el-tag type="info" style="position: absolute;right: 280px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
                   <span>期刊</span>
                 </el-tag>
+                <i class="el-icon-time" style="position: absolute;right: 150px;top: 130px">
+                  <span> 2020-01-01</span>
+                </i>
                 <i class="el-icon-star-on" style="position: absolute;right: 75px;top: 130px">
                   <span> 6667</span>
                 </i>
