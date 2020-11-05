@@ -2,7 +2,7 @@
   <div>
     <TopBar></TopBar>
     <div class="background">
-      
+
     </div>
     <div>
       <SearchBox></SearchBox>
