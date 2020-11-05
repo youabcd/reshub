@@ -2,7 +2,7 @@
   <div>
     <TopBar></TopBar>
     <div class="background">
-      <img :src="imgSrc" width="100%" height="100%" alt="" />
+      
     </div>
     <div>
       <SearchBox></SearchBox>
@@ -20,7 +20,7 @@
     name: "Home",
     data() {
       return {
-        imgSrc:require('../assets/background01.jpg'),
+
       }
     },
     methods:{
@@ -37,6 +37,7 @@
     height:100%;  /**宽高100%是为了图片铺满屏幕 */
     z-index:-1;
   //opacity:0.9;
+    background-image: url("../assets/background01.jpg");
     position: fixed;
   }
 </style>
