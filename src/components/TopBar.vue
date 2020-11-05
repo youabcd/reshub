@@ -30,8 +30,8 @@
         <div v-if="userId.length>0">
           <van-col span="6">
           </van-col>
-          <van-col span="10" style="margin-top:18px;">
-            <el-link :underline="false"><span style="font-size: 16px" clickable @click="goPersonalPortal"><i class="el-icon-paperclip"/>个人门户</span></el-link>
+          <van-col span="10" style="margin-top:18px;text-align: right;">
+            <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goPersonalPortal"><i class="el-icon-paperclip"/>个人门户</span></el-link>
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goSearchRecord"><i class="el-icon-edit-outline"/>搜索记录</span></el-link>
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goBrowseRecord"><i class="el-icon-edit-outline"/>浏览记录</span></el-link>
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMyCollection"><i class="el-icon-star-off" />收藏</span></el-link>
@@ -39,7 +39,7 @@
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMessage"><i class="el-icon-bell"/>消息</span></el-link>
           </van-col>
           <van-col span="1" style="margin-top:5px;">
-            <el-popover placement="bottom" width="20" trigger="click">
+            <el-popover placement="bottom" width="20" trigger="click" style="margin-left: 10px;">
               <van-cell clickable @click="goSearchRecord"><el-link :underline="false"><i class="el-icon-edit-outline"/> 搜索记录</el-link></van-cell>
               <van-cell clickable @click="goBrowseRecord"><el-link :underline="false"><i class="el-icon-edit-outline"/> 浏览记录</el-link></van-cell>
               <van-cell clickable @click="goMyCollection"><el-link :underline="false"><i class="el-icon-star-off" /> 我的收藏</el-link></van-cell>
