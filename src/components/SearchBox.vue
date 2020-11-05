@@ -5,21 +5,23 @@
       <div style="margin-top: 60px;width: 70%;margin-left: 15%" @keyup.enter="search">
         <van-row>
           <van-col span="22">
-            <el-input placeholder="请输入内容" v-model="keyWords" style="font-size: 20px;" class="input-with-select">
+            <el-autocomplete placeholder="请输入内容" v-model="keyWords"
+                             :fetch-suggestions="querySearch" @select="handleSelect"
+                             style="font-size: 20px;width: 100%;" class="input-with-select">
               <el-select v-model="select" slot="prepend" style="font-size: 15px">
                 <el-option label="搜索全部" value="1"></el-option>
                 <el-option label="搜索资料" value="2"></el-option>
                 <el-option label="搜索学者" value="3"></el-option>
               </el-select>
               <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
-            </el-input>
+            </el-autocomplete>
           </van-col>
           <van-col span="2">
             <van-row>
               &nbsp;
             </van-row>
             <van-row>
-              <el-link type="primary" @click="qualitySearch">>>高级检索</el-link>
+              <el-link type="" @click="qualitySearch">>>高级检索</el-link>
             </van-row>
           </van-col>
         </van-row>
@@ -81,6 +83,7 @@
           //搜索框部分数据
           keyWords:'',
           select:'1',
+          recommend: [],
           show:false,
           form: {
             keyWords:'',//关键词
@@ -126,6 +129,40 @@
             }
           });
         },//高级搜索
+
+        //搜索推荐
+        querySearch(queryString, cb) {
+          var recommend = this.recommend;
+          var results = queryString ? recommend.filter(this.createFilter(queryString)) : recommend;
+          // 调用 callback 返回建议列表的数据
+          clearTimeout(this.timeout);
+          this.timeout = setTimeout(() => {
+            cb(results);
+          }, 100 * Math.random());
+        },
+        createFilter(queryString) {
+          return (rec) => {
+            return (rec.value.toLowerCase().indexOf(queryString.toLowerCase()) !== -1);
+          };
+        },
+        loadAll() {
+          this.recommend=[{ "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
+            { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
+            { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+            { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
+            { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
+            { "value": "贡茶", "address": "上海市长宁区金钟路633号" }];
+          return this.recommend;
+        },
+        handleSelect(item) {
+          console.log(item);
+        },
+      },
+      created() {
+
+      },
+      mounted() {
+        this.recommend=this.loadAll();
       }
     }
 </script>
