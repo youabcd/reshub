@@ -118,9 +118,9 @@
                           v-model="textarea">
                         </el-input>
                       </div>
-                      <!--<div style="width: 100%;height: 30%;margin-top: 15px;">
+                      <div style="width: 100%;height: 30%;margin-top: 15px;">
                         <el-button @click="sendMessage">提交对方ip</el-button>
-                      </div>-->
+                      </div>
                     </el-footer>
                   </el-container>
                 </el-main>
@@ -212,7 +212,13 @@
 
         },
         sendMessage(){//发送对方ip
-
+          let data = {
+            'state': 'sendMessage',
+            'sendId': '发送的人的id',
+            'receiveId': '接收的人的id',
+            'content': '消息内容',
+            'chatId': '朋友关系的id' };
+          this.websock.send(JSON.stringify(data));
         },
         sendMessage1(){//发送自己ip
 
@@ -220,7 +226,7 @@
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://127.0.0.1:8000/websocketTest/"+this.checkIp1;//用自己的id构成websock链接
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/12"+this.checkIp1;//用自己的id构成websock链接
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
