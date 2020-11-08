@@ -229,6 +229,7 @@
         },
         websocketonmessage(e){ //数据接收
           let data = JSON.parse(e.data);
+          console.log(data);
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
