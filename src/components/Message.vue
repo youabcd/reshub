@@ -74,7 +74,8 @@
                   </div>
                 </el-aside>
                 <el-main>
-                  <div v-for="(item,index) in chats" :key="index">
+                    <el-header>
+                      <div v-for="(item,index) in chats" :key="index">
                     <van-row v-if="item.sender==userId">
                       <van-col span="20">
                         <div class="message1">
@@ -104,6 +105,21 @@
                       </van-col>
                     </van-row>
                   </div>
+                    </el-header>
+                    <el-main>
+                      <div style="width: 100%;height: 70%">
+                        <el-input
+                          type="textarea"
+                          autosize
+                          placeholder="请输入内容"
+                          v-model="textarea">
+                        </el-input>
+                      </div>
+                      <div style="width: 100%;height: 30%;">
+                        <el-button @click="sendMessage">提交对方ip</el-button>
+                      </div>
+                    </el-main>
+
                 </el-main>
               </el-container>
             </div>
@@ -112,6 +128,10 @@
 
       </el-container>
 
+      <div style="width: 50%;">
+        <el-input v-model="checkIp1"></el-input>
+        <el-button @click="sendMessage1">提交自己ip</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -123,9 +143,11 @@
       name: "Message",
       data(){
           return{
+            checkIp1:'',
             userId:'aaa',
             userImage:require('../../static/logo2.png'),
             nowActive:'1',
+            textarea:'',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
               {title: 'a',texts:'a',sendTime:'2020/10/7 20:14'},
@@ -182,6 +204,12 @@
       },
       methods:{
         openChats(item){
+
+        },
+        sendMessage(){//发送对方ip
+
+        },
+        sendMessage1(){//发送自己ip
 
         },
       }
