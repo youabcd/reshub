@@ -68,9 +68,14 @@
                     最近消息
                   </div>
                   <div>
-                    <van-cell v-for="(item,index) in recentMessage" :key="index" clickable @click="openChats(item)">
+                    <!--<van-cell class="cellClass" v-for="(item,index) in recentMessage" :key="index" clickable @click="openChats(item)">
                       {{item.friendName}}
-                    </van-cell>
+                    </van-cell>-->
+                    <el-menu :default-active="whichFriend">
+                      <el-menu-item v-for="(item,index) in recentMessage" :key="index" @click="openChats(item)">
+                        {{item.friendName}}
+                      </el-menu-item>
+                    </el-menu>
                   </div>
                 </el-aside>
                 <el-main>
@@ -110,7 +115,8 @@
                       </div>
                     </el-main>
                     <el-footer style="height: 20%;">
-                      <div style="width: 100%;height: 70%;">
+                      <div></div>
+                      <div style="width: 100%;height: 70%;margin-top: 5px;">
                         <el-input
                           type="textarea"
                           :autosize="{ minRows: 2, maxRows: 4}"
@@ -118,7 +124,7 @@
                           v-model="textarea">
                         </el-input>
                       </div>
-                      <div style="width: 100%;height: 30%;margin-top: 15px;">
+                      <div style="width: 100%;height: 30%;margin-top: 8px;">
                         <el-button @click="sendMessage">提交对方ip</el-button>
                       </div>
                     </el-footer>
@@ -128,13 +134,7 @@
             </div>
           </el-main>
         </el-container>
-
       </el-container>
-
-      <div style="width: 50%;">
-        <el-input v-model="checkIp1"></el-input>
-        <el-button @click="sendMessage1">提交自己ip</el-button>
-      </div>
     </div>
   </div>
 </template>
@@ -226,7 +226,7 @@
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://127.0.0.1:8000/websocketTest/12"+this.checkIp1;//用自己的id构成websock链接
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/12"+this.checkIp1;//用自己的id构成websock链接 改
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
@@ -308,6 +308,9 @@
     margin-top: 3px;
     background: inherit;
     transform: rotate(45deg);
+  }
+  .cellClass{
+    background-image: url("");
   }
 
 </style>
