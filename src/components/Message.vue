@@ -138,16 +138,18 @@
 
 <script>
     import TopBar from "./TopBar";
+    import baseUrl from "./baseUrl";
 
     export default {
       name: "Message",
       data(){
           return{
             checkIp1:'',
+            textarea:'',
+            websock: null,
             userId:'aaa',
             userImage:require('../../static/logo2.png'),
             nowActive:'1',
-            textarea:'',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
               {title: 'a',texts:'a',sendTime:'2020/10/7 20:14'},
@@ -212,7 +214,41 @@
         sendMessage1(){//发送自己ip
 
         },
-      }
+
+        // websocket 相关
+        initWebSocket() {//初始化websocket
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/"+this.checkIp1;//用自己的id构成websock链接
+          this.websock = new WebSocket(wsuri);
+          this.websock.onopen = this.websocketopen;
+          this.websock.onmessage = this.websocketonmessage;
+          this.websock.onclose = this.websocketclose;
+          this.websock.onerror = this.websocketerror;
+        },
+        websocketopen(){//打开
+          console.log("WebSocket连接成功")
+        },
+        websocketonmessage(e){ //数据接收
+          let data = JSON.parse(e.data);
+        },
+        websocketclose(){ //关闭
+          console.log("WebSocket关闭");
+        },
+        websocketerror(){ //失败
+          console.log("WebSocket连接失败");
+        },
+      },
+      mounted() {
+        if (this.websock!==null) {
+          this.websock.close(); // 关闭websocket连接
+        }
+        this.initWebSocket();
+      },
+      destroyed() {
+        //页面销毁时关闭ws连接
+        if (this.websock) {
+          this.websock.close(); // 关闭websocket
+        }
+      },
     }
 </script>
 
