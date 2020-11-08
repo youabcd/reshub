@@ -74,52 +74,55 @@
                   </div>
                 </el-aside>
                 <el-main>
-                    <el-header>
+                  <el-container style="height: 550px;">
+                    <el-main style="height: 80%;width: 100%">
                       <div v-for="(item,index) in chats" :key="index">
-                    <van-row v-if="item.sender==userId">
-                      <van-col span="20">
-                        <div class="message1">
-                          {{item.msg}}
-                        </div>
-                      </van-col>
-                      <van-col span="4">
-                        <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
-                          <template v-slot:loading>
-                            <van-loading type="spinner" size="20" />
-                          </template>
-                        </van-image>
-                      </van-col>
-                    </van-row>
-                    <van-row v-if="item.sender!=userId">
-                      <van-col span="4">
-                        <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
-                          <template v-slot:loading>
-                            <van-loading type="spinner" size="20" />
-                          </template>
-                        </van-image>
-                      </van-col>
-                      <van-col span="20">
-                        <div class="message2">
-                          {{item.msg}}
-                        </div>
-                      </van-col>
-                    </van-row>
-                  </div>
-                    </el-header>
-                    <el-main>
-                      <div style="width: 100%;height: 70%">
+                        <!--自己发的消息-->
+                        <van-row v-if="item.sender==userId">
+                          <van-col span="20">
+                            <div class="message1">
+                              {{item.msg}}
+                            </div>
+                          </van-col>
+                          <van-col span="4">
+                            <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                              <template v-slot:loading>
+                                <van-loading type="spinner" size="20" />
+                              </template>
+                            </van-image>
+                          </van-col>
+                        </van-row>
+                        <!--别人发的消息-->
+                        <van-row v-if="item.sender!=userId">
+                          <van-col span="4">
+                            <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                              <template v-slot:loading>
+                                <van-loading type="spinner" size="20" />
+                              </template>
+                            </van-image>
+                          </van-col>
+                          <van-col span="20">
+                            <div class="message2">
+                              {{item.msg}}
+                            </div>
+                          </van-col>
+                        </van-row>
+                      </div>
+                    </el-main>
+                    <el-footer style="height: 20%;">
+                      <div style="width: 100%;height: 70%;">
                         <el-input
                           type="textarea"
-                          autosize
+                          :autosize="{ minRows: 2, maxRows: 4}"
                           placeholder="请输入内容"
                           v-model="textarea">
                         </el-input>
                       </div>
-                      <div style="width: 100%;height: 30%;">
+                      <!--<div style="width: 100%;height: 30%;margin-top: 15px;">
                         <el-button @click="sendMessage">提交对方ip</el-button>
-                      </div>
-                    </el-main>
-
+                      </div>-->
+                    </el-footer>
+                  </el-container>
                 </el-main>
               </el-container>
             </div>
