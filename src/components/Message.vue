@@ -35,7 +35,7 @@
                 </van-row>
                 <van-row></van-row>
               </div>
-              <div v-for="(item,index) in systemMessage" style="margin-top: 15px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);border-radius: 5px;">
+              <div v-for="(item,index) in systemMessage" :key="index" style="margin-top: 15px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);border-radius: 5px;cursor: pointer;">
               <van-row></van-row>
               <van-row style="margin-left:15px;margin-top: 10px;">
                 <van-col span="12" style="font-size: 20px;text-align: left;">
