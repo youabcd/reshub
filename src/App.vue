@@ -1,16 +1,47 @@
+<!--<template>-->
+<!--  <div id="app">-->
+<!--    &lt;!&ndash;<img src="./assets/logo.png">&ndash;&gt;-->
+<!--    <router-view/>-->
+<!--  </div>-->
+<!--</template>-->
+
+<!--<script>-->
+<!--export default {-->
+<!--  name: 'App'-->
+<!--}-->
+<!--</script>-->
+
 <template>
   <div id="app">
-    <!--<img src="./assets/logo.png">-->
-    <router-view/>
+    <router-view v-if="isRouterAlive"></router-view>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  export default {
+    name: 'App',
+    provide (){
+      return {
+        reload:this.reload
+      }
+    },
+    data(){
+      return {
+        isRouterAlive:true
+      }
+    },
+    methods:{
+      reload (){
+        this.isRouterAlive = false
+        this.$nextTick(function(){
+          this.isRouterAlive = true
+        })
+      }
+    },
+    components:{
+    }
+  }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

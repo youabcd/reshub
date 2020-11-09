@@ -9,6 +9,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import dataV from '@jiaminghi/data-view'
 
+
 Vue.use(dataV)
 Vue.use(Vant)
 Vue.use(ElementUI)
