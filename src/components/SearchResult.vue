@@ -37,20 +37,20 @@
               </el-menu>
             </div>
             <div>
-              <el-card class="box-card" shadow="never">
-                <div v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+<!--              <el-card class="box-card" shadow="never">-->
+                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                   <!--                    {{'列表内容 ' + o }}-->
 <!--                  <div style="height: 40px;margin-top: 10px">-->
-                    <div style="text-align: left;display: inline;position: absolute;left: 0;top: 20px;">
+                    <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
                       <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
                     </div>
-                    <div style="display: inline;position: absolute;right: 0;top: 0">
+                    <div style="display: inline;position: absolute;right: 20px;top: 0">
                       <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
                         <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
                       </el-tooltip>
-                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">
-                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>
-                      </el-tooltip>
+<!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+<!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+<!--                      </el-tooltip>-->
                       <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
                         <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
                       </el-tooltip>
@@ -63,21 +63,21 @@
                   </div>
 
                   <div>
-                    <div style="position: absolute;left: 0;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
-                    <el-tag type="info" style="position: absolute;right: 150px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                    <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
+                    <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
                       <span>期刊</span>
                     </el-tag>
-                    <i class="el-icon-star-on" style="position: absolute;right: 75px;top: 130px">
+                    <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                       <span> 6667</span>
                     </i>
-                    <i class="el-icon-view" style="position: absolute;right: 0;top: 130px">
+                    <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
                       <span> 6666</span>
                     </i>
                   </div>
 
-                </div>
+                </el-card>
 
-              </el-card>
+<!--              </el-card>-->
             </div>
             <div>
               <el-pagination

@@ -19,26 +19,43 @@
             <el-card  shadow="hover" v-for="(item,index) in tableData" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
               <!--                    {{'列表内容 ' + o }}-->
 <!--              <div style="height: 40px;margin-top: 10px">-->
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px">
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection"></i>
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
                   </el-tooltip>
 <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
 <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
 <!--                  </el-tooltip>-->
+
                   <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
                     <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
                   </el-tooltip>
+<!--                  <el-dialog-->
+<!--                    title="点击复制链接或扫描二维码"-->
+<!--                    :visible.sync="dialogVisible"-->
+<!--                    show-close="false"-->
+<!--                    width="30%">-->
+<!--                    <div @click="Copy">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
+<!--                    </div>-->
+<!--                    <span slot="footer" class="dialog-footer">-->
+<!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
+<!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
+<!--                    </span>-->
+
+<!--                  </el-dialog>-->
+
 
                 </div>
 <!--              </div>-->
 
 
-              <div style="text-align: left;position: absolute;top: 60px">
-                <p style="height: 20px" >{{item.msg}}</p>
+              <div style="text-align: left;position: absolute;top: 60px;">
+                <p style="height: 20px;" >{{item.msg}}</p>
+<!--                overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 900px-->
               </div>
 
               <div>
@@ -93,10 +110,11 @@
       data() {
         return {
           btnFlag: false,
+          dialogVisible: false,
           tableData: [{
             paperId:'1',
             title:'Test1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author:'Author1',
             type:"期刊",
             collectionSum:666,
@@ -170,14 +188,15 @@
           }
         },
 
-        deleteCollection () {
+        deleteCollection (index) {
           //发送请求
           this.$message({
             showClose: true,
             message: '取消收藏成功',
             type: 'success'
           });
-          this.reload();
+          this.tableData.splice(index,1);
+          // this.reload();
         },
 
         Copy() {
@@ -186,7 +205,7 @@
             this.$message({
               showClose: true,
               message: '复制链接成功',
-              type: 'success'
+              type: 'success',
             });
             clipboard.destroy()
           })
@@ -194,14 +213,23 @@
             this.$message({
               showClose: true,
               message: '复制链接失败，请重试',
-              type: 'error'
+              type: 'error',
             });
             clipboard.destroy()
           })
         },
 
         gotoPaper(url) {
+          //发送点击数据
           window.open(url,url)
+        },
+
+        handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
         }
       }
     }
@@ -229,6 +257,7 @@
     bottom: 35px;
     right: 15px;
   }
+
 
   .back-top-circle{
     position: fixed;
