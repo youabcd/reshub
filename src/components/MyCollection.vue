@@ -15,14 +15,14 @@
           </el-menu>
         </div>
         <div>
-          <el-card class="box-card" shadow="hover">
-            <div v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+<!--          <el-card class="box-card" shadow="never">-->
+            <el-card  shadow="hover" v-for="(item,index) in tableData" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
               <!--                    {{'列表内容 ' + o }}-->
 <!--              <div style="height: 40px;margin-top: 10px">-->
-                <div style="text-align: left;display: inline;position: absolute;left: 0;top: 20px">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
-                <div style="display: inline;position: absolute;right: 0;top: 0">
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
                     <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection"></i>
                   </el-tooltip>
@@ -38,28 +38,28 @@
 
 
               <div style="text-align: left;position: absolute;top: 60px">
-                <p style="height: 20px" >文字文字文字文字</p>
+                <p style="height: 20px" >{{item.msg}}</p>
               </div>
 
               <div>
-                <div style="position: absolute;left: 0;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
-                <el-tag type="info" style="position: absolute;right: 280px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
-                  <span>期刊</span>
+                <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+                <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <span>{{item.type}}</span>
                 </el-tag>
-                <i class="el-icon-time" style="position: absolute;right: 150px;top: 130px">
-                  <span> 2020-01-01</span>
+                <i class="el-icon-time" style="position: absolute;right: 170px;top: 130px">
+                  <span> {{item.collectTime}}</span>
                 </i>
-                <i class="el-icon-star-on" style="position: absolute;right: 75px;top: 130px">
-                  <span> 6667</span>
+                <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                  <span> {{item.collectionSum}}</span>
                 </i>
-                <i class="el-icon-view" style="position: absolute;right: 0;top: 130px">
-                  <span> 6666</span>
+                <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                  <span> {{item.viewSum}}</span>
                 </i>
               </div>
 
-            </div>
+            </el-card>
 
-          </el-card>
+<!--          </el-card>-->
         </div>
         <div>
           <el-pagination
@@ -92,7 +92,51 @@
       },
       data() {
         return {
-          btnFlag: false
+          btnFlag: false,
+          tableData: [{
+            paperId:'1',
+            title:'Test1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author:'Author1',
+            type:"期刊",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'2',
+            title:'Test2',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+            author:'Author2',
+            type:"测试",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'3',
+            title:'Test3',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+            author:'Author3',
+            type:"期刊",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.bilibili.com/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'4',
+            title:'Test4',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+            author:'Author4',
+            type:"期刊",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          }]
         }
       },
       mounted () {
@@ -154,6 +198,10 @@
             });
             clipboard.destroy()
           })
+        },
+
+        gotoPaper(url) {
+          window.open(url,url)
         }
       }
     }
@@ -199,4 +247,6 @@
     cursor: pointer;
     z-index: 5;
   }
+
+
 </style>
