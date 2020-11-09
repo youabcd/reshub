@@ -23,15 +23,16 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 0;top: 0">
-                  <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection"></i>
                   </el-tooltip>
-                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">
-                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
+<!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+<!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+<!--                  </el-tooltip>-->
                   <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
                   </el-tooltip>
+
                 </div>
 <!--              </div>-->
 
@@ -82,9 +83,10 @@
 
 <script>
     import TopBar from "./TopBar";
-
+    import Clipboard from 'clipboard';
     export default {
-        name: "MyCollection",
+      name: "MyCollection",
+      inject:['reload'],
       components:{
         TopBar
       },
@@ -122,6 +124,36 @@
           } else {
             that.btnFlag = false
           }
+        },
+
+        deleteCollection () {
+          //发送请求
+          this.$message({
+            showClose: true,
+            message: '取消收藏成功',
+            type: 'success'
+          });
+          this.reload();
+        },
+
+        Copy() {
+          let clipboard = new Clipboard('.el-icon-share');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接成功',
+              type: 'success'
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接失败，请重试',
+              type: 'error'
+            });
+            clipboard.destroy()
+          })
         }
       }
     }
