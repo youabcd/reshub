@@ -21,7 +21,10 @@
 
         <el-container>
           <el-main>
+
+            <!--系统消息-->
             <div v-if="nowActive=='1'">
+              <el-scrollbar style="height:100%;">
               <div style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);border-radius: 8px;">
                 <van-row></van-row>
                 <van-row>
@@ -47,7 +50,8 @@
                 {{item.texts}}
               </div>
               <van-row></van-row>
-            </div>
+              </div>
+              </el-scrollbar>
             </div>
 
             <!--私信-->
@@ -68,13 +72,11 @@
                     最近消息
                   </div>
                   <div>
-                    <!--<van-cell class="cellClass" v-for="(item,index) in recentMessage" :key="index" clickable @click="openChats(item)">
-                      {{item.friendName}}
-                    </van-cell>-->
                     <el-menu :default-active="whichFriend">
-                      <el-menu-item v-for="(item,index) in recentMessage" :key="index" @click="openChats(item)">
-                        {{item.friendName}}
-                      </el-menu-item>
+                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" @click="openChats(item)">
+                          {{item.friendName}}
+                          <el-badge class="mark" :value=item.newMessage />
+                        </el-menu-item>
                     </el-menu>
                   </div>
                 </el-aside>
@@ -171,22 +173,22 @@
             ],
 
             recentMessage:[
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
-              {friendName:'youabcd'},
+              {friendName:'youabcd',newMessage:'1'},
+              {friendName:'youabcd',newMessage:'2'},
+              {friendName:'youabcd',newMessage:'3'},
+              {friendName:'youabcd',newMessage:'4'},
+              {friendName:'youabcd',newMessage:'5'},
+              {friendName:'youabcd',newMessage:'6'},
+              {friendName:'youabcd',newMessage:'7'},
+              {friendName:'youabcd',newMessage:'8'},
+              {friendName:'youabcd',newMessage:'9'},
+              {friendName:'youabcd',newMessage:'10'},
+              {friendName:'youabcd',newMessage:'11'},
+              {friendName:'youabcd',newMessage:'12'},
+              {friendName:'youabcd',newMessage:'13'},
+              {friendName:'youabcd',newMessage:'14'},
+              {friendName:'youabcd',newMessage:'15'},
+              {friendName:'youabcd',newMessage:'16'},
             ],
             chats:[
               {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
@@ -209,7 +211,7 @@
       },
       methods:{
         openChats(item){
-
+          this.initWebSocket();
         },
         sendMessage(){//发送对方ip
           let data = {
@@ -220,13 +222,10 @@
             'chatId': '朋友关系的id' };
           this.websock.send(JSON.stringify(data));
         },
-        sendMessage1(){//发送自己ip
-
-        },
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://127.0.0.1:8000/websocketTest/12"+this.checkIp1;//用自己的id构成websock链接 改
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/12";//用自己的id构成websock链接 改
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
@@ -239,6 +238,7 @@
         websocketonmessage(e){ //数据接收
           let data = JSON.parse(e.data);
           console.log(data);
+          //this.chats=data;
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
@@ -309,8 +309,9 @@
     background: inherit;
     transform: rotate(45deg);
   }
-  .cellClass{
-    background-image: url("");
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
   }
+
 
 </style>
