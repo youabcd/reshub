@@ -27,7 +27,8 @@
                     </el-popover>
                     <el-button type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button>
                   </div>
-              </figcaption><img src="../assets/jiang.jpg" alt="sample8" />
+              </figcaption>
+              <img src="../assets/jiang.jpg" alt="sample8" />
           </figure>
         </div>
       </el-header>
