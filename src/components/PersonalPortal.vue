@@ -15,7 +15,7 @@
                       width="200"
                       trigger="hover"
                       content="无可奉告">
-                      <el-button slot="reference" type="primary" icon="el-icon-message" circle></el-button>
+                      <el-button class="share" slot="reference" type="primary" icon="el-icon-message" data-clipboard-text=$content$ @click="Copy" circle></el-button>
                     </el-popover>
                     <el-popover
                       placement="bottom"
@@ -23,7 +23,7 @@
                       width="200"
                       trigger="hover"
                       content="谈笑风生">
-                      <el-button slot="reference" type="primary" icon="el-icon-phone" circle></el-button>
+                      <el-button class="share" slot="reference" type="primary" icon="el-icon-phone" data-clipboard-text=$content$ @click="Copy" circle></el-button>
                     </el-popover>
                     <el-button type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button>
                   </div>
@@ -117,12 +117,33 @@
 
 <script>
     import TopBar from "./TopBar";
-
+    import Clipboard from 'clipboard';
     export default {
-        name: "PersonalPortal",
+      name: "PersonalPortal",
       components:{
         TopBar
       },
+      methods: {
+        Copy() {
+          let clipboard = new Clipboard('.share');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '已经复制到剪贴板',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '已经复制到剪贴板',
+              type: 'error',
+            });
+            clipboard.destroy()
+          })
+        },
+      }
     }
 </script>
 
