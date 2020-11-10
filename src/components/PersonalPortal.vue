@@ -2,11 +2,15 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container>
-      <el-header height=200px>
+      <el-header height=180px>
         <div style="width: 70% auto;">
-          <div>
-            <img src="../assets/logo.png" />
-          </div>
+          <figure class="snip0056">
+              <figcaption>
+                  <h2>江竹溪</h2>
+                  <p>问来问去的问题都太简单，有时很幼稚！你们理解不？明白吗？作为一个长者，我必须告诉你们这一点。我不是记者，但是我必须告诉你们生活的真相。</p>
+                  <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
+              </figcaption><img src="../assets/sq-sample8.jpg" alt="sample8" />
+          </figure>
         </div>
       </el-header>
       <el-main style="background-color: #F4F4F4;width: 70%;margin:0 auto">
@@ -104,12 +108,87 @@
 </script>
 
 <style scoped>
- 
-    .box-card {
-      /* padding-left: -10px;
-      padding-right: -10px; */
-      margin-top: 5px;
-      margin-bottom: 5px;
-      width: 100%;
-    }
+  @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+  @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+  figure.snip0056 {
+    font-family: 'Raleway', Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+    margin: 10px auto;
+    width: 72%;
+    height: 180px;
+    background: #ffffff;
+    color: #000000;
+  }
+  figure.snip0056 * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  figure.snip0056 > img {
+    width: 10%;
+    border-radius: 50%;
+    -webkit-transition: all 0.35s ease-in-out;
+    transition: all 0.35s ease-in-out;
+    -webkit-transform: scale(1.6);
+    transform: scale(1.6);
+    position: relative;
+    float: right;
+    right: -5%;
+    z-index: 1;
+  }
+  figure.snip0056 figcaption {
+    padding: 20px 30px 20px 20px;
+    position: absolute;
+    left: 0;
+    width: 50%;
+  }
+  figure.snip0056 figcaption h2,
+  figure.snip0056 figcaption p {
+    margin: 0;
+    text-align: left;
+    padding: 10px 0;
+    width: 100%;
+  }
+  figure.snip0056 figcaption h2 {
+    font-size: 1.3em;
+    font-weight: 300;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  figure.snip0056 figcaption h2 span {
+    font-weight: 800;
+  }
+  figure.snip0056 figcaption p {
+    font-size: 0.9em;
+    opacity: 0.8;
+  }
+  figure.snip0056 figcaption .icons {
+    width: 100%;
+    text-align: left;
+  }
+  figure.snip0056 figcaption .icons i {
+    font-size: 26px;
+    padding: 5px;
+    top: 50%;
+    color: #000000;
+  }
+  figure.snip0056 figcaption a {
+    opacity: 0.3;
+    -webkit-transition: opacity 0.35s;
+    transition: opacity 0.35s;
+  }
+  figure.snip0056 figcaption a:hover {
+    opacity: 0.8;
+  }
+  figure.snip0056:hover > img,
+  figure.snip0056.hover > img {
+    right: 0%;
+  }
+  .box-card {
+    /* padding-left: -10px;
+    padding-right: -10px; */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
 </style>
