@@ -1,9 +1,13 @@
 <template>
-  <div style="overflow-y:scroll;background-color:white;">
+  <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container>
       <el-header>
-        
+        <div style="width: 70% auto;">
+          <div>
+            <img src="../assets/logo.png" />
+          </div>
+        </div>
       </el-header>
       <el-main style="background-color: #F4F4F4;width: 70%;margin:0 auto">
         <el-col :span="18">
@@ -44,7 +48,21 @@
         </el-col>
         
         <el-col :span="6">
-          <el-card class="box-card" style="float: left;">
+          <el-card class="box-card" style="float: right;width: 95%;">
+            <div slot="header" class="clearfix">
+              <span>联系方式</span>
+            </div>
+            <div>
+              探探:
+            </div>
+            <div>
+              百合网:
+            </div>
+            <div>
+              P站账号:
+            </div>
+          </el-card>
+          <el-card class="box-card" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>所属机构</span>
             </div>
@@ -52,12 +70,20 @@
               {{'机构' + o }}
             </div>
           </el-card>
-          <el-card class="box-card" style="float: left;">
+          <el-card class="box-card" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
             <div v-for="o in 2" :key="o" class="text item">
               {{'路人' + o }}
+            </div>
+          </el-card>
+          <el-card class="box-card" style="float: right;width: 95%;">
+            <div slot="header" class="clearfix">
+              <span>广告</span>
+            </div>
+            <div v-for="o in 15" :key="o" class="text item">
+              {{'广告' + o }}
             </div>
           </el-card>
         </el-col>
