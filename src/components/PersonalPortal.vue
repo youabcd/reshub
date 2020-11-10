@@ -6,11 +6,26 @@
         <div style="width: 70% auto;">
           <figure class="snip0056">
               <figcaption>
-                  <h2>江竹溪<i class="el-icon-male"></i><el-button float="right" type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button></h2>
+                  <h2>江竹溪</h2>
                   <p>问来问去的问题都太简单，有时很幼稚！你们理解不？明白吗？作为一个长者，我必须告诉你们这一点。我不是记者，但是我必须告诉你们生活的真相。</p>
                   <div class="icons">
-                    <a href="#"><i class="el-icon-message"></i></a>
-                    <a href="#"><i class="el-icon-phone"></i></a>
+                    <el-popover
+                      placement="bottom"
+                      title="联系邮箱"
+                      width="200"
+                      trigger="hover"
+                      content="无可奉告">
+                      <el-button slot="reference" type="primary" icon="el-icon-message" circle></el-button>
+                    </el-popover>
+                    <el-popover
+                      placement="bottom"
+                      title="联系电话"
+                      width="200"
+                      trigger="hover"
+                      content="谈笑风生">
+                      <el-button slot="reference" type="primary" icon="el-icon-phone" circle></el-button>
+                    </el-popover>
+                    <el-button type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button>
                   </div>
               </figcaption><img src="../assets/jiang.jpg" alt="sample8" />
           </figure>
