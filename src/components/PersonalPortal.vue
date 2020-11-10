@@ -2,7 +2,7 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container>
-      <el-header>
+      <el-header height=200px>
         <div style="width: 70% auto;">
           <div>
             <img src="../assets/logo.png" />
