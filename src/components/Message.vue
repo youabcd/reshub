@@ -74,8 +74,23 @@
                   <div>
                     <el-menu :default-active="whichFriend">
                         <el-menu-item v-for="(item,index) in recentMessage" :key="index" @click="openChats(item)">
-                          {{item.friendName}}
-                          <el-badge class="mark" :value=item.newMessage />
+                          <van-row></van-row>
+                          <van-row>
+                            <van-col span="">
+                              <van-image round fit="cover" width="35px" height="35px" :src="item.friendHead">
+                                <template v-slot:loading>
+                                  <van-loading type="spinner" size="20" />
+                                </template>
+                              </van-image>
+                            </van-col>
+                            <van-col span="">
+                              <div style="">
+                                {{item.friendName}}
+                                <el-badge class="mark" :value=item.newMessage />
+                              </div>
+                            </van-col>
+                          </van-row>
+                          <van-row></van-row>
                         </el-menu-item>
                     </el-menu>
                   </div>
@@ -102,7 +117,7 @@
                         <!--别人发的消息-->
                         <van-row v-if="item.sender!=userId">
                           <van-col span="4">
-                            <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                            <van-image round fit="cover" width="35px" height="35px" :src="chatImage" clickable>
                               <template v-slot:loading>
                                 <van-loading type="spinner" size="20" />
                               </template>
@@ -154,6 +169,7 @@
             websock: null,
             userId:'aaa',
             userImage:require('../../static/logo2.png'),
+            chatImage:require('../../static/logo2.png'),
             nowActive:'1',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
@@ -173,19 +189,19 @@
             ],
 
             recentMessage:[
-              {friendName:'youabcd',newMessage:'1'},
-              {friendName:'youabcd',newMessage:'2'},
-              {friendName:'youabcd',newMessage:'3'},
-              {friendName:'youabcd',newMessage:'4'},
-              {friendName:'youabcd',newMessage:'5'},
-              {friendName:'youabcd',newMessage:'6'},
-              {friendName:'youabcd',newMessage:'7'},
-              {friendName:'youabcd',newMessage:'8'},
-              {friendName:'youabcd',newMessage:'9'},
-              {friendName:'youabcd',newMessage:'10'},
-              {friendName:'youabcd',newMessage:'11'},
-              {friendName:'youabcd',newMessage:'12'},
-              {friendName:'youabcd',newMessage:'13'},
+              {friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'2',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'3',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'4',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'5',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'6',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'7',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'8',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'9',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'10',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'11',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'12',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'13',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcd',newMessage:'14'},
               {friendName:'youabcd',newMessage:'15'},
               {friendName:'youabcd',newMessage:'16'},
