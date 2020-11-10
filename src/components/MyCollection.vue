@@ -5,34 +5,29 @@
         <div>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                    active-text-color="#0079fe" >
-            <el-menu-item index="1" style="width: 125px">●全部</el-menu-item>
-            <el-menu-item index="2" style="width: 125px">●期刊</el-menu-item>
-            <el-menu-item index="3" style="width: 125px">●会议</el-menu-item>
-            <el-menu-item index="4" style="width: 125px">●科技报告</el-menu-item>
-            <el-menu-item index="5" style="width: 125px">●专利</el-menu-item>
-            <el-menu-item index="6" style="width: 125px">●成果</el-menu-item>
-            <el-menu-item index="7" style="width: 125px">●代码</el-menu-item>
+            <el-menu-item index="0" style="width: 125px">●全部</el-menu-item>
+            <el-menu-item index="1" style="width: 125px">●期刊</el-menu-item>
+            <el-menu-item index="2" style="width: 125px">●会议</el-menu-item>
+            <el-menu-item index="3" style="width: 125px">●报告</el-menu-item>
           </el-menu>
         </div>
         <div>
 <!--          <el-card class="box-card" shadow="never">-->
-            <el-card  shadow="hover" v-for="(item,index) in tableData" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-              <!--                    {{'列表内容 ' + o }}-->
-<!--              <div style="height: 40px;margin-top: 10px">-->
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
-                </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
-                  </el-tooltip>
+            <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+              <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+                <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+              </div>
+              <div style="display: inline;position: absolute;right: 20px;top: 0">
+                <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                </el-tooltip>
 <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
 <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
 <!--                  </el-tooltip>-->
 
-                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                  </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                  <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                </el-tooltip>
 <!--                  <el-dialog-->
 <!--                    title="点击复制链接或扫描二维码"-->
 <!--                    :visible.sync="dialogVisible"-->
@@ -49,9 +44,7 @@
 <!--                  </el-dialog>-->
 
 
-                </div>
-<!--              </div>-->
-
+              </div>
 
               <div style="text-align: left;position: absolute;top: 60px;">
                 <p style="height: 20px;" >{{item.msg}}</p>
@@ -60,7 +53,7 @@
 
               <div>
                 <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
-                <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                   <span>{{item.type}}</span>
                 </el-tag>
                 <i class="el-icon-time" style="position: absolute;right: 170px;top: 130px">
@@ -75,6 +68,174 @@
               </div>
 
             </el-card>
+
+          <el-card  shadow="hover" v-if="menuIndex === '1' " v-for="(item,index) in tableData1" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+            <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+            </div>
+            <div style="display: inline;position: absolute;right: 20px;top: 0">
+              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+              </el-tooltip>
+              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+              <!--                  </el-tooltip>-->
+
+              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+              </el-tooltip>
+              <!--                  <el-dialog-->
+              <!--                    title="点击复制链接或扫描二维码"-->
+              <!--                    :visible.sync="dialogVisible"-->
+              <!--                    show-close="false"-->
+              <!--                    width="30%">-->
+              <!--                    <div @click="Copy">-->
+              <!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
+              <!--                    </div>-->
+              <!--                    <span slot="footer" class="dialog-footer">-->
+              <!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
+              <!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
+              <!--                    </span>-->
+
+              <!--                  </el-dialog>-->
+
+
+            </div>
+
+            <div style="text-align: left;position: absolute;top: 60px;">
+              <p style="height: 20px;" >{{item.msg}}</p>
+              <!--                overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 900px-->
+            </div>
+
+            <div>
+              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
+                <span>{{item.type}}</span>
+              </el-tag>
+              <i class="el-icon-time" style="position: absolute;right: 170px;top: 130px">
+                <span> {{item.collectTime}}</span>
+              </i>
+              <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                <span> {{item.collectionSum}}</span>
+              </i>
+              <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                <span> {{item.viewSum}}</span>
+              </i>
+            </div>
+
+          </el-card>
+
+          <el-card  shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+            <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+            </div>
+            <div style="display: inline;position: absolute;right: 20px;top: 0">
+              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+              </el-tooltip>
+              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+              <!--                  </el-tooltip>-->
+
+              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+              </el-tooltip>
+              <!--                  <el-dialog-->
+              <!--                    title="点击复制链接或扫描二维码"-->
+              <!--                    :visible.sync="dialogVisible"-->
+              <!--                    show-close="false"-->
+              <!--                    width="30%">-->
+              <!--                    <div @click="Copy">-->
+              <!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
+              <!--                    </div>-->
+              <!--                    <span slot="footer" class="dialog-footer">-->
+              <!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
+              <!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
+              <!--                    </span>-->
+
+              <!--                  </el-dialog>-->
+
+
+            </div>
+
+            <div style="text-align: left;position: absolute;top: 60px;">
+              <p style="height: 20px;" >{{item.msg}}</p>
+              <!--                overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 900px-->
+            </div>
+
+            <div>
+              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
+                <span>{{item.type}}</span>
+              </el-tag>
+              <i class="el-icon-time" style="position: absolute;right: 170px;top: 130px">
+                <span> {{item.collectTime}}</span>
+              </i>
+              <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                <span> {{item.collectionSum}}</span>
+              </i>
+              <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                <span> {{item.viewSum}}</span>
+              </i>
+            </div>
+
+          </el-card>
+
+          <el-card  shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+            <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+            </div>
+            <div style="display: inline;position: absolute;right: 20px;top: 0">
+              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+              </el-tooltip>
+              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+              <!--                  </el-tooltip>-->
+
+              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+              </el-tooltip>
+              <!--                  <el-dialog-->
+              <!--                    title="点击复制链接或扫描二维码"-->
+              <!--                    :visible.sync="dialogVisible"-->
+              <!--                    show-close="false"-->
+              <!--                    width="30%">-->
+              <!--                    <div @click="Copy">-->
+              <!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
+              <!--                    </div>-->
+              <!--                    <span slot="footer" class="dialog-footer">-->
+              <!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
+              <!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
+              <!--                    </span>-->
+
+              <!--                  </el-dialog>-->
+
+
+            </div>
+
+            <div style="text-align: left;position: absolute;top: 60px;">
+              <p style="height: 20px;" >{{item.msg}}</p>
+              <!--                overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width: 900px-->
+            </div>
+
+            <div>
+              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
+                <span>{{item.type}}</span>
+              </el-tag>
+              <i class="el-icon-time" style="position: absolute;right: 170px;top: 130px">
+                <span> {{item.collectTime}}</span>
+              </i>
+              <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                <span> {{item.collectionSum}}</span>
+              </i>
+              <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                <span> {{item.viewSum}}</span>
+              </i>
+            </div>
+
+          </el-card>
 
 <!--          </el-card>-->
         </div>
@@ -91,7 +252,6 @@
           <div class="back-top-circle" @click="backTop" v-if="btnFlag">
             <i class="el-icon-caret-top" ></i>
           </div>
-          <!--              <img src="../assets/BacktoTop.jpg" class="icon" v-if="btnFlag" @click="backTop">-->
         </div>
       </div>
 
@@ -111,9 +271,57 @@
         return {
           btnFlag: false,
           dialogVisible: false,
+          activeIndex: "0",
+          menuIndex: "0",
           tableData: [{
+          }],
+          tableData0: [{
             paperId:'1',
-            title:'Test1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author:'Author1',
+            type:"期刊",
+            collectionSum:6,
+            viewSum:7,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
+            {
+              paperId:'2',
+              title:'Google2',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+              author:'Author2',
+              type:"会议",
+              collectionSum:66,
+              viewSum:77,
+              link:'https://www.youtube.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'3',
+              title:'BILIBILI3',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+              author:'Author3',
+              type:"期刊",
+              collectionSum:666,
+              viewSum:777,
+              link:'https://www.bilibili.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'4',
+              title:'Google4',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+              author:'Author4',
+              type:"报告",
+              collectionSum:6666,
+              viewSum:7777,
+              link:'https://www.google.com/',
+              collectTime:'2016-05-04'
+            }],
+          tableData1: [{
+            paperId:'1',
+            title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author:'Author1',
             type:"期刊",
@@ -123,19 +331,8 @@
             collectTime:'2016-05-04'
           },
           {
-            paperId:'2',
-            title:'Test2',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:'Author2',
-            type:"测试",
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
-          },
-          {
             paperId:'3',
-            title:'Test3',
+            title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:'Author3',
             type:"期刊",
@@ -143,18 +340,31 @@
             viewSum:777,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
-          },
-          {
-            paperId:'4',
-            title:'Test4',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:'Author4',
-            type:"期刊",
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
-          }]
+          }],
+          tableData2: [
+            {
+              paperId:'2',
+              title:'Google2',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+              author:'Author2',
+              type:"会议",
+              collectionSum:666,
+              viewSum:777,
+              link:'https://www.youtube.com/',
+              collectTime:'2016-05-04'
+            }],
+          tableData3: [
+            {
+              paperId:'4',
+              title:'Google4',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+              author:'Author4',
+              type:"报告",
+              collectionSum:666,
+              viewSum:777,
+              link:'https://www.google.com/',
+              collectTime:'2016-05-04'
+            }],
         }
       },
       mounted () {
@@ -188,14 +398,81 @@
           }
         },
 
+        handleSelect (key) {
+          this.menuIndex = key;
+          // if (key === "0") {
+          //   this.tableData = this.tableData0.slice();
+          // } else if (key === "1") {
+          //   this.tableData = this.tableData1.slice();
+          // } else if (key === "2") {
+          //   this.tableData = this.tableData2.slice();
+          // } else {
+          //   this.tableData = this.tableData3.slice();
+          // }
+        },
+
         deleteCollection (index) {
           //发送请求
+
+          if (this.menuIndex === '0') {
+            let temp = this.tableData0[index];
+            if (temp.type === "期刊") {
+              for (let i=0; i<this.tableData1.length; i++) {
+                if (temp.paperId === this.tableData1[i].paperId) {
+                  this.tableData1.splice(i, 1);
+                  break;
+                }
+              }
+            } else if (temp.type === "会议") {
+              for (let i=0; i<this.tableData2.length; i++) {
+                if (temp.paperId === this.tableData2[i].paperId) {
+                  this.tableData2.splice(i, 1);
+                  break;
+                }
+              }
+            } else if (temp.type === "报告") {
+              for (let i=0; i<this.tableData3.length; i++) {
+                if (temp.paperId === this.tableData3[i].paperId) {
+                  this.tableData3.splice(i, 1);
+                  break;
+                }
+              }
+            }
+            this.tableData0.splice(index, 1);
+          } else if (this.menuIndex === '1') {
+            let temp = this.tableData1[index];
+            for (let i=0; i<this.tableData0.length; i++) {
+              if (temp.paperId === this.tableData0[i].paperId) {
+                this.tableData0.splice(i, 1);
+                break;
+              }
+            }
+            this.tableData1.splice(index, 1);
+          } else if (this.menuIndex === '2') {
+            let temp = this.tableData2[index];
+            for (let i=0; i<this.tableData0.length; i++) {
+              if (temp.paperId === this.tableData0[i].paperId) {
+                this.tableData0.splice(i, 1);
+                break;
+              }
+            }
+            this.tableData2.splice(index, 1);
+          } else if (this.menuIndex === '3') {
+            let temp = this.tableData3[index];
+            for (let i=0; i<this.tableData0.length; i++) {
+              if (temp.paperId === this.tableData0[i].paperId) {
+                this.tableData0.splice(i, 1);
+                break;
+              }
+            }
+            this.tableData3.splice(index, 1);
+          }
           this.$message({
             showClose: true,
             message: '取消收藏成功',
             type: 'success'
           });
-          this.tableData.splice(index,1);
+
           // this.reload();
         },
 
@@ -224,13 +501,13 @@
           window.open(url,url)
         },
 
-        handleClose(done) {
-          this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-            })
-            .catch(_ => {});
-        }
+        // handleClose(done) {
+        //   this.$confirm('确认关闭？')
+        //     .then(_ => {
+        //       done();
+        //     })
+        //     .catch(_ => {});
+        // }
       }
     }
 
@@ -245,19 +522,18 @@
     padding: 18px 0;
   }
 
-  .box-card {
+  /*.box-card {*/
 
-    width: 100%;
-  }
+  /*  width: 100%;*/
+  /*}*/
 
-  .icon{
-    height: 60px;
-    width: 55px;
-    position: fixed;
-    bottom: 35px;
-    right: 15px;
-  }
-
+  /*.icon{*/
+  /*  height: 60px;*/
+  /*  width: 55px;*/
+  /*  position: fixed;*/
+  /*  bottom: 35px;*/
+  /*  right: 15px;*/
+  /*}*/
 
   .back-top-circle{
     position: fixed;
