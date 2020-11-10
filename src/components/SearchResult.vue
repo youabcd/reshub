@@ -38,7 +38,7 @@
             </div>
             <div>
 <!--              <el-card class="box-card" shadow="never">-->
-                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="background-color: #f4f4f4;height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                   <!--                    {{'列表内容 ' + o }}-->
 <!--                  <div style="height: 40px;margin-top: 10px">-->
                     <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">

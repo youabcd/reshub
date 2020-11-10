@@ -3,9 +3,9 @@
     <TopBar></TopBar>
     <el-container>
       <el-header>
-        
+
       </el-header>
-      <el-main style="background-color: #F4F4F4;width: 70%;margin:0 auto">
+      <el-main style="background-color: #f4f4f4;width: 70%;margin:0 auto">
         <el-col :span="18">
           <el-divider content-position="left">简介</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -19,7 +19,7 @@
               {{'领域 ' + o }}
             </div>
           </el-card>
-          
+
           <span>&nbsp</span>
           <el-divider content-position="left">发表作品</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -30,7 +30,7 @@
               {{'具体领域 ' + o }}
             </div>
           </el-card>
-          
+
           <span>&nbsp</span>
           <el-divider content-position="left">关系网络</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -42,7 +42,7 @@
             </div>
           </el-card>
         </el-col>
-        
+
         <el-col :span="6">
           <el-card class="box-card" style="float: left;">
             <div slot="header" class="clearfix">
@@ -78,7 +78,7 @@
 </script>
 
 <style scoped>
- 
+
     .box-card {
       /* padding-left: -10px;
       padding-right: -10px; */
