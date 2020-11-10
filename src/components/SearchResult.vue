@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-if="test">
     <!--    <el-container>-->
-    <TopBar></TopBar>
+    <TopBar v-on:searchEvent="search"></TopBar>
     <SearchBox style="position: relative;top: -15px"></SearchBox>
     <el-container style="height: 100%" >
       <!--        style="background-color: #f0f2f5"-->
@@ -38,7 +38,7 @@
             </div>
             <div>
 <!--              <el-card class="box-card" shadow="never">-->
-                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="background-color: #f4f4f4;height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                   <!--                    {{'列表内容 ' + o }}-->
 <!--                  <div style="height: 40px;margin-top: 10px">-->
                     <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
@@ -146,11 +146,17 @@
     },
     data() {
       return {
-        btnFlag: false
+        btnFlag: false,
+        keyWords:'',
+        test:true,
       }
     },
+    created() {
+
+    },
     mounted () {
-      window.addEventListener('scroll', this.scrollToTop)
+      window.addEventListener('scroll', this.scrollToTop);
+      this.search(this.$route.query.keyWords);
     },
     destroyed () {
       window.removeEventListener('scroll', this.scrollToTop)
@@ -178,6 +184,15 @@
         } else {
           that.btnFlag = false
         }
+      },
+
+
+      //搜索
+      search(keyWords){
+        this.$message({
+          message: keyWords,
+          type: 'success'
+        });
       }
     }
   }

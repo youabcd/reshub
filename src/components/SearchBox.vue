@@ -107,15 +107,16 @@
         search(){
           if(this.keyWords.length==0){
             this.$message({
-              message: '请输入检索关键词',
+              message: this.$route.path,
               type: 'error'
             });
           }
           else{
-            this.$message({
-              message: '恭喜你，这是一条成功消息',
-              type: 'success'
-            });
+              this.$router.push({
+                path: '/SearchResult',
+                query: {keyWords: this.keyWords}
+              });
+
           }
         },//搜索
         qualitySearch(){

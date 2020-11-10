@@ -237,6 +237,7 @@
         openChats(item){
           this.initWebSocket();
           this.whichFriend=item.index;
+          this.recentMessage[item.index].newMessage='0';
         },
         sendMessage(){//发送对方ip
           let data = {

@@ -2,42 +2,18 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container>
-<<<<<<< HEAD
-      <el-header>
-
-=======
-      <el-header height=200px>
+      <el-header height=180px>
         <div style="width: 70% auto;">
           <figure class="snip0056">
               <figcaption>
                   <h2>江竹溪</h2>
                   <p>问来问去的问题都太简单，有时很幼稚！你们理解不？明白吗？作为一个长者，我必须告诉你们这一点。我不是记者，但是我必须告诉你们生活的真相。</p>
-                  <div class="icons">
-                    <el-popover
-                      placement="bottom"
-                      title="联系邮箱"
-                      width="200"
-                      trigger="hover"
-                      content="无可奉告">
-                      <el-button class="share" slot="reference" type="primary" icon="el-icon-message" data-clipboard-text=$content$ @click="Copy" circle></el-button>
-                    </el-popover>
-                    <el-popover
-                      placement="bottom"
-                      title="联系电话"
-                      width="200"
-                      trigger="hover"
-                      content="谈笑风生">
-                      <el-button class="share" slot="reference" type="primary" icon="el-icon-phone" data-clipboard-text=$content$ @click="Copy" circle></el-button>
-                    </el-popover>
-                    <el-button type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button>
-                  </div>
-              </figcaption>
-              <img src="../assets/jiang.jpg" alt="sample8" />
+                  <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
+              </figcaption><img src="../assets/sq-sample8.jpg" alt="sample8" />
           </figure>
         </div>
->>>>>>> 4d415d781c6f03245d2d876ec6030e438da8aede
       </el-header>
-      <el-main style="background-color: #f4f4f4;width: 70%;margin:0 auto">
+      <el-main style="background-color: #F4F4F4;width: 70%;margin:0 auto">
         <el-col :span="18">
           <el-divider content-position="left">简介</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -51,7 +27,7 @@
               {{'领域 ' + o }}
             </div>
           </el-card>
-
+          
           <span>&nbsp</span>
           <el-divider content-position="left">发表作品</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -62,7 +38,7 @@
               {{'具体领域 ' + o }}
             </div>
           </el-card>
-
+          
           <span>&nbsp</span>
           <el-divider content-position="left">关系网络</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -74,7 +50,7 @@
             </div>
           </el-card>
         </el-col>
-
+        
         <el-col :span="6">
           <el-card class="box-card" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
@@ -122,53 +98,24 @@
 
 <script>
     import TopBar from "./TopBar";
-    import Clipboard from 'clipboard';
+
     export default {
-      name: "PersonalPortal",
+        name: "PersonalPortal",
       components:{
         TopBar
       },
-      methods: {
-        Copy() {
-          let clipboard = new Clipboard('.share');
-          clipboard.on('success', e => {
-            this.$message({
-              showClose: true,
-              message: '已经复制到剪贴板',
-              type: 'success',
-            });
-            clipboard.destroy()
-          })
-          clipboard.on('error', e => {
-            this.$message({
-              showClose: true,
-              message: '已经复制到剪贴板',
-              type: 'error',
-            });
-            clipboard.destroy()
-          })
-        },
-      }
     }
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-
-    .box-card {
-      /* padding-left: -10px;
-      padding-right: -10px; */
-      margin-top: 5px;
-      margin-bottom: 5px;
-      width: 100%;
-    }
-=======
+  @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+  @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
   figure.snip0056 {
     font-family: 'Raleway', Arial, sans-serif;
     position: relative;
     overflow: hidden;
     margin: 10px auto;
-    width: 71%;
+    width: 72%;
     height: 180px;
     background: #ffffff;
     color: #000000;
@@ -186,7 +133,7 @@
     transform: scale(1.6);
     position: relative;
     float: right;
-    right: 0%;
+    right: -5%;
     z-index: 1;
   }
   figure.snip0056 figcaption {
@@ -235,7 +182,7 @@
   }
   figure.snip0056:hover > img,
   figure.snip0056.hover > img {
-    right: 5%;
+    right: 0%;
   }
   .box-card {
     /* padding-left: -10px;
@@ -244,5 +191,4 @@
     margin-bottom: 5px;
     width: 100%;
   }
->>>>>>> 4d415d781c6f03245d2d876ec6030e438da8aede
 </style>

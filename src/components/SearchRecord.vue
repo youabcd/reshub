@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-    {{msg}}
+    搜索记录
   </div>
 </template>
 
@@ -10,15 +10,9 @@
 
     export default {
       name: "SearchRecord",
-      
       components:{
         TopBar
       },
-      data() {
-        return {
-          msg: '666'
-        }
-      }
     }
 </script>
 
