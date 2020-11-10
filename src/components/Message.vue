@@ -67,30 +67,26 @@
                 <van-row></van-row>
               </div>
               <el-container style="height: 590px;">
-                <el-aside width="220px" style="margin-top: 10px;">
-                  <div style="font-size: 20px;">
+                <el-aside width="220px" style="">
+                  <div style="margin-top: 10px;font-size: 20px;">
                     最近消息
                   </div>
                   <div>
                     <el-menu :default-active="whichFriend">
-                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index=index @click="openChats(item)" style="height: 60px;">
+                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" @click="openChats(item)">
                           <van-row></van-row>
                           <van-row>
-                            <van-col style="margin-top: 0px;">
+                            <van-col span="">
                               <van-image round fit="cover" width="35px" height="35px" :src="item.friendHead">
                                 <template v-slot:loading>
                                   <van-loading type="spinner" size="20" />
                                 </template>
                               </van-image>
                             </van-col>
-                            <van-col style="margin-left: 6px;text-align: left;">
-                              <div v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                                  {{item.friendName}}
-                              </div>
-                            </van-col>
-                            <van-col>
-                              <div>
-                                <el-badge v-if="item.newMessage>0" :value=item.newMessage />
+                            <van-col span="">
+                              <div style="">
+                                {{item.friendName}}
+                                <el-badge class="mark" :value=item.newMessage />
                               </div>
                             </van-col>
                           </van-row>
@@ -140,14 +136,13 @@
                       <div style="width: 100%;height: 70%;margin-top: 5px;">
                         <el-input
                           type="textarea"
-                          resize="none"
-                          :autosize="{ minRows: 3, maxRows: 3}"
+                          :autosize="{ minRows: 2, maxRows: 4}"
                           placeholder="请输入内容"
                           v-model="textarea">
                         </el-input>
                       </div>
-                      <div style="width: 100%;height: 30%;margin-top: 8px;text-align: right">
-                        <el-button type="primary" style="" @click="sendMessage">发送</el-button>
+                      <div style="width: 100%;height: 30%;margin-top: 8px;">
+                        <el-button @click="sendMessage">提交对方ip</el-button>
                       </div>
                     </el-footer>
                   </el-container>
@@ -176,7 +171,6 @@
             userImage:require('../../static/logo2.png'),
             chatImage:require('../../static/logo2.png'),
             nowActive:'1',
-            whichFriend:'',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
               {title: 'a',texts:'a',sendTime:'2020/10/7 20:14'},
@@ -194,25 +188,23 @@
               {title:'message2',texts:'dfhkjdhfjhjhjkfhjghadfkj gj hk shdkjh ahkh ah sahkjsah skjhsjgh kshjhsdkjh khjkdhjkh gkjhdgkjhdfjkgh djkkj',sendTime:'2020/10/7 19:53'},
             ],
 
-            commentWidth:'80',
-
             recentMessage:[
               {friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcd名字特别长sjfksjdlkfjklfds',newMessage:'2',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdasdfgfgf',newMessage:'3',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdasdfggf',newMessage:'4',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdagffgg',newMessage:'5',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdfdsfg',newMessage:'0',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdefgh',newMessage:'7',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdefg',newMessage:'8',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdfg',newMessage:'9',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdf',newMessage:'10',friendHead:require('../../static/logo2.png')},
-              {friendName:'youacd',newMessage:'11',friendHead:require('../../static/logo2.png')},
-              {friendName:'abcde',newMessage:'12',friendHead:require('../../static/logo2.png')},
-              {friendName:'abcd',newMessage:'13',friendHead:require('../../static/logo2.png')},
-              {friendName:'abc',newMessage:'14'},
-              {friendName:'ab',newMessage:'15'},
-              {friendName:'a',newMessage:'16'},
+              {friendName:'youabcd',newMessage:'2',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'3',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'4',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'5',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'6',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'7',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'8',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'9',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'10',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'11',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'12',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'13',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcd',newMessage:'14'},
+              {friendName:'youabcd',newMessage:'15'},
+              {friendName:'youabcd',newMessage:'16'},
             ],
             chats:[
               {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
@@ -236,7 +228,6 @@
       methods:{
         openChats(item){
           this.initWebSocket();
-          this.whichFriend=item.index;
         },
         sendMessage(){//发送对方ip
           let data = {
@@ -334,7 +325,7 @@
     background: inherit;
     transform: rotate(45deg);
   }
-  .el-scrollbar_wrap {
+  .el-scrollbar__wrap {
     overflow-x: hidden;
   }
 
