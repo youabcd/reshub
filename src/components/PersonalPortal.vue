@@ -2,14 +2,17 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container>
-      <el-header height=180px>
+      <el-header height=200px>
         <div style="width: 70% auto;">
           <figure class="snip0056">
               <figcaption>
-                  <h2>江竹溪</h2>
+                  <h2>江竹溪<i class="el-icon-male"></i><el-button float="right" type="primary" icon="el-icon-star-off" href="#" round plain>关注</el-button></h2>
                   <p>问来问去的问题都太简单，有时很幼稚！你们理解不？明白吗？作为一个长者，我必须告诉你们这一点。我不是记者，但是我必须告诉你们生活的真相。</p>
-                  <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
-              </figcaption><img src="../assets/sq-sample8.jpg" alt="sample8" />
+                  <div class="icons">
+                    <a href="#"><i class="el-icon-message"></i></a>
+                    <a href="#"><i class="el-icon-phone"></i></a>
+                  </div>
+              </figcaption><img src="../assets/jiang.jpg" alt="sample8" />
           </figure>
         </div>
       </el-header>
@@ -108,14 +111,12 @@
 </script>
 
 <style scoped>
-  @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
-  @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
   figure.snip0056 {
     font-family: 'Raleway', Arial, sans-serif;
     position: relative;
     overflow: hidden;
     margin: 10px auto;
-    width: 72%;
+    width: 71%;
     height: 180px;
     background: #ffffff;
     color: #000000;
@@ -133,7 +134,7 @@
     transform: scale(1.6);
     position: relative;
     float: right;
-    right: -5%;
+    right: 0%;
     z-index: 1;
   }
   figure.snip0056 figcaption {
@@ -182,7 +183,7 @@
   }
   figure.snip0056:hover > img,
   figure.snip0056.hover > img {
-    right: 0%;
+    right: 5%;
   }
   .box-card {
     /* padding-left: -10px;
