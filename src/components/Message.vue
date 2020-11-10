@@ -90,7 +90,7 @@
                             </van-col>
                             <van-col>
                               <div>
-                                <el-badge :value=item.newMessage />
+                                <el-badge v-if="item.newMessage>0" :value=item.newMessage />
                               </div>
                             </van-col>
                           </van-row>
@@ -202,7 +202,7 @@
               {friendName:'youabcdasdfgfgf',newMessage:'3',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfggf',newMessage:'4',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdagffgg',newMessage:'5',friendHead:require('../../static/logo2.png')},
-              {friendName:'youabcdfdsfg',newMessage:'6',friendHead:require('../../static/logo2.png')},
+              {friendName:'youabcdfdsfg',newMessage:'0',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdefgh',newMessage:'7',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdefg',newMessage:'8',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdfg',newMessage:'9',friendHead:require('../../static/logo2.png')},
@@ -334,7 +334,7 @@
     background: inherit;
     transform: rotate(45deg);
   }
-  .el-scrollbar__wrap {
+  .el-scrollbar_wrap {
     overflow-x: hidden;
   }
 
