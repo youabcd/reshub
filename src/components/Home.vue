@@ -20,7 +20,6 @@
     name: "Home",
     data() {
       return {
-
       }
     },
     methods:{

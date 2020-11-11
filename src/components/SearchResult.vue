@@ -2,7 +2,8 @@
   <div>
     <!--    <el-container>-->
     <TopBar></TopBar>
-    <SearchBox style="position: relative;top: -15px"></SearchBox>
+    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>
+
     <el-container style="height: 100%" >
       <!--        style="background-color: #f0f2f5"-->
       <el-aside width="15%">
@@ -37,47 +38,47 @@
               </el-menu>
             </div>
             <div>
-<!--              <el-card class="box-card" shadow="never">-->
-                <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-                  <!--                    {{'列表内容 ' + o }}-->
-<!--                  <div style="height: 40px;margin-top: 10px">-->
-                    <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
-                      <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
-                    </div>
-                    <div style="display: inline;position: absolute;right: 20px;top: 0">
-                      <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
-                        <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
-                      </el-tooltip>
-<!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-<!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-<!--                      </el-tooltip>-->
-                      <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                        <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
-                      </el-tooltip>
-                    </div>
-<!--                  </div>-->
+              <!--              <el-card class="box-card" shadow="never">-->
+              <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <!--                    {{'列表内容 ' + o }}-->
+                <!--                  <div style="height: 40px;margin-top: 10px">-->
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
+                </div>
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+                  <!--                      </el-tooltip>-->
+                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                </div>
+                <!--                  </div>-->
 
 
-                  <div style="text-align: left;position: absolute;top: 60px">
-                    <p style="height: 20px" >文字文字文字文字</p>
-                  </div>
+                <div style="text-align: left;position: absolute;top: 60px">
+                  <p style="height: 20px" >文字文字文字文字</p>
+                </div>
 
-                  <div>
-                    <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
-                    <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
-                      <span>期刊</span>
-                    </el-tag>
-                    <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
-                      <span> 6667</span>
-                    </i>
-                    <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
-                      <span> 6666</span>
-                    </i>
-                  </div>
+                <div>
+                  <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                    <span>期刊</span>
+                  </el-tag>
+                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                    <span> 6667</span>
+                  </i>
+                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                    <span> 6666</span>
+                  </i>
+                </div>
 
-                </el-card>
+              </el-card>
 
-<!--              </el-card>-->
+              <!--              </el-card>-->
             </div>
             <div>
               <el-pagination
@@ -146,11 +147,16 @@
     },
     data() {
       return {
-        btnFlag: false
+        btnFlag: false,
+        keyWords:'',
       }
     },
+    created() {
+    },
     mounted () {
-      window.addEventListener('scroll', this.scrollToTop)
+      window.addEventListener('scroll', this.scrollToTop);
+      this.search(localStorage.getItem("keyWords"));
+      this.keyWords=localStorage.getItem("keyWords");
     },
     destroyed () {
       window.removeEventListener('scroll', this.scrollToTop)
@@ -167,7 +173,6 @@
           }
         }, 16)
       },
-
       // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
       scrollToTop () {
         const that = this
@@ -178,6 +183,14 @@
         } else {
           that.btnFlag = false
         }
+      },
+      //搜索
+      search(keyWords){
+        this.$message({
+          message: keyWords,
+          type: 'success'
+        });
+        this.keyWords=keyWords;
       }
     }
   }
@@ -199,16 +212,12 @@
   .text {
     font-size: 14px;
   }
-
   .item {
     padding: 18px 0;
   }
-
   .box-card {
-
     width: 100%;
   }
-
   .icon{
     height: 60px;
     width: 55px;
@@ -216,7 +225,6 @@
     bottom: 35px;
     right: 15px;
   }
-
   .back-top-circle{
     position: fixed;
     background-color: #fff;
