@@ -35,8 +35,8 @@
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goSearchRecord"><i class="el-icon-edit-outline"/>搜索记录</span></el-link>
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goBrowseRecord"><i class="el-icon-edit-outline"/>浏览记录</span></el-link>
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMyCollection"><i class="el-icon-star-off" />收藏</span></el-link>
-            <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMyConcern"><i class="el-icon-bell"/>关注</span></el-link>
-            <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMessage"><i class="el-icon-bell"/>消息</span></el-link>
+            <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMyConcern"><i class="el-icon-user"/>关注</span></el-link>
+            <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goMessage"><i class="el-icon-bell"/>消息&nbsp&nbsp&nbsp</span></el-link>
           </van-col>
           <van-col span="1" style="margin-top:5px;">
             <el-popover placement="bottom" width="20" trigger="click">

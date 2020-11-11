@@ -1,8 +1,9 @@
 <template>
   <div>
     <TopBar></TopBar>
+    <div class="background"></div>
     <div style="background-color: #f4f5f7">
-      <el-container style="height: 680px; border: 1px solid #eee;width: 64%;margin-left: 13%">
+      <el-container style="height: 680px; border: 1px solid #eee;width: 64%;margin-left: 13%;">
         <el-aside width="150px" style="">
           <div style="margin-top: 10px;font-size: 20px;">
             <i class="el-icon-s-promotion"></i>我的关注
@@ -102,6 +103,8 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+  .background{
+    background-image: url("../assets/greyBackground.png");
+  }
 </style>
