@@ -400,15 +400,6 @@
 
         handleSelect (key) {
           this.menuIndex = key;
-          // if (key === "0") {
-          //   this.tableData = this.tableData0.slice();
-          // } else if (key === "1") {
-          //   this.tableData = this.tableData1.slice();
-          // } else if (key === "2") {
-          //   this.tableData = this.tableData2.slice();
-          // } else {
-          //   this.tableData = this.tableData3.slice();
-          // }
         },
 
         deleteCollection (index) {
@@ -552,6 +543,4 @@
     cursor: pointer;
     z-index: 5;
   }
-
-
 </style>
