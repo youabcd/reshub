@@ -186,11 +186,13 @@
       },
       //搜索
       search(keyWords){
-        this.$message({
-          message: keyWords,
-          type: 'success'
-        });
-        this.keyWords=keyWords;
+        this.keyWords = keyWords;
+        if(keyWords.length>0) {
+          this.$message({
+            message: keyWords,
+            type: 'success'
+          });
+        }
       }
     }
   }

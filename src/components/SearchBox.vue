@@ -107,7 +107,7 @@
       search(){
         if(this.keyWords.length==0){
           this.$message({
-            message: 'error',
+            message: '请输入搜索关键词',
             type: 'error'
           });
         }
