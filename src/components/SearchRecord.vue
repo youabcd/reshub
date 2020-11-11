@@ -2,12 +2,12 @@
   <div>
     <TopBar></TopBar>
     <div style="width: 70%;margin-top: 10px;margin-left: 15%;">
-      <div style="position: relative">
+      <div style="position: relative;height: 50px;margin-top: 20px">
         <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 10px">
           <i class="el-icon-search"> 搜索记录</i>
         </div>
         <div style="float: right">
-          <el-button type="danger" :disabled="multipleSelection.length === 0" @click="deleteSelectHistory">删除选中记录</el-button>
+          <el-button type="danger" :disabled="multipleSelection.length === 0" @click="open">删除选中记录</el-button>
         </div>
       </div>
 
@@ -122,7 +122,10 @@
         deleteHistory(index) {
           //传递数据
           this.tableData.splice(index,1);
-          this.$message('删除成功');
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          });
         },
         deleteSelectHistory() {
           //传递数据
@@ -136,7 +139,20 @@
               }
             }
           }
-          this.$message('批量删除成功');
+          // this.$message('批量删除成功');
+        },
+        open() {
+          this.$confirm('此操作将永久删除选中记录, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.deleteSelectHistory();
+            this.$message({
+              type: 'success',
+              message: '删除成功'
+            });
+          })
         }
       }
     }
