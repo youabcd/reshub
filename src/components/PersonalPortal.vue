@@ -27,7 +27,7 @@
               {{'领域 ' + o }}
             </div>
           </el-card>
-          
+
           <span>&nbsp</span>
           <el-divider content-position="left">发表作品</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -38,7 +38,7 @@
               {{'具体领域 ' + o }}
             </div>
           </el-card>
-          
+
           <span>&nbsp</span>
           <el-divider content-position="left">关系网络</el-divider>
           <el-card class="box-card" style="float: left;">
@@ -50,7 +50,7 @@
             </div>
           </el-card>
         </el-col>
-        
+
         <el-col :span="6">
           <el-card class="box-card" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
