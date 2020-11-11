@@ -76,103 +76,116 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import baseUrl from './baseUrl'
-    export default {
-      name: "SearchBox",
-      data(){
-        return{
-          //搜索框部分数据
-          keyWords:'',
-          select:'1',
-          recommend: [],
-          show:false,
-          form: {
-            keyWords:'',//关键词
-            region: '文章任意位置',//出现位置
-            date1: '',//搜索时间开始
-            date2: '',//搜索实际结束
-            profession:'',
-            author:'',//作者名字
-            institute:'',//机构名称
-            language:'1',//语种
-          },
-          rules:{
-            keyWords:[{required:true,message:'请输入检索词',trigger:'blur'}]
-          },
+  import axios from 'axios';
+  import baseUrl from './baseUrl'
+  export default {
+    name: "SearchBox",
+    data(){
+      return{
+        //搜索框部分数据
+        keyWords:'',
+        select:'1',
+        recommend: [],
+        show:false,
+        form: {
+          keyWords:'',//关键词
+          region: '文章任意位置',//出现位置
+          date1: '',//搜索时间开始
+          date2: '',//搜索实际结束
+          profession:'',
+          author:'',//作者名字
+          institute:'',//机构名称
+          language:'1',//语种
+        },
+        rules:{
+          keyWords:[{required:true,message:'请输入检索词',trigger:'blur'}]
+        },
+      }
+    },
+    methods:{
+      //搜索框部分函数
+      search(){
+        if(this.keyWords.length==0){
+          this.$message({
+            message: '请输入搜索关键词',
+            type: 'error'
+          });
+        }
+        else{
+          localStorage.setItem("keyWords", this.keyWords);
+          if(this.$route.path=='/SearchResult'){
+            this.$emit("searchEvent",this.keyWords);
+          }
+          else {
+            this.$router.push({
+              path: '/SearchResult',
+            });
+          }
+        }
+      },//搜索
+      qualitySearch(){
+        this.show=true;
+      },//打开高级搜索弹框
+      onSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      setKeyWords(){
+        if(this.$route.path=='/SearchResult'){
+          this.keyWords=localStorage.getItem("keyWords");
+        }
+        else{
+          this.keyWords='';
         }
       },
-      methods:{
-        //搜索框部分函数
-        search(){
-          if(this.keyWords.length==0){
-            this.$message({
-              message: '请输入检索关键词',
-              type: 'error'
-            });
-          }
-          else{
-            this.$message({
-              message: '恭喜你，这是一条成功消息',
-              type: 'success'
-            });
-          }
-        },//搜索
-        qualitySearch(){
-          this.show=true;
-        },//打开高级搜索弹框
-        onSubmit(formName) {
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
-              alert('submit!');
-            } else {
-              console.log('error submit!!');
-              return false;
-            }
-          });
-        },//高级搜索
-
-        //搜索推荐
-        querySearch(queryString, cb) {
-          var recommend = this.recommend;
-          var results = queryString ? recommend.filter(this.createFilter(queryString)) : recommend;
-          // 调用 callback 返回建议列表的数据
-          clearTimeout(this.timeout);
-          this.timeout = setTimeout(() => {
-            cb(results);
-          }, 100 * Math.random());
-        },
-        createFilter(queryString) {
-          return (rec) => {
-            return (rec.value.toLowerCase().indexOf(queryString.toLowerCase()) !== -1);
-          };
-        },
-        loadAll() {
-          let _this=this;
-          axios.get(baseUrl+'/recommend')
+      //高级搜索
+      //搜索推荐
+      querySearch(queryString, cb) {
+        var recommend = this.recommend;
+        var results = queryString ? recommend.filter(this.createFilter(queryString)) : recommend;
+        // 调用 callback 返回建议列表的数据
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(results);
+        }, 100 * Math.random());
+      },
+      createFilter(queryString) {
+        return (rec) => {
+          return (rec.value.toLowerCase().indexOf(queryString.toLowerCase()) !== -1);
+        };
+      },
+      loadAll() {
+        let _this=this;
+        axios.get(baseUrl+'/recommend')
           .then(function (response) {
             console.log(response);
             _this.recommend=response.data;
           })
-          /*this.recommend=[{ "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-            { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-            { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-            { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
-            { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
-            { "value": "贡茶", "address": "上海市长宁区金钟路633号" }];*/
-          return this.recommend;
-        },
-        handleSelect(item) {
-          console.log(item);
-        },
+        /*this.recommend=[{ "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
+          { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
+          { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+          { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
+          { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
+          { "value": "贡茶", "address": "上海市长宁区金钟路633号" }];*/
+        return this.recommend;
       },
-      created() {
-
+      handleSelect(item) {
+        console.log(item);
       },
-      mounted() {
-        this.recommend=this.loadAll();
-      }
+    },
+    created() {
+    },
+    mounted() {
+      this.recommend=this.loadAll();
+      this.setKeyWords();
     }
+  }
 </script>
 
 <style>
