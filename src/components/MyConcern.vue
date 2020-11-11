@@ -32,7 +32,7 @@
                   width="40"
                   height="40"
                   style="cursor: pointer"
-                  v-bind:src="require('../../static/'+item.headImg)">
+                  v-bind:src="require('../assets/'+item.headImg)">
                 </van-image>
               </template>
               <template #default>
@@ -55,7 +55,7 @@
                   width="40"
                   height="40"
                   style="cursor: pointer"
-                  v-bind:src="require('../../static/'+item.headImg)">
+                  v-bind:src="require('../assets/'+item.headImg)">
                 </van-image>
               </template>
               <template #default>
@@ -81,13 +81,13 @@
             textLength:'450',
 
             myConcern:[
-              {headImg:'logo2.png',name:'youabcd',state:'已关注',label:'这是一个人'},
-              {headImg:'logo2.png',name:'youabcd',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
+              {headImg:'background01.jpg',name:'youabcd',state:'已关注',label:'这是一个人'},
+              {headImg:'background01.jpg',name:'youabcd',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
             ],
 
             myFans:[
-              {headImg:'logo2.png',name:'youabcd_fans',state:'已关注',label:'这是一个人'},
-              {headImg:'logo2.png',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
+              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'这是一个人'},
+              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
             ]
           }
       },
