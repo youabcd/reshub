@@ -3,7 +3,7 @@
     <TopBar></TopBar>
     <el-container>
       <el-header height=180px>
-        <div style="width: 70% auto;">
+        <div style="width: auto;">
           <figure class="snip0056">
               <figcaption>
                   <h2>江竹溪</h2>
