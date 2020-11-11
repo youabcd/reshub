@@ -2,8 +2,13 @@
   <div>
     <TopBar></TopBar>
     <div style="width: 70%;margin-top: 10px;margin-left: 15%;">
-      <div style="text-align: right">
-        <el-button type="danger" :disabled="multipleSelection.length === 0" @click="deleteSelectHistory">删除选中记录</el-button>
+      <div style="position: relative">
+        <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 10px">
+          <i class="el-icon-search"> 搜索记录</i>
+        </div>
+        <div style="float: right">
+          <el-button type="danger" :disabled="multipleSelection.length === 0" @click="deleteSelectHistory">删除选中记录</el-button>
+        </div>
       </div>
 
       <el-table
@@ -11,7 +16,7 @@
         :data="tableData"
         tooltip-effect="dark"
         stripe
-        style="width: 100%"
+        style="width: 100%;margin-top: 10px"
         @selection-change="handleSelectionChange">
         <el-table-column
           type="selection"
