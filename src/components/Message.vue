@@ -8,11 +8,11 @@
             <i class="el-icon-s-promotion"></i>消息中心
           </div>
           <el-menu :default-active="nowActive">
-            <el-menu-item index="1" @click="nowActive='1'">
+            <el-menu-item index="1" @click="setNowActive('1')">
               <span style="">●</span>
               <span slot="title">系统消息</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="nowActive='2'">
+            <el-menu-item index="2" @click="setNowActive('2')">
               <span style="">●</span>
               <span slot="title">我的消息</span>
             </el-menu-item>
@@ -73,6 +73,29 @@
                   </div>
                   <div>
                     <el-menu :default-active="whichFriend">
+                        <el-menu-item v-if="newChatWindows.friendName.length>0" index="-1" @click="openChats(newChatWindows)" style="height: 60px;">
+                          <van-row></van-row>
+                          <van-row>
+                            <van-col style="margin-top: 0px;">
+                              <van-image round fit="cover" width="35px" height="35px" :src="newChatWindows.friendHead">
+                                <template v-slot:loading>
+                                  <van-loading type="spinner" size="20" />
+                                </template>
+                              </van-image>
+                            </van-col>
+                            <van-col style="margin-left: 6px;text-align: left;">
+                              <div v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
+                                {{newChatWindows.friendName}}
+                              </div>
+                            </van-col>
+                            <van-col>
+                              <div>
+                                <el-badge v-if="newChatWindows.newMessage>0" :value=newChatWindows.newMessage />
+                              </div>
+                            </van-col>
+                          </van-row>
+                          <van-row></van-row>
+                        </el-menu-item>
                         <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index=index @click="openChats(item)" style="height: 60px;">
                           <van-row></van-row>
                           <van-row>
@@ -176,6 +199,7 @@
             userImage:require('../../static/logo2.png'),
             chatImage:require('../../static/logo2.png'),
             nowActive:'1',
+            newChatWindows:{friendName:'',newMessage:'',friendHead:''},
             whichFriend:'',
             systemMessage:[
               {title:'message1',texts:'这是消息消息太长怎么办ddfsfa的撒发生第三方啊算法撒旦疯狂决定是否接受会计法圣诞节快乐房价快速分开计算框架反抗精神就是克里夫是会计1',sendTime:'2020/10/7 19:53'},
@@ -249,6 +273,11 @@
           this.websock.send(JSON.stringify(data));
         },
 
+        setNowActive(id){
+          this.nowActive=id;
+          localStorage.setItem("nowActive",id);
+        },
+
         // websocket 相关
         initWebSocket() {//初始化websocket
           const wsuri = "ws://127.0.0.1:8000/websocketTest/12";//用自己的id构成websock链接 改
@@ -272,6 +301,13 @@
         websocketerror(){ //失败
           console.log("WebSocket连接失败");
         },
+      },
+      created(){
+        this.nowActive=localStorage.getItem("nowActive");
+        this.whichFriend=localStorage.getItem("whichFriend")
+        this.newChatWindows.friendHead=require('../assets/'+this.$route.params.newFriendHead);
+        this.newChatWindows.friendName=this.$route.params.newFriendName;
+        this.newChatWindows.newMessage='0';
       },
       mounted() {
         if (this.websock!==null) {

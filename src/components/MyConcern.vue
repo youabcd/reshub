@@ -37,6 +37,17 @@
                 </van-image>
               </template>
               <template #default>
+                <el-tooltip class="item" effect="dark" content="更多操作" placement="top">
+                <el-popover
+                  placement="bottom"
+                  width="100"
+                  trigger="click">
+                  <span slot="reference" style="font-size: 25px;"><i class="el-icon-more"></i></span>
+                  <div style="text-align: center;"></div>
+                  <van-cell clickable @click="cancelConcern(item)"><i class="el-icon-delete"></i> 取消关注</van-cell>
+                  <van-cell clickable @click="sendMessage(item)"><i class="el-icon-message"></i> 发送消息</van-cell>
+                </el-popover>
+                </el-tooltip>
               </template>
               <template #label>
                 <div v-bind:style="{width:textLength+'px'}"><div class="van-ellipsis">{{item.label}}</div></div>
@@ -60,6 +71,16 @@
                 </van-image>
               </template>
               <template #default>
+                <el-tooltip class="item" effect="dark" content="更多操作" placement="top">
+                  <el-popover
+                    placement="bottom"
+                    width="100"
+                    trigger="click">
+                    <span slot="reference" style="font-size: 25px;"><i class="el-icon-more"></i></span>
+                    <div style="text-align: center;"></div>
+                    <van-cell clickable @click="sendMessage(item)"><i class="el-icon-message"></i> 发送消息</van-cell>
+                  </el-popover>
+                </el-tooltip>
               </template>
               <template #label>
                 <div v-bind:style="{width:textLength+'px'}"><div class="van-ellipsis">{{item.label}}</div></div>
@@ -82,13 +103,13 @@
             textLength:'450',
 
             myConcern:[
-              {headImg:'background01.jpg',name:'youabcd',state:'已关注',label:'这是一个人'},
-              {headImg:'background01.jpg',name:'youabcd',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
+              {name:'youabcd',headImg:'background01.jpg',state:'已关注',label:'这是一个人',id:'123'},
+              {name:'youabcd',headImg:'background01.jpg',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ],
 
             myFans:[
-              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'这是一个人'},
-              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'},
+              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'这是一个人',id:'123'},
+              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ]
           }
       },
@@ -98,6 +119,18 @@
           this.$router.push({
             path:'/PersonalPortal',
           });
+        },
+        cancelConcern(item){//取关
+          this.myConcern.splice(item.index,1);
+        },
+        sendMessage(item){//发消息
+          this.$router.push({
+            path:'/Message',
+            name:'Message',
+            params:{newFriendId:item.id,newFriendName:item.name,newFriendHead:item.headImg},
+          });
+          localStorage.setItem("nowActive",'2');
+          localStorage.setItem("whichFriend",'-1');
         },
       },
     }
