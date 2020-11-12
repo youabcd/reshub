@@ -42,43 +42,175 @@
               <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">{{item.title}}</span>
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
                     <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
                   </el-tooltip>
                   <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
                   <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
                   <!--                      </el-tooltip>-->
                   <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
                   </el-tooltip>
                 </div>
                 <!--                  </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px">
-                  <p style="height: 20px" >文字文字文字文字</p>
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                  <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
-                  <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>Me</span></div>
+                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
+                    <span >{{author_item}}</span>
+                  </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
-                    <span>期刊</span>
+                    <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
-                    <span> 6667</span>
+                    <span> {{item.collectionSum}}</span>
                   </i>
                   <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
-                    <span> 6666</span>
+                    <span> {{item.viewSum}}</span>
                   </i>
                 </div>
-
               </el-card>
 
-              <!--              </el-card>-->
+              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <!--                    {{'列表内容 ' + o }}-->
+                <!--                  <div style="height: 40px;margin-top: 10px">-->
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                </div>
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+                  <!--                      </el-tooltip>-->
+                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                  </el-tooltip>
+                </div>
+                <!--                  </div>-->
+
+
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                  <p style="height: 20px" >{{item.msg}}</p>
+                </div>
+
+                <div>
+                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
+                    <span >{{author_item}}</span>
+                  </div>
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                    <span>{{item.type}}</span>
+                  </el-tag>
+                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                    <span> {{item.collectionSum}}</span>
+                  </i>
+                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                    <span> {{item.viewSum}}</span>
+                  </i>
+                </div>
+              </el-card>
+
+              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <!--                    {{'列表内容 ' + o }}-->
+                <!--                  <div style="height: 40px;margin-top: 10px">-->
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                </div>
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+                  <!--                      </el-tooltip>-->
+                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                  </el-tooltip>
+                </div>
+                <!--                  </div>-->
+
+
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                  <p style="height: 20px" >{{item.msg}}</p>
+                </div>
+
+                <div>
+                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
+                    <span >{{author_item}}</span>
+                  </div>
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                    <span>{{item.type}}</span>
+                  </el-tag>
+                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                    <span> {{item.collectionSum}}</span>
+                  </i>
+                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                    <span> {{item.viewSum}}</span>
+                  </i>
+                </div>
+              </el-card>
+
+              <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+                <!--                    {{'列表内容 ' + o }}-->
+                <!--                  <div style="height: 40px;margin-top: 10px">-->
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                </div>
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                  </el-tooltip>
+                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
+                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
+                  <!--                      </el-tooltip>-->
+                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                  </el-tooltip>
+                </div>
+                <!--                  </div>-->
+
+
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                  <p style="height: 20px" >{{item.msg}}</p>
+                </div>
+
+                <div>
+                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
+                    <span >{{author_item}}</span>
+                  </div>
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                    <span>{{item.type}}</span>
+                  </el-tag>
+                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
+                    <span> {{item.collectionSum}}</span>
+                  </i>
+                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
+                    <span> {{item.viewSum}}</span>
+                  </i>
+                </div>
+              </el-card>
+                            <!--              </el-card>-->
             </div>
             <div>
               <el-pagination
@@ -94,7 +226,6 @@
             <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
             <el-card class="box-card" shadow="hover">
               <div v-for="o in 5" :key="o" class="text item" style="height: 120px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
-                <!--                    {{'列表内容 ' + o }}-->
                 <div style="text-align: left;margin-top: -10px">
                   <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</p>
                 </div>
@@ -131,6 +262,7 @@
   import TopBar from "./TopBar";
   import BottomBar from "./BottomBar";
   import SearchBox from "./SearchBox";
+  import Clipboard from 'clipboard';
   export default {
     name: "SearchResult",
     components:{
@@ -148,8 +280,9 @@
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author:'Author1',
+          author: ['Li Ming','Zhang San'],
           type:"期刊",
+          collectStatus: true,
           collectionSum:6,
           viewSum:7,
           link:'https://www.google.com.hk/',
@@ -159,8 +292,9 @@
             paperId:'2',
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:'Author2',
+            author:['Li Ming','Zhang San'],
             type:"会议",
+            collectStatus: false,
             collectionSum:66,
             viewSum:77,
             link:'https://www.youtube.com/',
@@ -170,8 +304,9 @@
             paperId:'3',
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:'Author3',
+            author:['Li Ming','Zhang San'],
             type:"期刊",
+            collectStatus: false,
             collectionSum:666,
             viewSum:777,
             link:'https://www.bilibili.com/',
@@ -181,8 +316,9 @@
             paperId:'4',
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:'Author4',
+            author:['Li Ming','Zhang San'],
             type:"报告",
+            collectStatus: false,
             collectionSum:6666,
             viewSum:7777,
             link:'https://www.google.com/',
@@ -192,8 +328,9 @@
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author:'Author1',
+          author:['Li Ming','Zhang San'],
           type:"期刊",
+          collectStatus: true,
           collectionSum:666,
           viewSum:777,
           link:'https://www.google.com.hk/',
@@ -203,8 +340,9 @@
             paperId:'3',
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:'Author3',
+            author:['Li Ming','Zhang San'],
             type:"期刊",
+            collectStatus: false,
             collectionSum:666,
             viewSum:777,
             link:'https://www.bilibili.com/',
@@ -215,8 +353,9 @@
             paperId:'2',
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:'Author2',
+            author:['Li Ming','Zhang San'],
             type:"会议",
+            collectStatus: false,
             collectionSum:666,
             viewSum:777,
             link:'https://www.youtube.com/',
@@ -227,8 +366,9 @@
             paperId:'4',
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:'Author4',
+            author:['Li Ming','Zhang San'],
             type:"报告",
+            collectStatus: false,
             collectionSum:666,
             viewSum:777,
             link:'https://www.google.com/',
@@ -280,9 +420,40 @@
         }
       },
 
+      handleSelect (key) {
+        this.menuIndex = key;
+      },
+
       gotoPaper(url) {
         //发送点击数据
         window.open(url,url)
+      },
+
+      addCollection() {
+        //发送数据
+
+      },
+
+
+
+      Copy() {
+        let clipboard = new Clipboard('.el-icon-share');
+        clipboard.on('success', e => {
+          this.$message({
+            showClose: true,
+            message: '复制链接成功',
+            type: 'success',
+          });
+          clipboard.destroy()
+        })
+        clipboard.on('error', e => {
+          this.$message({
+            showClose: true,
+            message: '复制链接失败，请重试',
+            type: 'error',
+          });
+          clipboard.destroy()
+        })
       },
     }
   }
