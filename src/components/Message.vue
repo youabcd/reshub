@@ -73,30 +73,8 @@
                   </div>
                   <div>
                     <el-menu :default-active="whichFriend">
-                        <el-menu-item v-if="newChatWindows.friendName.length>0" index="-1" @click="openChats(newChatWindows)" style="height: 60px;">
-                          <van-row></van-row>
-                          <van-row>
-                            <van-col style="margin-top: 0px;">
-                              <van-image round fit="cover" width="35px" height="35px" :src="newChatWindows.friendHead">
-                                <template v-slot:loading>
-                                  <van-loading type="spinner" size="20" />
-                                </template>
-                              </van-image>
-                            </van-col>
-                            <van-col style="margin-left: 6px;text-align: left;">
-                              <div v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                                {{newChatWindows.friendName}}
-                              </div>
-                            </van-col>
-                            <van-col>
-                              <div>
-                                <el-badge v-if="newChatWindows.newMessage>0" :value=newChatWindows.newMessage />
-                              </div>
-                            </van-col>
-                          </van-row>
-                          <van-row></van-row>
-                        </el-menu-item>
-                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index="item.index" @click="openChats(item)" style="height: 60px;">
+
+                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index="index" @click="openChats(item, index)" style="height: 60px;">
                           <van-row></van-row>
                           <van-row>
                             <van-col style="margin-top: 0px;">
@@ -258,10 +236,14 @@
         TopBar
       },
       methods:{
-        openChats(item){
+        openChats(item, index){
           this.initWebSocket();
-          this.whichFriend=item.index;
-          localStorage.getItem("whichFriend",this.whichFriend);
+          this.whichFriend=index;
+
+          localStorage.setItem("whichFriend",this.whichFriend.toString());
+
+          console.log(localStorage.getItem("whichFriend"));
+
           this.recentMessage[item.index].newMessage='0';
         },
         sendMessage(){//发送对方ip
@@ -305,11 +287,11 @@
       },
       created(){
         this.nowActive=localStorage.getItem("nowActive");
-        this.whichFriend=localStorage.getItem("whichFriend");
+        this.whichFriend=parseInt(localStorage.getItem("whichFriend"));
         this.newChatWindows.friendHead=require('../assets/'+this.$route.params.newFriendHead);
         this.newChatWindows.friendName=this.$route.params.newFriendName;
         this.newChatWindows.newMessage='0';
-        this.recentMessage.splice(0,this.newChatWindows);
+        this.recentMessage.splice(0,0,this.newChatWindows);
       },
       mounted() {
         if (this.websock!==null) {
@@ -322,6 +304,7 @@
         if (this.websock) {
           this.websock.close(); // 关闭websocket
         }
+        localStorage.setItem("whichFriend",this.whichFriend.toString());
       },
     }
 </script>
