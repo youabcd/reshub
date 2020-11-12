@@ -9,7 +9,7 @@
       <el-aside width="15%">
         <div style=";background-color: white;width: 12%;display: inline;">
           <!--            border: solid 2px #666666-->
-          <h5>专业分类</h5>
+          <h5>专业分类（没调好）</h5>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
             <el-menu-item index="1">计算机科学</el-menu-item>
             <el-submenu index="2">
@@ -28,22 +28,22 @@
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                <el-menu-item index="1" style="width: 120px">●全部</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●期刊</el-menu-item>
-                <el-menu-item index="3" style="width: 120px">●会议</el-menu-item>
-                <el-menu-item index="4" style="width: 120px">●科技报告</el-menu-item>
-                <el-menu-item index="5" style="width: 120px">●专利</el-menu-item>
-                <el-menu-item index="6" style="width: 120px">●成果</el-menu-item>
-                <el-menu-item index="7" style="width: 120px">●代码</el-menu-item>
+                <el-menu-item index="0" style="width: 120px">●全部</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●期刊</el-menu-item>
+                <el-menu-item index="2" style="width: 120px">●会议</el-menu-item>
+                <el-menu-item index="3" style="width: 120px">●报告</el-menu-item>
+<!--                <el-menu-item index="5" style="width: 120px">●专利</el-menu-item>-->
+<!--                <el-menu-item index="6" style="width: 120px">●成果</el-menu-item>-->
+<!--                <el-menu-item index="7" style="width: 120px">●代码</el-menu-item>-->
               </el-menu>
             </div>
             <div>
               <!--              <el-card class="box-card" shadow="never">-->
-              <el-card shadow="hover" v-for="o in 10" :key="o" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</span>
+                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <el-tooltip class="item" effect="dark" content="收藏" placement="bottom">
@@ -90,7 +90,7 @@
             </div>
           </div>
 
-          <div style="position: absolute;left: 78%;top: 0;width: 22%;display: inline;">
+          <div style="position: absolute;left: 77%;top: 0;width: 23%;display: inline;">
             <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
             <el-card class="box-card" shadow="hover">
               <div v-for="o in 5" :key="o" class="text item" style="height: 120px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
@@ -120,17 +120,10 @@
             <div class="back-top-circle" @click="backTop" v-if="btnFlag">
               <i class="el-icon-caret-top" ></i>
             </div>
-            <!--              <img src="../assets/BacktoTop.jpg" class="icon" v-if="btnFlag" @click="backTop">-->
           </div>
         </div>
       </el-main>
     </el-container>
-    <!--      <el-footer>-->
-    <!--        <div><BottomBar></BottomBar></div>-->
-
-    <!--      </el-footer>-->
-    <!--    </el-container>-->
-
   </div>
 </template>
 
@@ -149,6 +142,98 @@
       return {
         btnFlag: false,
         keyWords:'',
+        activeIndex: "0",
+        menuIndex: "0",
+        tableData0: [{
+          paperId:'1',
+          title:'Google1',
+          msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+          author:'Author1',
+          type:"期刊",
+          collectionSum:6,
+          viewSum:7,
+          link:'https://www.google.com.hk/',
+          collectTime:'2016-05-04'
+        },
+          {
+            paperId:'2',
+            title:'Google2',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+            author:'Author2',
+            type:"会议",
+            collectionSum:66,
+            viewSum:77,
+            link:'https://www.youtube.com/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'3',
+            title:'BILIBILI3',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+            author:'Author3',
+            type:"期刊",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.bilibili.com/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'4',
+            title:'Google4',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+            author:'Author4',
+            type:"报告",
+            collectionSum:6666,
+            viewSum:7777,
+            link:'https://www.google.com/',
+            collectTime:'2016-05-04'
+          }],
+        tableData1: [{
+          paperId:'1',
+          title:'Google1',
+          msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+          author:'Author1',
+          type:"期刊",
+          collectionSum:666,
+          viewSum:777,
+          link:'https://www.google.com.hk/',
+          collectTime:'2016-05-04'
+        },
+          {
+            paperId:'3',
+            title:'BILIBILI3',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+            author:'Author3',
+            type:"期刊",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.bilibili.com/',
+            collectTime:'2016-05-04'
+          }],
+        tableData2: [
+          {
+            paperId:'2',
+            title:'Google2',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+            author:'Author2',
+            type:"会议",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.youtube.com/',
+            collectTime:'2016-05-04'
+          }],
+        tableData3: [
+          {
+            paperId:'4',
+            title:'Google4',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+            author:'Author4',
+            type:"报告",
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.google.com/',
+            collectTime:'2016-05-04'
+          }],
       }
     },
     created() {
@@ -193,7 +278,12 @@
             type: 'success'
           });
         }
-      }
+      },
+
+      gotoPaper(url) {
+        //发送点击数据
+        window.open(url,url)
+      },
     }
   }
 </script>
