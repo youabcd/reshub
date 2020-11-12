@@ -1,0 +1,4 @@
+myId:已登入的用户id
+nowActive:message页面中当前激活的分栏（系统消息或私信）
+keyWords:搜索关键词
+whichFriend:当前激活的聊天框对象

@@ -128,7 +128,7 @@
         }
       },
       mounted() {
-        localStorage.setItem("myId",'');
+        localStorage.setItem("myId",this.userId);
       },
     }
 </script>
