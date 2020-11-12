@@ -8,8 +8,12 @@
               <figcaption>
                   <h2>江竹溪</h2>
                   <p>问来问去的问题都太简单，有时很幼稚！你们理解不？明白吗？作为一个长者，我必须告诉你们这一点。我不是记者，但是我必须告诉你们生活的真相。</p>
-                  <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
-              </figcaption><img src="../assets/sq-sample8.jpg" alt="sample8" />
+                  <div class="icons">
+                    <a href="#"><i class="ion-ios-email"></i></a>
+                    <a href="#"><i class="ion-ios-telephone"></i></a>
+                  </div>
+              </figcaption>
+              <img src="../assets/jiang.jpg" alt="sample8" />
           </figure>
         </div>
       </el-header>
@@ -115,8 +119,8 @@
     position: relative;
     overflow: hidden;
     margin: 10px auto;
-    width: 72%;
-    height: 180px;
+    width: 71%;
+    height: 165px;
     background: #ffffff;
     color: #000000;
   }
