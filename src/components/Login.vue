@@ -23,6 +23,8 @@
 
 <script>
 import Loading from './Loading.vue'
+import axios from 'axios'
+import baseUrl from './baseUrl'
 export default {
   name: 'Login',
   data(){
@@ -31,6 +33,23 @@ export default {
   		account: '',
   		password: ''
   	}
+  },
+  methods:{
+    login(){
+      let _this=this;
+      axios.get(baseUrl+'/login')
+        .then(function (response) {
+          console.log(response);
+          var success;
+          success=response.data.success;
+          if(success=='true'){
+            localStorage.setItem("myId",_this.account);
+            _this.$router.push({
+              path:'/',
+            });
+          }
+        })
+    },
   },
   components:{
     Loading
@@ -84,38 +103,38 @@ position: relative;}
 border-radius: 5px;}
 .log-input.warn{border: 1px solid #f88787}
 
- @-webkit-keyframes cloud1 {  
-    0%{left: 200px}  
-    100%{left:-130px;} 
+ @-webkit-keyframes cloud1 {
+    0%{left: 200px}
+    100%{left:-130px;}
 }
 @keyframes cloud1{
-    0%{left: 200px}  
-    100%{left:-130px;} 
+    0%{left: 200px}
+    100%{left:-130px;}
 }
 
- @-webkit-keyframes cloud2 {  
-    0%{left:500px;}  
-    100%{left:-90px;} 
+ @-webkit-keyframes cloud2 {
+    0%{left:500px;}
+    100%{left:-90px;}
 }
 @keyframes cloud2{
-    0%{left:500px;}  
-    100%{left:-90px;} 
+    0%{left:500px;}
+    100%{left:-90px;}
 }
 
-@-webkit-keyframes cloud3 {  
-    0%{left:620px;}  
-    100%{left:-70px;} 
+@-webkit-keyframes cloud3 {
+    0%{left:620px;}
+    100%{left:-70px;}
 }
 @keyframes cloud3{
-    0%{left:620px;}  
-    100%{left:-70px;} 
-}@-webkit-keyframes cloud4 {  
-    0%{left:100px;}  
-    100%{left:-70px;} 
+    0%{left:620px;}
+    100%{left:-70px;}
+}@-webkit-keyframes cloud4 {
+    0%{left:100px;}
+    100%{left:-70px;}
 }
 @keyframes cloud4{
-    0%{left:100px;}  
-    100%{left:-70px;} 
+    0%{left:100px;}
+    100%{left:-70px;}
 }
 
 </style>

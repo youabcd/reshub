@@ -16,6 +16,7 @@
         <van-col span="2" style="margin-top:15px;">
           <el-link :underline="false"><span style="font-size: 20px" clickable @click="goHotspotAnalysis"><i class="el-icon-s-flag"/>热点分析</span></el-link>
         </van-col>
+
         <div v-if="userId.length==0">
           <van-col span="14">
           </van-col>
@@ -27,6 +28,7 @@
           </van-col>
           <van-col span="1"></van-col>
         </div>
+
         <div v-if="userId.length>0">
           <van-col span="6">
           </van-col>
@@ -62,7 +64,7 @@
       name: "TopBar",
       data(){
           return{
-            userId:'123',
+            userId:localStorage.getItem("myId"),
             userImage:require('../../static/logo2.png'),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
@@ -124,6 +126,9 @@
           this.clickNum++;
           this.clickNum=this.clickNum%4;
         }
+      },
+      mounted() {
+        localStorage.setItem("myId",'');
       },
     }
 </script>
