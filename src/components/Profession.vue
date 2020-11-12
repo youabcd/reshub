@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow-y:scroll;">
+  <div>
     <TopBar></TopBar>
   </div>
 </template>
@@ -19,11 +19,11 @@
   .text {
       font-size: 14px;
     }
-  
+
     .item {
       margin-bottom: 18px;
     }
-  
+
     .clearfix:before,
     .clearfix:after {
       display: table;
@@ -32,7 +32,7 @@
     .clearfix:after {
       clear: both
     }
-  
+
     .box-card {
       margin-left: 5px;
       margin-right: 5px;
