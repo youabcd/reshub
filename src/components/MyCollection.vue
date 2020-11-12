@@ -71,7 +71,6 @@
                   <span> {{item.viewSum}}</span>
                 </i>
               </div>
-
             </el-card>
 
           <el-card  shadow="hover" v-if="menuIndex === '1' " v-for="(item,index) in tableData1" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
@@ -405,15 +404,6 @@
 
         handleSelect (key) {
           this.menuIndex = key;
-          // if (key === "0") {
-          //   this.tableData = this.tableData0.slice();
-          // } else if (key === "1") {
-          //   this.tableData = this.tableData1.slice();
-          // } else if (key === "2") {
-          //   this.tableData = this.tableData2.slice();
-          // } else {
-          //   this.tableData = this.tableData3.slice();
-          // }
         },
 
         deleteCollection (index) {
