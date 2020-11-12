@@ -2,6 +2,11 @@
   <div style="">
     <TopBar></TopBar>
       <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 15%;margin-top: 2%;width: 70%;">
+        <div style="position: relative;height: 50px;margin-top: 20px">
+          <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 10px">
+            <i class="el-icon-star-off"> 我的收藏</i>
+          </div>
+        </div>
         <div>
           <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                    active-text-color="#0079fe" >
