@@ -6,22 +6,41 @@
 
     <el-container style="height: 100%" >
       <!--        style="background-color: #f0f2f5"-->
+
       <el-aside width="15%">
-        <div style=";background-color: white;width: 12%;display: inline;">
+        <div style="width: 12%;display: inline;">
           <!--            border: solid 2px #666666-->
-          <h5>专业分类（没调好）</h5>
-          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
-            <el-menu-item index="1">计算机科学</el-menu-item>
-            <el-submenu index="2">
-              <template slot="title">人工智能</template>
-              <el-menu-item index="2-1">选项1</el-menu-item>
-              <el-menu-item index="2-2">选项2</el-menu-item>
-              <el-menu-item index="2-3">选项3</el-menu-item>
-            </el-submenu>
-            <el-menu-item index="3">软件工程</el-menu-item>
+          <h5>学科</h5>
+          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
+            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
+            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
+            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
+<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
+<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
+<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
           </el-menu>
         </div>
+        <div style="width: 12%;display: inline;">
+          <!--            border: solid 2px #666666-->
+          <h5>作者</h5>
+          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
+            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
+            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
+            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
+            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
+            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
+            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+          </el-menu>
+        </div>
+        <div style="margin-top: 30px">
+          <el-button type="primary" plain>筛选</el-button>
+          <el-button type="danger" plain>重置</el-button>
+        </div>
+
       </el-aside>
+
       <el-main style="width: 85%">
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 75%;position: relative">
@@ -46,8 +65,8 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
                   </el-tooltip>
                   <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                     <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -67,10 +86,14 @@
                 </div>
 
                 <div>
-                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
-                    <span >{{author_item}}</span>
+                  <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -89,8 +112,8 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
                   </el-tooltip>
                   <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                     <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -104,14 +127,17 @@
                 </div>
                 <!--                  </div>-->
 
-
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
-                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
-                    <span >{{author_item}}</span>
+                  <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
                     <span>{{item.type}}</span>
@@ -132,8 +158,8 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
                   </el-tooltip>
                   <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                     <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -153,8 +179,12 @@
                 </div>
 
                 <div>
-                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
-                    <span >{{author_item}}</span>
+                  <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
                     <span>{{item.type}}</span>
@@ -175,8 +205,8 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
                   </el-tooltip>
                   <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                     <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -196,8 +226,12 @@
                 </div>
 
                 <div>
-                  <div v-for="(author_item,author_index) in item.author" :key="author_index" style="position: absolute;left: 20px;top: 130px;width: 60%;text-align: left;">
-                    <span >{{author_item}}</span>
+                  <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
                     <span>{{item.type}}</span>
@@ -224,18 +258,24 @@
 
           <div style="position: absolute;left: 77%;top: 0;width: 23%;display: inline;">
             <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
-            <el-card class="box-card" shadow="hover">
-              <div v-for="o in 5" :key="o" class="text item" style="height: 120px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
-                <div style="text-align: left;margin-top: -10px">
-                  <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">标题</p>
+            <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
+<!--              <div >-->
+                <div style="text-align: left;margin-top: -20px;cursor: pointer">
+                  <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
                 </div>
 
                 <div style="text-align: left">
-                  <p style="height: 20px">字文字字文</p>
+                  <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.msg}}</p>
                 </div>
 
                 <div>
-                  <div style="width: 30%;text-align: left;margin-top: 8px"><span>Me</span></div>
+                  <div style="margin-top: 30px;text-align: left">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
+                  </div>
                   <!--                    <el-tag type="info" style="position: absolute;right: 10%;width: 50px;text-align: center">-->
                   <!--                      <span>期刊</span>-->
                   <!--                    </el-tag>-->
@@ -243,7 +283,7 @@
                   <!--                      <span>66666</span>-->
                   <!--                    </i>-->
                 </div>
-              </div>
+<!--              </div>-->
             </el-card>
           </div>
 
@@ -263,6 +303,7 @@
   import BottomBar from "./BottomBar";
   import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
+
   export default {
     name: "SearchResult",
     components:{
@@ -374,6 +415,55 @@
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
+        hotData: [
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'2',
+            title:'Google2',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+            author:['Li Ming','Zhang San'],
+            type:"会议",
+            collectStatus: false,
+            collectionSum:66,
+            viewSum:77,
+            link:'https://www.youtube.com/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'3',
+            title:'BILIBILI3',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+            author:['Li Ming','Zhang San'],
+            type:"期刊",
+            collectStatus: false,
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.bilibili.com/',
+            collectTime:'2016-05-04'
+          },
+          {
+            paperId:'4',
+            title:'Google4',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+            author:['Li Ming','Zhang San'],
+            type:"报告",
+            collectStatus: false,
+            collectionSum:6666,
+            viewSum:7777,
+            link:'https://www.google.com/',
+            collectTime:'2016-05-04'
+          }],
       }
     },
     created() {
@@ -401,13 +491,8 @@
       // 为了计算距离顶部的高度，当高度大于60显示回顶部图标，小于60则隐藏
       scrollToTop () {
         const that = this
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        that.scrollTop = scrollTop
-        if (that.scrollTop > 50) {
-          that.btnFlag = true
-        } else {
-          that.btnFlag = false
-        }
+        that.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        that.btnFlag = that.scrollTop > 50;
       },
       //搜索
       search(keyWords){
@@ -429,12 +514,68 @@
         window.open(url,url)
       },
 
-      addCollection() {
+      addCollection(index) {
         //发送数据
-
+        console.log(1);
+        if (this.menuIndex === '0') {
+          let temp = this.tableData0[index];
+          if (temp.type === "期刊") {
+            for (let i=0; i<this.tableData1.length; i++) {
+              if (temp.paperId === this.tableData1[i].paperId) {
+                this.tableData1[i].collectStatus=true;
+                break;
+              }
+            }
+          } else if (temp.type === "会议") {
+            for (let i=0; i<this.tableData2.length; i++) {
+              if (temp.paperId === this.tableData2[i].paperId) {
+                this.tableData2[i].collectStatus=true;
+                break;
+              }
+            }
+          } else if (temp.type === "报告") {
+            for (let i=0; i<this.tableData3.length; i++) {
+              if (temp.paperId === this.tableData3[i].paperId) {
+                this.tableData3[i].collectStatus=true;
+                break;
+              }
+            }
+          }
+          this.tableData0[index].collectStatus=true;
+        } else if (this.menuIndex === '1') {
+          let temp = this.tableData1[index];
+          for (let i=0; i<this.tableData0.length; i++) {
+            if (temp.paperId === this.tableData0[i].paperId) {
+              this.tableData0[i].collectStatus=true;
+              break;
+            }
+          }
+          this.tableData1[index].collectStatus=true;
+        } else if (this.menuIndex === '2') {
+          let temp = this.tableData2[index];
+          for (let i=0; i<this.tableData0.length; i++) {
+            if (temp.paperId === this.tableData0[i].paperId) {
+              this.tableData0[i].collectStatus=true;
+              break;
+            }
+          }
+          this.tableData2[index].collectStatus=true;
+        } else if (this.menuIndex === '3') {
+          let temp = this.tableData3[index];
+          for (let i=0; i<this.tableData0.length; i++) {
+            if (temp.paperId === this.tableData0[i].paperId) {
+              this.tableData0[i].collectStatus=true;
+              break;
+            }
+          }
+          this.tableData3[index].collectStatus=true;
+        }
+        this.$message({
+          showClose: true,
+          message: '收藏成功',
+          type: 'success'
+        });
       },
-
-
 
       Copy() {
         let clipboard = new Clipboard('.el-icon-share');
@@ -454,6 +595,15 @@
           });
           clipboard.destroy()
         })
+      },
+
+      KeyRegExp(val, keyword) {
+        val = val + '';
+        if (val.indexOf(keyword) !== -1 && keyword !== '') {
+          return val.replace(keyword, '<span style="color: #f00; ">' + keyword + '</span>')
+        } else {
+          return val
+        }
       },
     }
   }
@@ -504,5 +654,11 @@
     box-shadow: 0 0 6px rgba(0,0,0,.12);
     cursor: pointer;
     z-index: 5;
+  }
+
+  .checkBox{
+    text-align: left;
+    margin-left: 30px;
+    height: 30px;
   }
 </style>
