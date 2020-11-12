@@ -96,7 +96,7 @@
                           </van-row>
                           <van-row></van-row>
                         </el-menu-item>
-                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index=index @click="openChats(item)" style="height: 60px;">
+                        <el-menu-item v-for="(item,index) in recentMessage" :key="index" :index="item.index" @click="openChats(item)" style="height: 60px;">
                           <van-row></van-row>
                           <van-row>
                             <van-col style="margin-top: 0px;">
@@ -261,6 +261,7 @@
         openChats(item){
           this.initWebSocket();
           this.whichFriend=item.index;
+          localStorage.getItem("whichFriend",this.whichFriend);
           this.recentMessage[item.index].newMessage='0';
         },
         sendMessage(){//发送对方ip
@@ -304,10 +305,11 @@
       },
       created(){
         this.nowActive=localStorage.getItem("nowActive");
-        this.whichFriend=localStorage.getItem("whichFriend")
+        this.whichFriend=localStorage.getItem("whichFriend");
         this.newChatWindows.friendHead=require('../assets/'+this.$route.params.newFriendHead);
         this.newChatWindows.friendName=this.$route.params.newFriendName;
         this.newChatWindows.newMessage='0';
+        this.recentMessage.splice(0,this.newChatWindows);
       },
       mounted() {
         if (this.websock!==null) {
