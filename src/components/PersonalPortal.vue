@@ -2,8 +2,66 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container style="width: 60%;margin:0 auto">
-      <el-header height=180px>
-        
+      <el-header height=310px>
+        	<div id="author_intro_wr">
+                <div class="person_image">
+        			<a href="#" class="person_portraitwr">
+        				<img src="../assets/jiang.jpg" alt="学者头像" class="" width="112" height="112">
+        			</a>
+        			<a href="#" target="_blank" class="person_authen p_auth_btn">
+        				我要认证
+        			</a>
+        			<div class="focus auFocus" data-id="777ab9eb59a49f2eb5c0fef873af1d94" data-name="陈云霁">
+        				<p class="firstFollow">
+        					<span data-focus="0" class="noFocus">关注</span></p>
+        				<p class="cancelFocus">取消关注</p>
+        			</div>
+        		</div>
+        		<div class="person_baseinfo">
+        			<div class="p_name">
+        				陈云霁
+        			</div>
+        			<div class="p_volume">
+        				1400人看过
+        			</div>
+        			<div class="p_scholarID">
+        				<div class="p_scholarID_all">
+        					ScholarID:<span class="p_scholarID_id">CN-BQ74WL1J</span>
+        				</div>
+        			</div>
+        			<div class="p_affiliate">
+        				中国科学院研究生院
+        			</div>
+              </br>
+        			<ul class="p_ach_wr">
+        				<li class="p_ach_item">
+        					<p class="p_ach_type c_gray">被引频次</p>
+        					<p class="p_ach_num">212</p>
+        				</li>
+        				<li class="p_ach_item">
+        					<p class="p_ach_type c_gray">成果数</p>
+        					<p class="p_ach_num">22</p>
+        				</li>
+        				<li class="p_ach_item">
+        					<p class="p_ach_type c_gray">H指数</p>
+        					<p class="p_ach_num">8</p>
+        				</li>
+        				<li class="p_ach_item">
+        					<p class="p_ach_type c_gray">G指数</p>
+        					<p class="p_ach_num">14</p>
+        				</li>
+        			</ul>
+        			</br>
+        			<div class="person_editinfo">
+        				<div class="">
+        					<span class="c_gray prefix_label">领域:&nbsp;</span>
+        					<span class="person_domain person_text">
+        						<a href="#" target="_blank">政治</a>
+        					</span>
+        				</div>
+        			</div>
+        	  </div>
+        	</div>
       </el-header>
       <el-main>
         <el-col :span="17">
@@ -107,10 +165,148 @@
 </script>
 
 <style scoped>
+  li{list-style:none}
+  #author_intro_wr{
+  	border-bottom:1px solid #e3e3e3;
+  	padding:32px 0 53px;
+  	overflow:hidden;
+  	zoom:1
+  }
+  #author_intro_wr .person_baseinfo{
+  	margin-right:65px
+  }h3,
+  .c_gray{
+  	color:#999
+  }
+  #author_intro_wr .person_image{
+  	width:125px;
+  	float:left;
+  	text-align:center;
+  	margin-right:35px;
+  	margin-left:5px
+  }
+  #author_intro_wr .person_portraitwr{
+  	position:relative;
+  	display:inline-block;
+  	width:112px;
+  	height:112px;
+  	border:6px solid #fff;
+  	overflow:hidden;
+  	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-webkit-border-radius:50%;
+  	-moz-border-radius:50%;-ms-border-radius:50%;
+  	border-radius:50%
+  }
+  #author_intro_wr .person_portraitwr .edit_portraitbtn{
+  	_display:none;
+  	position:absolute;
+  	bottom:0;
+  	left:0;
+  	color:#fff;
+  	cursor:pointer;
+  	text-align:center;
+  	font-size:12px;
+  	height:30px;
+  	line-height:26px;
+  	width:100%;
+  	background:#000;
+  	background:rgba(0,0,0,.6);
+  	filter:alpha(opacity=80);
+  	transition:all .2s
+  }
+  #author_intro_wr .person_portraitwr:hover{
+  	text-decoration:none
+  }
+  #author_intro_wr .person_portraitwr:hover .edit_portraitbtn{
+  	height:112px;
+  	line-height:112px
+  }
   
+  #author_intro_wr .person_baseinfo{
+  	float:left;
+  	width:555px;
+  	margin-right:30px;
+  	margin-top:20px
+  }
+  #author_intro_wr .p_name{
+  	font-size:28px;
+  	line-height:30px;
+  	color:#333;
+  	margin-bottom:8px;
+  	float:left
+  }
+  #author_intro_wr .p_name .c-icon{
+  	margin:9px 0 0 12px;vertical-align:top
+  }
+  #author_intro_wr .p_volume{
+  	font-size:14px;color:#999;margin-top:10px;margin-left:20px;float:left}
+  #author_intro_wr .p_scholarID .p_scholarID_all{
+  	width:190px;
+  	height:22px;
+  	border:1px solid #E6E6E6;
+  	background-color:#fafafa;
+  	color:#999;
+  	font-size:13px;
+  	text-align:center;
+  	line-height:24px
+  }
+  #author_intro_wr .p_scholarID{
+  	width:192px;
+  	height:24px;
+  	background-color:#fafafa;
+  	padding:3px;float:right
+  }
+  #author_intro_wr .p_scholarID .p_scholarID_all .p_scholarID_id{
+  	font-size:13px;
+  	color:#06c
+  }
+  #author_intro_wr .p_affiliate{
+  	float:left;
+    clear:both
+  }
+  #author_intro_wr .p_ach_wr{
+    float: left;
+  	width:355px;
+  	display:inline-block;
+  	margin:20px 0 18px;
+  	overflow:hidden;
+  	height:70px
+  }
+  #author_intro_wr .p_ach_item{
+  	float:left;
+  	border-right:1px solid #efefef;
+  	margin-right:10px;
+  	font-size:20px;
+  	width:78px
+  }
+  #author_intro_wr .p_ach_item:last-child{border:0}
+  #author_intro_wr .p_ach_type{font-size:12px}
+  #author_intro_wr .p_ach_num{}
+  #author_intro_wr .shareCont{
+  	display:inline-block;
+  	position:relative;
+  	width:200px;
+  	height:50px;
+  	vertical-align:top;
+  	margin-top:20px
+  }
+  #author_intro_wr .person_domain a{
+    float: left;
+  	text-decoration:underline;
+  	display:inline-block
+  }
+  #author_intro_wr .prefix_label{float:left}
   .box-card {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
   }
+  #author_intro_wr .person_editinfo{
+    float: left;
+    word-break:break-all;
+    line-height:25px
+    }
 </style>
