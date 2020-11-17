@@ -22,7 +22,7 @@
                     width="200"
                     trigger="hover"
                     content="1321312312@11232123.com">
-                <el-button slot="reference" type="info" icon="el-icon-message" circle></el-button>
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-message" data-clipboard-text="Copy" @click="Copy" circle></el-button>
                 </el-popover>
                 <el-popover
                     placement="bottom"
@@ -30,7 +30,7 @@
                     width="200"
                     trigger="hover"
                     content="1321">
-                <el-button slot="reference" type="info" icon="el-icon-phone-outline" circle></el-button>
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" data-clipboard-text="Copy" @click="Copy" circle></el-button>
                 </el-popover>
         			</div>
         			<div class="p_volume">
@@ -85,7 +85,7 @@
                 <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
               </el-tooltip>
               <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
               </el-tooltip>
             </div>
             <div style="text-align: left;position: absolute;top: 60px;width: 96%">
@@ -162,6 +162,46 @@
       components:{
         TopBar
       },
+      methods:{
+        Copy() {
+          let clipboard = new Clipboard('.commun');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接成功',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接失败，请重试',
+              type: 'error',
+            });
+            clipboard.destroy()
+          })
+        },
+        CopyLink() {
+          let clipboard = new Clipboard('.el-icon-share');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接成功',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接失败，请重试',
+              type: 'error',
+            });
+            clipboard.destroy()
+          })
+        }
+      }
     }
 </script>
 
