@@ -2,20 +2,36 @@
   <div style="background-color:white;">
     <TopBar></TopBar>
     <el-container style="width: 60%;margin:0 auto">
-      <el-header height=310px>
+      <el-header height=283px>
         	<div id="author_intro_wr">
             <div class="person_image">
         			<a href="#" class="person_portraitwr">
-        				<img src="../assets/jiang.jpg" alt="学者头像" class="" width="112" height="112">
+        				<img src="../assets/trump.jpg" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
+                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
         			  <el-button style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
         			</div>
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
         				特朗普
+                <el-popover
+                    placement="bottom"
+                    title="邮箱"
+                    width="200"
+                    trigger="hover"
+                    content="1321312312@11232123.com">
+                <el-button slot="reference" type="info" icon="el-icon-message" circle></el-button>
+                </el-popover>
+                <el-popover
+                    placement="bottom"
+                    title="电话"
+                    width="200"
+                    trigger="hover"
+                    content="1321">
+                <el-button slot="reference" type="info" icon="el-icon-phone-outline" circle></el-button>
+                </el-popover>
         			</div>
         			<div class="p_volume">
         				1400人看过
@@ -33,14 +49,6 @@
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">成果数</p>
                     <p class="p_ach_num">22</p>
-                  </li>
-                  <li class="p_ach_item">
-                    <p class="p_ach_type c_gray">H指数</p>
-                    <p class="p_ach_num">8</p>
-                  </li>
-                  <li class="p_ach_item">
-                    <p class="p_ach_type c_gray">G指数</p>
-                    <p class="p_ach_num">14</p>
                   </li>
                 </ul>
         			</div>
@@ -161,7 +169,7 @@
   li{list-style:none}
   #author_intro_wr{
   	border-bottom:1px solid #e3e3e3;
-  	padding:32px 0 53px;
+  	padding:32px 0 43px;
   	overflow:hidden;
   	zoom:1
   }
@@ -229,6 +237,7 @@
   	font-size:28px;
   	line-height:30px;
   	color:#333;
+    margin-left: 15px;
   	margin-bottom:8px;
   	float:left
   }
@@ -248,7 +257,13 @@
   	color:#06c
   }
   #author_intro_wr .p_affiliate{
-  	float:left;
+  	margin-left: 15px;
+    float:left;
+    clear:left;
+  }
+  #author_intro_wr .p_mail{
+  	margin-left: 15px;
+    float:left;
     clear:left;
   }
   #author_intro_wr .p_ach_wr{
@@ -281,6 +296,7 @@
   #author_intro_wr .person_editinfo{
     clear: left;
     float: left;
+    margin-left: 15px;
     word-break:break-all;
     line-height:25px
   }
