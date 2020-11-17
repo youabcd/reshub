@@ -7,7 +7,7 @@
       </el-header>
       <el-main>
         <el-col :span="17">
-          <el-card class="box-card" shadow="never">
+          <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
               <span>可视化</span>
             </div>
@@ -44,9 +44,17 @@
               </i>
             </div>
           </el-card>
+          <div>
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="800"
+              style="margin-top: 10px;height: 100px">
+            </el-pagination>
+          </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
@@ -55,7 +63,7 @@
             </div>
           </el-card>
           
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
