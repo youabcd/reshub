@@ -1,42 +1,44 @@
 <template>
   <div>
-    <!--    <el-container>-->
     <TopBar></TopBar>
     <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>
 
     <el-container style="height: 100%" >
-      <!--        style="background-color: #f0f2f5"-->
-
       <el-aside width="15%">
         <div style="width: 12%;display: inline;">
-          <!--            border: solid 2px #666666-->
           <h5>学科</h5>
-          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
-            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
-<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
-<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
-<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+          <el-menu>
+            <el-checkbox-group v-model="checkedSubject" >
+              <div class="checkBox">
+                <el-checkbox v-for="Subject in subjectOptions" :label="Subject" :key="Subject" class="checkBox">{{Subject}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
+          </el-menu>
+        </div>
+
+        <div style="width: 12%;display: inline;">
+          <h5>作者</h5>
+          <el-menu>
+            <el-checkbox-group v-model="checkedAuthor" >
+              <div class="checkBox">
+                <el-checkbox v-for="Author in authorOptions" :label="Author" :key="Author" class="checkBox">{{Author}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
           </el-menu>
         </div>
         <div style="width: 12%;display: inline;">
-          <!--            border: solid 2px #666666-->
-          <h5>作者</h5>
-          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
-            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
-            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
-            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
-            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+          <h5>年限</h5>
+          <el-menu>
+            <el-checkbox-group v-model="checkedTime" >
+              <div class="checkBox">
+                <el-checkbox v-for="Time in timeOptions" :label="Time" :key="Time" class="checkBox">{{Time}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
           </el-menu>
         </div>
         <div style="margin-top: 30px">
           <el-button type="primary" plain>筛选</el-button>
-          <el-button type="danger" plain>重置</el-button>
+          <el-button type="danger" :disabled="checkedSubject.length === 0 && checkedAuthor.length === 0 && checkedTime.length === 0" plain @click="clearList">重置</el-button>
         </div>
 
       </el-aside>
@@ -51,14 +53,11 @@
                 <el-menu-item index="1" style="width: 120px">●期刊</el-menu-item>
                 <el-menu-item index="2" style="width: 120px">●会议</el-menu-item>
                 <el-menu-item index="3" style="width: 120px">●报告</el-menu-item>
-<!--                <el-menu-item index="5" style="width: 120px">●专利</el-menu-item>-->
-<!--                <el-menu-item index="6" style="width: 120px">●成果</el-menu-item>-->
-<!--                <el-menu-item index="7" style="width: 120px">●代码</el-menu-item>-->
               </el-menu>
             </div>
             <div>
               <!--              <el-card class="box-card" shadow="never">-->
-              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+              <el-card shadow="hover" v-if="menuIndex === '0' && item.visible === true" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
@@ -139,7 +138,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -186,7 +185,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -233,7 +232,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -257,7 +256,7 @@
           </div>
 
           <div style="position: absolute;left: 77%;top: 0;width: 23%;display: inline;">
-            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
+            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥热点</p>
             <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
 <!--              <div >-->
                 <div style="text-align: left;margin-top: -20px;cursor: pointer">
@@ -303,7 +302,6 @@
   import BottomBar from "./BottomBar";
   import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
-
   export default {
     name: "SearchResult",
     components:{
@@ -317,15 +315,23 @@
         keyWords:'',
         activeIndex: "0",
         menuIndex: "0",
+        subjectOptions : ['🤺', '👨‍❤️‍👨', '你🐎呢？'],
+        authorOptions : ['Zhang San', 'Li Ming'],
+        timeOptions : ['1900', '2000', '2010', '2020'],
+        checkedSubject: [],
+        checkedAuthor: [],
+        checkedTime: [],
+        // cities: cityOptions,
         tableData0: [{
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author: ['Li Ming','Zhang San'],
+          author: ['Li Ming','Zhang San','Clearlove'],
           type:"期刊",
           collectStatus: true,
           collectionSum:6,
           viewSum:7,
+          visible:true,
           link:'https://www.google.com.hk/',
           collectTime:'2016-05-04'
         },
@@ -338,6 +344,7 @@
             collectStatus: false,
             collectionSum:66,
             viewSum:77,
+            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           },
@@ -350,6 +357,7 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
+            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           },
@@ -362,6 +370,7 @@
             collectStatus: false,
             collectionSum:6666,
             viewSum:7777,
+            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -369,11 +378,12 @@
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author:['Li Ming','Zhang San'],
+          author:['Li Ming','Zhang San','Clearlove'],
           type:"期刊",
           collectStatus: true,
           collectionSum:666,
           viewSum:777,
+          visible:true,
           link:'https://www.google.com.hk/',
           collectTime:'2016-05-04'
         },
@@ -386,6 +396,7 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
+            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           }],
@@ -399,6 +410,7 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
+            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           }],
@@ -412,6 +424,7 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
+            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -425,6 +438,7 @@
             collectStatus: true,
             collectionSum:6,
             viewSum:7,
+            visible:true,
             link:'https://www.google.com.hk/',
             collectTime:'2016-05-04'
           },
@@ -437,6 +451,7 @@
             collectStatus: false,
             collectionSum:66,
             viewSum:77,
+            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           },
@@ -449,6 +464,7 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
+            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           },
@@ -461,6 +477,7 @@
             collectStatus: false,
             collectionSum:6666,
             viewSum:7777,
+            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -597,22 +614,23 @@
         })
       },
 
-      KeyRegExp(val, keyword) {
-        val = val + '';
-        if (val.indexOf(keyword) !== -1 && keyword !== '') {
-          return val.replace(keyword, '<span style="color: #f00; ">' + keyword + '</span>')
-        } else {
-          return val
-        }
+      clearList() {
+        this.checkedSubject = [];
+        this.checkedAuthor = [];
+        this.checkedTime = [];
       },
+
+      filter() {
+
+      }
     }
   }
 </script>
 
 <style >
-  .result{
-    min-height: calc(100vh - 75px);
-  }
+  /*.result{*/
+  /*  min-height: calc(100vh - 75px);*/
+  /*}*/
   /*.el-select .el-input {*/
   /*  width: 100px;*/
   /*  height: 75px;*/
@@ -621,6 +639,13 @@
   /*  background-color: #fff;*/
   /*  width: 100px;*/
   /*  height: 75px;*/
+  /*}*/
+  /*.icon{*/
+  /*  height: 60px;*/
+  /*  width: 55px;*/
+  /*  position: fixed;*/
+  /*  bottom: 35px;*/
+  /*  right: 15px;*/
   /*}*/
   .text {
     font-size: 14px;
@@ -631,13 +656,7 @@
   .box-card {
     width: 100%;
   }
-  .icon{
-    height: 60px;
-    width: 55px;
-    position: fixed;
-    bottom: 35px;
-    right: 15px;
-  }
+
   .back-top-circle{
     position: fixed;
     background-color: #fff;
@@ -659,6 +678,7 @@
   .checkBox{
     text-align: left;
     margin-left: 30px;
-    height: 30px;
+    margin-bottom: 10px;
+    /*height: 30px;*/
   }
 </style>

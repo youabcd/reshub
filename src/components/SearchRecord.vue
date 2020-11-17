@@ -3,7 +3,7 @@
     <TopBar></TopBar>
     <div style="width: 70%;margin-top: 10px;margin-left: 15%;">
       <div style="position: relative;height: 50px;margin-top: 20px">
-        <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 10px">
+        <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 15px">
           <i class="el-icon-search"> 搜索记录</i>
         </div>
         <div style="float: right">
