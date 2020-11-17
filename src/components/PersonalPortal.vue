@@ -4,53 +4,46 @@
     <el-container style="width: 60%;margin:0 auto">
       <el-header height=310px>
         	<div id="author_intro_wr">
-                <div class="person_image">
+            <div class="person_image">
         			<a href="#" class="person_portraitwr">
         				<img src="../assets/jiang.jpg" alt="学者头像" class="" width="112" height="112">
         			</a>
-        			<a href="#" target="_blank" class="person_authen p_auth_btn">
-        				我要认证
-        			</a>
-        			<div class="focus auFocus" data-id="777ab9eb59a49f2eb5c0fef873af1d94" data-name="陈云霁">
-        				<p class="firstFollow">
-        					<span data-focus="0" class="noFocus">关注</span></p>
-        				<p class="cancelFocus">取消关注</p>
+        			<div style="margin: auto;">
+                <el-button style="text-align:center;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
+        			  <el-button style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
         			</div>
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
-        				陈云霁
+        				特朗普
         			</div>
         			<div class="p_volume">
         				1400人看过
         			</div>
-        			<div class="p_scholarID">
-        				<div class="p_scholarID_all">
-        					ScholarID:<span class="p_scholarID_id">CN-BQ74WL1J</span>
-        				</div>
-        			</div>
         			<div class="p_affiliate">
-        				中国科学院研究生院
+        				白宫
         			</div>
               </br>
-        			<ul class="p_ach_wr">
-        				<li class="p_ach_item">
-        					<p class="p_ach_type c_gray">被引频次</p>
-        					<p class="p_ach_num">212</p>
-        				</li>
-        				<li class="p_ach_item">
-        					<p class="p_ach_type c_gray">成果数</p>
-        					<p class="p_ach_num">22</p>
-        				</li>
-        				<li class="p_ach_item">
-        					<p class="p_ach_type c_gray">H指数</p>
-        					<p class="p_ach_num">8</p>
-        				</li>
-        				<li class="p_ach_item">
-        					<p class="p_ach_type c_gray">G指数</p>
-        					<p class="p_ach_num">14</p>
-        				</li>
-        			</ul>
+        			<div class="p_ach_wr">
+                <ul>
+                  <li class="p_ach_item">
+                    <p class="p_ach_type c_gray">被引频次</p>
+                    <p class="p_ach_num">212</p>
+                  </li>
+                  <li class="p_ach_item">
+                    <p class="p_ach_type c_gray">成果数</p>
+                    <p class="p_ach_num">22</p>
+                  </li>
+                  <li class="p_ach_item">
+                    <p class="p_ach_type c_gray">H指数</p>
+                    <p class="p_ach_num">8</p>
+                  </li>
+                  <li class="p_ach_item">
+                    <p class="p_ach_type c_gray">G指数</p>
+                    <p class="p_ach_num">14</p>
+                  </li>
+                </ul>
+        			</div>
         			</br>
         			<div class="person_editinfo">
         				<div class="">
@@ -182,8 +175,9 @@
   	width:125px;
   	float:left;
   	text-align:center;
+    margin: auto;
   	margin-right:35px;
-  	margin-left:5px
+  	margin-left:5px;
   }
   #author_intro_wr .person_portraitwr{
   	position:relative;
@@ -243,16 +237,6 @@
   }
   #author_intro_wr .p_volume{
   	font-size:14px;color:#999;margin-top:10px;margin-left:20px;float:left}
-  #author_intro_wr .p_scholarID .p_scholarID_all{
-  	width:190px;
-  	height:22px;
-  	border:1px solid #E6E6E6;
-  	background-color:#fafafa;
-  	color:#999;
-  	font-size:13px;
-  	text-align:center;
-  	line-height:24px
-  }
   #author_intro_wr .p_scholarID{
   	width:192px;
   	height:24px;
@@ -265,9 +249,10 @@
   }
   #author_intro_wr .p_affiliate{
   	float:left;
-    clear:both
+    clear:left;
   }
   #author_intro_wr .p_ach_wr{
+    clear: left;
     float: left;
   	width:355px;
   	display:inline-block;
@@ -285,28 +270,24 @@
   #author_intro_wr .p_ach_item:last-child{border:0}
   #author_intro_wr .p_ach_type{font-size:12px}
   #author_intro_wr .p_ach_num{}
-  #author_intro_wr .shareCont{
-  	display:inline-block;
-  	position:relative;
-  	width:200px;
-  	height:50px;
-  	vertical-align:top;
-  	margin-top:20px
-  }
   #author_intro_wr .person_domain a{
     float: left;
   	text-decoration:underline;
   	display:inline-block
   }
-  #author_intro_wr .prefix_label{float:left}
+  #author_intro_wr .prefix_label{
+    float:left
+  }
+  #author_intro_wr .person_editinfo{
+    clear: left;
+    float: left;
+    word-break:break-all;
+    line-height:25px
+  }
   .box-card {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
   }
-  #author_intro_wr .person_editinfo{
-    float: left;
-    word-break:break-all;
-    line-height:25px
-    }
+
 </style>
