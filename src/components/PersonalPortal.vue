@@ -15,40 +15,40 @@
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
-        				特朗普
+        				{{name}}
                 <el-popover
                     placement="bottom"
                     title="邮箱"
                     width="200"
                     trigger="hover"
-                    content="1321312312@11232123.com">
-                <el-button class="commun" slot="reference" type="info" icon="el-icon-message" data-clipboard-text="Copy" @click="Copy" circle></el-button>
+                    :content="mail">
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
                 <el-popover
                     placement="bottom"
                     title="电话"
                     width="200"
                     trigger="hover"
-                    content="1321">
-                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" data-clipboard-text="Copy" @click="Copy" circle></el-button>
+                    :content="phone">
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
                 </el-popover>
         			</div>
         			<div class="p_volume">
         				1400人看过
         			</div>
         			<div class="p_affiliate">
-        				白宫
+        				{{institute}}
         			</div>
               </br>
         			<div class="p_ach_wr">
                 <ul>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">被引频次</p>
-                    <p class="p_ach_num">212</p>
+                    <p class="p_ach_num">{{quoted}}</p>
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">成果数</p>
-                    <p class="p_ach_num">22</p>
+                    <p class="p_ach_num">{{products}}</p>
                   </li>
                 </ul>
         			</div>
@@ -57,7 +57,7 @@
         				<div class="">
         					<span class="c_gray prefix_label">领域:&nbsp;</span>
         					<span class="person_domain person_text">
-        						<a href="#" target="_blank">政治</a>
+        						|<span v-for="(u,i) in domain">&nbsp;{{u}}&nbsp;|</span>
         					</span>
         				</div>
         			</div>
@@ -144,7 +144,14 @@
       name: "PersonalPortal",
       data() {
         return {
-          menuIndex: "0",
+          menuIndex: '0',
+          name:'Trump',
+          institute:'White House',
+          mail:'1@2.3',
+          phone:'123',
+          quoted:'132',
+          products:'321',
+          domain:['假新闻','吹牛','政治斗争','建墙'],
           tableData0: [
             {
               paperId:'0',
