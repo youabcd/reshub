@@ -145,8 +145,8 @@
       data() {
         return {
           menuIndex: '0',
-          name:'Trump',
-          institute:'White House',
+          name:'Trump名字最多可以这么长',
+          institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
           phone:'123',
           quoted:'132',
@@ -156,7 +156,7 @@
             {
               paperId:'0',
               title:'MAGA',
-              msg:'Make America Great Again',
+              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
