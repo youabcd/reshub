@@ -155,13 +155,13 @@
           tableData0: [
             {
               paperId:'0',
-              title:'Youtube',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-              type:"会议",
+              title:'MAGA',
+              msg:'Make America Great Again',
+              type:"扯淡",
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://www.youtube.com/',
+              link:'https://trump.com/',
               collectTime:'2016-05-04'
             }],
         }
