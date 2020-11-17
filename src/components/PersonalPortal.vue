@@ -6,7 +6,13 @@
         
       </el-header>
       <el-main>
-        <el-col :span="18">
+        <el-col :span="17">
+          <el-card class="box-card" shadow="never">
+            <div slot="header" class="clearfix">
+              <span>可视化</span>
+            </div>
+            图图图图图</br>图图图图图
+          </el-card>
           <el-divider content-position="left">发表作品</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
@@ -38,9 +44,9 @@
               </i>
             </div>
           </el-card>
-        </el-col>  
-        <el-col :span="6">
-          <el-card class="box-card" style="float: right;width: 95%;">
+        </el-col>
+        <el-col :span="7">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
@@ -49,7 +55,7 @@
             </div>
           </el-card>
           
-          <el-card class="box-card" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
@@ -78,7 +84,7 @@
               title:'Youtube',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
               type:"会议",
-              collectStatus: false,
+              collectStatus:true,
               collectionSum:666,
               viewSum:777,
               link:'https://www.youtube.com/',
