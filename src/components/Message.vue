@@ -252,7 +252,7 @@
           let data = {
             'state': 'sendMessage',
             'myId': this.userId,
-            'friendId': this.recentMessage[index].friendId,
+            'friendId': this.recentMessage[this.whichFriend].friendId,
             'content': this.textarea,
             'chatId': this.recentMessage[index].chatId,
           };
