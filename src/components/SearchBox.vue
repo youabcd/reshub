@@ -5,7 +5,7 @@
       <div style="margin-top: 60px;width: 70%;margin-left: 15%" @keyup.enter="search">
         <van-row v-for="(item,index) in searchKey" :key="index" style="margin-top: 15px;">
           <van-col span="22">
-            <el-autocomplete v-if="index==0" placeholder="请输入内容" v-model="item.words"
+            <el-autocomplete v-if="index<1" placeholder="请输入内容" v-model="item.words"
                              :fetch-suggestions="querySearch" @select="handleSelect"
                              style="font-size: 20px;width: 100%;" class="input-with-select">
               <el-select v-if="index>0" v-model="item.boolType" slot="prepend" style="font-size: 15px">
@@ -72,6 +72,10 @@
         </van-row>
       </div>
 
+      <div style="margin-top: 24px;">
+        <el-button type="primary" @click="search" style="font-size: 20px;width: 150px;">搜索</el-button>
+      </div>
+
     </div>
 
   </div>
@@ -109,14 +113,15 @@
         }
         else{
           localStorage.setItem("keyWords", this.keyWords);
-          if(this.$route.path=='/SearchResult'){
+          /*if(this.$route.path=='/SearchResult'){
             this.$emit("searchEvent",this.keyWords);
           }
           else {
             this.$router.push({
               path: '/SearchResult',
             });
-          }
+          }*/
+          window.open("http://localhost:8080/#/SearchResult");
         }
       },//搜索
       //添加行
