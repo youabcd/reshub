@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 100%">
     <div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
     </div>
     <div>
@@ -39,8 +39,12 @@
           require('../assets/bing07.jpg'),
           require('../assets/bing08.jpg'),
           require('../assets/bing09.jpg'),
+          require('../assets/bing10.jpg'),
+          require('../assets/bing11.jpg'),
+          require('../assets/bing12.jpg'),
+          require('../assets/bing13.jpg'),
         ],
-        whichPic:parseInt(Math.random()*9),
+        whichPic:parseInt(Math.random()*13),
       }
     },
     methods:{
@@ -77,7 +81,7 @@
     z-index:-1;
     position: fixed;
     /*background: url("../assets/bing02.jpg");*/
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
   }
   .back-top-circle1{
