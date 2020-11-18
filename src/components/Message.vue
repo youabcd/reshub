@@ -105,7 +105,7 @@
                     <el-main style="height: 80%;width: 100%">
                       <div v-for="(item,index) in chats" :key="index">
                         <!--自己发的消息-->
-                        <van-row v-if="item.sender==userId">
+                        <van-row v-if="item.sendId==userId">
                           <van-col span="20">
                             <div class="message1">
                               {{item.msg}}
@@ -120,7 +120,7 @@
                           </van-col>
                         </van-row>
                         <!--别人发的消息-->
-                        <van-row v-if="item.sender!=userId">
+                        <van-row v-if="item.sendId!=userId">
                           <van-col span="4">
                             <van-image round fit="cover" width="35px" height="35px" :src="chatImage" clickable>
                               <template v-slot:loading>
@@ -173,7 +173,7 @@
             checkIp1:'',
             textarea:'',
             websock: null,
-            userId:'aaa',
+            userId: localStorage.getItem('myId'),
             userImage:require('../../static/logo2.png'),
             chatImage:require('../../static/logo2.png'),
             nowActive:'1',
@@ -199,7 +199,7 @@
             commentWidth:'80',
 
             recentMessage:[
-              {friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
+              {chatId: '', friendId: '123', friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcd名字特别长sjfksjdlkfjklfds',newMessage:'2',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfgfgf',newMessage:'3',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfggf',newMessage:'4',friendHead:require('../../static/logo2.png')},
@@ -217,18 +217,18 @@
               {friendName:'a',newMessage:'16'},
             ],
             chats:[
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:12'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:13'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:14'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:15'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:16'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:17'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:18'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:19'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:20'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:21'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:22'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:12'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:13'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:14'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:15'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:16'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:17'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:18'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:19'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:20'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:21'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:22'},
             ]
           }
       },
@@ -246,13 +246,14 @@
 
           this.recentMessage[index].newMessage='0';
         },
-        sendMessage(){//发送对方ip
+        sendMessage(){ // 发送一条消息
           let data = {
             'state': 'sendMessage',
-            'sendId': '发送的人的id',
-            'receiveId': '接收的人的id',
-            'content': '消息内容',
-            'chatId': '朋友关系的id' };
+            'myId': this.userId,
+            'friendId': this.recentMessage[index].friendId,
+            'content': this.textarea,
+            'chatId': this.recentMessage[index].chatId,
+          };
           this.websock.send(JSON.stringify(data));
         },
 
@@ -275,6 +276,7 @@
         },
         websocketonmessage(e){ //数据接收
           let data = JSON.parse(e.data);
+          this.chats.push(data);
           console.log(data);
           //this.chats=data;
         },

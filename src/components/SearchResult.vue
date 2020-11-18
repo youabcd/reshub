@@ -77,25 +77,41 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-dropdown placement="top">
-                    <span class="el-dropdown-link">
-                      <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
+
+<!--                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">-->
+<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="分享到微博" placement="bottom">-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;margin-bottom: 10px">-->
+<!--&lt;!&ndash;                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="gotoWeibo(item.link,item.title)"></i>&ndash;&gt;-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="分享到微信" placement="bottom">-->
+<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="openQRcode(item.link)"></i>-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
+<!--                  </el-tooltip>-->
                 </div>
                 <!--                  </div>-->
 
@@ -131,25 +147,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-dropdown placement="top">
-                    <span class="el-dropdown-link">
-                      <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -184,25 +202,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-dropdown placement="top">
-                    <span class="el-dropdown-link">
-                      <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -238,25 +258,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-dropdown placement="top">
-                    <span class="el-dropdown-link">
-                      <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                      <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -625,7 +647,7 @@
       },
 
       Copy() {
-        let clipboard = new Clipboard('.el-icon-share');
+        let clipboard = new Clipboard('.el-icon-document-copy');
         clipboard.on('success', e => {
           this.$message({
             showClose: true,
