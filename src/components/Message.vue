@@ -254,7 +254,7 @@
             'myId': this.userId,
             'friendId': this.recentMessage[this.whichFriend].friendId,
             'content': this.textarea,
-            'chatId': this.recentMessage[index].chatId,
+            'chatId': this.recentMessage[this.whichFriend].chatId,
           };
           this.websock.send(JSON.stringify(data));
         },
@@ -266,7 +266,7 @@
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://127.0.0.1:8000/websocketTest/12";//用自己的id构成websock链接 改
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/"+this.userId;//用自己的id构成websock链接 改
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
@@ -277,6 +277,7 @@
           console.log("WebSocket连接成功")
         },
         websocketonmessage(e){ //数据接收
+          console.log("收到消息")
           let data = JSON.parse(e.data);
           this.chats.push(data);
           console.log(data);
