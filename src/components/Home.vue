@@ -38,13 +38,14 @@
           require('../assets/bing06.jpg'),
           require('../assets/bing07.jpg'),
           require('../assets/bing08.jpg'),
+          require('../assets/bing09.jpg'),
         ],
-        whichPic:parseInt(Math.random()*8),
+        whichPic:parseInt(Math.random()*9),
       }
     },
     methods:{
       nextPic(){
-        if(this.whichPic<7){
+        if(this.whichPic<this.back.length-1){
           this.whichPic++;
         }
         else{
@@ -56,7 +57,7 @@
           this.whichPic--;
         }
         else{
-          this.whichPic=7;
+          this.whichPic=this.back.length-1;
         }
       }
     },

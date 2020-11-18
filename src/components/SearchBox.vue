@@ -23,7 +23,7 @@
               </el-select>
             </el-autocomplete>
             <el-input v-if="index>0" placeholder="" v-model="item.words"
-                             style="font-size: 20px;width: 100%;" class="input-with-select">
+                             style="width: 100%;" class="input-with-select">
               <el-select v-if="index>0" v-model="item.boolType" slot="prepend" style="font-size: 15px">
                 <el-option label="AND" value="1"></el-option>
                 <el-option label="OR" value="2"></el-option>
@@ -42,8 +42,8 @@
           <van-col span="2">
             <van-row></van-row>
             <el-tooltip class="item" effect="light" content="删除该行" placement="right">
-              <el-link v-if="index>0" @click="declineSearchBox(item,index)" style="margin-top: 5px;text-align: left;font-size: 30px;">
-                <span style="color: #000000"><i class="el-icon-remove-outline"></i></span>
+              <el-link :underline="false" v-if="index>0" @click="declineSearchBox(item,index)" style="margin-top: 5px;text-align: left;font-size: 30px;">
+                <span><i class="el-icon-remove-outline"></i></span>
               </el-link>
             </el-tooltip>
           </van-col>
@@ -60,7 +60,7 @@
             <el-date-picker type="date" placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="6"></van-col>
-          <van-col span="6" style="text-align: left;">
+          <van-col span="6" style="text-align: left;font-size: 20px;">
             <span>
               <el-link @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-link>
             </span>
@@ -138,6 +138,8 @@
       //重设
       cleanSearchBox(){
         this.searchKey.splice(1,this.searchKey.length-1);
+        this.searchKey[0].words='';
+        this.searchKey[0].type='1';
       },
       //删除行
       declineSearchBox(item,index){
