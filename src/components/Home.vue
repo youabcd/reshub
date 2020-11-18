@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-    <div class="background">
+    <div class="background" >
 
     </div>
     <div>
