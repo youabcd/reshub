@@ -164,6 +164,11 @@ name: 'HelloWorld',
         }
       }
     },
+    created() {
+      this.$router.push({
+        path:'/'
+      });
+    },
     mounted() {
       this.charet();
     },

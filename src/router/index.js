@@ -19,6 +19,7 @@ import BottomBar from "../components/BottomBar";
 import SearchBox from "../components/SearchBox";
 import MyConcern from "../components/MyConcern";
 import BrowseRecord from "../components/BrowseRecord";
+import Administrator from "../components/Administrator";
 
 Vue.use(Router)
 
@@ -118,6 +119,11 @@ export default new Router({
       path: '/BrowseRecord',
       name: 'BrowseRecord',
       component: BrowseRecord
+    },
+    {
+      path: '/Administrator',
+      name: 'Administrator',
+      component: Administrator
     },
   ]
 })

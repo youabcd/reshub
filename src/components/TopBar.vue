@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isReNew">
     <div style="width:100%;height: 55px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);margin-top: 0px;" :style="{background: colour[clickNum]}">
       <van-row></van-row>
       <van-row>
@@ -68,6 +68,7 @@
             userImage:require('../../static/logo2.png'),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
+            isReNew:true,
           }
       },
       methods:{
@@ -121,14 +122,19 @@
             path:'/BrowseRecord',
           })
         },
-        Quit(){},
+        Quit(){
+          localStorage.setItem("myId","");
+          this.$router.push({
+            path:'/HelloWorld'
+          });
+        },
         changeColour(){
           this.clickNum++;
           this.clickNum=this.clickNum%4;
         }
       },
       mounted() {
-        localStorage.setItem("myId",this.userId);
+
       },
     }
 </script>
