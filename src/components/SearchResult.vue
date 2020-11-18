@@ -62,7 +62,7 @@
               show-close="false"
               width="30%">
               <div>
-                <img :src="'https://my.tv.sohu.com/user/a/wvideo/getQRCode.do?text='+QRlink" alt="" width="250" height="250">
+                <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
               </div>
               <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>

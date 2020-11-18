@@ -1,6 +1,8 @@
 <template>
   <div style="">
     <TopBar></TopBar>
+
+    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
       <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 15%;margin-top: 2%;width: 70%;">
         <div style="position: relative;height: 50px;margin-top: 20px">
           <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 5px">
@@ -23,7 +25,7 @@
           show-close="false"
           width="30%">
           <div>
-            <img :src="'https://my.tv.sohu.com/user/a/wvideo/getQRCode.do?text='+QRlink" alt="" width="250" height="250">
+            <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
           </div>
           <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
@@ -45,9 +47,9 @@
                     <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
-                    <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                    <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                    <el-dropdown-item><span @click="gotoWeibo(item.link,item.title)"><i class="el-icon-share"> 分享到微博</i></span></el-dropdown-item>
+                    <el-dropdown-item><span @click="openQRcode(item.link)"><i class="el-icon-share"> 分享到微信</i></span></el-dropdown-item>
+                    <el-dropdown-item><i class="el-icon-document-copy" :data-clipboard-text=item.link @click="Copy"> 复制链接</i></el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -92,7 +94,7 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
                   <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy" :data-clipboard-text=item.link @click="Copy"> 复制链接</i></el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
 
@@ -168,7 +170,7 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
                   <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy" :data-clipboard-text=item.link @click="Copy"> 复制链接</i></el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
 
@@ -216,7 +218,7 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
                   <el-dropdown-item><i class="el-icon-share" @click="openQRcode(item.link)"> 分享到微信</i></el-dropdown-item>
-                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy" :data-clipboard-text=item.link @click="Copy"> 复制链接</i></el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
