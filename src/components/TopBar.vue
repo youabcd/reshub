@@ -125,7 +125,8 @@
         Quit(){
           localStorage.setItem("myId","");
           this.$router.push({
-            path:'/HelloWorld'
+            path:'/HelloWorld',
+            query:{nowPath:this.$router.path}
           });
         },
         changeColour(){
@@ -134,7 +135,8 @@
         }
       },
       mounted() {
-
+        localStorage.setItem("myId",this.userId);
+        
       },
     }
 </script>
