@@ -2,7 +2,6 @@
   <div>
     <TopBar></TopBar>
 <!--    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>-->
-
     <el-container style="height: 100%" >
       <el-aside width="15%" style="height: 100%">
         <div style="width: 12%;display: inline;">
@@ -90,7 +89,7 @@
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                   </span>
-                  <span>
+                  <span style="margin-left: 5px;margin-right: 2px">
                     <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                   </span>
                   <span>
@@ -160,7 +159,7 @@
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                   </span>
-                  <span>
+                  <span style="margin-left: 5px;margin-right: 2px">
                     <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                   </span>
                   <span>
@@ -215,7 +214,7 @@
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                   </span>
-                  <span>
+                  <span style="margin-left: 5px;margin-right: 2px">
                     <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                   </span>
                   <span>
@@ -271,7 +270,7 @@
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                   </span>
-                  <span>
+                  <span style="margin-left: 5px;margin-right: 2px">
                     <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                   </span>
                   <span>

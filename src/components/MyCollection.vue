@@ -28,10 +28,9 @@
           </div>
           <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
-                  </span>
+          </span>
         </el-dialog>
         <div>
-
 <!--          <el-card class="box-card" shadow="never">-->
             <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
               <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
@@ -58,7 +57,7 @@
                 <span>
                   <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                 </span>
-                <span>
+                <span style="margin-left: 5px;margin-right: 2px">
                   <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                 </span>
                 <span>
@@ -113,7 +112,7 @@
               <span>
                   <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
               </span>
-              <span>
+              <span style="margin-left: 5px;margin-right: 2px">
                   <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
               </span>
               <span>
@@ -189,7 +188,7 @@
               <span>
                   <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                 </span>
-              <span>
+              <span style="margin-left: 5px;margin-right: 2px">
                   <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                 </span>
               <span>
@@ -237,7 +236,7 @@
               <span>
                   <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                 </span>
-              <span>
+              <span style="margin-left: 5px;margin-right: 2px">
                   <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
                 </span>
               <span>

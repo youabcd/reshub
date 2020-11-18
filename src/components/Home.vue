@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%">
+  <div>
     <div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
     </div>
     <div>
