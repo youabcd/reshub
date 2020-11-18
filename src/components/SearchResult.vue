@@ -4,7 +4,7 @@
     <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>
 
     <el-container style="height: 100%" >
-      <el-aside width="15%">
+      <el-aside width="15%" style="height: 100%">
         <div style="width: 12%;display: inline;">
           <h5>学科</h5>
           <el-menu>
@@ -43,9 +43,9 @@
 
       </el-aside>
 
-      <el-main style="width: 85%">
+      <div style="width: 85%;margin-left: 7px">
         <div style="position: relative">
-          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 75%;position: relative">
+          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
@@ -57,7 +57,7 @@
             </div>
             <div>
               <!--              <el-card class="box-card" shadow="never">-->
-              <el-card shadow="hover" v-if="menuIndex === '0' && item.visible === true" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
@@ -255,7 +255,7 @@
             </div>
           </div>
 
-          <div style="position: absolute;left: 77%;top: 0;width: 23%;display: inline;">
+          <div style="position: absolute;left: 78%;top: 0;width: 21%;display: inline;margin-bottom: 20px">
             <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥热点</p>
             <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
 <!--              <div >-->
@@ -292,7 +292,7 @@
             </div>
           </div>
         </div>
-      </el-main>
+      </div>
     </el-container>
   </div>
 </template>
@@ -317,7 +317,7 @@
         menuIndex: "0",
         subjectOptions : ['🤺', '👨‍❤️‍👨', '你🐎呢？'],
         authorOptions : ['Zhang San', 'Li Ming'],
-        timeOptions : ['1900', '2000', '2010', '2020'],
+        timeOptions : ['1990', '2000', '2010', '2020'],
         checkedSubject: [],
         checkedAuthor: [],
         checkedTime: [],
@@ -331,7 +331,6 @@
           collectStatus: true,
           collectionSum:6,
           viewSum:7,
-          visible:true,
           link:'https://www.google.com.hk/',
           collectTime:'2016-05-04'
         },
@@ -344,7 +343,6 @@
             collectStatus: false,
             collectionSum:66,
             viewSum:77,
-            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           },
@@ -357,7 +355,6 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
-            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           },
@@ -370,7 +367,6 @@
             collectStatus: false,
             collectionSum:6666,
             viewSum:7777,
-            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -383,7 +379,6 @@
           collectStatus: true,
           collectionSum:666,
           viewSum:777,
-          visible:true,
           link:'https://www.google.com.hk/',
           collectTime:'2016-05-04'
         },
@@ -396,7 +391,6 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
-            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           }],
@@ -410,7 +404,6 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
-            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           }],
@@ -424,7 +417,6 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
-            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -438,7 +430,6 @@
             collectStatus: true,
             collectionSum:6,
             viewSum:7,
-            visible:true,
             link:'https://www.google.com.hk/',
             collectTime:'2016-05-04'
           },
@@ -451,7 +442,6 @@
             collectStatus: false,
             collectionSum:66,
             viewSum:77,
-            visible:true,
             link:'https://www.youtube.com/',
             collectTime:'2016-05-04'
           },
@@ -464,7 +454,6 @@
             collectStatus: false,
             collectionSum:666,
             viewSum:777,
-            visible:true,
             link:'https://www.bilibili.com/',
             collectTime:'2016-05-04'
           },
@@ -477,7 +466,6 @@
             collectStatus: false,
             collectionSum:6666,
             viewSum:7777,
-            visible:true,
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
@@ -677,7 +665,7 @@
 
   .checkBox{
     text-align: left;
-    margin-left: 30px;
+    margin-left: 40px;
     margin-bottom: 10px;
     /*height: 30px;*/
   }

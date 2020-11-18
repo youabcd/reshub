@@ -26,27 +26,29 @@
                 <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
                   <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
                 </el-tooltip>
-<!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-<!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-<!--                  </el-tooltip>-->
+                <el-dropdown placement="top">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
+                    <el-dropdown-item><i class="el-icon-share" @click="dialogVisible = true"> 分享到微信</i></el-dropdown-item>
+                    <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
 
-                <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                  <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                </el-tooltip>
-<!--                  <el-dialog-->
-<!--                    title="点击复制链接或扫描二维码"-->
-<!--                    :visible.sync="dialogVisible"-->
-<!--                    show-close="false"-->
-<!--                    width="30%">-->
-<!--                    <div @click="Copy">-->
-<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
-<!--                    </div>-->
-<!--                    <span slot="footer" class="dialog-footer">-->
-<!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
-<!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
-<!--                    </span>-->
-
-<!--                  </el-dialog>-->
+                <el-dialog
+                  title="使用微信扫一扫"
+                  :visible.sync="dialogVisible"
+                  show-close="false"
+                  width="30%">
+                  <div>
+                    <img src="http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl=http://www.baidu.com" alt="" width="200" height="200">
+                  </div>
+                  <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+                  </span>
+                </el-dialog>
 
 
               </div>
@@ -84,10 +86,29 @@
               <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
               <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
               <!--                  </el-tooltip>-->
+              <el-dropdown placement="top">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                  </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-share" @click="dialogVisible = true"> 分享到微信</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
 
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
+              <el-dialog
+                title="使用微信扫一扫"
+                :visible.sync="dialogVisible"
+                show-close="false"
+                width="30%">
+                <div>
+                  <img src="http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl=http://www.baidu.com" alt="" width="200" height="200">
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+                  </span>
+              </el-dialog>
               <!--                  <el-dialog-->
               <!--                    title="点击复制链接或扫描二维码"-->
               <!--                    :visible.sync="dialogVisible"-->
@@ -140,10 +161,29 @@
               <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
               <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
               <!--                  </el-tooltip>-->
+              <el-dropdown placement="top">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                  </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-share" @click="dialogVisible = true"> 分享到微信</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
 
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
+              <el-dialog
+                title="使用微信扫一扫"
+                :visible.sync="dialogVisible"
+                show-close="false"
+                width="30%">
+                <div>
+                  <img src="http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl=http://www.baidu.com" alt="" width="200" height="200">
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+                  </span>
+              </el-dialog>
               <!--                  <el-dialog-->
               <!--                    title="点击复制链接或扫描二维码"-->
               <!--                    :visible.sync="dialogVisible"-->
@@ -196,10 +236,29 @@
               <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
               <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
               <!--                  </el-tooltip>-->
+              <el-dropdown placement="top">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>
+                  </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item><i class="el-icon-share" @click="gotoWeibo(item.link,item.title)"> 分享到微博</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-share" @click="dialogVisible = true"> 分享到微信</i></el-dropdown-item>
+                  <el-dropdown-item><i class="el-icon-document-copy"> 复制链接</i></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
 
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
+              <el-dialog
+                title="使用微信扫一扫"
+                :visible.sync="dialogVisible"
+                show-close="false"
+                width="30%">
+                <div>
+                  <img src="http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl=http://www.baidu.com" alt="" width="200" height="200">
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+                  </span>
+              </el-dialog>
               <!--                  <el-dialog-->
               <!--                    title="点击复制链接或扫描二维码"-->
               <!--                    :visible.sync="dialogVisible"-->
@@ -495,6 +554,15 @@
           //发送点击数据
           window.open(url,url)
         },
+
+        gotoWeibo(url,title) {
+          window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
+        },
+
+        gotoWeChat(url) {
+
+          window.open('http://zixuephp.net/inc/qrcode_img.php?url='+url);
+        }
 
         // handleClose(done) {
         //   this.$confirm('确认关闭？')
