@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div @keyup.enter="search">
     <!--搜索框样式-->
     <div>
-      <div style="margin-top: 60px;width: 70%;margin-left: 15%" @keyup.enter="search">
+      <div style="margin-top: 60px;width: 70%;margin-left: 15%">
         <van-row v-for="(item,index) in searchKey" :key="index" style="margin-top: 15px;">
           <van-col span="22">
             <el-autocomplete v-if="index<1" placeholder="请输入内容" v-model="item.words"
@@ -41,11 +41,11 @@
           </van-col>
           <van-col span="2">
             <van-row></van-row>
-            <el-link v-if="index>0" type="" @click="declineSearchBox(item,index)" style="margin-top: 5px;text-align: left;font-size: 30px;">
-              <el-tooltip class="item" effect="light" content="删除该行" placement="right">
-                <i class="el-icon-remove-outline"></i>
-              </el-tooltip>
-            </el-link>
+            <el-tooltip class="item" effect="light" content="删除该行" placement="right">
+              <el-link v-if="index>0" @click="declineSearchBox(item,index)" style="margin-top: 5px;text-align: left;font-size: 30px;">
+                <span style="color: #000000"><i class="el-icon-remove-outline"></i></span>
+              </el-link>
+            </el-tooltip>
           </van-col>
         </van-row>
       </div>
@@ -62,11 +62,11 @@
           <van-col span="6"></van-col>
           <van-col span="6" style="text-align: left;">
             <span>
-              <el-link type="" @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-link>
+              <el-link @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-link>
             </span>
             <span>&nbsp|&nbsp</span>
             <span>
-              <el-link type="" @click="cleanSearchBox">重设</el-link>
+              <el-link @click="cleanSearchBox">重设</el-link>
             </span>
           </van-col>
         </van-row>

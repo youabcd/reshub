@@ -39,7 +39,7 @@
           require('../assets/bing07.jpg'),
           require('../assets/bing08.jpg'),
         ],
-        whichPic:parseInt(Math.random()*7),
+        whichPic:parseInt(Math.random()*8),
       }
     },
     methods:{
@@ -115,4 +115,4 @@
   }
 </style>
 
- 
+
