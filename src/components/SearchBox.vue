@@ -52,7 +52,7 @@
 
       <div style="margin-top: 15px;width: 70%;margin-left: 15%">
         <van-row>
-          <van-col span="2" style="font-size: 18px;margin-top: 5px;">时间范围</van-col>
+          <van-col span="2" style="font-size: 18px;margin-top: 7px;">时间范围</van-col>
           <van-col span="5">
             <el-date-picker type="date" placeholder="选择开始日期" v-model="dataStart" style="width: 100%;"></el-date-picker>
           </van-col>
