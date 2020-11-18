@@ -165,6 +165,7 @@
 <script>
     import TopBar from "./TopBar";
     import baseUrl from "./baseUrl";
+    import axios from 'axios';
 
     export default {
       name: "Message",
@@ -199,6 +200,7 @@
             commentWidth:'80',
 
             recentMessage:[
+              {chatId: '1', friendId: '456', friendName:'456',newMessage:'1',friendHead:require('../../static/logo2.png')},
               {chatId: '', friendId: '123', friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcd名字特别长sjfksjdlkfjklfds',newMessage:'2',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfgfgf',newMessage:'3',friendHead:require('../../static/logo2.png')},
@@ -286,6 +288,18 @@
         websocketerror(){ //失败
           console.log("WebSocket连接失败");
         },
+        getChatFriends(){
+          let _this = this;
+          axios.get(baseUrl+'/recentUsers', {
+            params: {
+              userId: localStorage.getItem('myId'),
+            }
+          })
+          .then(function (res) {
+              _this.recentMessage = res.data.list;
+          })
+        }
+
       },
       created(){
         this.nowActive=localStorage.getItem("nowActive");
@@ -300,6 +314,7 @@
           this.websock.close(); // 关闭websocket连接
         }
         this.initWebSocket();
+        this.getChatFriends();
       },
       destroyed() {
         //页面销毁时关闭ws连接
