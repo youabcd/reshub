@@ -23,7 +23,7 @@
           show-close="false"
           width="30%">
           <div>
-            <img :src="'http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl='+QRlink" alt="" width="200" height="200">
+            <img :src="'https://my.tv.sohu.com/user/a/wvideo/getQRCode.do?text='+QRlink" alt="" width="250" height="250">
           </div>
           <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>

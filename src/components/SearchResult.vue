@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>
+<!--    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>-->
 
     <el-container style="height: 100%" >
       <el-aside width="15%" style="height: 100%">
@@ -43,7 +43,7 @@
 
       </el-aside>
 
-      <div style="width: 85%;margin-left: 7px">
+      <div style="width: 85%;margin-left: 7px;margin-top: 30px">
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
             <div>
@@ -62,7 +62,7 @@
               show-close="false"
               width="30%">
               <div>
-                <img :src="'http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl='+QRlink" alt="" width="200" height="200">
+                <img :src="'https://my.tv.sohu.com/user/a/wvideo/getQRCode.do?text='+QRlink" alt="" width="250" height="250">
               </div>
               <span slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
