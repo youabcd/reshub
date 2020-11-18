@@ -244,7 +244,7 @@
 
           console.log(localStorage.getItem("whichFriend"));
 
-          this.recentMessage[item.index].newMessage='0';
+          this.recentMessage[index].newMessage='0';
         },
         sendMessage(){//发送对方ip
           let data = {
