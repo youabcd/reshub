@@ -135,6 +135,7 @@
                           </van-col>
                         </van-row>
                       </div>
+                      <div id="bottomMsg"></div>
                     </el-main>
                     <el-footer style="height: 20%;">
                       <div></div>
@@ -256,6 +257,9 @@
           })
           .then(function (res) {
             _this.chats = res.data.list;
+            setTimeout(() => {
+              document.getElementById('bottomMsg').scrollIntoView();
+            }, 50);
           })
         },
         sendMessage(){ // 发送一条消息
@@ -293,6 +297,9 @@
           this.chats.push(data);
           this.textarea = '';
           console.log(data);
+          setTimeout(() => {
+            document.getElementById('bottomMsg').scrollIntoView();
+          }, 50);
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
@@ -309,6 +316,7 @@
           })
           .then(function (res) {
               _this.recentMessage = res.data.list;
+
           })
         }
 
