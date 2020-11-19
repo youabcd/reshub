@@ -102,7 +102,7 @@
                 </el-aside>
                 <el-main>
                   <el-container style="height: 550px;">
-                    <el-main style="height: 80%;width: 100%">
+                    <el-main style="height: 80%;width: 100%" class="scrollBall">
                       <div v-for="(item,index) in chats" :key="index">
                         <!--自己发的消息-->
                         <van-row v-if="item.sendId==userId">
@@ -142,6 +142,7 @@
                       <div style="width: 100%;height: 70%;margin-top: 5px;">
                         <el-input
                           type="textarea"
+                          @keydown.native="listen($event)"
                           resize="none"
                           :autosize="{ minRows: 3, maxRows: 3}"
                           placeholder="请输入内容"
@@ -240,6 +241,7 @@
       },
       methods:{
         openChats(item, index){
+          this.scrollToBottom();
           this.whichFriend=index;
 
           localStorage.setItem("whichFriend",this.whichFriend.toString());
@@ -261,6 +263,20 @@
               document.getElementById('bottomMsg').scrollIntoView();
             }, 50);
           })
+
+        },
+        scrollToBottom(){
+          this.$nextTick(()=>{
+            let scrollBall = this.$el.querySelector(".scrollBall")
+            scrollBall.scrollTop = scrollBall.scrollHeight
+          })
+        },
+        listen (event) {
+          if (event.keyCode === 13&&!event.shiftKey) {
+            this.sendMessage() // 发送文本
+            event.preventDefault() // 阻止浏览器默认换行操作
+            return false
+          }
         },
         sendMessage(){ // 发送一条消息
           let data = {
@@ -328,6 +344,8 @@
         this.newChatWindows.friendName=this.$route.params.newFriendName;
         this.newChatWindows.newMessage='0';
         this.recentMessage.splice(0,0,this.newChatWindows);
+        this.openChats(this.recentMessage[this.whichFriend],this.whichFriend);
+        this.scrollToBottom()
       },
       mounted() {
         if (this.websock!==null) {
@@ -335,6 +353,7 @@
         }
         this.initWebSocket();
         this.getChatFriends();
+        this.scrollToBottom()
       },
       destroyed() {
         //页面销毁时关闭ws连接
@@ -396,6 +415,9 @@
   .el-scrollbar_wrap {
     overflow-x: hidden;
   }
-
+  .scrollBall{
+    height: 200px;
+    overflow-y:auto;
+  }
 
 </style>
