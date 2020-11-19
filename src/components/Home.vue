@@ -34,17 +34,15 @@
           require('../assets/bing02.jpg'),
           require('../assets/bing03.jpg'),
           require('../assets/bing04.jpg'),
-          require('../assets/bing05.jpg'),
           require('../assets/bing06.jpg'),
           require('../assets/bing07.jpg'),
           require('../assets/bing08.jpg'),
           require('../assets/bing09.jpg'),
           require('../assets/bing10.jpg'),
           require('../assets/bing11.jpg'),
-          require('../assets/bing12.jpg'),
           require('../assets/bing13.jpg'),
         ],
-        whichPic:parseInt(Math.random()*13),
+        whichPic:parseInt(Math.random()*11),
       }
     },
     methods:{

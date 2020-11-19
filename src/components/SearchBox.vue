@@ -41,32 +41,36 @@
           </van-col>
           <van-col span="2">
             <van-row></van-row>
-            <el-tooltip class="item" effect="light" content="删除该行" placement="right">
-              <el-link :underline="false" v-if="index>0" @click="declineSearchBox(item,index)" style="margin-top: 5px;text-align: left;font-size: 30px;">
-                <span><i class="el-icon-remove-outline"></i></span>
-              </el-link>
+            <el-tooltip class="item" effect="light" content="删除该行" placement="right" style="text-align: left;">
+              <el-button v-if="index>0" @click="declineSearchBox(item,index)" style="margin-top: 5px;" circle size="mini" type="danger">
+                <span><i class="el-icon-minus"></i></span>
+              </el-button>
             </el-tooltip>
           </van-col>
         </van-row>
       </div>
 
       <div style="margin-top: 15px;width: 70%;margin-left: 15%">
-        <van-row>
-          <van-col span="2" style="font-size: 18px;margin-top: 7px;">时间范围</van-col>
-          <van-col span="5">
+        <van-row style="">
+          <van-col span="2">
+            <div style="height: 40px;background: #ffffff;border-radius: 5px;">
+            <van-row><van-col span="24" style="font-size: 18px;margin-top:8px;">时间范围</van-col></van-row>
+            </div>
+          </van-col>
+          <van-col span="5" >
             <el-date-picker type="date" placeholder="选择开始日期" v-model="dataStart" style="width: 100%;"></el-date-picker>
           </van-col>
-          <van-col span="5">
+          <van-col span="5" >
             <el-date-picker type="date" placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="6"></van-col>
           <van-col span="6" style="text-align: left;font-size: 20px;">
             <span>
-              <el-link @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-link>
+              <el-button type="success" size="small" @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-button>
             </span>
             <span>&nbsp|&nbsp</span>
             <span>
-              <el-link @click="cleanSearchBox">重设</el-link>
+              <el-button type="danger" size="small" @click="cleanSearchBox"><i class="el-icon-close"></i> 重设</el-button>
             </span>
           </van-col>
         </van-row>
@@ -95,7 +99,6 @@
         */
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
-
         ],
         dataStart:'',
         dataEnd:'',
@@ -111,16 +114,62 @@
             type: 'error'
           });
         }
-        else{
-          localStorage.setItem("keyWords", this.keyWords);
-          /*if(this.$route.path=='/SearchResult'){
-            this.$emit("searchEvent",this.keyWords);
+        else{/*type {1：主题；2：标题；3：作者；4：关键词；5：摘要；6：全文}*/
+          var k="(";
+          for (var i=0;i<this.searchKey.length;i++){
+            if(i===0){
+              if(this.searchKey[i].type==='1'){
+                k=k+"主题 ";
+              }
+              else if(this.searchKey[i].type==='2'){
+                k=k+"标题 ";
+              }
+              else if(this.searchKey[i].type==='3'){
+                k=k+"作者 ";
+              }
+              else if(this.searchKey[i].type==='4'){
+                k=k+"关键词 ";
+              }
+              else if(this.searchKey[i].type==='5'){
+                k=k+"摘要 "
+              }
+              else if(this.searchKey[i].type==='6'){
+                k=k+"全文 "
+              }
+              k=k+this.searchKey[i].words+")";
+            }
+            else {
+              if(this.searchKey[i].boolType==='1'){
+                k=k+" AND ("
+              }
+              else if(this.searchKey[i].boolType==='2'){
+                k=k+" OR ("
+              }
+              else if(this.searchKey[i].boolType==='3'){
+                k=k+" NOT ("
+              }
+              if(this.searchKey[i].type==='1'){
+                k=k+"主题 ";
+              }
+              else if(this.searchKey[i].type==='2'){
+                k=k+"标题 ";
+              }
+              else if(this.searchKey[i].type==='3'){
+                k=k+"作者 ";
+              }
+              else if(this.searchKey[i].type==='4'){
+                k=k+"关键词 ";
+              }
+              else if(this.searchKey[i].type==='5'){
+                k=k+"摘要 "
+              }
+              else if(this.searchKey[i].type==='6'){
+                k=k+"全文 "
+              }
+              k=k+this.searchKey[i].words+")";
+            }
           }
-          else {
-            this.$router.push({
-              path: '/SearchResult',
-            });
-          }*/
+          localStorage.setItem("keyWords",k);
           window.open("http://localhost:8080/#/SearchResult");
         }
       },//搜索
