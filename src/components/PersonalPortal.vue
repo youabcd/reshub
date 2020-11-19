@@ -6,11 +6,12 @@
         	<div id="author_intro_wr">
             <div class="person_image">
         			<a href="#" class="person_portraitwr">
-        				<img src="../assets/trump.jpg" alt="学者头像" class="" width="112" height="112">
+        				<img :src='avatar' alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
                 <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
-        			  <el-button style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+        			  <el-button v-if="this.likeStatus === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+                <el-button v-if="this.likeStatus === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
         			</div>
         		</div>
         		<div class="person_baseinfo">
@@ -24,14 +25,14 @@
                     :content="mail">
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
-                <el-popover
+                <!-- <el-popover
                     placement="bottom"
                     title="电话"
                     width="200"
                     trigger="hover"
                     :content="phone">
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
-                </el-popover>
+                </el-popover> -->
         			</div>
         			<!-- <div class="p_volume">
         				1400人看过
@@ -130,7 +131,6 @@
               {{'机构' + o }}
             </div>
           </el-card>
-          
         </el-col>
       </el-main>
     </el-container>
@@ -144,11 +144,13 @@
       name: "PersonalPortal",
       data() {
         return {
+          avatar:require('../assets/trump.jpg'),
+          likeStatus: true,
           menuIndex: '0',
           name:'Trump名字最多可以这么长',
           institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
-          phone:'123',
+          // phone:'123',
           quoted:'132',
           products:'321',
           domain:['假新闻','吹牛','政治斗争','建墙'],
