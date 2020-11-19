@@ -239,7 +239,6 @@
       },
       methods:{
         openChats(item, index){
-          this.initWebSocket();
           this.whichFriend=index;
 
           localStorage.setItem("whichFriend",this.whichFriend.toString());
@@ -268,6 +267,7 @@
             'chatId': this.recentMessage[this.whichFriend].chatId,
           };
           this.websock.send(JSON.stringify(data));
+          console.log("send")
         },
 
         setNowActive(id){
