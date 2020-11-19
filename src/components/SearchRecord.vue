@@ -15,6 +15,7 @@
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
+        @cell-click="search"
         stripe
         style="width: 100%;margin-top: 10px"
         @selection-change="handleSelectionChange">
@@ -104,6 +105,12 @@
         }
       },
       methods: {
+        search(row){
+          localStorage.setItem("keyWords",row.history);
+          this.$router.push({
+            path:'/SearchResult',
+          });
+        },
         handleSelectionChange(val) {
           this.multipleSelection = val;
         },
