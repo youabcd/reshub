@@ -105,20 +105,8 @@
       },
       methods: {
         handleSelectionChange(val) {
-          // console.log(val);
           this.multipleSelection = val;
-          // console.log(this.multipleSelection);
         },
-        // handleCommand(command) {
-        //   if (command === 'a') {
-        //     //传递删除数据
-        //
-        //     this.$message('删除成功');
-        //   }
-        //   if (command === 'b') {
-        //     this.$message('功能待定');
-        //   }
-        // }
         deleteHistory(index) {
           //传递数据
           this.tableData.splice(index,1);
