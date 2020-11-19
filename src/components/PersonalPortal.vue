@@ -10,8 +10,8 @@
         			</a>
         			<div style="margin: auto;">
                 <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
-        			  <el-button v-if="this.likeStatus === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.likeStatus === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
+        			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
         			</div>
         		</div>
         		<div class="person_baseinfo">
@@ -34,9 +34,9 @@
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
                 </el-popover> -->
         			</div>
-        			<!-- <div class="p_volume">
-        				1400人看过
-        			</div> -->
+        			<div class="p_volume">
+        				{{visitNum}}人看过|{{followNum}}人正在关注
+        			</div>
         			<div class="p_affiliate">
         				{{institute}}
         			</div>
@@ -52,18 +52,14 @@
                     <p class="p_ach_num">{{products}}</p>
                   </li>
                 </ul>
-        			</div>
-        			</br>
-        			<div class="person_editinfo">
-        				<div class="">
-        					<span class="c_gray prefix_label">领域:&nbsp;</span>
-        					<span class="person_domain person_text">
-        						|<span v-for="(u,i) in domain">&nbsp;{{u}}&nbsp;|</span>
-        					</span>
-        				</div>
-        			</div>
-        	  </div>
-        	</div>
+            </div>
+            </br>
+            <div class="person_editinfo">
+              <span class="c_gray prefix_label">领域：</span>
+              <span class="person_domain person_text">{{domain}}</span>
+            </div>
+          </div>
+        </div>
       </el-header>
       <el-main>
         <el-col :span="17">
@@ -108,7 +104,7 @@
             <el-pagination
               background
               layout="prev, pager, next"
-              :total="800"
+              :total="100"
               style="margin-top: 10px;height: 100px">
             </el-pagination>
           </div>
@@ -118,19 +114,19 @@
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-for="o in 2" :key="o" class="text item">
-              {{'路人' + o }}
+            <div v-for="o in coopList" :key="o" class="text item">
+              {{o}}
             </div>
           </el-card>
           
-          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
-            <div v-for="o in 2" :key="o" class="text item">
-              {{'机构' + o }}
+            <div v-for="o in coopList" :key="o" class="text item">
+              {{o}}
             </div>
-          </el-card>
+          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -144,16 +140,18 @@
       name: "PersonalPortal",
       data() {
         return {
-          avatar:require('../assets/trump.jpg'),
-          likeStatus: true,
           menuIndex: '0',
+          avatar:require('../assets/trump.jpg'),
+          isFollowing: true,
+          visitNum:'1400',
+          followNum:'0',
           name:'Trump名字最多可以这么长',
           institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
-          // phone:'123',
           quoted:'132',
           products:'321',
-          domain:['假新闻','吹牛','政治斗争','建墙'],
+          domain:'吹牛',
+          coopList:['r','g','b','u','w'],
           tableData0: [
             {
               paperId:'0',
@@ -278,7 +276,7 @@
   
   #author_intro_wr .person_baseinfo{
   	float:left;
-  	width:555px;
+  	width:700px;
   	margin-right:30px;
   	margin-top:20px
   }
@@ -293,13 +291,13 @@
   #author_intro_wr .p_name .c-icon{
   	margin:9px 0 0 12px;vertical-align:top
   }
-/*  #author_intro_wr .p_volume{
+  #author_intro_wr .p_volume{
   	font-size:14px;
     color:#999;
     margin-top:10px;
     margin-left:20px;
     float:left
-  } */
+  }
   #author_intro_wr .p_scholarID{
   	width:192px;
   	height:24px;
