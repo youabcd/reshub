@@ -16,20 +16,37 @@
           <i class="el-icon-document" style="margin-left: 25px"></i>
           <span slot="title">个人信息</span>
         </el-menu-item>
-        <el-menu-item index="2">
-          <i class="el-icon-s-check" style="margin-left: 25px"></i>
-          <span slot="title">审核</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>
-          <span slot="title">申诉</span>
-        </el-menu-item>
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-s-check" style="margin-left: 25px"></i>
+            <span>审核</span>
+          </template>
+          <el-menu-item index="2-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
+          <el-menu-item index="2-2"><span style="margin-left: 38px">已通过</span></el-menu-item>
+          <el-menu-item index="2-3"><span style="margin-left: 38px">已拒绝</span></el-menu-item>
+        </el-submenu>
+<!--        <el-menu-item index="2">-->
+<!--          <i class="el-icon-s-check" style="margin-left: 25px"></i>-->
+<!--          <span slot="title">审核</span>-->
+<!--        </el-menu-item>-->
+        <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>
+            <span>申诉</span>
+          </template>
+          <el-menu-item index="3-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
+          <el-menu-item index="3-2"><span style="margin-left: 38px">已通过</span></el-menu-item>
+          <el-menu-item index="3-3"><span style="margin-left: 38px">已拒绝</span></el-menu-item>
+        </el-submenu>
+<!--        <el-menu-item index="3">-->
+<!--          <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>-->
+<!--          <span slot="title">申诉</span>-->
+<!--        </el-menu-item>-->
       </el-menu>
     </el-aside>
     <el-container>
       <el-header style="position: relative">
         <div style="position: absolute;right: 10px;top: 50%;transform: translate(0, -50%);" class="avatar">
-
         </div>
       </el-header>
       <el-main>
@@ -55,13 +72,45 @@
         <el-drawer
           :visible.sync="drawer"
           :direction="direction"
-          v-if="drawer"
-          :before-close="handleClose">
+          v-if="drawer">
           <div>
-            <span>姓名</span>
-            <div style="float: right">666</div>
+            <van-row>
+              <van-col span="8">
+                <span>日期</span>
+              </van-col>
+              <van-col span="8" style="margin-top: 3px;text-align: left">
+                <span>{{drawerData.date}}</span>
+              </van-col>
+              <van-col span="8"></van-col>
+            </van-row>
           </div>
-          <div class="drawerTable">{{drawerData}}</div>
+
+          <div style="margin-top: 20px">
+            <van-row>
+              <van-col span="8">
+                <span>姓名</span>
+              </van-col>
+              <van-col span="8" style="text-align: left">
+                <span>{{drawerData.name}}</span>
+              </van-col>
+              <van-col span="8"></van-col>
+            </van-row>
+          </div>
+
+          <div style="margin-top: 20px">
+            <van-row>
+              <van-col span="8">
+                <span>审核内容</span>
+              </van-col>
+              <van-col span="16" style="text-align: left">
+                <span>{{drawerData.address}}</span>
+              </van-col>
+            </van-row>
+          </div>
+<!--          <div style="margin-top: 30px">-->
+<!--            <div style="display: inline;float: left;margin-left: 100px">姓名</div>-->
+<!--            <div style="display: inline;border: 1px solid rgba(0,0,0,.1);padding: 10px;width: 200px">{{drawerData.name}}</div>-->
+<!--          </div>-->
           <el-button type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass">通过</el-button>
           <el-button type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject">拒绝</el-button>
         </el-drawer>
@@ -81,7 +130,7 @@
             <el-button @click="dialogVisible = true">修改密码</el-button>
           </div>
         </div>
-        <div v-if="menuIndex === '2'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">
+        <div v-if="menuIndex === '2-1'">
           <el-table
             :data="tableData"
             border
@@ -99,7 +148,7 @@
             </el-table-column>
             <el-table-column
               prop="address"
-              label="地址"
+              label="审核内容"
               >
             </el-table-column>
             <el-table-column
@@ -141,7 +190,7 @@
         }
       };
       return {
-        menuIndex: "2",
+        menuIndex: "2-1",
         dialogVisible: false,
         drawer: false,
         direction: 'rtl',
@@ -213,13 +262,6 @@
       handleSelect (key) {
         this.menuIndex = key;
       },
-      handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
       view(index) {
         this.drawerData.date=this.tableData[index].date;
         this.drawerData.name=this.tableData[index].name;
@@ -228,10 +270,10 @@
         // console.log(this.drawerData);
       },
       pass() {
-
+        this.drawer=false;
       },
       reject() {
-
+        this.drawer=false;
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
