@@ -247,6 +247,17 @@
           console.log(localStorage.getItem("whichFriend"));
 
           this.recentMessage[index].newMessage='0';
+
+          let _this = this;
+          axios.get(baseUrl+'/getChats',{
+            params:{
+              myId: _this.userId,
+              friendId: _this.recentMessage[index].friendId,
+            }
+          })
+          .then(function (res) {
+            _this.chats = res.data.list;
+          })
         },
         sendMessage(){ // 发送一条消息
           let data = {
@@ -277,11 +288,11 @@
           console.log("WebSocket连接成功")
         },
         websocketonmessage(e){ //数据接收
-          console.log("收到消息")
+          console.log("收到消息");
           let data = JSON.parse(e.data);
           this.chats.push(data);
+          this.textarea = '';
           console.log(data);
-          //this.chats=data;
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
