@@ -64,7 +64,7 @@
       name: "TopBar",
       data(){
           return{
-            userId:localStorage.getItem("myId"),
+            userId:'',
             userImage:require('../../static/logo2.png'),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
@@ -135,8 +135,10 @@
         }
       },
       mounted() {
-        localStorage.setItem("myId",this.userId);
-
+        if(localStorage.getItem("myId")==null){
+          localStorage.setItem("myId",'');
+        }
+        this.userId=localStorage.getItem("myId");
       },
     }
 </script>
