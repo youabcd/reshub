@@ -33,9 +33,9 @@
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
                 </el-popover>
         			</div>
-        			<div class="p_volume">
+        			<!-- <div class="p_volume">
         				1400人看过
-        			</div>
+        			</div> -->
         			<div class="p_affiliate">
         				{{institute}}
         			</div>
@@ -291,8 +291,13 @@
   #author_intro_wr .p_name .c-icon{
   	margin:9px 0 0 12px;vertical-align:top
   }
-  #author_intro_wr .p_volume{
-  	font-size:14px;color:#999;margin-top:10px;margin-left:20px;float:left}
+/*  #author_intro_wr .p_volume{
+  	font-size:14px;
+    color:#999;
+    margin-top:10px;
+    margin-left:20px;
+    float:left
+  } */
   #author_intro_wr .p_scholarID{
   	width:192px;
   	height:24px;
