@@ -135,6 +135,7 @@
                           </van-col>
                         </van-row>
                       </div>
+                      <div id="bottomMsg"></div>
                     </el-main>
                     <el-footer style="height: 20%;">
                       <div></div>
@@ -239,7 +240,6 @@
       },
       methods:{
         openChats(item, index){
-          this.initWebSocket();
           this.whichFriend=index;
 
           localStorage.setItem("whichFriend",this.whichFriend.toString());
@@ -247,6 +247,20 @@
           console.log(localStorage.getItem("whichFriend"));
 
           this.recentMessage[index].newMessage='0';
+
+          let _this = this;
+          axios.get(baseUrl+'/getChats',{
+            params:{
+              myId: _this.userId,
+              friendId: _this.recentMessage[index].friendId,
+            }
+          })
+          .then(function (res) {
+            _this.chats = res.data.list;
+            setTimeout(() => {
+              document.getElementById('bottomMsg').scrollIntoView();
+            }, 50);
+          })
         },
         sendMessage(){ // 发送一条消息
           let data = {
@@ -257,6 +271,7 @@
             'chatId': this.recentMessage[this.whichFriend].chatId,
           };
           this.websock.send(JSON.stringify(data));
+          console.log("send")
         },
 
         setNowActive(id){
@@ -277,11 +292,14 @@
           console.log("WebSocket连接成功")
         },
         websocketonmessage(e){ //数据接收
-          console.log("收到消息")
+          console.log("收到消息");
           let data = JSON.parse(e.data);
           this.chats.push(data);
+          this.textarea = '';
           console.log(data);
-          //this.chats=data;
+          setTimeout(() => {
+            document.getElementById('bottomMsg').scrollIntoView();
+          }, 50);
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
@@ -298,6 +316,7 @@
           })
           .then(function (res) {
               _this.recentMessage = res.data.list;
+
           })
         }
 
