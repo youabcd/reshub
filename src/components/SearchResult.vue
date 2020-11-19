@@ -1,49 +1,50 @@
 <template>
   <div>
-    <!--    <el-container>-->
     <TopBar></TopBar>
-    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>
-
+<!--    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>-->
     <el-container style="height: 100%" >
-      <!--        style="background-color: #f0f2f5"-->
-
-      <el-aside width="15%">
+      <el-aside width="15%" style="height: 100%">
         <div style="width: 12%;display: inline;">
-          <!--            border: solid 2px #666666-->
           <h5>学科</h5>
-          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
-            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
-<!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
-<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
-<!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+          <el-menu>
+            <el-checkbox-group v-model="checkedSubject" >
+              <div class="checkBox">
+                <el-checkbox v-for="Subject in subjectOptions" :label="Subject" :key="Subject" class="checkBox">{{Subject}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
+          </el-menu>
+        </div>
+
+        <div style="width: 12%;display: inline;">
+          <h5>作者</h5>
+          <el-menu>
+            <el-checkbox-group v-model="checkedAuthor" >
+              <div class="checkBox">
+                <el-checkbox v-for="Author in authorOptions" :label="Author" :key="Author" class="checkBox">{{Author}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
           </el-menu>
         </div>
         <div style="width: 12%;display: inline;">
-          <!--            border: solid 2px #666666-->
-          <h5>作者</h5>
-          <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="vertical" @select="handleSelect2">
-            <div class="checkBox"><el-checkbox v-model="checked">选a项111111</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <div class="checkBox"><el-checkbox v-model="checked">备选a项1</el-checkbox></div>
-            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项12</el-checkbox></div>-->
-            <!--            <div style="height: 30px"><el-checkbox v-model="checked">备选项1</el-checkbox></div>-->
-            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
-            <!--            <div style="text-align: left;height: 30px"><el-checkbox v-model="checked">备选项</el-checkbox></div>-->
+          <h5>年限</h5>
+          <el-menu>
+            <el-checkbox-group v-model="checkedTime" >
+              <div class="checkBox">
+                <el-checkbox v-for="Time in timeOptions" :label="Time" :key="Time" class="checkBox">{{Time}}</el-checkbox>
+              </div>
+            </el-checkbox-group>
           </el-menu>
         </div>
         <div style="margin-top: 30px">
           <el-button type="primary" plain>筛选</el-button>
-          <el-button type="danger" plain>重置</el-button>
+          <el-button type="danger" :disabled="checkedSubject.length === 0 && checkedAuthor.length === 0 && checkedTime.length === 0" plain @click="clearList">重置</el-button>
         </div>
 
       </el-aside>
 
-      <el-main style="width: 85%">
+      <div style="width: 85%;margin-left: 7px;margin-top: 30px">
         <div style="position: relative">
-          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 75%;position: relative">
+          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
@@ -51,11 +52,21 @@
                 <el-menu-item index="1" style="width: 120px">●期刊</el-menu-item>
                 <el-menu-item index="2" style="width: 120px">●会议</el-menu-item>
                 <el-menu-item index="3" style="width: 120px">●报告</el-menu-item>
-<!--                <el-menu-item index="5" style="width: 120px">●专利</el-menu-item>-->
-<!--                <el-menu-item index="6" style="width: 120px">●成果</el-menu-item>-->
-<!--                <el-menu-item index="7" style="width: 120px">●代码</el-menu-item>-->
               </el-menu>
             </div>
+            <el-dialog
+              title="使用微信扫一扫"
+              :visible.sync="dialogVisible"
+              v-if="dialogVisible"
+              show-close="false"
+              width="30%">
+              <div>
+                <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
+              </div>
+              <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+                  </span>
+            </el-dialog>
             <div>
               <!--              <el-card class="box-card" shadow="never">-->
               <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
@@ -65,18 +76,41 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                  </el-tooltip>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
+
+<!--                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">-->
+<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="分享到微博" placement="bottom">-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;margin-bottom: 10px">-->
+<!--&lt;!&ndash;                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="gotoWeibo(item.link,item.title)"></i>&ndash;&gt;-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="分享到微信" placement="bottom">-->
+<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="openQRcode(item.link)"></i>-->
+<!--                  </el-tooltip>-->
+<!--                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
+<!--                  </el-tooltip>-->
                 </div>
                 <!--                  </div>-->
 
@@ -112,18 +146,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                  </el-tooltip>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -139,7 +182,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -158,18 +201,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                  </el-tooltip>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -186,7 +238,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -205,18 +257,27 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                    <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                  </el-tooltip>
-                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                  </el-tooltip>
-                  <!--                      <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-                  <!--                        <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-                  <!--                      </el-tooltip>-->
-                  <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                  </el-tooltip>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                  </span>
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  </span>
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                    </el-tooltip>
+                  </span>
                 </div>
                 <!--                  </div>-->
 
@@ -233,7 +294,7 @@
                       </el-link>
                     </span>
                   </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0px">
+                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>{{item.type}}</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
@@ -256,8 +317,8 @@
             </div>
           </div>
 
-          <div style="position: absolute;left: 77%;top: 0;width: 23%;display: inline;">
-            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold">🔥热点</p>
+          <div style="position: absolute;left: 78%;top: 0;width: 21%;display: inline;margin-bottom: 20px">
+            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥热点</p>
             <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
 <!--              <div >-->
                 <div style="text-align: left;margin-top: -20px;cursor: pointer">
@@ -293,7 +354,7 @@
             </div>
           </div>
         </div>
-      </el-main>
+      </div>
     </el-container>
   </div>
 </template>
@@ -303,7 +364,6 @@
   import BottomBar from "./BottomBar";
   import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
-
   export default {
     name: "SearchResult",
     components:{
@@ -314,14 +374,22 @@
     data() {
       return {
         btnFlag: false,
+        dialogVisible: false,
         keyWords:'',
         activeIndex: "0",
         menuIndex: "0",
+        subjectOptions : ['🤺', '👨‍❤️‍👨', '你🐎呢？'],
+        authorOptions : ['Zhang San', 'Li Ming'],
+        timeOptions : ['1990', '2000', '2010', '2020'],
+        checkedSubject: [],
+        checkedAuthor: [],
+        checkedTime: [],
+        // cities: cityOptions,
         tableData0: [{
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author: ['Li Ming','Zhang San'],
+          author: ['Li Ming','Zhang San','Clearlove'],
           type:"期刊",
           collectStatus: true,
           collectionSum:6,
@@ -369,7 +437,7 @@
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author:['Li Ming','Zhang San'],
+          author:['Li Ming','Zhang San','Clearlove'],
           type:"期刊",
           collectStatus: true,
           collectionSum:666,
@@ -578,7 +646,7 @@
       },
 
       Copy() {
-        let clipboard = new Clipboard('.el-icon-share');
+        let clipboard = new Clipboard('.el-icon-document-copy');
         clipboard.on('success', e => {
           this.$message({
             showClose: true,
@@ -597,22 +665,36 @@
         })
       },
 
-      KeyRegExp(val, keyword) {
-        val = val + '';
-        if (val.indexOf(keyword) !== -1 && keyword !== '') {
-          return val.replace(keyword, '<span style="color: #f00; ">' + keyword + '</span>')
-        } else {
-          return val
-        }
+      clearList() {
+        this.checkedSubject = [];
+        this.checkedAuthor = [];
+        this.checkedTime = [];
+      },
+
+      filter() {
+
+      },
+
+      gotoWeibo(url,title) {
+        window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
+      },
+
+      openQRcode(url) {
+        this.QRlink=url;
+        this.dialogVisible=true;
+      },
+
+      handleClose(done) {
+        Object.assign(this.$data, this.$options.data())
       },
     }
   }
 </script>
 
 <style >
-  .result{
-    min-height: calc(100vh - 75px);
-  }
+  /*.result{*/
+  /*  min-height: calc(100vh - 75px);*/
+  /*}*/
   /*.el-select .el-input {*/
   /*  width: 100px;*/
   /*  height: 75px;*/
@@ -621,6 +703,13 @@
   /*  background-color: #fff;*/
   /*  width: 100px;*/
   /*  height: 75px;*/
+  /*}*/
+  /*.icon{*/
+  /*  height: 60px;*/
+  /*  width: 55px;*/
+  /*  position: fixed;*/
+  /*  bottom: 35px;*/
+  /*  right: 15px;*/
   /*}*/
   .text {
     font-size: 14px;
@@ -631,13 +720,7 @@
   .box-card {
     width: 100%;
   }
-  .icon{
-    height: 60px;
-    width: 55px;
-    position: fixed;
-    bottom: 35px;
-    right: 15px;
-  }
+
   .back-top-circle{
     position: fixed;
     background-color: #fff;
@@ -658,7 +741,8 @@
 
   .checkBox{
     text-align: left;
-    margin-left: 30px;
-    height: 30px;
+    margin-left: 40px;
+    margin-bottom: 10px;
+    /*height: 30px;*/
   }
 </style>

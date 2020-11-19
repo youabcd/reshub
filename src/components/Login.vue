@@ -37,12 +37,12 @@ export default {
   methods:{
     login(){
       let _this=this;
-      axios.get(baseUrl+'/login')
+      axios.post(baseUrl+'/identityCheck')
         .then(function (response) {
           console.log(response);
           var success;
-          success=response.data.success;
-          if(success=='true'){
+          success=response.data.result;
+          if(success==true){
             localStorage.setItem("myId",_this.account);
             _this.$router.push({
               path:'/',

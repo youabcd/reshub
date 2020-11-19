@@ -1,9 +1,10 @@
 <template>
   <div style="">
     <TopBar></TopBar>
+<!--    <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>-->
       <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 15%;margin-top: 2%;width: 70%;">
         <div style="position: relative;height: 50px;margin-top: 20px">
-          <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 10px">
+          <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 5px">
             <i class="el-icon-star-off"> 我的收藏</i>
           </div>
         </div>
@@ -16,6 +17,19 @@
             <el-menu-item index="3" style="width: 125px">●报告</el-menu-item>
           </el-menu>
         </div>
+        <el-dialog
+          title="使用微信扫一扫"
+          :visible.sync="dialogVisible"
+          v-if="dialogVisible"
+          show-close="false"
+          width="30%">
+          <div>
+            <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
+          </div>
+          <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+          </span>
+        </el-dialog>
         <div>
 <!--          <el-card class="box-card" shadow="never">-->
             <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
@@ -23,32 +37,44 @@
                 <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
               </div>
               <div style="display: inline;position: absolute;right: 20px;top: 0">
-                <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
-                </el-tooltip>
-<!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-<!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-<!--                  </el-tooltip>-->
-
-                <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                  <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-                </el-tooltip>
-<!--                  <el-dialog-->
-<!--                    title="点击复制链接或扫描二维码"-->
-<!--                    :visible.sync="dialogVisible"-->
-<!--                    show-close="false"-->
-<!--                    width="30%">-->
-<!--                    <div @click="Copy">-->
-<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
-<!--                    </div>-->
-<!--                    <span slot="footer" class="dialog-footer">-->
-<!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
-<!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
-<!--                    </span>-->
-
-<!--                  </el-dialog>-->
-
-
+<!--                <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">-->
+<!--                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>-->
+<!--                </el-tooltip>-->
+<!--                <el-tooltip class="item" effect="dark" content="分享到微博" placement="bottom">-->
+<!--                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="gotoWeibo(item.link,item.title)"></i>-->
+<!--                </el-tooltip>-->
+<!--                <el-tooltip class="item" effect="dark" content="分享到微信" placement="bottom">-->
+<!--                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="openQRcode(item.link)"></i>-->
+<!--                </el-tooltip>-->
+<!--                <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                  <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
+<!--                </el-tooltip>-->
+                <span>
+                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                  </el-tooltip>
+                </span>
+                <span>
+                  <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                </span>
+                <span style="margin-left: 5px;margin-right: 2px">
+                  <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                </span>
+                <span>
+                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                  </el-tooltip>
+                </span>
+<!--                <el-dropdown placement="top">-->
+<!--                  <span class="el-dropdown-link">-->
+<!--                    <i class="el-icon-share" style="font-size: 25px;width: 30px"></i>-->
+<!--                  </span>-->
+<!--                  <el-dropdown-menu slot="dropdown">-->
+<!--                    <el-dropdown-item><span @click="gotoWeibo(item.link,item.title)"><i class="el-icon-share"> 分享到微博</i></span></el-dropdown-item>-->
+<!--                    <el-dropdown-item><span @click="openQRcode(item.link)"><i class="el-icon-share"> 分享到微信</i></span></el-dropdown-item>-->
+<!--                    <el-dropdown-item><i class="el-icon-document-copy" :data-clipboard-text=item.link @click="Copy"> 复制链接</i></el-dropdown-item>-->
+<!--                  </el-dropdown-menu>-->
+<!--                </el-dropdown>-->
               </div>
 
               <div style="text-align: left;position: absolute;top: 60px;">
@@ -78,16 +104,36 @@
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
-              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
-              </el-tooltip>
-              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-              <!--                  </el-tooltip>-->
+              <span>
+                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                  </el-tooltip>
+              </span>
+              <span>
+                  <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+              </span>
+              <span style="margin-left: 5px;margin-right: 2px">
+                  <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+              </span>
+              <span>
+                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                  </el-tooltip>
+              </span>
 
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
+<!--              <el-dialog-->
+<!--                title="使用微信扫一扫"-->
+<!--                :visible.sync="dialogVisible"-->
+<!--                v-if="dialogVisible"-->
+<!--                show-close="false"-->
+<!--                width="30%">-->
+<!--                <div>-->
+<!--                  <img src="http://chart.apis.google.com/chart?cht=qr&chs=104x104&chld=L|0&chl=http://www.baidu.com" alt="" width="200" height="200">-->
+<!--                </div>-->
+<!--                <span slot="footer" class="dialog-footer">-->
+<!--                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
+<!--                  </span>-->
+<!--              </el-dialog>-->
               <!--                  <el-dialog-->
               <!--                    title="点击复制链接或扫描二维码"-->
               <!--                    :visible.sync="dialogVisible"-->
@@ -134,30 +180,22 @@
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
-              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
-              </el-tooltip>
-              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-              <!--                  </el-tooltip>-->
-
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
-              <!--                  <el-dialog-->
-              <!--                    title="点击复制链接或扫描二维码"-->
-              <!--                    :visible.sync="dialogVisible"-->
-              <!--                    show-close="false"-->
-              <!--                    width="30%">-->
-              <!--                    <div @click="Copy">-->
-              <!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
-              <!--                    </div>-->
-              <!--                    <span slot="footer" class="dialog-footer">-->
-              <!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
-              <!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
-              <!--                    </span>-->
-
-              <!--                  </el-dialog>-->
+              <span>
+                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                  </el-tooltip>
+                </span>
+              <span>
+                  <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                </span>
+              <span style="margin-left: 5px;margin-right: 2px">
+                  <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                </span>
+              <span>
+                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                  </el-tooltip>
+                </span>
 
 
             </div>
@@ -190,32 +228,22 @@
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
-              <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
-              </el-tooltip>
-              <!--                  <el-tooltip class="item" effect="dark" content="举报" placement="bottom">-->
-              <!--                    <i class="el-icon-warning-outline" style="font-size: 25px;width: 30px"></i>-->
-              <!--                  </el-tooltip>-->
-
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
-              </el-tooltip>
-              <!--                  <el-dialog-->
-              <!--                    title="点击复制链接或扫描二维码"-->
-              <!--                    :visible.sync="dialogVisible"-->
-              <!--                    show-close="false"-->
-              <!--                    width="30%">-->
-              <!--                    <div @click="Copy">-->
-              <!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" ></i>-->
-              <!--                    </div>-->
-              <!--                    <span slot="footer" class="dialog-footer">-->
-              <!--&lt;!&ndash;                      <el-button @click="dialogVisible = false">取 消</el-button>&ndash;&gt;-->
-              <!--                      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>-->
-              <!--                    </span>-->
-
-              <!--                  </el-dialog>-->
-
-
+              <span>
+                  <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                  </el-tooltip>
+                </span>
+              <span>
+                  <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                </span>
+              <span style="margin-left: 5px;margin-right: 2px">
+                  <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                </span>
+              <span>
+                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                  </el-tooltip>
+                </span>
             </div>
 
             <div style="text-align: left;position: absolute;top: 60px;">
@@ -277,6 +305,7 @@
           dialogVisible: false,
           activeIndex: "0",
           menuIndex: "0",
+          QRlink: "",
           tableData: [{
           }],
           tableData0: [{
@@ -472,7 +501,7 @@
         },
 
         Copy() {
-          let clipboard = new Clipboard('.el-icon-share');
+          let clipboard = new Clipboard('.el-icon-document-copy');
           clipboard.on('success', e => {
             this.$message({
               showClose: true,
@@ -496,13 +525,20 @@
           window.open(url,url)
         },
 
-        // handleClose(done) {
-        //   this.$confirm('确认关闭？')
-        //     .then(_ => {
-        //       done();
-        //     })
-        //     .catch(_ => {});
-        // }
+        gotoWeibo(url,title) {
+          window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
+        },
+
+        openQRcode(url) {
+          this.QRlink=url;
+          this.dialogVisible=true;
+        },
+
+        handleClose(done) {
+          Object.assign(this.$data, this.$options.data())
+        },
+
+
       }
     }
 

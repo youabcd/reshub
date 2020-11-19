@@ -102,10 +102,10 @@
                 </el-aside>
                 <el-main>
                   <el-container style="height: 550px;">
-                    <el-main style="height: 80%;width: 100%">
+                    <el-main style="height: 80%;width: 100%" class="scrollBall">
                       <div v-for="(item,index) in chats" :key="index">
                         <!--自己发的消息-->
-                        <van-row v-if="item.sender==userId">
+                        <van-row v-if="item.sendId==userId">
                           <van-col span="20">
                             <div class="message1">
                               {{item.msg}}
@@ -120,7 +120,7 @@
                           </van-col>
                         </van-row>
                         <!--别人发的消息-->
-                        <van-row v-if="item.sender!=userId">
+                        <van-row v-if="item.sendId!=userId">
                           <van-col span="4">
                             <van-image round fit="cover" width="35px" height="35px" :src="chatImage" clickable>
                               <template v-slot:loading>
@@ -135,12 +135,14 @@
                           </van-col>
                         </van-row>
                       </div>
+                      <div id="bottomMsg"></div>
                     </el-main>
                     <el-footer style="height: 20%;">
                       <div></div>
                       <div style="width: 100%;height: 70%;margin-top: 5px;">
                         <el-input
                           type="textarea"
+                          @keydown.native="listen($event)"
                           resize="none"
                           :autosize="{ minRows: 3, maxRows: 3}"
                           placeholder="请输入内容"
@@ -165,6 +167,7 @@
 <script>
     import TopBar from "./TopBar";
     import baseUrl from "./baseUrl";
+    import axios from 'axios';
 
     export default {
       name: "Message",
@@ -173,7 +176,7 @@
             checkIp1:'',
             textarea:'',
             websock: null,
-            userId:'aaa',
+            userId: localStorage.getItem('myId'),
             userImage:require('../../static/logo2.png'),
             chatImage:require('../../static/logo2.png'),
             nowActive:'1',
@@ -199,7 +202,8 @@
             commentWidth:'80',
 
             recentMessage:[
-              {friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
+              {chatId: '1', friendId: '456', friendName:'456',newMessage:'1',friendHead:require('../../static/logo2.png')},
+              {chatId: '', friendId: '123', friendName:'youabcd',newMessage:'1',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcd名字特别长sjfksjdlkfjklfds',newMessage:'2',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfgfgf',newMessage:'3',friendHead:require('../../static/logo2.png')},
               {friendName:'youabcdasdfggf',newMessage:'4',friendHead:require('../../static/logo2.png')},
@@ -217,18 +221,18 @@
               {friendName:'a',newMessage:'16'},
             ],
             chats:[
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:12'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:13'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:14'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:15'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:16'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:17'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:18'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:19'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:20'},
-              {sender:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:21'},
-              {sender:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:22'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:11'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:12'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:13'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:14'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:15'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:16'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:17'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:18'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:19'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:20'},
+              {sendId:'ccc',msg:'吃饭',sendTime:'2020/10/29 17:21'},
+              {sendId:'aaa',msg:'吃饭',sendTime:'2020/10/29 17:22'},
             ]
           }
       },
@@ -237,23 +241,53 @@
       },
       methods:{
         openChats(item, index){
-          this.initWebSocket();
+          this.scrollToBottom();
           this.whichFriend=index;
 
           localStorage.setItem("whichFriend",this.whichFriend.toString());
 
           console.log(localStorage.getItem("whichFriend"));
 
-          this.recentMessage[item.index].newMessage='0';
+          this.recentMessage[index].newMessage='0';
+
+          let _this = this;
+          axios.get(baseUrl+'/getChats',{
+            params:{
+              myId: _this.userId,
+              friendId: _this.recentMessage[index].friendId,
+            }
+          })
+          .then(function (res) {
+            _this.chats = res.data.list;
+            setTimeout(() => {
+              document.getElementById('bottomMsg').scrollIntoView();
+            }, 50);
+          })
+
         },
-        sendMessage(){//发送对方ip
+        scrollToBottom(){
+          this.$nextTick(()=>{
+            let scrollBall = this.$el.querySelector(".scrollBall")
+            scrollBall.scrollTop = scrollBall.scrollHeight
+          })
+        },
+        listen (event) {
+          if (event.keyCode === 13&&!event.shiftKey) {
+            this.sendMessage() // 发送文本
+            event.preventDefault() // 阻止浏览器默认换行操作
+            return false
+          }
+        },
+        sendMessage(){ // 发送一条消息
           let data = {
             'state': 'sendMessage',
-            'sendId': '发送的人的id',
-            'receiveId': '接收的人的id',
-            'content': '消息内容',
-            'chatId': '朋友关系的id' };
+            'myId': this.userId,
+            'friendId': this.recentMessage[this.whichFriend].friendId,
+            'content': this.textarea,
+            'chatId': this.recentMessage[this.whichFriend].chatId,
+          };
           this.websock.send(JSON.stringify(data));
+          console.log("send")
         },
 
         setNowActive(id){
@@ -263,7 +297,7 @@
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://127.0.0.1:8000/websocketTest/12";//用自己的id构成websock链接 改
+          const wsuri = "ws://127.0.0.1:8000/websocketTest/"+this.userId;//用自己的id构成websock链接 改
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
@@ -274,9 +308,14 @@
           console.log("WebSocket连接成功")
         },
         websocketonmessage(e){ //数据接收
+          console.log("收到消息");
           let data = JSON.parse(e.data);
+          this.chats.push(data);
+          this.textarea = '';
           console.log(data);
-          //this.chats=data;
+          setTimeout(() => {
+            document.getElementById('bottomMsg').scrollIntoView();
+          }, 50);
         },
         websocketclose(){ //关闭
           console.log("WebSocket关闭");
@@ -284,6 +323,19 @@
         websocketerror(){ //失败
           console.log("WebSocket连接失败");
         },
+        getChatFriends(){
+          let _this = this;
+          axios.get(baseUrl+'/recentUsers', {
+            params: {
+              userId: localStorage.getItem('myId'),
+            }
+          })
+          .then(function (res) {
+              _this.recentMessage = res.data.list;
+
+          })
+        }
+
       },
       created(){
         this.nowActive=localStorage.getItem("nowActive");
@@ -292,12 +344,16 @@
         this.newChatWindows.friendName=this.$route.params.newFriendName;
         this.newChatWindows.newMessage='0';
         this.recentMessage.splice(0,0,this.newChatWindows);
+        this.openChats(this.recentMessage[this.whichFriend],this.whichFriend);
+        this.scrollToBottom()
       },
       mounted() {
         if (this.websock!==null) {
           this.websock.close(); // 关闭websocket连接
         }
         this.initWebSocket();
+        this.getChatFriends();
+        this.scrollToBottom()
       },
       destroyed() {
         //页面销毁时关闭ws连接
@@ -359,6 +415,9 @@
   .el-scrollbar_wrap {
     overflow-x: hidden;
   }
-
+  .scrollBall{
+    height: 200px;
+    overflow-y:auto;
+  }
 
 </style>

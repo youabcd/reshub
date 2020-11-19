@@ -1,28 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import CatchPortal from '@/components/CatchPortal'
-import FindPassword from '@/components/FindPassword'
-import Home from '@/components/Home'
-import HotspotAnalysis from '@/components/HotspotAnalysis'
-import Login from '@/components/Login'
-import Message from '@/components/Message'
-import PersonalPortal from '@/components/PersonalPortal'
-import Profession from '@/components/Profession'
-import Register from '@/components/Register'
-import ResearchInstitute from '@/components/ResearchInstitute'
-import SearchResult from '@/components/SearchResult'
-import TopBar from '@/components/TopBar'
-import SearchRecord from '@/components/SearchRecord'
-import MyCollection from '@/components/MyCollection'
-import BottomBar from "../components/BottomBar";
-import SearchBox from "../components/SearchBox";
-import MyConcern from "../components/MyConcern";
-import BrowseRecord from "../components/BrowseRecord";
+const HelloWorld = resolve => require(['@/components/HelloWorld'],resolve)
+const CatchPortal = resolve => require(['@/components/CatchPortal'],resolve)
+const FindPassword = resolve => require(['@/components/FindPassword'],resolve)
+const Home = resolve => require(['@/components/Home'],resolve)
+const HotspotAnalysis = resolve => require(['@/components/HotspotAnalysis'],resolve)
+const Login = resolve => require(['@/components/Login'],resolve)
+const Message = resolve => require(['@/components/Message'],resolve)
+const PersonalPortal = resolve => require(['@/components/PersonalPortal'],resolve)
+const Profession = resolve => require(['@/components/Profession'],resolve)
+const Register = resolve => require(['@/components/Register'],resolve)
+const ResearchInstitute = resolve => require(['@/components/ResearchInstitute'],resolve)
+const SearchResult = resolve => require(['@/components/SearchResult'],resolve)
+const TopBar = resolve => require(['@/components/TopBar'],resolve)
+const SearchRecord = resolve => require(['@/components/SearchRecord'],resolve)
+const MyCollection = resolve => require(['@/components/MyCollection'],resolve)
+const BottomBar = resolve => require(["@/components/BottomBar"],resolve)
+const SearchBox = resolve => require(["@/components/SearchBox"],resolve)
+const MyConcern = resolve => require(["@/components/MyConcern"],resolve)
+const BrowseRecord = resolve => require(["@/components/BrowseRecord"],resolve)
+const Administrator = resolve => require(["@/components/Administrator"],resolve)
 
 Vue.use(Router)
 
 export default new Router({
+
   routes: [
     {
       path: '/HelloWorld',
@@ -118,6 +120,11 @@ export default new Router({
       path: '/BrowseRecord',
       name: 'BrowseRecord',
       component: BrowseRecord
+    },
+    {
+      path: '/Administrator',
+      name: 'Administrator',
+      component: Administrator
     },
   ]
 })

@@ -5,3 +5,4 @@
 5.npm install @jiaminghi/data-view
 6.npm install --save axios
 7.npm install clipboard --save
+8.npm install --save-dev @babel/plugin-syntax-dynamic-import
