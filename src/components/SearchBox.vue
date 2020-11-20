@@ -3,7 +3,7 @@
     <!--搜索框样式-->
     <div>
       <div style="margin-top: 60px;width: 70%;margin-left: 15%">
-        <van-row v-for="(item,index) in searchKey" :key="index" style="margin-top: 15px;">
+        <van-row v-for="(item,index) in searchKey" :key="index" style="margin-top: 22px;">
           <van-col span="22">
             <el-autocomplete v-if="index<1" placeholder="请输入内容" v-model="item.words"
                              :fetch-suggestions="querySearch" @select="handleSelect"
@@ -50,7 +50,7 @@
         </van-row>
       </div>
 
-      <div style="margin-top: 15px;width: 70%;margin-left: 15%">
+      <div style="margin-top: 22px;width: 70%;margin-left: 15%">
         <van-row style="">
           <van-col span="2">
             <div style="height: 40px;background: #ffffff;border-radius: 5px;">
@@ -76,7 +76,7 @@
         </van-row>
       </div>
 
-      <div style="margin-top: 24px;">
+      <div style="margin-top: 34px;">
         <el-button type="primary" @click="search" style="font-size: 20px;width: 150px;">搜索</el-button>
       </div>
 

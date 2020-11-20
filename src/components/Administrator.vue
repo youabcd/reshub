@@ -22,8 +22,7 @@
             <span>审核</span>
           </template>
           <el-menu-item index="2-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
-          <el-menu-item index="2-2"><span style="margin-left: 38px">已通过</span></el-menu-item>
-          <el-menu-item index="2-3"><span style="margin-left: 38px">已拒绝</span></el-menu-item>
+          <el-menu-item index="2-2"><span style="margin-left: 38px">已审核</span></el-menu-item>
         </el-submenu>
 <!--        <el-menu-item index="2">-->
 <!--          <i class="el-icon-s-check" style="margin-left: 25px"></i>-->
@@ -35,8 +34,7 @@
             <span>申诉</span>
           </template>
           <el-menu-item index="3-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
-          <el-menu-item index="3-2"><span style="margin-left: 38px">已通过</span></el-menu-item>
-          <el-menu-item index="3-3"><span style="margin-left: 38px">已拒绝</span></el-menu-item>
+          <el-menu-item index="3-2"><span style="margin-left: 38px">已审核</span></el-menu-item>
         </el-submenu>
 <!--        <el-menu-item index="3">-->
 <!--          <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>-->
@@ -133,10 +131,9 @@
         <div v-if="menuIndex === '2-1'">
           <el-table
             :data="tableData"
-            border
+
             style="width: 100%">
             <el-table-column
-              fixed
               prop="date"
               label="日期"
               width="150">
@@ -153,10 +150,116 @@
             </el-table-column>
             <el-table-column
               fixed="right"
+              width="100"
+              label="操作">
+              <template slot-scope="scope">
+                <el-button @click="view(scope.$index)" type="text" size="small">查看</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div v-if="menuIndex === '2-2'">
+          <el-table
+            :data="tableData1"
+
+            style="width: 100%">
+            <el-table-column
+              prop="date"
+              label="日期"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="姓名"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="审核内容"
+            >
+            </el-table-column>
+
+            <el-table-column
+              label="审核结果"
+            >
+              <template slot-scope="scope1">
+                <div v-if="scope1.row.state==='pass'" style="color: lawngreen">
+                  {{scope1.row.state}}
+                </div>
+                <div v-if="scope1.row.state==='failed'" style="color: red">
+                  {{scope1.row.state}}
+                </div>
+              </template>
+            </el-table-column>
+            <!--<el-table-column
               label="操作"
               width="100">
               <template slot-scope="scope">
                 <el-button @click="view(scope.$index)" type="text" size="small">查看</el-button>
+              </template>
+            </el-table-column>-->
+          </el-table>
+        </div>
+        <div v-if="menuIndex === '3-1'">
+          <el-table
+            :data="tableData"
+
+            style="width: 100%">
+            <el-table-column
+              prop="date"
+              label="日期"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="姓名"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="审核内容"
+            >
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              width="100"
+              label="操作">
+              <template slot-scope="scope">
+                <el-button @click="view(scope.$index)" type="text" size="small">查看</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div v-if="menuIndex === '3-2'">
+          <el-table
+            :data="tableData1"
+
+            style="width: 100%">
+            <el-table-column
+              prop="date"
+              label="日期"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="姓名"
+              width="150">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="审核内容"
+            >
+            </el-table-column>
+            <el-table-column
+              label="审核内容"
+            >
+              <template slot-scope="scope1">
+                <div v-if="scope1.row.state==='pass'" style="color: #3a8ee6">
+                  {{scope1.row.state}}
+                </div>
+                <div v-if="scope1.row.state==='failed'" style="color: red">
+                  {{scope1.row.state}}
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -203,7 +306,23 @@
           pass: '',
           checkPass: '',
         },
-        tableData: [{
+        tableData1: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          state:'pass'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄',
+          state:'pass'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+          state:'failed'
+        },],
+          tableData: [{
           date: '2016-05-02',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄',
