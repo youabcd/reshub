@@ -75,7 +75,7 @@
           </el-card>
           <el-divider content-position="left">旗下作者</el-divider[4]>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
-            <div style="text-align: left;display: inline;position: absolute;left: 75px;top: 20px;cursor: pointer">
+            <div style="text-align: left;display: inline;position: absolute;left: 95px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 10px;top: 5px">
@@ -83,8 +83,11 @@
                 <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
               </el-tooltip>
             </div>
-            <div style="text-align: left;position: absolute;left:75px;top: 50px;width: 96%">
+            <div style="text-align: left;position: absolute;left:95px;top: 50px;width: 96%">
               <p style="height: 20px" >{{item.msg}}</p>
+            </div>
+            <div style="text-align: left;position: absolute;width: 96%">
+              <img class="avatar" src="../assets/jiang.jpg" ></img>
             </div>
             <div>
               <i class="el-icon-star-on" style="position: absolute;right: 65px;top: 110px">
@@ -365,6 +368,21 @@
     margin-left: 15px;
     word-break:break-all;
     line-height:25px
+  }
+  .avatar{
+  	position:relative;
+  	display:inline-block;
+  	width:52px;
+  	height:52px;
+  	border:6px solid #fff;
+  	overflow:hidden;
+  	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-webkit-border-radius:50%;
+  	-moz-border-radius:50%;-ms-border-radius:50%;
+  	border-radius:50%
   }
   .box-res {
     display:inline-block;
