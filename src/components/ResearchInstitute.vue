@@ -156,7 +156,7 @@
           products:'321',
           researchers:'32123',
           domain:'政治',
-          resList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
+          resList:['BiliBili','NicoNico','Acfun','Pixiv','Patreoon'],
           resData: [
             {
               paperId:'0',
