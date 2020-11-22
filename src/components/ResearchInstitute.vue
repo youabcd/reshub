@@ -134,6 +134,7 @@
               </i>
             </div>
           </el-card>
+          
           <div>
             <el-pagination
               background
@@ -191,7 +192,7 @@
             {
               paperId:'0',
               title:'MAGA',
-              msg:'Make America Great Again最多这么长',
+              msg:'Make America Great Again',
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
@@ -338,7 +339,8 @@
   	float:left
   }
   #author_intro_wr .p_name .c-icon{
-  	margin:9px 0 0 12px;vertical-align:top
+  	margin:9px 0 0 12px;
+    vertical-align:top
   }
   #author_intro_wr .p_volume{
   	font-size:14px;
@@ -402,6 +404,7 @@
     line-height:25px
   }
   .box-res {
+    display:inline-block;
     position: relative;
     margin-top: 5px;
     margin-bottom: 5px;
