@@ -104,6 +104,36 @@
               </i>
             </div>
           </el-card>
+          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData1" :key="index" class="box-res">
+            <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+            </div>
+            <div style="display: inline;position: absolute;right: 20px;top: 5px">
+              <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
+                <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
+              </el-tooltip>
+              <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
+              </el-tooltip>
+            </div>
+            <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+              <p style="height: 20px" >{{item.msg}}</p>
+            </div>
+            <div>
+              <el-tag type="info" style="position: absolute;right: 170px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
+                <span>{{item.type}}</span>
+              </el-tag>
+              <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 110px">
+                <span> {{item.collectionSum}}</span>
+              </i>
+              <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
+                <span> {{item.viewSum}}</span>
+              </i>
+            </div>
+          </el-card>
           <div>
             <el-pagination
               background
@@ -168,7 +198,21 @@
               viewSum:777,
               link:'https://trump.com/',
               collectTime:'2016-05-04'
-            }],
+            },
+          ],
+          resData1: [
+            {
+              paperId:'1',
+              title:'KAG',
+              msg:'Keep America Great',
+              type:"扯淡",
+              collectStatus:true,
+              collectionSum:888,
+              viewSum:999,
+              link:'https://trump.com/',
+              collectTime:'0202-05-04'
+            },
+          ],
         }
       },
       components:{
@@ -358,11 +402,11 @@
     line-height:25px
   }
   .box-res {
+    position: relative;
     margin-top: 5px;
     margin-bottom: 5px;
     height: 140px;
-    position: relative;
-    width: 50%;
+    width: 49%;
   }
   .box-card {
     margin-top: 5px;
