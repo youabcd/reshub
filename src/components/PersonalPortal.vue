@@ -6,7 +6,7 @@
         	<div id="author_intro_wr">
             <div class="person_image">
         			<a href="#" class="person_portraitwr">
-        				<img :src='avatar' alt="学者头像" class="" width="112" height="112">
+        				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
                 <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
