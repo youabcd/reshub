@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 60%;margin:0 auto">
+    <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div class="person_image">
@@ -70,7 +70,7 @@
             图图图图图</br>图图图图图
           </el-card>
           <el-divider content-position="left">发表作品</el-divider>
-          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text-item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -114,7 +114,7 @@
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-for="o in coopList" :key="o" class="text item">
+            <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
           </el-card>
@@ -123,7 +123,7 @@
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
-            <div v-for="o in coopList" :key="o" class="text item">
+            <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
           </el-card> -->
@@ -151,7 +151,7 @@
           quoted:'132',
           products:'321',
           domain:'吹牛',
-          coopList:['r','g','b','u','w'],
+          coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
           tableData0: [
             {
               paperId:'0',
