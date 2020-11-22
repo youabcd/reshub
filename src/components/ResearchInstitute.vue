@@ -1,72 +1,69 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 60%;margin:0 auto">
+    <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div class="person_image">
         			<a href="#" class="person_portraitwr">
-        				<img src="../assets/white.jpg" alt="学者头像" class="" width="112" height="112">
+        				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
-        			  <el-button style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
+        			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
         			</div>
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
-        				白宫
+        				{{name}}
                 <el-popover
                     placement="bottom"
                     title="邮箱"
                     width="200"
                     trigger="hover"
-                    content="1321312312@11232123.com">
-                <el-button slot="reference" type="info" icon="el-icon-message" circle></el-button>
+                    :content="mail">
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
-                <el-popover
+                <!-- <el-popover
                     placement="bottom"
                     title="电话"
                     width="200"
                     trigger="hover"
-                    content="1321">
-                <el-button slot="reference" type="info" icon="el-icon-phone-outline" circle></el-button>
-                </el-popover>
+                    :content="phone">
+                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
+                </el-popover> -->
         			</div>
         			<div class="p_volume">
-        				1400人看过
+        				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-        				美国
+        				{{institute}}
         			</div>
               </br>
         			<div class="p_ach_wr">
                 <ul>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">被引频次</p>
-                    <p class="p_ach_num">212</p>
+                    <p class="p_ach_num">{{quoted}}</p>
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">成果数</p>
-                    <p class="p_ach_num">22</p>
+                    <p class="p_ach_num">{{products}}</p>
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">专家数</p>
-                    <p class="p_ach_num">14</p>
+                    <p class="p_ach_num">{{researchers}}</p>
                   </li>
                 </ul>
-        			</div>
-        			</br>
-        			<div class="person_editinfo">
-        				<div class="">
-        					<span class="c_gray prefix_label">领域:&nbsp;</span>
-        					<span class="person_domain person_text">
-        						<a href="#" target="_blank">政治</a>
-        					</span>
-        				</div>
-        			</div>
-        	  </div>
-        	</div>
+            </div>
+            </br>
+            <div class="person_editinfo">
+              <span class="c_gray prefix_label">领域：</span>
+              <span class="person_domain person_text">{{domain}}</span>
+            </div>
+          </div>
+        </div>
       </el-header>
       <el-main>
         <el-col :span="17">
@@ -76,8 +73,8 @@
             </div>
             图图图图图</br>图图图图图
           </el-card>
-          <el-divider content-position="left">旗下专家</el-divider>
-          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-divider content-position="left">旗下作者</el-divider[4]>
+          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -89,12 +86,12 @@
                 <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
               </el-tooltip>
               <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="Copy"></i>
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
               </el-tooltip>
             </div>
             <div style="text-align: left;position: absolute;top: 60px;width: 96%">
               <p style="height: 20px" >{{item.msg}}</p>
-            </div>         
+            </div>
             <div>
               <el-tag type="info" style="position: absolute;right: 170px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
                 <span>{{item.type}}</span>
@@ -111,7 +108,7 @@
             <el-pagination
               background
               layout="prev, pager, next"
-              :total="800"
+              :total="100"
               style="margin-top: 10px;height: 100px">
             </el-pagination>
           </div>
@@ -119,12 +116,21 @@
         <el-col :span="7">
           <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
-              <span>招牌作者</span>
+              <span>核心作品</span>
             </div>
-            <div v-for="o in 2" :key="o" class="text item">
-              {{'路人' + o }}
+            <div v-for="o in resList" :key="o">
+              {{o}}
             </div>
-          </el-card>          
+          </el-card>
+          
+          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+            <div slot="header" class="clearfix">
+              <span>合作机构</span>
+            </div>
+            <div v-for="o in coopList" :key="o">
+              {{o}}
+            </div>
+          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -135,20 +141,32 @@
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
     export default {
-      name: "PersonalPortal",
+      name: "ResearchInstitute",
       data() {
         return {
-          menuIndex: "0",
-          tableData0: [
+          menuIndex: '0',
+          avatar:require('../assets/white.jpg'),
+          isFollowing: true,
+          visitNum:'1400',
+          followNum:'0',
+          name:'White House名字最多可以这么长',
+          institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
+          mail:'1@2.3',
+          quoted:'132',
+          products:'321',
+          researchers:'32123',
+          domain:'政治',
+          resList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
+          resData: [
             {
               paperId:'0',
-              title:'Youtube',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-              type:"会议",
+              title:'MAGA',
+              msg:'Make America Great Again最多这么长',
+              type:"扯淡",
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://www.youtube.com/',
+              link:'https://trump.com/',
               collectTime:'2016-05-04'
             }],
         }
@@ -156,6 +174,46 @@
       components:{
         TopBar
       },
+      methods:{
+        Copy() {
+          let clipboard = new Clipboard('.commun');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接成功',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接失败，请重试',
+              type: 'error',
+            });
+            clipboard.destroy()
+          })
+        },
+        CopyLink() {
+          let clipboard = new Clipboard('.el-icon-share');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接成功',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制链接失败，请重试',
+              type: 'error',
+            });
+            clipboard.destroy()
+          })
+        }
+      }
     }
 </script>
 
@@ -223,7 +281,7 @@
   
   #author_intro_wr .person_baseinfo{
   	float:left;
-  	width:555px;
+  	width:700px;
   	margin-right:30px;
   	margin-top:20px
   }
@@ -239,7 +297,12 @@
   	margin:9px 0 0 12px;vertical-align:top
   }
   #author_intro_wr .p_volume{
-  	font-size:14px;color:#999;margin-top:10px;margin-left:20px;float:left}
+  	font-size:14px;
+    color:#999;
+    margin-top:10px;
+    margin-left:20px;
+    float:left
+  }
   #author_intro_wr .p_scholarID{
   	width:192px;
   	height:24px;
@@ -293,6 +356,13 @@
     margin-left: 15px;
     word-break:break-all;
     line-height:25px
+  }
+  .box-res {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 140px;
+    position: relative;
+    width: 50%;
   }
   .box-card {
     margin-top: 5px;

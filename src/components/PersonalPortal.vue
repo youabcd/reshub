@@ -69,7 +69,7 @@
             </div>
             图图图图图</br>图图图图图
           </el-card>
-          <el-divider content-position="left">发表作品</el-divider>
+          <el-divider content-position="left">发表作品</el-divider[4]>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text-item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
