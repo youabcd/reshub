@@ -86,10 +86,10 @@
             <div style="text-align: left;position: absolute;left:95px;top: 50px;width: 96%">
               <p style="height: 20px" >{{item.msg}}</p>
             </div>
-            <div style="display:inline;text-align: left;position: absolute;left:15px;top: 104px;">
-              <el-button style="width: 87px;" size="mini" type="primary" round>查看详情</el-button>
-              <el-button v-if="item.collectStatus === false" style="width: 87px;" size="mini" type="primary" round plain>关注</el-button>
-              <el-button v-if="item.collectStatus === true" style="width: 87px;" size="mini" type="primary" round plain>取消关注</el-button>
+            <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
+              <el-button style="width: 79px;" size="mini" type="primary" round>查看详情</el-button>
+              <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
+              <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
             <div style="text-align: left;position: absolute;width: 96%">
               <img class="avatar" src="../assets/jiang.jpg" ></img>
