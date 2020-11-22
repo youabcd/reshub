@@ -353,16 +353,17 @@
     line-height:25px
   }
   .text-item{
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 100%;
+    display:inline-block;
+    position: relative;
+    margin-top: 2px;
     height: 140px;
-    position: relative
+    width:99%;
   }
   .box-card {
+    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
+    width: 99%;
   }
 
 </style>

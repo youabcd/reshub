@@ -134,7 +134,8 @@
               </i>
             </div>
           </el-card>
-          
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
           <div>
             <el-pagination
               background
@@ -406,15 +407,16 @@
   .box-res {
     display:inline-block;
     position: relative;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 2px;
     height: 140px;
     width: 49%;
   }
   .box-card {
+    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
+    float:none;
+    width: 99%;
   }
 
 </style>
