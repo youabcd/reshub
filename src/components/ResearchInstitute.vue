@@ -75,23 +75,30 @@
           </el-card>
           <el-divider content-position="left">旗下作者</el-divider[4]>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
-            <div style="text-align: left;display: inline;position: absolute;left: 95px;top: 20px;cursor: pointer">
+            <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.link)">{{item.title}}</span>
+              <el-popover
+                placement="right"
+                title="邮箱"
+                trigger="hover"
+                :content="item.mail">
+                <i class="el-icon-message" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="item.mail" @click="CopyResMail" circle></i>
+              </el-popover>
             </div>
             <div style="display: inline;position: absolute;right: 10px;top: 5px">
               <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="CopyLink"></i>
+                <i class="el-icon-share" style="font-size: 25px;" :data-clipboard-text="item.link" @click="CopyLink"></i>
               </el-tooltip>
             </div>
-            <div style="text-align: left;position: absolute;left:95px;top: 50px;width: 96%">
-              <p style="height: 20px" >邮箱：{{item.mail}}&nbsp;&nbsp;&nbsp;领域：{{item.domain}}</p>
+            <div style="text-align: left;position: absolute;left:95px;top: 44px;">
+              <p style="height: 7px" >领域：{{item.domain}}</p>
             </div>
             <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
               <el-button style="width: 79px;" size="mini" type="primary" @click="gotoPortal(item.link)" round>查看详情</el-button>
               <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
               <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
-            <div style="text-align: left;position: absolute;width: 96%">
+            <div style="text-align: left;position: absolute;">
               <img class="avatar" src="../assets/jiang.jpg" ></img>
             </div>
             <div>
@@ -103,6 +110,14 @@
               </i>
             </div>
           </el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
+          <el-card class="box-res"></el-card>
           <el-card class="box-res"></el-card>
           <el-card class="box-res"></el-card>
           <el-card class="box-res"></el-card>
@@ -163,7 +178,7 @@
             {
               paperId:'0',
               title:'MAGA',
-              mail:'1@2.3',
+              mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
@@ -181,6 +196,26 @@
       methods:{
         Copy() {
           let clipboard = new Clipboard('.commun');
+          clipboard.on('success', e => {
+            this.$message({
+              showClose: true,
+              message: '复制邮箱成功',
+              type: 'success',
+            });
+            clipboard.destroy()
+          })
+          clipboard.on('error', e => {
+            this.$message({
+              showClose: true,
+              message: '复制邮箱失败，请重试',
+              type: 'error',
+            });
+            
+            clipboard.destroy()
+          })
+        },
+        CopyResMail() {
+          let clipboard = new Clipboard('.el-icon-message');
           clipboard.on('success', e => {
             this.$message({
               showClose: true,

@@ -85,8 +85,9 @@
                 <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
               </el-tooltip>
             </div>
-            <div style="text-align: left;position: absolute;top: 60px;width: 96%">
-              <p style="height: 20px" >{{item.msg}}</p>
+            <div style="text-align: left;position: absolute;top: 47px;width: 96%">
+              <p style="line-height: 27px;" >{{item.msg}}<a :href="item.link">>>查看详情</a></p>
+              
             </div>         
             <div>
               <el-tag type="info" style="position: absolute;right: 170px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
@@ -100,6 +101,11 @@
               </i>
             </div>
           </el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
           <div>
             <el-pagination
               background
@@ -147,7 +153,7 @@
           followNum:'0',
           name:'Trump名字最多可以这么长',
           institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
-          mail:'1@2.3',
+          mail:'邮箱大概也就这么@长吧.别太长了',
           quoted:'132',
           products:'321',
           domain:'吹牛',
@@ -156,7 +162,7 @@
             {
               paperId:'0',
               title:'MAGA',
-              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
+              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
