@@ -76,18 +76,18 @@
           <el-divider content-position="left">旗下作者</el-divider[4]>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="text-align: left;display: inline;position: absolute;left: 95px;top: 20px;cursor: pointer">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 10px;top: 5px">
               <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
+                <i class="el-icon-share" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="CopyLink"></i>
               </el-tooltip>
             </div>
             <div style="text-align: left;position: absolute;left:95px;top: 50px;width: 96%">
-              <p style="height: 20px" >{{item.msg}}</p>
+              <p style="height: 20px" >邮箱：{{item.mail}}&nbsp;&nbsp;&nbsp;领域：{{item.domain}}</p>
             </div>
             <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
-              <el-button style="width: 79px;" size="mini" type="primary" round>查看详情</el-button>
+              <el-button style="width: 79px;" size="mini" type="primary" @click="gotoPortal(item.link)" round>查看详情</el-button>
               <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
               <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
@@ -163,8 +163,8 @@
             {
               paperId:'0',
               title:'MAGA',
-              msg:'邮箱：1@2.3 领域：吹牛',
-              type:"扯淡",
+              mail:'1@2.3',
+              domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
@@ -172,19 +172,7 @@
               collectTime:'2016-05-04'
             },
           ],
-          resData1: [
-            {
-              paperId:'1',
-              title:'KAG',
-              msg:'Keep America Great',
-              type:"扯淡",
-              collectStatus:true,
-              collectionSum:888,
-              viewSum:999,
-              link:'https://trump.com/',
-              collectTime:'0202-05-04'
-            },
-          ],
+          
         }
       },
       components:{
@@ -196,7 +184,7 @@
           clipboard.on('success', e => {
             this.$message({
               showClose: true,
-              message: '复制链接成功',
+              message: '复制邮箱成功',
               type: 'success',
             });
             clipboard.destroy()
@@ -204,9 +192,10 @@
           clipboard.on('error', e => {
             this.$message({
               showClose: true,
-              message: '复制链接失败，请重试',
+              message: '复制邮箱失败，请重试',
               type: 'error',
             });
+            
             clipboard.destroy()
           })
         },
@@ -228,7 +217,11 @@
             });
             clipboard.destroy()
           })
-        }
+        },
+        gotoPortal(url) {
+          //发送点击数据
+          window.open(url,url)
+        },
       }
     }
 </script>
