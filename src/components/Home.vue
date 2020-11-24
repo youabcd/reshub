@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
-    </div>
+  <div style="background: #eeeeee;min-height: 100vh;height: 100%">
+    <!--<div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
+    </div>-->
     <div>
       <TopBar></TopBar>
     </div>
-
     <div>
-      <SearchBox></SearchBox>
+      <div>
+        <SearchBox></SearchBox>
+      </div>
     </div>
 
     <div>

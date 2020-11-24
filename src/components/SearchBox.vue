@@ -1,8 +1,9 @@
 <template>
   <div @keyup.enter="search">
     <!--搜索框样式-->
-    <div>
-      <div style="margin-top: 60px;width: 70%;margin-left: 15%">
+    <div style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);width: 76%;margin-left: 12%;background:#ffffff;margin-top: 0px;height: 100%;">
+      <van-row></van-row>
+      <div style="margin-top: 60px;width: 88%;margin-left: 6%;">
         <van-row v-for="(item,index) in searchKey" :key="index" style="margin-top: 22px;">
           <van-col span="22">
             <el-autocomplete v-if="index<1" placeholder="请输入内容" v-model="item.words"
@@ -50,10 +51,10 @@
         </van-row>
       </div>
 
-      <div style="margin-top: 22px;width: 70%;margin-left: 15%">
+      <div style="margin-top: 22px;width: 88%;margin-left: 6%">
         <van-row style="">
           <van-col span="2">
-            <div style="height: 40px;background: #ffffff;border-radius: 5px;">
+            <div style="height: 40px;background: #ffffff;box-shadow: 0 2px 4px rgba(0, 0, 0, .02), 0 0 6px rgba(0, 0, 0, .12);;border-radius: 5px;">
             <van-row><van-col span="24" style="font-size: 18px;margin-top:8px;">时间范围</van-col></van-row>
             </div>
           </van-col>
@@ -76,10 +77,11 @@
         </van-row>
       </div>
 
-      <div style="margin-top: 34px;">
+      <div style="margin-top: 34px;margin-bottom: 30px;">
         <el-button type="primary" @click="search" style="font-size: 20px;width: 150px;">搜索</el-button>
       </div>
 
+      <van-row></van-row>
     </div>
 
   </div>
