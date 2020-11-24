@@ -1,12 +1,12 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 60%;margin:0 auto">
+    <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div class="person_image">
         			<a href="#" class="person_portraitwr">
-        				<img :src='avatar' alt="学者头像" class="" width="112" height="112">
+        				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
                 <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
@@ -69,8 +69,8 @@
             </div>
             图图图图图</br>图图图图图
           </el-card>
-          <el-divider content-position="left">发表作品</el-divider>
-          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-divider content-position="left">发表作品</el-divider[4]>
+          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text-item" >
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -85,8 +85,9 @@
                 <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
               </el-tooltip>
             </div>
-            <div style="text-align: left;position: absolute;top: 60px;width: 96%">
-              <p style="height: 20px" >{{item.msg}}</p>
+            <div style="text-align: left;position: absolute;top: 47px;width: 96%">
+              <p style="line-height: 27px;" >{{item.msg}}<a :href="item.link">>>查看详情</a></p>
+              
             </div>         
             <div>
               <el-tag type="info" style="position: absolute;right: 170px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
@@ -100,6 +101,11 @@
               </i>
             </div>
           </el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
+          <el-card class="text-item"></el-card>
           <div>
             <el-pagination
               background
@@ -114,7 +120,7 @@
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-for="o in coopList" :key="o" class="text item">
+            <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
           </el-card>
@@ -123,7 +129,7 @@
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
-            <div v-for="o in coopList" :key="o" class="text item">
+            <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
           </el-card> -->
@@ -147,16 +153,16 @@
           followNum:'0',
           name:'Trump名字最多可以这么长',
           institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
-          mail:'1@2.3',
+          mail:'邮箱大概也就这么@长吧.别太长了',
           quoted:'132',
           products:'321',
           domain:'吹牛',
-          coopList:['r','g','b','u','w'],
+          coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
           tableData0: [
             {
               paperId:'0',
               title:'MAGA',
-              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
+              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
@@ -352,10 +358,18 @@
     word-break:break-all;
     line-height:25px
   }
+  .text-item{
+    display:inline-block;
+    position: relative;
+    margin-top: 2px;
+    height: 140px;
+    width:99%;
+  }
   .box-card {
+    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
+    width: 99%;
   }
 
 </style>
