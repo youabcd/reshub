@@ -24,6 +24,7 @@
           <el-menu-item index="2-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
           <el-menu-item index="2-2"><span style="margin-left: 38px">已审核</span></el-menu-item>
         </el-submenu>
+
 <!--        <el-menu-item index="2">-->
 <!--          <i class="el-icon-s-check" style="margin-left: 25px"></i>-->
 <!--          <span slot="title">审核</span>-->
@@ -36,6 +37,10 @@
           <el-menu-item index="3-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
           <el-menu-item index="3-2"><span style="margin-left: 38px">已审核</span></el-menu-item>
         </el-submenu>
+<!--        <el-menu-item index="4">-->
+<!--          <i class="el-icon-document" style="margin-left: 25px"></i>-->
+<!--          <span slot="title">测试</span>-->
+<!--        </el-menu-item>-->
 <!--        <el-menu-item index="3">-->
 <!--          <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>-->
 <!--          <span slot="title">申诉</span>-->
@@ -278,6 +283,7 @@
             </el-table-column>
           </el-table>
         </div>
+<!--        <div :style="{backgroundImage: 'url(' + img + ')' }" style="height: 100%" v-if="menuIndex === '4'">666</div>-->
       </el-main>
     </el-container>
   </el-container>
@@ -307,10 +313,11 @@
         }
       };
       return {
-        menuIndex: "2-1",
+        menuIndex: "1",
         dialogVisible: false,
         drawer1: false,
         direction: 'rtl',
+        // img: require('../assets/bing01.jpg'),
         drawerData: {
           id: '',
           date: '',
