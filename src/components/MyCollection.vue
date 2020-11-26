@@ -83,7 +83,13 @@
               </div>
 
               <div>
-                <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+                <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
+                </div>
                 <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                   <span>{{item.type}}</span>
                 </el-tag>
@@ -158,7 +164,13 @@
             </div>
 
             <div>
-              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
+              </div>
               <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                 <span>{{item.type}}</span>
               </el-tag>
@@ -206,7 +218,13 @@
             </div>
 
             <div>
-              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
+              </div>
               <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                 <span>{{item.type}}</span>
               </el-tag>
@@ -252,7 +270,13 @@
             </div>
 
             <div>
-              <div style="position: absolute;left: 20px;top: 130px;width: 30%;text-align: left;"><span>{{item.author}}</span></div>
+              <div style="position: absolute;left: 5px;top: 130px;">
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                      <el-link :underline="false">
+                        {{author_item}}
+                      </el-link>
+                    </span>
+              </div>
               <el-tag type="info" style="position: absolute;right: 300px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                 <span>{{item.type}}</span>
               </el-tag>
@@ -358,7 +382,7 @@
             paperId:'1',
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author:'Author1',
+            author:['Li Ming','Zhang San'],
             type:"期刊",
             collectionSum:6,
             viewSum:7,
@@ -369,7 +393,7 @@
               paperId:'2',
               title:'Google2',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-              author:'Author2',
+              author:['Li Ming','Zhang San'],
               type:"会议",
               collectionSum:66,
               viewSum:77,
@@ -391,7 +415,7 @@
               paperId:'4',
               title:'Google4',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-              author:'Author4',
+              author:['Li Ming','Zhang San'],
               type:"报告",
               collectionSum:6666,
               viewSum:7777,
@@ -402,7 +426,7 @@
             paperId:'1',
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author:'Author1',
+            author:['Li Ming','Zhang San'],
             type:"期刊",
             collectionSum:666,
             viewSum:777,
@@ -413,7 +437,7 @@
             paperId:'3',
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:'Author3',
+            author:['Li Ming','Zhang San'],
             type:"期刊",
             collectionSum:666,
             viewSum:777,
@@ -425,7 +449,7 @@
               paperId:'2',
               title:'Google2',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-              author:'Author2',
+              author:['Li Ming','Zhang San'],
               type:"会议",
               collectionSum:666,
               viewSum:777,
@@ -437,7 +461,7 @@
               paperId:'4',
               title:'Google4',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-              author:'Author4',
+              author:['Li Ming','Zhang San'],
               type:"报告",
               collectionSum:666,
               viewSum:777,
