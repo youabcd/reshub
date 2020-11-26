@@ -22,13 +22,21 @@
     import TopBar from "./TopBar";
 
     export default {
-        name: "HotspotAnalysis",
+      name: "HotspotAnalysis",
+      data(){
+        return{
+        }
+      },
+      mounted() {
+      },
+      methods: {
+      },
       components:{
         TopBar
       },
     }
 </script>
 
-<style scoped>
+<style>
 
 </style>

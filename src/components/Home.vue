@@ -6,7 +6,7 @@
       <TopBar></TopBar>
     </div>
     <div>
-      <div>
+      <div style="margin-top: 25px;">
         <SearchBox></SearchBox>
       </div>
     </div>

@@ -1,8 +1,6 @@
 1.npm install
 2.npm i element-ui -S
 3.npm i vant -S
-4.npm install @jiaminghi/charts
-5.npm install @jiaminghi/data-view
-6.npm install --save axios
-7.npm install clipboard --save
-8.npm install --save-dev @babel/plugin-syntax-dynamic-import
+4.npm install --save axios
+5.npm install clipboard --save
+6.npm install --save-dev @babel/plugin-syntax-dynamic-import
