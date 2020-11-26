@@ -32,7 +32,7 @@
         </el-dialog>
         <div>
 <!--          <el-card class="box-card" shadow="never">-->
-            <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+            <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
               <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                 <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
               </div>
@@ -99,7 +99,7 @@
               </div>
             </el-card>
 
-          <el-card  shadow="hover" v-if="menuIndex === '1' " v-for="(item,index) in tableData1" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-card  shadow="hover" v-if="menuIndex === '1' " v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -175,7 +175,7 @@
 
           </el-card>
 
-          <el-card  shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-card  shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -223,7 +223,7 @@
 
           </el-card>
 
-          <el-card  shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+          <el-card  shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
@@ -271,15 +271,58 @@
 
 <!--          </el-card>-->
         </div>
-        <div>
+
+        <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
           <el-pagination
-            background
-            layout="prev, pager, next"
-            :total="1000"
-            style="margin-top: 10px;height: 100px">
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="tableData0.length"
+            prev-text="上一页"
+            next-text="下一页">
           </el-pagination>
         </div>
 
+        <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '1'">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="tableData1.length"
+            prev-text="上一页"
+            next-text="下一页">
+          </el-pagination>
+        </div>
+
+        <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '2'">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="tableData2.length"
+            prev-text="上一页"
+            next-text="下一页">
+          </el-pagination>
+        </div>
+
+        <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '3'">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-size="pageSize"
+            layout="total, prev, pager, next, jumper"
+            :total="tableData3.length"
+            prev-text="上一页"
+            next-text="下一页">
+          </el-pagination>
+        </div>
         <div>
           <div class="back-top-circle" @click="backTop" v-if="btnFlag">
             <i class="el-icon-caret-top" ></i>
@@ -301,6 +344,8 @@
       },
       data() {
         return {
+          pageSize: 1,
+          currentPage: 1,
           btnFlag: false,
           dialogVisible: false,
           activeIndex: "0",
@@ -407,6 +452,13 @@
         window.removeEventListener('scroll', this.scrollToTop)
       },
       methods: {
+        handleSizeChange: function(size) {
+          this.pageSize = size;
+        },
+        //点击第几页
+        handleCurrentChange: function(currentPage) {
+          this.currentPage = currentPage;
+        },
         // 点击图片回到顶部方法，加计时器是为了过渡顺滑
         backTop () {
           const that = this
@@ -433,6 +485,7 @@
 
         handleSelect (key) {
           this.menuIndex = key;
+          this.currentPage = 1;
         },
 
         deleteCollection (index) {

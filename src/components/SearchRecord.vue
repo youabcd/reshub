@@ -57,7 +57,7 @@
           @current-change="handleCurrentChange"
           :current-page="currentPage"
           :page-size="pageSize"
-          layout="total, prev, pager, next"
+          layout="total, prev, pager, next, jumper"
           :total="tableData.length"
           prev-text="上一页"
           next-text="下一页">
