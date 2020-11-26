@@ -13,7 +13,7 @@
 
       <el-table
         ref="multipleTable"
-        :data="tableData"
+        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         tooltip-effect="dark"
         @cell-click="search"
         stripe
@@ -50,6 +50,20 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div style="margin-top: 30px">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next"
+          :total="tableData.length"
+          prev-text="上一页"
+          next-text="下一页">
+        </el-pagination>
+      </div>
+
     </div>
   </div>
 </template>
@@ -64,6 +78,8 @@
       },
       data() {
         return {
+          currentPage: 1,
+          pageSize: 10,
           visible: false,
           tableData: [{
             id: '1',
@@ -100,11 +116,89 @@
             date: '2016-05-07',
             name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
-          }],
+          },{
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, {
+            id: '1',
+            date: '2016/05/01 16:00',
+            name: '王小虎',
+            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+          }, ],
           multipleSelection: []
         }
       },
       methods: {
+        handleSizeChange: function(size) {
+          this.pageSize = size;
+        },
+        //点击第几页
+        handleCurrentChange: function(currentPage) {
+          this.currentPage = currentPage;
+        },
+
         search(row){
           localStorage.setItem("keyWords",row.history);
           this.$router.push({
