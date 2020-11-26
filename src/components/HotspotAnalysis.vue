@@ -4,8 +4,15 @@
     <div style="margin-top: 60px;width: 1100px;margin-left: 100px;">
       <van-row>
         <van-col span="16">
-          <div style="background: #1fcab3;height: 400px;width: 100%;">
-
+          <div style="background: #e9e9e9;height: 400px;width: 100%;" >
+            <el-card class="card" shadow="never" v-for="(item,index) in paperTable" :key="index">
+              <div class="van-ellipsis" style="width: 300px">
+                <el-link :href="item.link" target="_blank">
+                  <i class="el-icon-s-promotion"></i>
+                  {{item.title}}
+                </el-link>
+              </div>
+            </el-card>
           </div>
         </van-col>
         <van-col span="8">
@@ -32,7 +39,57 @@
       name: "HotspotAnalysis",
       data(){
         return{
+          paperTable: [{
+            id:'1',
+            title: 'kasdlflkas11',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'2',
+            title: 'kasdlflkas1111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },{
+            id:'3',
+            title: 'kasdlflkas11111',
+            link: 'https://www.bilibili.com',
+          },
 
+          ],
         }
       },
       mounted() {
@@ -46,6 +103,7 @@
           myChart.setOption({
             title:{text:''},
             backgroundColor:"",
+
             tooltip: {              //设置tip提示
               trigger: 'axis'
             },
@@ -120,5 +178,11 @@
     height:200px;
     //background: #cce6f0;
     margin: 0 auto;
+  }
+
+  .card{
+    width: 49.7%;
+    float: left;
+    text-align: left
   }
 </style>
