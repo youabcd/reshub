@@ -60,9 +60,9 @@
             x: "center"
           },
           backgroundColor: "#fff",
-          // tooltip: {
-          //   pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
-          // },
+          tooltip: {
+             pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+          },
           series: [
             {
               type: "wordCloud",
@@ -109,12 +109,15 @@
           ]
         };
         this.chart.setOption(option);
-      }
+        this.chart.on('click',function(params){
+          window.open("https://www.cnblogs.com/monkeyblog/p/13728272.html");
+        });
+      },
     }
   };
 </script>
 <style scoped>
   .chart {
-    padding-left: 1.2rem;
+
   }
 </style>

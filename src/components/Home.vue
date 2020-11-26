@@ -11,12 +11,12 @@
       </div>
     </div>
 
-    <div>
+    <div style="margin-left: 12%;margin-top: 50px;">
       <WordCloudChart
         id="05"
         title="热门搜索词"
         :data="echarts05Data"
-        width="500px"
+        width="86%"
         height="500px"
       />
     </div>
