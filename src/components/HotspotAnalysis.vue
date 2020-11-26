@@ -29,7 +29,7 @@
 <script>
     import TopBar from "./TopBar";
     let echarts = require('echarts/lib/echarts')
-    // 引入柱状图组件
+    // 引入折线图组件
     require('echarts/lib/chart/line')
     // 引入提示框和title组件
     require('echarts/lib/component/tooltip')
@@ -118,8 +118,8 @@
               name: 'DATE',           //X轴 name
               nameTextStyle: {        //坐标轴名称的文字样式
                 color: '#FA6F53',
-                fontSize: 16,
-                padding: [0, 0, 0, 20]
+                fontSize: 9,
+                padding: [0, 0, 0, 0]//上下左右间距
               },
               axisLine: {             //坐标轴轴线相关设置。
                 lineStyle: {
@@ -128,11 +128,11 @@
               }
             },
             yAxis: {
-              name: 'SALES VOLUME',
+              name: 'Grade',
               nameTextStyle: {
                 color: '#FA6F53',
-                fontSize: 16,
-                padding: [0, 0, 10, 0]
+                fontSize: 9,
+                padding: [0, 0, 0, 0]
               },
               axisLine: {
                 lineStyle: {
@@ -154,7 +154,7 @@
               },
               {
                 name: '学生成绩',
-                data: [120, 200, 150, 80, 70, 110, 130],
+                data: [120, 200, 150, 80, 70, 110, 130,260],
                 type: 'line',
                 lineStyle: {
                   normal: {
@@ -174,8 +174,8 @@
 
 <style>
   .charts1{
-    width: 800px;
-    height:800px;
+    width: 400px;
+    height:200px;
     //background: #cce6f0;
     margin: 0 auto;
   }
