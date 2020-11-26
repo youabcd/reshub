@@ -9,3 +9,4 @@
 9.npm i -D webpack-parallel-uglify-plugin
 10.npm i os
 11.npm run dll
+12.npm install echarts -S
