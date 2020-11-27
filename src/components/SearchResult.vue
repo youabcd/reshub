@@ -46,6 +46,27 @@
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
             <div>
+              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-left: 20px">
+                <h4>学者推荐</h4>
+              </div>
+              <div v-if="authorTable.length !== 0"  style="text-align: left;">
+                <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
+                  <div>
+                    <el-link :href="item.link" target="_blank">
+                      {{item.name}}
+                    </el-link>
+                  </div>
+                  <div style="margin-top: 10px">
+                    <el-link :href="item.link" target="_blank">
+                      {{item.institution}}
+                    </el-link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
                 <el-menu-item index="0" style="width: 120px">●全部</el-menu-item>
@@ -431,7 +452,39 @@
         checkedSubject: [],
         checkedAuthor: [],
         checkedTime: [],
-        // cities: cityOptions,
+        authorTable: [{
+          name:'Zhang San',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学北京航空航天大学',
+          id:'1',
+        },{
+          name:'Zhang Si',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学1',
+          id:'2',
+        },{
+          name:'Zhang San',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学3',
+          id:'3',
+        },{
+          name:'Zhang San',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学3',
+          id:'3',
+        },{
+          name:'Zhang San',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学3',
+          id:'3',
+        },{
+          name:'Zhang San',
+          link:'https://www.bilibili.com',
+          institution:'北京航空航天大学3',
+          id:'3',
+        },
+
+        ],
         tableData0: [{
           paperId:'1',
           title:'Google1',
@@ -799,5 +852,11 @@
     margin-left: 40px;
     margin-bottom: 10px;
     /*height: 30px;*/
+  }
+
+  .card{
+    width: 49.7%;
+    float: left;
+    text-align: left
   }
 </style>
