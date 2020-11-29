@@ -659,7 +659,7 @@
     position: relative;
     width: 360px;
     height: 150px;
-    //background: #cce6f0;
+    background: #ffffff;
     margin: 10 10 10 10 auto;
   }
   .charts2{
@@ -667,7 +667,7 @@
     position: relative;
     width: 360px;
     height: 150px;
-    //background: #cce6f0;
+    background: #ffffff;
     margin: 10 10 10 10 auto;
   }
   .text-item{
