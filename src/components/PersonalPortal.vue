@@ -64,11 +64,9 @@
       <el-main>
         <el-col :span="17">
           <el-card class="box-card" shadow="hover">
-            <div slot="header" class="clearfix">
-              <div class="charts1" ref="fChart" id="first"></div>
-            </div>
-            <div>
-              <div class="charts2" ref="sChart" id="second"></div>
+            <div style="display:inline-block">
+               <div class="charts1" ref="fChart" id="first"></div>
+               <div class="charts2" ref="sChart" id="second"></div>
             </div>
           </el-card>
           <el-divider content-position="left">发表作品</el-divider>
@@ -248,11 +246,13 @@
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
           var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
-          var resCount=['3', '5', '1', '2', '3', '9', '2','1'];
+          var resCount=['3', '5', '4', '2', '3', '9', '2','3'];
+          var quoCount=['47', '72', '38', '64', '36', '23', '86','23'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
               trigger: 'axis',
+              alwaysShowContent: true ,
               formatter: function (params, ticket, callback) {
                 var htmlStr = '';
                 for(var i=0;i<params.length;i++){
@@ -272,6 +272,12 @@
                 return htmlStr;
               }
             },
+            grid: {
+              x:5,
+              y:0,
+              x2:5,
+              y2:1
+            },
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
@@ -312,7 +318,6 @@
               {
                 name: '成果数',
                 type: 'line',
-                //data: [{'year':'2013','count':'3'}, {'year':'2014','count':'5'}, {'year':'2015','count':'1'}, {'year':'2016','count':'2'}, {'year':'2017','count':'3'}, {'year':'2018','count':'9'}, {'year':'2019','count':'2'},{'year':'2020','count':'1'}],
                 data: resCount,
                 smooth: true,
                 areaStyle: {
@@ -326,7 +331,7 @@
                         offset: 0,
                         color: "#59c4e6" // 0% 处的颜色
                       }, {
-                        offset: 0.7,
+                        offset: 1,
                         color: "rgba(89,196,230,0)" // 100% 处的颜色
                       }],
                       globalCoord: false // 缺省为 false
@@ -345,12 +350,31 @@
             backgroundColor:"",
             tooltip: {              //设置tip提示
               trigger: 'axis',
-              formatter: function(param) {  
-                console.log(JSON.stringify(param));             
-                console.log(param.name); 
-                                  
-                return param.name  + param.value;               
+              alwaysShowContent: true ,
+              formatter: function (params, ticket, callback) {
+                var htmlStr = '';
+                for(var i=0;i<params.length;i++){
+                	var param = params[i];
+                  var xName = param.name;//x轴的名称
+                  var seriesName = param.seriesName;//图例名称
+                  var value = param.value;//y轴值
+                  var color = param.color;//图例颜色
+                  if(i===0){
+                    htmlStr += xName + '年';//x轴的名称
+                  }
+                  htmlStr += seriesName + '</br>'
+                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+                  htmlStr += value;
+                  htmlStr += '</div>';
+                }
+                return htmlStr;
               }
+            },
+            grid: {
+              x:5,
+              y:0,
+              x2:5,
+              y2:1
             },
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
@@ -390,10 +414,9 @@
             },
             series: [
               {
-                name: '成果数',
+                name: '被引数',
                 type: 'line',
-                //data: [{'year':'2013','count':'3'}, {'year':'2014','count':'5'}, {'year':'2015','count':'1'}, {'year':'2016','count':'2'}, {'year':'2017','count':'3'}, {'year':'2018','count':'9'}, {'year':'2019','count':'2'},{'year':'2020','count':'1'}],
-                data: resCount,
+                data: quoCount,
                 smooth: true,
                 areaStyle: {
                   normal: {
@@ -406,7 +429,7 @@
                         offset: 0,
                         color: "#59c4e6" // 0% 处的颜色
                       }, {
-                        offset: 0.7,
+                        offset: 1,
                         color: "rgba(89,196,230,0)" // 100% 处的颜色
                       }],
                       globalCoord: false // 缺省为 false
@@ -420,6 +443,20 @@
                 },
               }
             ]
+          });
+          setTimeout(function(){
+            fChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex:0,  // 显示第几个series
+              dataIndex:7
+            });
+          });
+          setTimeout(function(){
+            sChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex:0,  // 显示第几个series
+              dataIndex:7
+            });
           });
         },
         handleSizeChange: function(size) {
@@ -618,16 +655,20 @@
     line-height:25px
   }
   .charts1{
-    width: 400px;
-    height:200px;
+    float:left;
+    position: relative;
+    width: 360px;
+    height: 150px;
     //background: #cce6f0;
-    margin: 0 auto;
+    margin: 10 10 10 10 auto;
   }
   .charts2{
-    width: 400px;
-    height:200px;
+    float:left;
+    position: relative;
+    width: 360px;
+    height: 150px;
     //background: #cce6f0;
-    margin: 0 auto;
+    margin: 10 10 10 10 auto;
   }
   .text-item{
     display:inline-block;
