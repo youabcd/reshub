@@ -69,11 +69,13 @@
         <el-col :span="17">
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>可视化</span>
+              <span>可视化</span></br>
+              <span>其实可以很长的吧</span></br>
+              <span>是吧</span>
             </div>
             图图图图图</br>图图图图图
           </el-card>
-          <el-divider content-position="left">旗下作者</el-divider[4]>
+          <el-divider content-position="left">旗下作者</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.link)">{{item.title}}</span>
@@ -86,9 +88,11 @@
               </el-popover>
             </div>
             <div style="display: inline;position: absolute;right: 10px;top: 5px">
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;" :data-clipboard-text="item.link" @click="CopyLink"></i>
-              </el-tooltip>
+              <span>
+                <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                  <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                </el-tooltip>
+              </span>
             </div>
             <div style="text-align: left;position: absolute;left:95px;top: 44px;">
               <p style="height: 7px" >领域：{{item.domain}}</p>
@@ -110,24 +114,20 @@
               </i>
             </div>
           </el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
-          <el-card class="box-res"></el-card>
           <div>
-            <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="100"
-              style="margin-top: 10px;height: 100px">
-            </el-pagination>
+            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-size="pageSize"
+                hide-on-single-page = true
+                layout="total, prev, pager, next, jumper"
+                :total="totalPage"
+                prev-text="上一页"
+                next-text="下一页">
+              </el-pagination>
+            </div>
           </div>
         </el-col>
         <el-col :span="7">
@@ -161,6 +161,9 @@
       name: "ResearchInstitute",
       data() {
         return {
+          currentPage: 1,
+          pageSize: 10,
+          totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/white.jpg'),
           isFollowing: true,
@@ -177,6 +180,105 @@
           resData: [
             {
               paperId:'0',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'1',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'2',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'3',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'4',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'5',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'6',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'7',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'8',
+              title:'MAGA',
+              mail:'romeo.yang.zheng@centralepekin.cn',
+              domain:'吹牛',
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'9',
               title:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
@@ -421,15 +523,17 @@
     display:inline-block;
     position: relative;
     margin-top: 2px;
+    margin-left: 2.5px;
+    margin-right: 2.5px;
     height: 140px;
-    width: 49%;
+    width: calc(50% - 10px);
   }
   .box-card {
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    float:none;
-    width: 99%;
+    float: none;
+    width: calc(98% + 2px);
   }
 
 </style>

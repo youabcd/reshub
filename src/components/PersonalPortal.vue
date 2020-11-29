@@ -65,35 +65,49 @@
         <el-col :span="17">
           <el-card class="box-card" shadow="hover">
             <div slot="header" class="clearfix">
-              <span>可视化</span>
+              <div class="charts1" ref="fChart" id="first"></div>
             </div>
-            图图图图图</br>图图图图图
+            <div>
+              <div class="charts2" ref="sChart" id="second"></div>
+            </div>
           </el-card>
-          <el-divider content-position="left">发表作品</el-divider[4]>
-          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index" class="text-item" >
+          <el-divider content-position="left">发表作品</el-divider>
+          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData" :key="index" class="text-item" >
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 5px">
-              <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom" @click="addCollection(index)">
-                <i class="el-icon-star-off" style="font-size: 25px;width: 30px"></i>
-              </el-tooltip>
-              <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-              </el-tooltip>
-              <el-tooltip class="item" effect="dark" content="分享" placement="bottom">
-                <i class="el-icon-share" style="font-size: 25px;width: 30px" data-clipboard-text="Copy" @click="CopyLink"></i>
-              </el-tooltip>
+              <span>
+                <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                  <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
+                </el-tooltip>
+              </span>
+              <span>
+                <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                  <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                </el-tooltip>
+              </span>
+              <span>
+                <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+              </span>
+              <span style="margin-left: 5px;margin-right: 2px">
+                <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+              </span>
+              <span>
+                <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                  <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                </el-tooltip>
+              </span>
             </div>
-            <div style="text-align: left;position: absolute;top: 47px;width: 96%">
-              <p style="line-height: 27px;" >{{item.msg}}<a :href="item.link">>>查看详情</a></p>
+            <div style="text-align: left;position: absolute;top: 43px;width: 96%">
+              <p style="line-height: 27px;" >{{item.msg}}<a :href="item.link" target="_blank">>>查看详情</a></p>
               
             </div>         
             <div>
-              <el-tag type="info" style="position: absolute;right: 170px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
+              <el-tag type="info" style="position: absolute;right: 161px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
                 <span>{{item.type}}</span>
               </el-tag>
-              <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 110px">
+              <i class="el-icon-star-on" style="position: absolute;right: 86px;top: 110px">
                 <span> {{item.collectionSum}}</span>
               </i>
               <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
@@ -101,18 +115,20 @@
               </i>
             </div>
           </el-card>
-          <el-card class="text-item"></el-card>
-          <el-card class="text-item"></el-card>
-          <el-card class="text-item"></el-card>
-          <el-card class="text-item"></el-card>
-          <el-card class="text-item"></el-card>
           <div>
-            <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="100"
-              style="margin-top: 10px;height: 100px">
-            </el-pagination>
+            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-size="pageSize"
+                hide-on-single-page = true
+                layout="total, prev, pager, next, jumper"
+                :total="totalPage"
+                prev-text="上一页"
+                next-text="下一页">
+              </el-pagination>
+            </div>
           </div>
         </el-col>
         <el-col :span="7">
@@ -142,10 +158,17 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    let echarts = require('echarts/lib/echarts')
+    require('echarts/lib/chart/line')
+    require('echarts/lib/component/tooltip')
+    require('echarts/lib/component/title')
     export default {
       name: "PersonalPortal",
       data() {
         return {
+          currentPage: 1,
+          pageSize: 5,
+          totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/trump.jpg'),
           isFollowing: true,
@@ -158,7 +181,7 @@
           products:'321',
           domain:'吹牛',
           coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
-          tableData0: [
+          tableData: [
             {
               paperId:'0',
               title:'MAGA',
@@ -169,13 +192,202 @@
               viewSum:777,
               link:'https://trump.com/',
               collectTime:'2016-05-04'
-            }],
+            },
+            {
+              paperId:'1',
+              title:'MAGA',
+              msg:'Make America Great Again1',
+              type:"扯淡",
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'2',
+              title:'MAGA',
+              msg:'Make America Great Again2',
+              type:"扯淡",
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'3',
+              title:'MAGA',
+              msg:'Make America Great Again3',
+              type:"扯淡",
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'4',
+              title:'MAGA',
+              msg:'Make America Great Again4',
+              type:"扯淡",
+              collectStatus:true,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://trump.com/',
+              collectTime:'2016-05-04'
+            }
+          ],
         }
       },
-      components:{
-        TopBar
+      mounted() {
+        this.drawLine();
       },
       methods:{
+        drawLine(){
+          let fChart=echarts.init(document.getElementById('first'))
+          let sChart=echarts.init(document.getElementById('second'))
+          var xd=['2019-1-1', '2019-2-1', '2019-3-1', '2019-4-1', '2019-5-1', '2019-6-1', '2019-7-1','2019-8-1'];
+          var watchTimes=[220, 232, 201, 234, 290, 230, 220,250];
+          fChart.setOption({
+            title:{text:''},
+            backgroundColor:"",
+        
+            tooltip: {              //设置tip提示
+              trigger: 'axis'
+            },
+            legend: {               //设置区分（哪条线属于什么）
+              data:['平均成绩','学生成绩']
+            },
+            color: ['#8AE09F', '#FA6F53'],       //设置区分（每条线是什么颜色，和 legend 一一对应）
+            xAxis: {                //设置x轴
+              type: 'category',
+              boundaryGap: false,     //坐标轴两边不留白
+              data: xd,
+              name: 'DATE',           //X轴 name
+              nameTextStyle: {        //坐标轴名称的文字样式
+                color: '#FA6F53',
+                fontSize: 9,
+                padding: [0, 0, 0, 0]//上下左右间距
+              },
+              axisLine: {             //坐标轴轴线相关设置。
+                lineStyle: {
+                  color: '#FA6F53',
+                }
+              }
+            },
+            yAxis: {
+              name: 'Grade',
+              nameTextStyle: {
+                color: '#FA6F53',
+                fontSize: 9,
+                padding: [0, 0, 0, 0]
+              },
+              axisLine: {
+                lineStyle: {
+                  color: '#FA6F53',
+                }
+              },
+              type: 'value'
+            },
+            series: [
+              {
+                name: '平均成绩',
+                data:  watchTimes,
+                type: 'line',               // 类型为折线图
+                lineStyle: {                // 线条样式 => 必须使用normal属性
+                  normal: {
+                    color: '#8AE09F',
+                  }
+                },
+              },
+              {
+                name: '学生成绩',
+                data: [120, 200, 150, 80, 70, 110, 130,260],
+                type: 'line',
+                lineStyle: {
+                  normal: {
+                    color: '#FA6F53',
+                  }
+                },
+              }
+            ]
+          });
+          sChart.setOption({
+            title:{text:''},
+            backgroundColor:"",
+                  
+            tooltip: {              //设置tip提示
+              trigger: 'axis'
+            },
+            legend: {               //设置区分（哪条线属于什么）
+              data:['平均成绩','学生成绩']
+            },
+            color: ['#8AE09F', '#FA6F53'],       //设置区分（每条线是什么颜色，和 legend 一一对应）
+            xAxis: {                //设置x轴
+              type: 'category',
+              boundaryGap: false,     //坐标轴两边不留白
+              data: xd,
+              name: 'DATE',           //X轴 name
+              nameTextStyle: {        //坐标轴名称的文字样式
+                color: '#FA6F53',
+                fontSize: 9,
+                padding: [0, 0, 0, 0]//上下左右间距
+              },
+              axisLine: {             //坐标轴轴线相关设置。
+                lineStyle: {
+                  color: '#FA6F53',
+                }
+              }
+            },
+            yAxis: {
+              name: 'Grade',
+              nameTextStyle: {
+                color: '#FA6F53',
+                fontSize: 9,
+                padding: [0, 0, 0, 0]
+              },
+              axisLine: {
+                lineStyle: {
+                  color: '#FA6F53',
+                }
+              },
+              type: 'value'
+            },
+            series: [
+              {
+                name: '平均成绩',
+                data:  watchTimes,
+                type: 'line',               // 类型为折线图
+                lineStyle: {                // 线条样式 => 必须使用normal属性
+                  normal: {
+                    color: '#8AE09F',
+                  }
+                },
+              },
+              {
+                name: '学生成绩',
+                data: [120, 200, 150, 80, 70, 110, 130,260],
+                type: 'line',
+                lineStyle: {
+                  normal: {
+                    color: '#FA6F53',
+                  }
+                },
+              }
+            ]
+          });
+        },
+        handleSizeChange: function(size) {
+          this.pageSize = size;
+        },
+        //点击第几页
+        handleCurrentChange: function(currentPage) {
+          this.currentPage = currentPage;
+        },
+        gotoPaper(url) {
+          window.open(url,url)
+        },
         Copy() {
           let clipboard = new Clipboard('.commun');
           clipboard.on('success', e => {
@@ -214,6 +426,9 @@
             clipboard.destroy()
           })
         }
+      },
+      components:{
+        TopBar
       }
     }
 </script>
@@ -358,18 +573,30 @@
     word-break:break-all;
     line-height:25px
   }
+  .charts1{
+    width: 400px;
+    height:200px;
+    //background: #cce6f0;
+    margin: 0 auto;
+  }
+  .charts2{
+    width: 400px;
+    height:200px;
+    //background: #cce6f0;
+    margin: 0 auto;
+  }
   .text-item{
     display:inline-block;
     position: relative;
     margin-top: 2px;
     height: 140px;
-    width:99%;
+    width:calc(98% + 2px);
   }
   .box-card {
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 99%;
+    width: calc(98% + 2px);
   }
 
 </style>
