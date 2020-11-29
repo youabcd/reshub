@@ -248,16 +248,35 @@
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
           var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
-          var watchTimes=[220, 232, 201, 234, 290, 230, 220,250];
+          var resCount=['3', '5', '1', '2', '3', '9', '2','1'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
-              trigger: 'axis'
+              trigger: 'axis',
+              formatter: function (params, ticket, callback) {
+                var htmlStr = '';
+                for(var i=0;i<params.length;i++){
+                	var param = params[i];
+                  var xName = param.name;//x轴的名称
+                  var seriesName = param.seriesName;//图例名称
+                  var value = param.value;//y轴值
+                  var color = param.color;//图例颜色
+                  if(i===0){
+                    htmlStr += xName + '年';//x轴的名称
+                  }
+                  htmlStr += seriesName + '</br>'
+                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+                  htmlStr += value;
+                  htmlStr += '</div>';
+                }
+                return htmlStr;
+              }
             },
-            color: ['#8AE09F'],       //设置区分（每条线是什么颜色，和 legend 一一对应）
+            color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
               data: xd,
+              type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
                 show: true,
                 lineStyle: {
@@ -275,6 +294,7 @@
               }
             },
             yAxis: {
+              type: 'value',
               axisLine: {             //坐标轴轴线相关设置。
                 show: false,
               },
@@ -291,8 +311,9 @@
             series: [
               {
                 name: '成果数',
-                data:  watchTimes,
-                type: 'line',               // 类型为折线图
+                type: 'line',
+                //data: [{'year':'2013','count':'3'}, {'year':'2014','count':'5'}, {'year':'2015','count':'1'}, {'year':'2016','count':'2'}, {'year':'2017','count':'3'}, {'year':'2018','count':'9'}, {'year':'2019','count':'2'},{'year':'2020','count':'1'}],
+                data: resCount,
                 smooth: true,
                 areaStyle: {
                   normal: {
@@ -321,64 +342,80 @@
             ]
           });
           sChart.setOption({
-            title:{text:''},
             backgroundColor:"",
-                  
             tooltip: {              //设置tip提示
-              trigger: 'axis'
+              trigger: 'axis',
+              formatter: function(param) {  
+                console.log(JSON.stringify(param));             
+                console.log(param.name); 
+                                  
+                return param.name  + param.value;               
+              }
             },
-            legend: {               //设置区分（哪条线属于什么）
-              data:['平均成绩','学生成绩']
-            },
-            color: ['#8AE09F', '#FA6F53'],       //设置区分（每条线是什么颜色，和 legend 一一对应）
+            color: ['#59c4e6'],
             xAxis: {                //设置x轴
-              type: 'category',
               boundaryGap: false,     //坐标轴两边不留白
               data: xd,
-              name: 'DATE',           //X轴 name
-              nameTextStyle: {        //坐标轴名称的文字样式
-                color: '#FA6F53',
-                fontSize: 9,
-                padding: [0, 0, 0, 0]//上下左右间距
-              },
+              type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
+                show: true,
                 lineStyle: {
-                  color: '#FA6F53',
+                  color: '#e2e2e2',
                 }
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false
+              },
+              splitline: {
+                show: true,
               }
             },
             yAxis: {
-              name: 'Grade',
-              nameTextStyle: {
-                color: '#FA6F53',
-                fontSize: 9,
-                padding: [0, 0, 0, 0]
+              type: 'value',
+              axisLine: {             //坐标轴轴线相关设置。
+                show: false,
               },
-              axisLine: {
-                lineStyle: {
-                  color: '#FA6F53',
-                }
+              axisLabel: {
+                show: false,
               },
-              type: 'value'
+              axisTick: {
+                show: false
+              },
+              splitLine:{
+                show:false//不显示网格线
+              },
             },
             series: [
               {
-                name: '平均成绩',
-                data:  watchTimes,
-                type: 'line',               // 类型为折线图
-                lineStyle: {                // 线条样式 => 必须使用normal属性
+                name: '成果数',
+                type: 'line',
+                //data: [{'year':'2013','count':'3'}, {'year':'2014','count':'5'}, {'year':'2015','count':'1'}, {'year':'2016','count':'2'}, {'year':'2017','count':'3'}, {'year':'2018','count':'9'}, {'year':'2019','count':'2'},{'year':'2020','count':'1'}],
+                data: resCount,
+                smooth: true,
+                areaStyle: {
                   normal: {
-                    color: '#8AE09F',
+                    color: {
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                        offset: 0,
+                        color: "#59c4e6" // 0% 处的颜色
+                      }, {
+                        offset: 0.7,
+                        color: "rgba(89,196,230,0)" // 100% 处的颜色
+                      }],
+                      globalCoord: false // 缺省为 false
+                    }
                   }
                 },
-              },
-              {
-                name: '学生成绩',
-                data: [120, 200, 150, 80, 70, 110, 130,260],
-                type: 'line',
-                lineStyle: {
+                lineStyle: {                // 线条样式 => 必须使用normal属性
                   normal: {
-                    color: '#FA6F53',
+                    color: '#59c4e6',
                   }
                 },
               }
