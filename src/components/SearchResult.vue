@@ -89,10 +89,9 @@
                   </span>
             </el-dialog>
             <div>
-              <!--              <el-card class="box-card" shadow="never">-->
+
+<!--全部-->
               <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -118,24 +117,7 @@
                       <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
-
-<!--                  <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">-->
-<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
-<!--                  </el-tooltip>-->
-<!--                  <el-tooltip class="item" effect="dark" content="分享到微博" placement="bottom">-->
-<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;margin-bottom: 10px">-->
-<!--&lt;!&ndash;                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="gotoWeibo(item.link,item.title)"></i>&ndash;&gt;-->
-<!--                  </el-tooltip>-->
-<!--                  <el-tooltip class="item" effect="dark" content="分享到微信" placement="bottom">-->
-<!--                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="openQRcode(item.link)"></i>-->
-<!--                  </el-tooltip>-->
-<!--                  <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
-<!--                    <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
-<!--                  </el-tooltip>-->
                 </div>
-                <!--                  </div>-->
-
-
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
@@ -160,6 +142,7 @@
                 </div>
               </el-card>
 
+<!--期刊-->
               <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
@@ -215,6 +198,7 @@
                 </div>
               </el-card>
 
+<!--会议-->
               <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
@@ -271,6 +255,7 @@
                 </div>
               </el-card>
 
+<!--报告-->
               <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
                 <!--                    {{'列表内容 ' + o }}-->
                 <!--                  <div style="height: 40px;margin-top: 10px">-->
@@ -440,7 +425,7 @@
     data() {
       return {
         currentPage: 1,
-        pageSize: 1,
+        pageSize: 10,
         btnFlag: false,
         dialogVisible: false,
         keyWords:'',
@@ -452,7 +437,8 @@
         checkedSubject: [],
         checkedAuthor: [],
         checkedTime: [],
-        authorTable: [{
+        authorTable: [
+          {
           name:'Zhang San',
           link:'https://www.bilibili.com',
           institution:'北京航空航天大学北京航空航天大学',
@@ -485,7 +471,8 @@
         },
 
         ],
-        tableData0: [{
+        tableData0: [
+          {
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
@@ -533,7 +520,8 @@
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
-        tableData1: [{
+        tableData1: [
+          {
           paperId:'1',
           title:'Google1',
           msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',

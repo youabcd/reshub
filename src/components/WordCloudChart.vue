@@ -59,7 +59,7 @@
             text: this.title,
             x: "center"
           },
-          backgroundColor: "#fff",
+          backgroundColor: "#e9e9e9",
           tooltip: {
              pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
           },
@@ -110,7 +110,8 @@
         };
         this.chart.setOption(option);
         this.chart.on('click',function(params){
-          window.open("https://www.cnblogs.com/monkeyblog/p/13728272.html");
+          localStorage.setItem("keyWords",params.name);
+          window.open("http://localhost:8080/#/SearchResult");
         });
       },
     }

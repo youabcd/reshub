@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div style="margin-left: 12%;margin-top: 50px;">
+    <div style="margin-left: 12%;margin-top: 50px;margin-bottom: 20px;">
       <WordCloudChart
         id="05"
         title="热门搜索词"
@@ -21,7 +21,9 @@
       />
     </div>
 
-    <div>
+    <van-row></van-row>
+
+    <!--<div>
       <div class="back-top-circle1" @click="nextPic">
         <i class="el-icon-arrow-right" ></i>
       </div>
@@ -29,7 +31,7 @@
       <div class="back-top-circle2" @click="backPic">
         <i class="el-icon-arrow-left" ></i>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
