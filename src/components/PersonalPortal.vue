@@ -64,9 +64,18 @@
       <el-main>
         <el-col :span="17">
           <el-card class="box-card" shadow="hover">
+            <div slot="header" style="display:inline-block">
+              <div class="pie" ref="uPie" id="une"></div>
+              <div class="pie" ref="dPie" id="deux"></div>
+              <div class="pie" ref="tPie" id="trois"></div>
+              <div class="textinpie">
+                共</br>
+                114514篇
+              </div>
+            </div>
             <div style="display:inline-block">
-               <div class="charts1" ref="fChart" id="first"></div>
-               <div class="charts2" ref="sChart" id="second"></div>
+              <div class="charts" ref="fChart" id="first"></div>
+              <div class="charts" ref="sChart" id="second"></div>
             </div>
           </el-card>
           <el-divider content-position="left">发表作品</el-divider>
@@ -158,8 +167,10 @@
     import Clipboard from 'clipboard';
     let echarts = require('echarts/lib/echarts')
     require('echarts/lib/chart/line')
+    require('echarts/lib/chart/pie')
     require('echarts/lib/component/tooltip')
     require('echarts/lib/component/title')
+    require('echarts/lib/component/graphic')
     export default {
       name: "PersonalPortal",
       data() {
@@ -245,6 +256,9 @@
         drawLine(){
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
+          let uPie=echarts.init(document.getElementById('une'))
+          let dPie=echarts.init(document.getElementById('deux'))
+          let tPie=echarts.init(document.getElementById('trois'))
           var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
           var resCount=['3', '5', '4', '2', '3', '9', '2','3'];
           var quoCount=['47', '72', '38', '64', '36', '23', '86','23'];
@@ -442,6 +456,189 @@
                   }
                 },
               }
+            ]
+          });
+          uPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: '50%',      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '期刊',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:50, 
+                  name:'期刊',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:100-50, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
+            ]
+          });
+          dPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: '20%',      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '专著',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:20, 
+                  name:'专著',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:100-20, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
+            ]
+          });
+          tPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: '30%',      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '会议',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:30, 
+                  name:'会议',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:100-30, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
             ]
           });
           setTimeout(function(){
@@ -654,7 +851,7 @@
     word-break:break-all;
     line-height:25px
   }
-  .charts1{
+  .charts{
     float:left;
     position: relative;
     width: 360px;
@@ -662,13 +859,23 @@
     background: #ffffff;
     margin: 10 10 10 10 auto;
   }
-  .charts2{
+  .pie{
     float:left;
     position: relative;
-    width: 360px;
+    width: 150px;
     height: 150px;
     background: #ffffff;
-    margin: 10 10 10 10 auto;
+    margin: 0 auto;
+  }
+  .textinpie{
+    float:left;
+    position: relative;
+    font: bold 27px  arial;
+    width: 130px;
+    height: 115px;
+    background: #ffffff;
+    margin-top: 32px;
+    margin-left: 20px;
   }
   .text-item{
     display:inline-block;
