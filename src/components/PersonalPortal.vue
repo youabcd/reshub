@@ -16,7 +16,7 @@
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
-        				{{name}}
+        				{{realName}}
                 <el-popover
                     placement="bottom"
                     title="邮箱"
@@ -38,25 +38,25 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-        				{{institute}}
+        				{{insName}}
         			</div>
               </br>
         			<div class="p_ach_wr">
                 <ul>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">被引频次</p>
-                    <p class="p_ach_num">{{quoted}}</p>
+                    <p class="p_ach_num">{{quoteNum}}</p>
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">成果数</p>
-                    <p class="p_ach_num">{{products}}</p>
+                    <p class="p_ach_num">{{paperNum}}</p>
                   </li>
                 </ul>
             </div>
             </br>
             <div class="person_editinfo">
               <span class="c_gray prefix_label">领域：</span>
-              <span class="person_domain person_text">{{domain}}</span>
+              <span class="person_domain person_text">{{resField}}</span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
               <div class="pie" ref="tPie" id="trois"></div>
               <div class="textinpie">
                 共</br>
-                114514篇
+                {{paperNum}}篇
               </div>
             </div>
             <div style="display:inline-block">
@@ -180,15 +180,17 @@
           totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/trump.jpg'),
+          isClaimed: true,
           isFollowing: true,
+          isMyPortal: false,
           visitNum:'1400',
           followNum:'0',
-          name:'Trump名字最多可以这么长',
-          institute:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
+          realName:'Trump名字最多可以这么长',
+          insName:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'邮箱大概也就这么@长吧.别太长了',
-          quoted:'132',
-          products:'321',
-          domain:'吹牛',
+          quoteNum:'132',
+          paperNum:'321',
+          resField:'吹牛',
           coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
           tableData: [
             {
