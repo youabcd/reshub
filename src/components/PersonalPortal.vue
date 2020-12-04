@@ -192,6 +192,14 @@
           paperNum:'321',
           resField:'吹牛',
           coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
+          resCount:['3', '5', '4', '2', '3', '9', '2','3'],
+          quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
+          magCount:50,
+          magPar:'50%',
+          patCount:20,
+          patPar:'20%',
+          confCount:30,
+          confPar:'30%',
           tableData: [
             {
               paperId:'0',
@@ -262,8 +270,6 @@
           let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
           var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
-          var resCount=['3', '5', '4', '2', '3', '9', '2','3'];
-          var quoCount=['47', '72', '38', '64', '36', '23', '86','23'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
@@ -334,7 +340,7 @@
               {
                 name: '成果数',
                 type: 'line',
-                data: resCount,
+                data: this.resCount,
                 smooth: true,
                 areaStyle: {
                   normal: {
@@ -432,7 +438,7 @@
               {
                 name: '被引数',
                 type: 'line',
-                data: quoCount,
+                data: this.quoCount,
                 smooth: true,
                 areaStyle: {
                   normal: {
@@ -473,7 +479,7 @@
               top: '37%',           
               left: 'center',          
               style: {
-                text: '50%',      
+                text: this.magPar,      
                 fill: '#333333',       
                 fontSize: 20,          
                 fontWeight: 'normal'
@@ -508,12 +514,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:50, 
+                  value:this.magCount, 
                   name:'期刊',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:100-50, 
+                  value:this.patCount+this.confCount, 
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -534,7 +540,7 @@
               top: '37%',           
               left: 'center',          
               style: {
-                text: '20%',      
+                text: this.patPar,      
                 fill: '#333333',       
                 fontSize: 20,          
                 fontWeight: 'normal'
@@ -569,12 +575,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:20, 
+                  value:this.patCount, 
                   name:'专著',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:100-20, 
+                  value:this.confCount+this.magCount, 
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -595,7 +601,7 @@
               top: '37%',           
               left: 'center',          
               style: {
-                text: '30%',      
+                text: this.confPar,      
                 fill: '#333333',       
                 fontSize: 20,          
                 fontWeight: 'normal'
@@ -630,12 +636,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:30, 
+                  value:this.confCount, 
                   name:'会议',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:100-30, 
+                  value:this.magCount+this.patCount, 
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },

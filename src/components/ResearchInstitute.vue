@@ -49,7 +49,7 @@
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">成果数</p>
-                    <p class="p_ach_num">{{products}}</p>
+                    <p class="p_ach_num">{{paperNum}}</p>
                   </li>
                   <li class="p_ach_item">
                     <p class="p_ach_type c_gray">专家数</p>
@@ -68,12 +68,19 @@
       <el-main>
         <el-col :span="17">
           <el-card class="box-card" shadow="hover">
-            <div slot="header" class="clearfix">
-              <span>可视化</span></br>
-              <span>其实可以很长的吧</span></br>
-              <span>是吧</span>
+            <div slot="header" style="display:inline-block">
+              <div class="pie" ref="uPie" id="une"></div>
+              <div class="pie" ref="dPie" id="deux"></div>
+              <div class="pie" ref="tPie" id="trois"></div>
+              <div class="textinpie">
+                共</br>
+                {{paperNum}}篇
+              </div>
             </div>
-            图图图图图</br>图图图图图
+            <div style="display:inline-block">
+              <div class="charts" ref="fChart" id="first"></div>
+              <div class="charts" ref="sChart" id="second"></div>
+            </div>
           </el-card>
           <el-divider content-position="left">合作专家</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
@@ -157,6 +164,12 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    let echarts = require('echarts/lib/echarts')
+    require('echarts/lib/chart/line')
+    require('echarts/lib/chart/pie')
+    require('echarts/lib/component/tooltip')
+    require('echarts/lib/component/title')
+    require('echarts/lib/component/graphic')
     export default {
       name: "ResearchInstitute",
       data() {
@@ -173,10 +186,18 @@
           institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
           quoted:'132',
-          products:'321',
+          paperNum:'321',
           researchers:'32123',
           domain:'政治',
           resList:['BiliBili','NicoNico','Acfun','Pixiv','Patreoon'],
+          resCount:['3', '5', '4', '2', '3', '9', '2','3'],
+          quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
+          magCount:50,
+          magPar:'50%',
+          patCount:20,
+          patPar:'20%',
+          confCount:30,
+          confPar:'30%',
           resData: [
             {
               paperId:'0',
@@ -295,7 +316,411 @@
       components:{
         TopBar
       },
+      mounted() {
+        this.drawLine();
+      },
       methods:{
+        drawLine(){
+          let fChart=echarts.init(document.getElementById('first'))
+          let sChart=echarts.init(document.getElementById('second'))
+          let uPie=echarts.init(document.getElementById('une'))
+          let dPie=echarts.init(document.getElementById('deux'))
+          let tPie=echarts.init(document.getElementById('trois'))
+          var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
+          fChart.setOption({
+            backgroundColor:"",
+            tooltip: {              //设置tip提示
+              trigger: 'axis',
+              alwaysShowContent: true ,
+              formatter: function (params, ticket, callback) {
+                var htmlStr = '';
+                for(var i=0;i<params.length;i++){
+                	var param = params[i];
+                  var xName = param.name;//x轴的名称
+                  var seriesName = param.seriesName;//图例名称
+                  var value = param.value;//y轴值
+                  var color = param.color;//图例颜色
+                  if(i===0){
+                    htmlStr += xName + '年';//x轴的名称
+                  }
+                  htmlStr += seriesName + '</br>'
+                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+                  htmlStr += value;
+                  htmlStr += '</div>';
+                }
+                return htmlStr;
+              }
+            },
+            grid: {
+              x:5,
+              y:0,
+              x2:5,
+              y2:1
+            },
+            color: ['#59c4e6'],
+            xAxis: {                //设置x轴
+              boundaryGap: false,     //坐标轴两边不留白
+              data: xd,
+              type: 'category',
+              axisLine: {             //坐标轴轴线相关设置。
+                show: true,
+                lineStyle: {
+                  color: '#e2e2e2',
+                }
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false
+              },
+              splitline: {
+                show: true,
+              }
+            },
+            yAxis: {
+              type: 'value',
+              axisLine: {             //坐标轴轴线相关设置。
+                show: false,
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false
+              },
+              splitLine:{
+                show:false//不显示网格线
+              },
+            },
+            series: [
+              {
+                name: '成果数',
+                type: 'line',
+                data: this.resCount,
+                smooth: true,
+                areaStyle: {
+                  normal: {
+                    color: {
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                        offset: 0,
+                        color: "#59c4e6" // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: "rgba(89,196,230,0)" // 100% 处的颜色
+                      }],
+                      globalCoord: false // 缺省为 false
+                    }
+                  }
+                },
+                lineStyle: {                // 线条样式 => 必须使用normal属性
+                  normal: {
+                    color: '#59c4e6',
+                  }
+                },
+              }
+            ]
+          });
+          sChart.setOption({
+            backgroundColor:"",
+            tooltip: {              //设置tip提示
+              trigger: 'axis',
+              alwaysShowContent: true ,
+              formatter: function (params, ticket, callback) {
+                var htmlStr = '';
+                for(var i=0;i<params.length;i++){
+                	var param = params[i];
+                  var xName = param.name;//x轴的名称
+                  var seriesName = param.seriesName;//图例名称
+                  var value = param.value;//y轴值
+                  var color = param.color;//图例颜色
+                  if(i===0){
+                    htmlStr += xName + '年';//x轴的名称
+                  }
+                  htmlStr += seriesName + '</br>'
+                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+                  htmlStr += value;
+                  htmlStr += '</div>';
+                }
+                return htmlStr;
+              }
+            },
+            grid: {
+              x:5,
+              y:0,
+              x2:5,
+              y2:1
+            },
+            color: ['#59c4e6'],
+            xAxis: {                //设置x轴
+              boundaryGap: false,     //坐标轴两边不留白
+              data: xd,
+              type: 'category',
+              axisLine: {             //坐标轴轴线相关设置。
+                show: true,
+                lineStyle: {
+                  color: '#e2e2e2',
+                }
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false
+              },
+              splitline: {
+                show: true,
+              }
+            },
+            yAxis: {
+              type: 'value',
+              axisLine: {             //坐标轴轴线相关设置。
+                show: false,
+              },
+              axisLabel: {
+                show: false,
+              },
+              axisTick: {
+                show: false
+              },
+              splitLine:{
+                show:false//不显示网格线
+              },
+            },
+            series: [
+              {
+                name: '被引数',
+                type: 'line',
+                data: this.quoCount,
+                smooth: true,
+                areaStyle: {
+                  normal: {
+                    color: {
+                      x: 0,
+                      y: 0,
+                      x2: 0,
+                      y2: 1,
+                      colorStops: [{
+                        offset: 0,
+                        color: "#59c4e6" // 0% 处的颜色
+                      }, {
+                        offset: 1,
+                        color: "rgba(89,196,230,0)" // 100% 处的颜色
+                      }],
+                      globalCoord: false // 缺省为 false
+                    }
+                  }
+                },
+                lineStyle: {                // 线条样式 => 必须使用normal属性
+                  normal: {
+                    color: '#59c4e6',
+                  }
+                },
+              }
+            ]
+          });
+          uPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: this.magPar,      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '期刊',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:this.magCount, 
+                  name:'期刊',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:this.patCount+this.confCount, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
+            ]
+          });
+          dPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: this.patPar,      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '专著',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:this.patCount, 
+                  name:'专著',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:this.confCount+this.magCount, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
+            ]
+          });
+          tPie.setOption({
+            title: {//标题组件
+              textStyle: {    
+                color: "#333333",    
+                fontSize: 12,   
+              }
+            },
+            graphic:[		       	       
+            {
+              type: 'text',              
+              top: '37%',           
+              left: 'center',          
+              style: {
+                text: this.confPar,      
+                fill: '#333333',       
+                fontSize: 20,          
+                fontWeight: 'normal'
+              }  		      		        
+            },{
+              type: 'text',              
+              top: '50%',           
+              left: 'center',          
+              style: {
+                text: '会议',      
+                fill: '#A6A8B6',       
+                fontSize: 12,          
+                fontWeight: 'normal'
+              }  		      		        
+            },      
+            ],
+            //圆环的颜色
+            color:['#66b1ff','#dfe6ee'], 		  
+            series: [
+            {
+              name:'工资占比图',//代表a的值，系列名称
+              type:'pie',
+              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                	show: false  //视觉引导项第二段的长度。
+                }
+              },
+              // 系列中的数据内容数组。
+              data:[
+                {
+                  value:this.confCount, 
+                  name:'会议',
+                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+                },
+                {
+                  value:this.magCount+this.patCount, 
+                  name:'其他',
+                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+                },
+              ]
+            }
+            ]
+          });
+          setTimeout(function(){
+            fChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex:0,  // 显示第几个series
+              dataIndex:7
+            });
+          });
+          setTimeout(function(){
+            sChart.dispatchAction({
+              type: 'showTip',
+              seriesIndex:0,  // 显示第几个series
+              dataIndex:7
+            });
+          });
+        },
         Copy() {
           let clipboard = new Clipboard('.commun');
           clipboard.on('success', e => {
@@ -503,6 +928,32 @@
     margin-left: 15px;
     word-break:break-all;
     line-height:25px
+  }
+  .charts{
+    float:left;
+    position: relative;
+    width: 360px;
+    height: 150px;
+    background: #ffffff;
+    margin: 10 10 10 10 auto;
+  }
+  .pie{
+    float:left;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background: #ffffff;
+    margin: 0 auto;
+  }
+  .textinpie{
+    float:left;
+    position: relative;
+    font: bold 27px  arial;
+    width: 130px;
+    height: 115px;
+    background: #ffffff;
+    margin-top: 32px;
+    margin-left: 20px;
   }
   .avatar{
   	position:relative;
