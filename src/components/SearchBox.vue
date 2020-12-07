@@ -97,7 +97,7 @@
         //搜索框部分数据
         keyWords:'',
         /*boolType {1:AND ; 2:OR ; 3:NOT}
-        type {1：主题；2：标题；3：作者；4：关键词；5：摘要；6：全文}
+        type {1：主题；2：标题；3：作者；4：关键词；5：摘要; }
         */
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
