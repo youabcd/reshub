@@ -56,10 +56,12 @@
         <el-dialog
           title="修改密码"
           :visible.sync="dialogVisible"
+          :close-on-click-modal="false"
           v-if="dialogVisible"
-          :show-close=false
-          width="30%">
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-right: 80px">
+          :show-close=true
+          width="500px"
+          @close="resetForm('ruleForm')">
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" style="margin-right: 80px" v-if="dialogVisible">
             <el-form-item label="密码" prop="pass">
               <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
             </el-form-item>
@@ -133,13 +135,13 @@
         <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">
           <div style="position: absolute;left: 50px;top: 50px" class="avatar_info"></div>
           <div style="position: absolute;left: 450px;top: 100px">
-            姓名 :
+            姓名 : {{administrator.name}}
           </div>
           <div style="position: absolute;left: 450px;top: 150px">
-            手机号 :
+            手机号 : {{administrator.phone}}
           </div>
           <div style="position: absolute;left: 450px;top: 200px">
-            身份证 :
+            身份证 : {{administrator.ID_card}}
           </div>
           <div style="position: absolute;left: 450px;top: 250px">
             密码 :
@@ -290,8 +292,13 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import baseUrl from "./baseUrl";
   export default {
     name: "Administrator",
+    mounted() {
+      this.getAdministrator()
+    },
     data() {
       let validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -318,6 +325,11 @@
         drawer1: false,
         direction: 'rtl',
         // img: require('../assets/bing01.jpg'),
+        administrator: {
+          name: '',
+          phone: '',
+          ID_card: '',
+        },
         drawerData: {
           id: '',
           date: '',
@@ -457,6 +469,18 @@
       }
     },
     methods: {
+      getAdministrator() {
+        axios.post(baseUrl+'/getAdministrator',{
+          userId: localStorage.getItem(myId)
+        }).then(function (response) {
+          this.administrator.name=response.data.info.name;
+          this.administrator.phone=response.data.info.phone;
+          this.administrator.ID_card=response.data.info.ID_card;
+        })
+      },
+      getList() {
+
+      },
       handleSelect (key) {
         this.menuIndex = key;
       },
@@ -559,22 +583,27 @@
         });
       },
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$message({
-              showClose: true,
-              message: '修改成功',
-              type: 'success'
-            });
-          } else {
-            this.$message({
-              showClose: true,
-              message: '修改失败',
-              type: 'error'
-            });
-            return false;
-          }
-        });
+        axios.post(baseUrl+'/changePassword',{
+          userId: localStorage.getItem(myId),
+          password: this.ruleForm.pass
+        }).then(function (response) {
+          this.$refs[formName].validate((valid) => {
+            if (valid && response.data.succeed) {
+              this.$message({
+                showClose: true,
+                message: '修改成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                showClose: true,
+                message: '修改失败',
+                type: 'error'
+              });
+              return false;
+            }
+          });
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
