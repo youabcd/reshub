@@ -11,6 +11,10 @@
       </div>
     </div>
 
+    <!--<div style="margin-top: 100px;color: red"><p>{{back[whichPic].name}}</p>
+      <el-button @click="backPic">next</el-button>
+    </div>-->
+
     <div style="margin-left: 12%;margin-top: 50px;margin-bottom: 20px;">
       <WordCloudChart
         id="05"
@@ -46,19 +50,11 @@
     data() {
       return {
         /*back:[
-          require('../assets/bing01.jpg'),
-          require('../assets/bing02.jpg'),
-          require('../assets/bing03.jpg'),
-          require('../assets/bing04.jpg'),
-          require('../assets/bing06.jpg'),
-          require('../assets/bing07.jpg'),
-          require('../assets/bing08.jpg'),
-          require('../assets/bing09.jpg'),
-          require('../assets/bing10.jpg'),
-          require('../assets/bing11.jpg'),
-          require('../assets/bing13.jpg'),
+          {name:'陈振涛',isCatch:false},
+          {name:'李柯凡',isCatch:false},
+          {name:'刘禹辰',isCatch:false},
         ],
-        whichPic:parseInt(Math.random()*11),*/
+        whichPic:parseInt(Math.random() * 3),*/
         hotWords: [
           {
             name: "十九大精神",
@@ -169,12 +165,7 @@
         }
       },
       backPic(){
-        if(this.whichPic>0){
-          this.whichPic--;
-        }
-        else{
-          this.whichPic=this.back.length-1;
-        }
+        this.whichPic=parseInt(Math.random() *3);
       },
       getEhartsData(){
         let _this=this;
