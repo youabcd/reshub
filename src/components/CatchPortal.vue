@@ -73,8 +73,8 @@
 </template>
 
 <script>
-  import TopBar from "./TopBar"
-  import axios from 'axios'
+  import TopBar from "./TopBar";
+  import axios from 'axios';
   import baseUrl from "./baseUrl";
     export default {
         name: "CatchPortal",
@@ -130,7 +130,7 @@
       },
 
       methods:{
-        //发送验证码
+        //发送验证码        need change
         getAuthCode(){
           const verification = this.PortalForm.cemail;
           const url =" "
@@ -156,15 +156,12 @@
 
         //上传信息
         submit(){
-          this.$axios({
-            method: 'post',
-            url: baseUrl+'/CatchPortal',
-            data:{
-              name: this.PortalForm.realname,
-              id: this.PortalForm.idnumber,
-              institude: this.PortalForm.institude,
-              email: this.PortalForm.cemail
-            }
+          let _this=this;
+          axios.post(baseUrl+'/CatchPortal',{
+            name: this.PortalForm.realname,
+            id: this.PortalForm.idnumber,
+            institude: this.PortalForm.institude,
+            email: this.PortalForm.cemail
           }).then(res =>{
            if(res.data.message === 'SUCCESS'){
              this.$notify({
