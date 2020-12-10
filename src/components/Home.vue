@@ -15,7 +15,7 @@
       <WordCloudChart
         id="05"
         title="热门搜索词"
-        :data="echarts05Data"
+        :data="hotWords"
         width="86%"
         height="500px"
       />
@@ -39,11 +39,13 @@
   import TopBar from "./TopBar";
   import SearchBox from "./SearchBox";
   import WordCloudChart from "./WordCloudChart";
+  import axios from "axios";
+  import baseUrl from "./baseUrl";
   export default {
     name: "Home",
     data() {
       return {
-        back:[
+        /*back:[
           require('../assets/bing01.jpg'),
           require('../assets/bing02.jpg'),
           require('../assets/bing03.jpg'),
@@ -56,8 +58,8 @@
           require('../assets/bing11.jpg'),
           require('../assets/bing13.jpg'),
         ],
-        whichPic:parseInt(Math.random()*11),
-        echarts05Data: [
+        whichPic:parseInt(Math.random()*11),*/
+        hotWords: [
           {
             name: "十九大精神",
             value: 15000
@@ -173,6 +175,14 @@
         else{
           this.whichPic=this.back.length-1;
         }
+      },
+      getEhartsData(){
+        let _this=this;
+        axios.get(baseUrl+"/home")
+            .then(function (response) {
+              console.log(response);
+              this.hotWords=response.data;
+            })
       }
     },
     components: {
@@ -181,6 +191,9 @@
     created() {
 
     },
+    mounted() {
+      this.getEhartsData();
+    }
   }
 </script>
 
