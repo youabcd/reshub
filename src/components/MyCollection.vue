@@ -34,7 +34,7 @@
 <!--          <el-card class="box-card" shadow="never">-->
             <el-card  shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
               <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link, index, item.paperId)">{{item.title}}</span>
               </div>
               <div style="display: inline;position: absolute;right: 20px;top: 0">
 <!--                <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">-->
@@ -51,7 +51,7 @@
 <!--                </el-tooltip>-->
                 <span>
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, tableData0[index].paperId)"></i>
                   </el-tooltip>
                 </span>
                 <span>
@@ -85,7 +85,7 @@
               <div>
                 <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" :href="item.author_link[author_index]">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -107,12 +107,12 @@
 
           <el-card  shadow="hover" v-if="menuIndex === '1' " v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link, index, item.paperId)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
               <span>
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, tableData1[index].paperId)"></i>
                   </el-tooltip>
               </span>
               <span>
@@ -166,7 +166,7 @@
             <div>
               <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" :href="item.author_link[author_index]">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -189,12 +189,12 @@
 
           <el-card  shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link, index, item.paperId)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
               <span>
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, tableData2[index].paperId)"></i>
                   </el-tooltip>
                 </span>
               <span>
@@ -220,7 +220,7 @@
             <div>
               <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" :href="item.author_link[author_index]">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -243,12 +243,12 @@
 
           <el-card  shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style=";height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link, index, item.paperId)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 0">
               <span>
                   <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
-                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index)"></i>
+                    <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, tableData3[index].paperId)"></i>
                   </el-tooltip>
                 </span>
               <span>
@@ -272,7 +272,7 @@
             <div>
               <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" :href="item.author_link[author_index]">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -361,6 +361,8 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    import axios from 'axios';
+    import baseUrl from "./baseUrl";
     export default {
       name: "MyCollection",
       inject:['reload'],
@@ -369,7 +371,7 @@
       },
       data() {
         return {
-          pageSize: 1,
+          pageSize: 10,
           currentPage: 1,
           btnFlag: false,
           dialogVisible: false,
@@ -377,12 +379,23 @@
           menuIndex: "0",
           QRlink: "",
           tableData: [{
+            paperId:'',
+            title:'',
+            msg:'',
+            author:['',''],
+            author_link:['',''],
+            type:'',
+            collectionSum:0,
+            viewSum:0,
+            link:'',
+            collectTime:''
           }],
           tableData0: [{
             paperId:'1',
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author:['Li Ming','Zhang San'],
+            author_link:['https://www.bilibili.com','https://www.baidu.com'],
             type:"期刊",
             collectionSum:6,
             viewSum:7,
@@ -394,6 +407,7 @@
               title:'Google2',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
               author:['Li Ming','Zhang San'],
+              author_link:['https://www.bilibili.com','https://www.baidu.com'],
               type:"会议",
               collectionSum:66,
               viewSum:77,
@@ -404,7 +418,8 @@
               paperId:'3',
               title:'BILIBILI3',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-              author:'Author3',
+              author:['Li Ming','Zhang San'],
+              author_link:['https://www.bilibili.com','https://www.baidu.com'],
               type:"期刊",
               collectionSum:666,
               viewSum:777,
@@ -416,6 +431,7 @@
               title:'Google4',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
               author:['Li Ming','Zhang San'],
+              author_link:['https://www.bilibili.com','https://www.baidu.com'],
               type:"报告",
               collectionSum:6666,
               viewSum:7777,
@@ -427,6 +443,7 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author:['Li Ming','Zhang San'],
+            author_link:['https://www.bilibili.com','https://www.baidu.com'],
             type:"期刊",
             collectionSum:666,
             viewSum:777,
@@ -438,6 +455,7 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            author_link:['https://www.bilibili.com','https://www.baidu.com'],
             type:"期刊",
             collectionSum:666,
             viewSum:777,
@@ -450,6 +468,7 @@
               title:'Google2',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
               author:['Li Ming','Zhang San'],
+              author_link:['https://www.bilibili.com','https://www.baidu.com'],
               type:"会议",
               collectionSum:666,
               viewSum:777,
@@ -462,6 +481,7 @@
               title:'Google4',
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
               author:['Li Ming','Zhang San'],
+              author_link:['https://www.bilibili.com','https://www.baidu.com'],
               type:"报告",
               collectionSum:666,
               viewSum:777,
@@ -471,12 +491,83 @@
         }
       },
       mounted () {
+        this.getMyCollection()
         window.addEventListener('scroll', this.scrollToTop)
       },
       destroyed () {
         window.removeEventListener('scroll', this.scrollToTop)
       },
       methods: {
+        getMyCollection() {
+          axios.post(baseUrl+'/getMyCollection',{
+            userId:localStorage.getItem(myId)
+          }).then(function (response) {
+            for (let i=0, length=response.data.collections.length; i<length; i++) {
+              this.tableData.paperId=response.data.collections[i].paperId;
+              this.tableData.title=response.data.collections[i].title;
+              this.tableData.msg=response.data.collections[i].msg;
+              this.tableData.author=response.data.collections[i].author;
+              this.tableData.author_link=response.data.collections[i].author_link;
+              this.tableData.type=response.data.collections[i].type;
+              this.tableData.collectionSum=response.data.collections[i].collectionSum;
+              this.tableData.viewSum=response.data.collections[i].viewSum;
+              this.tableData.link=response.data.collections[i].link;
+              this.tableData.collectTime=response.data.collections[i].collectTime;
+              this.tableData0.push({
+                paperId: this.tableData.paperId,
+                title: this.tableData.title,
+                msg: this.tableData.msg,
+                author: this.tableData.author,
+                author_link: this.tableData.author_link,
+                type: this.tableData.type,
+                collectionSum: this.tableData.collectionSum,
+                viewSum: this.tableData.viewSum,
+                link: this.tableData.link,
+                collectTime: this.tableData.collectTime,
+              })
+              if (this.tableData.type === '期刊') {
+                this.tableData1.push({
+                  paperId: this.tableData.paperId,
+                  title: this.tableData.title,
+                  msg: this.tableData.msg,
+                  author: this.tableData.author,
+                  author_link: this.tableData.author_link,
+                  type: this.tableData.type,
+                  collectionSum: this.tableData.collectionSum,
+                  viewSum: this.tableData.viewSum,
+                  link: this.tableData.link,
+                  collectTime: this.tableData.collectTime,
+                })
+              } else if (this.tableData.type === '会议') {
+                this.tableData2.push({
+                  paperId: this.tableData.paperId,
+                  title: this.tableData.title,
+                  msg: this.tableData.msg,
+                  author: this.tableData.author,
+                  author_link: this.tableData.author_link,
+                  type: this.tableData.type,
+                  collectionSum: this.tableData.collectionSum,
+                  viewSum: this.tableData.viewSum,
+                  link: this.tableData.link,
+                  collectTime: this.tableData.collectTime,
+                })
+              } else if (this.tableData.type === '报告') {
+                this.tableData3.push({
+                  paperId: this.tableData.paperId,
+                  title: this.tableData.title,
+                  msg: this.tableData.msg,
+                  author: this.tableData.author,
+                  author_link: this.tableData.author_link,
+                  type: this.tableData.type,
+                  collectionSum: this.tableData.collectionSum,
+                  viewSum: this.tableData.viewSum,
+                  link: this.tableData.link,
+                  collectTime: this.tableData.collectTime,
+                })
+              }
+            }
+          })
+        },
         handleSizeChange: function(size) {
           this.pageSize = size;
         },
@@ -513,9 +604,8 @@
           this.currentPage = 1;
         },
 
-        deleteCollection (index) {
+        deleteCollection (index, paperId) {
           //发送请求
-
           if (this.menuIndex === '0') {
             let temp = this.tableData0[index];
             if (temp.type === "期刊") {
@@ -569,12 +659,24 @@
             }
             this.tableData3.splice(index, 1);
           }
-          this.$message({
-            showClose: true,
-            message: '取消收藏成功',
-            type: 'success'
-          });
-
+          axios.post(baseUrl+'/cancelCollection',{
+            userId:localStorage.getItem(myId),
+            paperId: paperId
+          }).then(function (response) {
+            if (response.data.succeed===true) {
+              this.$message({
+                showClose: true,
+                message: '取消收藏成功',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                showClose: true,
+                message: '取消收藏失败，请重试',
+                type: 'error'
+              });
+            }
+          })
           // this.reload();
         },
 
@@ -598,8 +700,12 @@
           })
         },
 
-        gotoPaper(url) {
-          //发送点击数据
+        gotoPaper(url, index, paperId) {
+          //发送点击数据.
+          axios.post(baseUrl+'/addBrowseHistory',{
+            userId:localStorage.getItem(myId),
+            paperId: paperId,
+          })
           window.open(url,url)
         },
 
@@ -615,8 +721,6 @@
         handleClose(done) {
           Object.assign(this.$data, this.$options.data())
         },
-
-
       }
     }
 

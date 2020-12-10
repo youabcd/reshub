@@ -13,11 +13,11 @@
 
       <el-table
         ref="multipleTable"
-        :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        :data="tableData"
         tooltip-effect="dark"
         @cell-click="search"
         stripe
-        style="width: 100%;margin-top: 10px"
+        style="width: 100%;margin-top: 10px;margin-bottom: 50px"
         @selection-change="handleSelectionChange">
         <el-table-column
           type="selection"
@@ -44,25 +44,25 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native.prevent="deleteHistory(scope.$index)"><i class="el-icon-delete"> 删除记录</i></el-dropdown-item>
-                <el-dropdown-item><i class="el-icon-document-copy"> 复制文本</i></el-dropdown-item>
+<!--                <el-dropdown-item><i class="el-icon-document-copy" > 复制文本</i></el-dropdown-item>-->
               </el-dropdown-menu>
             </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
 
-      <div style="margin-top: 30px">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-size="pageSize"
-          layout="total, prev, pager, next, jumper"
-          :total="tableData.length"
-          prev-text="上一页"
-          next-text="下一页">
-        </el-pagination>
-      </div>
+<!--      <div style="margin-top: 30px">-->
+<!--        <el-pagination-->
+<!--          @size-change="handleSizeChange"-->
+<!--          @current-change="handleCurrentChange"-->
+<!--          :current-page="currentPage"-->
+<!--          :page-size="pageSize"-->
+<!--          layout="total, prev, pager, next, jumper"-->
+<!--          :total="tableData.length"-->
+<!--          prev-text="上一页"-->
+<!--          next-text="下一页">-->
+<!--        </el-pagination>-->
+<!--      </div>-->
 
     </div>
   </div>
@@ -70,6 +70,9 @@
 
 <script>
     import TopBar from "./TopBar";
+    import Clipboard from "clipboard";
+    import axios from 'axios'
+    import baseUrl from "./baseUrl";
 
     export default {
       name: "SearchRecord",
@@ -81,116 +84,119 @@
           currentPage: 1,
           pageSize: 10,
           visible: false,
+          temp: [{
+            id: '',
+            date: '',
+            history: '',
+          }],
           tableData: [{
             id: '1',
-            date: '2016/05/01 16:00',
-            name: '王小虎',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
+            date: '2016-05-01 16:00',
+            history: '上海市普陀区金江路'
           }, {
             id: '2',
             date: '2016-05-02',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           }, {
             id: '3',
             date: '2016-05-03',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           }, {
             id: '4',
             date: '2016-05-04',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           }, {
             id: '5',
             date: '2016-05-05',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           }, {
             id: '6',
             date: '2016-05-06',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           }, {
             id: '7',
             date: '2016-05-07',
-            name: '王小虎',
             history: '上海市普陀区金沙江路 1518 弄'
           },{
-            id: '1',
+            id: '12',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '13',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '14',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '15',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '16',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '17',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '18',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '19',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '111',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '122',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '133',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '144',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '155',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, {
-            id: '1',
+            id: '166',
             date: '2016/05/01 16:00',
-            name: '王小虎',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, ],
           multipleSelection: []
         }
       },
+      mounted() {
+        this.getSearchRecord()
+      },
       methods: {
+        getSearchRecord() {
+          axios.post(baseUrl+'/getSearchRecord',{
+            userId:localStorage.getItem(myId)
+          }).then(function (response) {
+            for (let i=0, length=response.data.results.length; i<length; i++) {
+              this.temp.id=response.data.results[i].id;
+              this.temp.date=response.data.results[i].date;
+              this.temp.history=response.data.results[i].history;
+              this.tableData.push({
+                id: this.temp.id,
+                date: this.temp.date,
+                history: this.temp.history,
+              })
+            }
+          })
+        },
         handleSizeChange: function(size) {
           this.pageSize = size;
         },
