@@ -261,8 +261,17 @@
       },
       mounted() {
         this.drawLine();
+        this.getPersonalPortal();
       },
       methods:{
+        getPersonalPortal() {
+          axios.post(baseUrl+'/getSearchRecord',{
+            userId:localStorage.getItem(myId),
+            resId:localStorage.getItem(resId)
+          }).then(function (response) {
+             this.temp.realName=response.data.results.realname;
+          })
+        },
         drawLine(){
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
