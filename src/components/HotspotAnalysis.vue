@@ -67,6 +67,8 @@
 
 <script>
     import TopBar from "./TopBar";
+    import baseUrl from "./baseUrl";
+    import axios from 'axios';
     import WordCloudChart from "./WordCloudChart";
     let echarts = require('echarts/lib/echarts')
     // 引入折线图组件
@@ -158,27 +160,20 @@
             {name:"项目",value: 50},
           ],
           scholarName:['y1','y2','y3','y4','y5','y6','y7','y8',],
-          scholarCited:[120,110,100,90,80,70,60,50,],
-          scholar:[
-            {name:'y1',id:'1',cited:120},
-            {name:'y2',id:'2',cited:110},
-            {name:'y3',id:'3',cited:100},
-            {name:'y4',id:'4',cited:90},
-            {name:'y5',id:'5',cited:80},
-            {name:'y6',id:'6',cited:70},
-            {name:'y7',id:'7',cited:60},
-            {name:'y8',id:'8',cited:50},
-          ],
+          scholarCited:[120,110,100,90,80,70,60,50,],//发文数量
+          scholarUsed:[120, 200, 150, 80, 70, 110, 130,260],//被引次数
         }
       },
       mounted() {
+        this.getHot();
         this.drawLine();
       },
       methods: {
         drawLine(){
           let myChart=echarts.init(document.getElementById('main'))
           var xd=this.scholarName;
-          var watchTimes=this.scholarCited;
+          var scholarCited=this.scholarCited;//发文数量
+          var scholarUsed=this.scholarUsed;//被引次数
           myChart.setOption({
             title:{text:''},
             backgroundColor:"",
@@ -187,7 +182,7 @@
               trigger: 'axis'
             },
             legend: {               //设置区分（哪条线属于什么）
-              data:['平均成绩','学生成绩']
+              data:['发文数量','被引次数']
             },
             color: ['#8AE09F', '#FA6F53'],       //设置区分（每条线是什么颜色，和 legend 一一对应）
             xAxis: {                //设置x轴
@@ -223,7 +218,7 @@
             series: [
               {
                 name: '发文数量',
-                data:  watchTimes,
+                data:  scholarCited,
                 type: 'line',               // 类型为折线图
                 lineStyle: {                // 线条样式 => 必须使用normal属性
                   normal: {
@@ -233,7 +228,7 @@
               },
               {
                 name: '被引次数',
-                data: [120, 200, 150, 80, 70, 110, 130,260],
+                data: scholarUsed,
                 type: 'line',
                 lineStyle: {
                   normal: {
@@ -243,6 +238,18 @@
               }
             ]
         });
+        },
+        getHot(){
+          let _this=this;
+          axios.get(baseUrl+"/hot")
+              .then(function (response) {
+                console.log(response);
+                _this.scholarUsed=response.data.scholarUsed;
+                _this.scholarCited=response.data.scholarCited;
+                _this.scholarName=response.data.scholarName;
+                _this.paperTable=response.data.paperTable;
+                _this.hotSearch=response.data.hotSearch;
+              })
         },
       },
       components:{

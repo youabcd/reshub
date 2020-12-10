@@ -7,6 +7,7 @@
   //import resize from "./mixins/resize";
   import "echarts-wordcloud/dist/echarts-wordcloud";
   import "echarts-wordcloud/dist/echarts-wordcloud.min";
+  import webUrl from "./webUrl";
 
   export default {
     //mixins: [resize],
@@ -111,7 +112,7 @@
         this.chart.setOption(option);
         this.chart.on('click',function(params){
           localStorage.setItem("keyWords",params.name);
-          window.open("http://localhost:8080/#/SearchResult");
+          window.open(webUrl+"SearchResult");
         });
       },
     }

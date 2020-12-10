@@ -90,6 +90,7 @@
 <script>
   import axios from 'axios';
   import baseUrl from './baseUrl'
+  import webUrl from "./webUrl";
   export default {
     name: "SearchBox",
     data(){
@@ -172,7 +173,7 @@
             }
           }
           localStorage.setItem("keyWords",k);
-          window.open("http://localhost:8080/#/SearchResult");
+          window.open(webUrl+"SearchResult");
         }
       },//搜索
       //添加行
