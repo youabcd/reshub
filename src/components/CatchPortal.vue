@@ -14,28 +14,28 @@
           <!--真实姓名-->
           <div class="real_name">
             <label><span style="color: red">*</span>真实姓名：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="RegionForm.realname" placeholder="请输入您的真实姓名"></el-input>
+            <el-input style="width: 300px" v-model="PortalForm.realname" placeholder="请输入您的真实姓名"></el-input>
             <br><br>
           </div>
 
           <!--身份证号-->
           <div class="identity_number">
             <label><span style="color: red">*</span>身份证号：</label>     <!--需要加id吗？ 另外v-model还是input吗-->
-            <el-input style="width: 300px" v-model="RegionForm.idnumber" placeholder="请输入身份证号"></el-input>
+            <el-input style="width: 300px" v-model="PortalForm.idnumber" placeholder="请输入身份证号"></el-input>
             <br><br>
           </div>
 
           <!--所属机构-->
           <div class="research_institute">
             <label><span style="color: red">*</span>所属机构：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="RegionForm.institude" placeholder="请输入您目前所在的单位名称"></el-input>
+            <el-input style="width: 300px" v-model="PortalForm.institude" placeholder="请输入您目前所在的单位名称"></el-input>
             <br><br>
           </div>
 
           <!--联系方式-->
           <div class="communicate_email">
             <label><span style="color: red">*</span>联系邮箱：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="RegionForm.cemail" placeholder="请输入可以联系到您的电子邮箱"></el-input>
+            <el-input style="width: 300px" v-model="PortalForm.cemail" placeholder="请输入可以联系到您的电子邮箱"></el-input>
             <br><br>
           </div>
 
@@ -73,7 +73,9 @@
 </template>
 
 <script>
-  import TopBar from "./TopBar";
+  import TopBar from "./TopBar"
+  import axios from 'axios'
+  import baseUrl from "./baseUrl";
     export default {
         name: "CatchPortal",
       data(){
@@ -82,7 +84,7 @@
           //以下内容参考了https://www.php.cn/js-tutorial-401539.html
 
           return{
-            RegionForm:{
+            PortalForm:{
               realname:'',
               idnumber:'',
               institude:'',
@@ -97,28 +99,28 @@
                 {
                   requied:true,
                   message:'请输入真实姓名！',
-                  trigger:'blur'         //what is this
+                  trigger:'change'         //what is this
                 }
               ],
               idnumber:[
                 {
                   requied:true,
                   message:'请输入身份证号！',
-                  trigger:'blur'         //what is this
+                  trigger:'change'         //what is this
                 }
               ],
               institude:[
                 {
                   requied:true,
                   message:'请输入所在机构！',
-                  trigger:'blur'         //what is this
+                  trigger:'change'         //what is this
                 }
               ],
               cemail:[
                 {
                   requied:true,
                   message:'请输入自己的邮箱！',
-                  trigger:'blur'         //what is this
+                  trigger:'change'         //what is this
                 }
               ]
             },
@@ -130,9 +132,10 @@
       methods:{
         //发送验证码
         getAuthCode(){
-          const verification = this.RegionForm.cemail;
+          const verification = this.PortalForm.cemail;
           const url =" "
             console.log("url",url);
+          //axios
               this.$http.get(url).then(function(response){
                 console.log("请求成功",response)
               },function(error){
@@ -149,6 +152,42 @@
                 clearInterval(auth_timetimer);
               }
             },1000);
+        },
+
+        //上传信息
+        submit(){
+          this.$axios({
+            method: 'post',
+            url: baseUrl+'/CatchPortal',
+            data:{
+              name: this.PortalForm.realname,
+              id: this.PortalForm.idnumber,
+              institude: this.PortalForm.institude,
+              email: this.PortalForm.cemail
+            }
+          }).then(res =>{
+           if(res.data.message === 'SUCCESS'){
+             this.$notify({
+               title: '提示',
+               message: '提交门户认领申请成功',
+               duration: 3000
+             });
+           }else{
+             this.$notify({
+               title: '提示',
+               message: '提交失败',
+               duration: 3000
+             });
+           }
+          })
+          .catch(err=>{
+            this.$notify({
+              title: '提示',
+              message: '提交出现错误',
+              duration: 3000
+            });
+            console.log(err)
+          })
         }
 
         //发送请求认证
@@ -159,10 +198,10 @@
               cemail:''
          */
         /*thisAjax(){
-          const realnameData = this.RegionForm.realname;
-          const idnumberData = this.RegionForm.idnumber;
-          const institudeData = this.RegionForm.institude;
-          const cemailData = this.RegionForm.cemail;
+          const realnameData = this.PortalForm.realname;
+          const idnumberData = this.PortalForm.idnumber;
+          const institudeData = this.PortalForm.institude;
+          const cemailData = this.PortalForm.cemail;
 
           //网上写的注册
           //emulateJSON:true 设置后post可跨域？
