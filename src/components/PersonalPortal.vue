@@ -269,7 +269,18 @@
             userId:localStorage.getItem(myId),
             resId:localStorage.getItem(resId)
           }).then(function (response) {
-             this.temp.realName=response.data.results.realname;
+             this.realName=response.data.results.realname;
+             this.insName=response.data.results.insname;
+             this.mail=response.data.results.mail;
+             this.quoteNum=response.data.results.quotenum;
+             this.paperNum=response.data.results.papernum;
+             this.resField=response.data.results.resfield;
+             this.magCount=response.data.results.magcount;
+             this.magPar=response.data.results.magpar;
+             this.patCount=response.data.results.patcount;
+             this.patPar=response.data.results.patpar;
+             this.confCount=response.data.results.confcount;
+             this.confPar=response.data.results.confpar;
           })
         },
         drawLine(){
