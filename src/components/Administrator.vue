@@ -127,10 +127,10 @@
 <!--            <div style="display: inline;float: left;margin-left: 100px">姓名</div>-->
 <!--            <div style="display: inline;border: 1px solid rgba(0,0,0,.1);padding: 10px;width: 200px">{{drawerData.name}}</div>-->
 <!--          </div>-->
-          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1">通过</el-button>
-          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1">拒绝</el-button>
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2">通过</el-button>
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2">拒绝</el-button>
+          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData.id)">通过</el-button>
+          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData.id)">拒绝</el-button>
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData.id)">通过</el-button>
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData.id)">拒绝</el-button>
         </el-drawer>
         <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">
           <div style="position: absolute;left: 50px;top: 50px" class="avatar_info"></div>
@@ -298,6 +298,7 @@
     name: "Administrator",
     mounted() {
       this.getAdministrator()
+      this.getList()
     },
     data() {
       let validatePass = (rule, value, callback) => {
@@ -479,7 +480,14 @@
         })
       },
       getList() {
-
+        axios.post(baseUrl+'/getList1',{
+          userId: localStorage.getItem(myId)
+        }).then(function (response) {
+          this.tableData1=response.data.list1
+          this.tableData2=response.data.list2
+          this.tableData3=response.data.list3
+          this.tableData4=response.data.list4
+        })
       },
       handleSelect (key) {
         this.menuIndex = key;
@@ -510,77 +518,107 @@
         window.open(url,url);
       },
 
-      pass1() {
+      pass1(id) {
         //发送数据
-        this.drawer1=false;
-        this.drawerData.status='通过';
-        for (let i=0; i<this.tableData1.length; i++) {
-          if (this.drawerData.id === this.tableData1[i].id) {
-            this.tableData1[i].status='通过';
-            this.tableData2.unshift(this.tableData1[i]);
-            this.tableData1.splice(i,1);
-            break;
+        axios.post(baseUrl+'/pass1',{
+          userId: localStorage.getItem(myId),
+          id: id
+        }).then(function (response) {
+          this.drawer1=false;
+          this.drawerData.status='通过';
+          for (let i=0; i<this.tableData1.length; i++) {
+            if (this.drawerData.id === this.tableData1[i].id) {
+              this.tableData1[i].status='通过';
+              this.tableData2.unshift(this.tableData1[i]);
+              this.tableData1.splice(i,1);
+              break;
+            }
           }
-        }
-        this.$message({
-          showClose: true,
-          message: '已通过该审核',
-          type: 'success'
-        });
+          if (response.data.succeed) {
+            this.$message({
+              showClose: true,
+              message: '已通过该审核',
+              type: 'success'
+            });
+          }
+        })
       },
-      reject1() {
+      reject1(id) {
         //发送数据
-        this.drawer1=false;
-        this.drawerData.status='拒绝';
-        for (let i=0; i<this.tableData1.length; i++) {
-          if (this.drawerData.id === this.tableData1[i].id) {
-            this.tableData1[i].status='拒绝';
-            this.tableData2.unshift(this.tableData1[i]);
-            this.tableData1.splice(i,1);
-            break;
+        axios.post(baseUrl+'/reject1',{
+          userId: localStorage.getItem(myId),
+          id: id
+        }).then(function (response) {
+          this.drawer1=false;
+          this.drawerData.status='拒绝';
+          for (let i=0; i<this.tableData1.length; i++) {
+            if (this.drawerData.id === this.tableData1[i].id) {
+              this.tableData1[i].status='拒绝';
+              this.tableData2.unshift(this.tableData1[i]);
+              this.tableData1.splice(i,1);
+              break;
+            }
           }
-        }
-        this.$message({
-          showClose: true,
-          message: '已拒绝该请求',
-          type: 'error'
-        });
+          if (response.data.succeed) {
+            this.$message({
+              showClose: true,
+              message: '已拒绝该请求',
+              type: 'error'
+            });
+          }
+        })
       },
-      pass2() {
+      pass2(id) {
         //发送数据
-        this.drawer1=false;
-        this.drawerData.status='通过';
-        for (let i=0; i<this.tableData3.length; i++) {
-          if (this.drawerData.id === this.tableData3[i].id) {
-            this.tableData3[i].status='通过';
-            this.tableData4.unshift(this.tableData3[i]);
-            this.tableData3.splice(i,1);
-            break;
+        axios.post(baseUrl+'/pass2',{
+          userId: localStorage.getItem(myId),
+          id: id
+        }).then(function (response) {
+          this.drawer1=false;
+          this.drawerData.status='通过';
+          for (let i=0; i<this.tableData3.length; i++) {
+            if (this.drawerData.id === this.tableData3[i].id) {
+              this.tableData3[i].status='通过';
+              this.tableData4.unshift(this.tableData3[i]);
+              this.tableData3.splice(i,1);
+              break;
+            }
           }
-        }
-        this.$message({
-          showClose: true,
-          message: '已通过该审核',
-          type: 'success'
-        });
+          if (response.data.succeed) {
+            this.$message({
+              showClose: true,
+              message: '已通过该审核',
+              type: 'success'
+            });
+          }
+
+        })
+
       },
-      reject2() {
+      reject2(id) {
         //发送数据
-        this.drawer1=false;
-        this.drawerData.status='拒绝';
-        for (let i=0; i<this.tableData3.length; i++) {
-          if (this.drawerData.id === this.tableData3[i].id) {
-            this.tableData3[i].status='拒绝';
-            this.tableData4.unshift(this.tableData3[i]);
-            this.tableData3.splice(i,1);
-            break;
+        axios.post(baseUrl+'/reject2',{
+          userId: localStorage.getItem(myId),
+          id: id
+        }).then(function (response) {
+          this.drawer1=false;
+          this.drawerData.status='拒绝';
+          for (let i=0; i<this.tableData3.length; i++) {
+            if (this.drawerData.id === this.tableData3[i].id) {
+              this.tableData3[i].status='拒绝';
+              this.tableData4.unshift(this.tableData3[i]);
+              this.tableData3.splice(i,1);
+              break;
+            }
           }
-        }
-        this.$message({
-          showClose: true,
-          message: '已拒绝该请求',
-          type: 'error'
-        });
+          if (response.data.succeed) {
+            this.$message({
+              showClose: true,
+              message: '已拒绝该请求',
+              type: 'error'
+            });
+          }
+        })
       },
       submitForm(formName) {
         axios.post(baseUrl+'/changePassword',{
