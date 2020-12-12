@@ -606,59 +606,6 @@
 
         deleteCollection (index, paperId) {
           //发送请求
-          if (this.menuIndex === '0') {
-            let temp = this.tableData0[index];
-            if (temp.type === "期刊") {
-              for (let i=0; i<this.tableData1.length; i++) {
-                if (temp.paperId === this.tableData1[i].paperId) {
-                  this.tableData1.splice(i, 1);
-                  break;
-                }
-              }
-            } else if (temp.type === "会议") {
-              for (let i=0; i<this.tableData2.length; i++) {
-                if (temp.paperId === this.tableData2[i].paperId) {
-                  this.tableData2.splice(i, 1);
-                  break;
-                }
-              }
-            } else if (temp.type === "报告") {
-              for (let i=0; i<this.tableData3.length; i++) {
-                if (temp.paperId === this.tableData3[i].paperId) {
-                  this.tableData3.splice(i, 1);
-                  break;
-                }
-              }
-            }
-            this.tableData0.splice(index, 1);
-          } else if (this.menuIndex === '1') {
-            let temp = this.tableData1[index];
-            for (let i=0; i<this.tableData0.length; i++) {
-              if (temp.paperId === this.tableData0[i].paperId) {
-                this.tableData0.splice(i, 1);
-                break;
-              }
-            }
-            this.tableData1.splice(index, 1);
-          } else if (this.menuIndex === '2') {
-            let temp = this.tableData2[index];
-            for (let i=0; i<this.tableData0.length; i++) {
-              if (temp.paperId === this.tableData0[i].paperId) {
-                this.tableData0.splice(i, 1);
-                break;
-              }
-            }
-            this.tableData2.splice(index, 1);
-          } else if (this.menuIndex === '3') {
-            let temp = this.tableData3[index];
-            for (let i=0; i<this.tableData0.length; i++) {
-              if (temp.paperId === this.tableData0[i].paperId) {
-                this.tableData0.splice(i, 1);
-                break;
-              }
-            }
-            this.tableData3.splice(index, 1);
-          }
           axios.post(baseUrl+'/cancelCollection',{
             userId:localStorage.getItem(myId),
             paperId: paperId
@@ -669,6 +616,59 @@
                 message: '取消收藏成功',
                 type: 'success'
               });
+              if (this.menuIndex === '0') {
+                let temp = this.tableData0[index];
+                if (temp.type === "期刊") {
+                  for (let i=0; i<this.tableData1.length; i++) {
+                    if (temp.paperId === this.tableData1[i].paperId) {
+                      this.tableData1.splice(i, 1);
+                      break;
+                    }
+                  }
+                } else if (temp.type === "会议") {
+                  for (let i=0; i<this.tableData2.length; i++) {
+                    if (temp.paperId === this.tableData2[i].paperId) {
+                      this.tableData2.splice(i, 1);
+                      break;
+                    }
+                  }
+                } else if (temp.type === "报告") {
+                  for (let i=0; i<this.tableData3.length; i++) {
+                    if (temp.paperId === this.tableData3[i].paperId) {
+                      this.tableData3.splice(i, 1);
+                      break;
+                    }
+                  }
+                }
+                this.tableData0.splice(index, 1);
+              } else if (this.menuIndex === '1') {
+                let temp = this.tableData1[index];
+                for (let i=0; i<this.tableData0.length; i++) {
+                  if (temp.paperId === this.tableData0[i].paperId) {
+                    this.tableData0.splice(i, 1);
+                    break;
+                  }
+                }
+                this.tableData1.splice(index, 1);
+              } else if (this.menuIndex === '2') {
+                let temp = this.tableData2[index];
+                for (let i=0; i<this.tableData0.length; i++) {
+                  if (temp.paperId === this.tableData0[i].paperId) {
+                    this.tableData0.splice(i, 1);
+                    break;
+                  }
+                }
+                this.tableData2.splice(index, 1);
+              } else if (this.menuIndex === '3') {
+                let temp = this.tableData3[index];
+                for (let i=0; i<this.tableData0.length; i++) {
+                  if (temp.paperId === this.tableData0[i].paperId) {
+                    this.tableData0.splice(i, 1);
+                    break;
+                  }
+                }
+                this.tableData3.splice(index, 1);
+              }
             } else {
               this.$message({
                 showClose: true,
