@@ -43,7 +43,8 @@
           <van-col span="1" style="margin-top:5px;">
             <el-popover placement="bottom" width="20" trigger="click">
               <van-cell clickable @click="goSearchRecord"><el-link :underline="false"><i class="el-icon-edit-outline"/> 搜索记录</el-link></van-cell>
-              <van-cell clickable @click="goBrowseRecord"><el-link :underline="false"><i class="el-icon-edit"/> 修改头像</el-link></van-cell>
+              <van-cell clickable @click="goBrowseRecord"><el-link :underline="false"><i class="el-icon-edit-outline"/> 浏览记录</el-link></van-cell>
+              <van-cell clickable @click="changeMyHead"><el-link :underline="false"><i class="el-icon-edit"/> 修改头像</el-link></van-cell>
               <van-cell clickable @click="goMyCollection"><el-link :underline="false"><i class="el-icon-star-off" /> 我的收藏</el-link></van-cell>
               <van-cell clickable @click="Quit"><el-link :underline="false"><i class="el-icon-warning-outline"/> 退出</el-link></van-cell>
               <van-image slot="reference" round fit="cover" width="45px" height="45px" :src="userImage" clickable>
@@ -81,6 +82,10 @@
           this.$router.push({
             path:'/HotspotAnalysis',
           })
+        },
+        //修改头像
+        changeMyHead(){
+          var k;
         },
         goPersonalPortal(){
           this.$router.push({
