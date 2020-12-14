@@ -128,18 +128,27 @@
             .then(function (response) {
               console.log(response);
               _this.myConcern=response.data.myConcern;
+              _this.myFans=response.data.myFans;
             })
         },
         cancelConcern(item){//取关
           let _this=this;
           axios.post(baseUrl+'/getMyConcern',{
-            UserEmail:localStorage.getItem('myId')
-          })
-            .then(function (response) {
+            UserEmail:localStorage.getItem('myId'),
+            ResearchId:item.id,
+          }).then(function (response) {
               console.log(response);
-              _this.myConcern=response.data.myConcern;
+              if(response.data.status==1){
+                this.myConcern.splice(item.index,1);
+                this.$message({
+                  message:response.data.message,
+                  type:'success'
+                });
+              }
+              else{
+                this.$message.error('出错啦！');
+              }
             })
-          this.myConcern.splice(item.index,1);
         },
         sendMessage(item){//发消息
           this.$router.push({
@@ -151,6 +160,9 @@
           localStorage.setItem("whichFriend",'-1');
         },
       },
+      mounted() {
+          this.getConcern();
+      }
     }
 </script>
 
