@@ -184,7 +184,7 @@
       methods: {
         getSearchRecord() {
           axios.post(baseUrl+'/getSearchRecord',{
-            userId:localStorage.getItem(myId)
+            userId:localStorage.getItem('myId')
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.id=response.data.results[i].id;
@@ -219,7 +219,7 @@
           //传递数据
           // console.log([this.tableData[index].id])
           axios.post(baseUrl+'/deleteSearchRecord',{
-            userId: localStorage.getItem(myId),
+            userId: localStorage.getItem('myId'),
             Id: [this.tableData[index].id]
           }).then(function (response) {
             if (response.data.succeed===true) {
@@ -243,7 +243,7 @@
             this.post.push(this.multipleSelection[i].id)
           }
           axios.post(baseUrl+'/deleteSearchRecord',{
-            userId: localStorage.getItem(myId),
+            userId: localStorage.getItem('myId'),
             Id: this.post
           }).then(function (response) {
             if (response.data.succeed === true) {

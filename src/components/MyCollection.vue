@@ -500,7 +500,7 @@
       methods: {
         getMyCollection() {
           axios.post(baseUrl+'/getMyCollection',{
-            userId:localStorage.getItem(myId)
+            userId:localStorage.getItem('myId')
           }).then(function (response) {
             for (let i=0, length=response.data.collections.length; i<length; i++) {
               this.tableData.paperId=response.data.collections[i].paperId;
@@ -607,7 +607,7 @@
         deleteCollection (index, paperId) {
           //发送请求
           axios.post(baseUrl+'/cancelCollection',{
-            userId:localStorage.getItem(myId),
+            userId:localStorage.getItem('myId'),
             paperId: paperId
           }).then(function (response) {
             if (response.data.succeed===true) {
@@ -703,7 +703,7 @@
         gotoPaper(url, index, paperId) {
           //发送点击数据.
           axios.post(baseUrl+'/addBrowseHistory',{
-            userId:localStorage.getItem(myId),
+            userId:localStorage.getItem('myId'),
             paperId: paperId,
           })
           window.open(url,url)
