@@ -95,6 +95,8 @@
 
 <script>
     import TopBar from "./TopBar";
+    import axios from "axios";
+    import baseUrl from "./baseUrl";
     export default {
         name: "MyConcern",
       data(){
@@ -120,7 +122,23 @@
             path:'/PersonalPortal',
           });
         },
+        getConcern(){
+          let _this=this;
+          axios.get(baseUrl+'/getMyConcern')
+            .then(function (response) {
+              console.log(response);
+              _this.myConcern=response.data.myConcern;
+            })
+        },
         cancelConcern(item){//取关
+          let _this=this;
+          axios.post(baseUrl+'/getMyConcern',{
+            UserEmail:localStorage.getItem('myId')
+          })
+            .then(function (response) {
+              console.log(response);
+              _this.myConcern=response.data.myConcern;
+            })
           this.myConcern.splice(item.index,1);
         },
         sendMessage(item){//发消息

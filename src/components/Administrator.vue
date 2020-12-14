@@ -472,7 +472,7 @@
     methods: {
       getAdministrator() {
         axios.post(baseUrl+'/getAdministrator',{
-          userId: localStorage.getItem(myId)
+          userId: localStorage.getItem('myId')
         }).then(function (response) {
           this.administrator.name=response.data.info.name;
           this.administrator.phone=response.data.info.phone;
