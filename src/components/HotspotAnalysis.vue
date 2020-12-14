@@ -47,7 +47,7 @@
     </div>
 
     <!--热门学者-->
-    <div style="margin-top: 60px;width: 86%;margin-left: 7%;">
+    <div style="margin-top: 60px;width: 86%;margin-left: 7%;margin-bottom: 30px;">
       <van-row></van-row>
       <van-row>
         <van-col span="24">
@@ -61,6 +61,8 @@
         </van-col>
       </van-row>
     </div>
+
+    <van-row></van-row>
 
   </div>
 </template>

@@ -66,7 +66,7 @@
       data(){
           return{
             userId:'123',
-            userImage:require('../assets/Head/head02.png'),
+            userImage:require('../assets/Head/head7.png'),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
             isReNew:true,
