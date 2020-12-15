@@ -47,7 +47,66 @@
           :visible.sync="drawer"
           :direction="direction"
           v-if="drawer">
-
+          <!--文章标题-->
+          <div style="margin-top: -10px;font-size: 30px;">
+            {{tableData.title}}
+          </div>
+          <!--作者 可点击-->
+          <div style="margin-top: 15px;">
+            <el-link v-for="(item,index) in tableData.author" type="primary" :underline="false">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+          </div>
+          <!--机构 可点击-->
+          <div style="margin-top: 10px;">
+            <el-link type="primary" :underline="false">{{tableData.title}}</el-link>
+          </div>
+          <!--摘要-->
+          <div style="margin-top: 15px;text-align: left;margin-left: 5px;">
+            <span>摘要：</span>
+            <span>{{tableData.msg}}</span>
+          </div>
+          <!--关键词-->
+          <div style="margin-top: 15px;text-align: left;margin-left: 5px;">
+            <span>关键词：</span>
+            <span>{{tableData.paperId}}</span>
+          </div>
+          <!--基金资助-->
+          <div></div>
+          <!--文献查看  分享推荐等图标  可点击-->
+          <div style="margin-top: 24px;">
+            <van-row>
+              <van-col span="4">
+                <el-button type="primary" style="margin-left: 10px;" plain @click="gotoPaper(tableData.link)">查看原文</el-button>
+              </van-col>
+              <van-col span="10"></van-col>
+              <van-col span="10" style="margin-top: -8px;">
+                <!--收藏-->
+                <span>
+                    <el-tooltip v-if="tableData.collectStatus === false" class="item" effect="dark" content="收藏">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData.paperId)"></i>
+                    </el-tooltip>
+                </span>
+                <span>
+                    <el-tooltip v-if="tableData.collectStatus === true" class="item" effect="dark" content="已收藏">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                </span>
+                <!--微博-->
+                <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData.link,tableData.title)" style="height: 20px;">
+                </span>
+                <!--微信-->
+                <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData.link)" style="height: 20px;">
+                </span>
+                <!--复制连接-->
+                <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData.link" @click="Copy"></i>
+                    </el-tooltip>
+                </span>
+              </van-col>
+            </van-row>
+          </div>
         </el-drawer>
 
         <div style="position: relative">
@@ -77,9 +136,9 @@
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
                 <el-menu-item index="0" style="width: 120px">●全部</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●期刊</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●会议</el-menu-item>
-                <el-menu-item index="3" style="width: 120px">●报告</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●论文</el-menu-item>
+                <el-menu-item index="2" style="width: 120px">●专利</el-menu-item>
+                <el-menu-item index="3" style="width: 120px">●项目</el-menu-item>
               </el-menu>
             </div>
             <el-dialog
@@ -125,7 +184,7 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%" @click="open(tableData0[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData0[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
@@ -149,10 +208,8 @@
                 </div>
               </el-card>
 
-              <!--期刊-->
+              <!--论文-->
               <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -179,9 +236,8 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%" @click="open(tableData1[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
@@ -205,10 +261,8 @@
                 </div>
               </el-card>
 
-              <!--会议-->
+              <!--专利-->
               <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -235,10 +289,9 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%" @click="open(tableData2[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData2[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
@@ -262,10 +315,8 @@
                 </div>
               </el-card>
 
-              <!--报告-->
+              <!--项目-->
               <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -292,10 +343,9 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%" @click="open(tableData3[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData3[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
@@ -318,7 +368,6 @@
                   </i>
                 </div>
               </el-card>
-              <!--              </el-card>-->
             </div>
 
             <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
@@ -395,14 +444,7 @@
                       </el-link>
                     </span>
                 </div>
-                <!--                    <el-tag type="info" style="position: absolute;right: 10%;width: 50px;text-align: center">-->
-                <!--                      <span>期刊</span>-->
-                <!--                    </el-tag>-->
-                <!--                    <i class="el-icon-view" style="position: absolute;right: 2%">-->
-                <!--                      <span>66666</span>-->
-                <!--                    </i>-->
               </div>
-              <!--              </div>-->
             </el-card>
           </div>
 
@@ -816,25 +858,6 @@
 </script>
 
 <style >
-  /*.result{*/
-  /*  min-height: calc(100vh - 75px);*/
-  /*}*/
-  /*.el-select .el-input {*/
-  /*  width: 100px;*/
-  /*  height: 75px;*/
-  /*}*/
-  /*.input-with-select .el-input-group__prepend {*/
-  /*  background-color: #fff;*/
-  /*  width: 100px;*/
-  /*  height: 75px;*/
-  /*}*/
-  /*.icon{*/
-  /*  height: 60px;*/
-  /*  width: 55px;*/
-  /*  position: fixed;*/
-  /*  bottom: 35px;*/
-  /*  right: 15px;*/
-  /*}*/
   .text {
     font-size: 14px;
   }
