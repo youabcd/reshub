@@ -140,7 +140,8 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">作者关系</p>
+          <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
@@ -152,7 +153,7 @@
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
@@ -977,6 +978,7 @@
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
+    float: none;
     width: calc(98% + 2px);
   }
 

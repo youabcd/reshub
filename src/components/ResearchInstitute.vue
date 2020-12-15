@@ -67,7 +67,7 @@
       </el-header>
       <el-main>
         <el-col :span="17">
-          <el-card class="box-card" shadow="hover">
+          <el-card class="box-card" shadow="never">
             <div slot="header" style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
               <div class="pie" ref="dPie" id="deux"></div>
@@ -138,23 +138,26 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
-            <div slot="header" class="clearfix">
-              <span>核心作品</span>
+          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">最新作品</p>
+          <el-card class="box-card" shadow="never" v-for="(item,index) in hotData" :key="index" >
+            <div style="text-align: left;margin-top: -20px;cursor: pointer">
+              <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
             </div>
-            <div v-for="o in resList" :key="o">
-              {{o}}
+          
+            <div style="text-align: left" @click="open(hotData[index])">
+              <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor: pointer;">{{item.msg}}</p>
+            </div>
+          
+            <div>
+              <div style="margin-top: 30px;text-align: left">
+                  <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
+                    <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
+                      {{author_item}}
+                    </el-link>
+                  </span>
+              </div>
             </div>
           </el-card>
-          
-          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
-            <div slot="header" class="clearfix">
-              <span>合作机构</span>
-            </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
-            </div>
-          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -309,7 +312,84 @@
               collectTime:'2016-05-04'
             },
           ],
-          
+          hotData: [
+            {
+              paperId:'1',
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"期刊",
+              collectStatus: true,
+              collectionSum:6,
+              viewSum:7,
+              link:'https://www.google.com.hk/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'2',
+              title:'Google2',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"会议",
+              collectStatus: false,
+              collectionSum:66,
+              viewSum:77,
+              link:'https://www.youtube.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'3',
+              title:'BILIBILI3',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"期刊",
+              collectStatus: false,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://www.bilibili.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'4',
+              title:'Google4',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"报告",
+              collectStatus: false,
+              collectionSum:6666,
+              viewSum:7777,
+              link:'https://www.google.com/',
+              collectTime:'2016-05-04'
+            },
+          ],
         }
       },
       components:{
