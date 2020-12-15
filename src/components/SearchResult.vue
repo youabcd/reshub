@@ -48,29 +48,37 @@
           :direction="direction"
           v-if="drawer">
           <!--文章标题-->
-          <div style="margin-top: -10px;font-size: 30px;">
+          <div style="margin-top: -10px;font-size: 30px;font-weight: 500;">
             {{tableData.title}}
           </div>
           <!--作者 可点击-->
           <div style="margin-top: 15px;">
-            <el-link v-for="(item,index) in tableData.author" type="primary" :underline="false" @click="gotoAuthor(tableData.authorId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+            <el-link v-for="(item,index) in tableData.author" :key="index" type="primary" :underline="false" @click="gotoAuthor(tableData.authorId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
           </div>
           <!--机构 可点击-->
           <div style="margin-top: 10px;">
-            <el-link type="primary" :underline="false" >{{tableData.title}}</el-link>
+            <el-link v-for="(item,index) in tableData.institution" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData.institutionId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
           </div>
           <!--摘要-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 5px;">
-            <span>摘要：</span>
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">摘要：</span>
             <span>{{tableData.msg}}</span>
           </div>
           <!--关键词-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 5px;">
-            <span>关键词：</span>
-            <span>{{tableData.paperId}}</span>
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">关键词：</span>
+            <span>{{tableData.keyword}}</span>
           </div>
           <!--基金资助-->
-          <div></div>
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">基金：</span>
+            <span>{{tableData.fund}}</span>
+          </div>
+          <!--参考文献 clickable-->
+          <div  style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
+            <span><el-link v-for="(item,index) in tableData.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData.referenceLink[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link></span>
+          </div>
           <!--文献查看  分享推荐等图标  可点击-->
           <div style="margin-top: 24px;">
             <van-row>
@@ -425,9 +433,8 @@
           </div>
 
           <div style="position: absolute;left: 78%;top: 0;width: 21%;display: inline;">
-            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥热点</p>
+            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥推荐</p>
             <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
-              <!--              <div >-->
               <div style="text-align: left;margin-top: -20px;cursor: pointer">
                 <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
               </div>
@@ -555,8 +562,8 @@
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
             type:"期刊",
             collectStatus: true,
             collectionSum:6,
@@ -837,8 +844,13 @@
       },
 
       gotoAuthor(authorId) {
-        window.open(webUrl+'/PersonalPortal');
+        window.open(webUrl+'PersonalPortal');
         localStorage.setItem('authorId',authorId);
+      },
+
+      gotoInstitution(institutionId){
+        window.open(webUrl+'ResearchInstitute');
+        localStorage.setItem('institutionId',institutionId);
       },
 
       addCollection(index) {
