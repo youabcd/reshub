@@ -63,14 +63,14 @@
       </el-header>
       <el-main>
         <el-col :span="17">
-          <el-card class="box-card" shadow="hover">
+          <el-card class="box-card" shadow="never">
             <div slot="header" style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
               <div class="pie" ref="dPie" id="deux"></div>
               <div class="pie" ref="tPie" id="trois"></div>
               <div class="textinpie">
                 共</br>
-                {{paperNum}}篇
+                <font style="font:  bold italic 27px  arial">{{paperNum}}</font>篇
               </div>
             </div>
             <div style="display:inline-block">
@@ -139,23 +139,26 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
+            <div v-if="menuIndex === '0'" v-for="(item,index) in coopData" :key="index" class="coop-item" >
+              <div style="text-align: left;position: absolute;">
+                <img class="avatar" src="../assets/trump.jpg" ></img>
+              </div>
+              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;"><a :href="item.link"></a>{{item.name}}</div>
+              <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-          
-          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
             <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
-          </el-card> -->
+          </el-card>
         </el-col>
       </el-main>
     </el-container>
@@ -200,6 +203,38 @@
           patPar:'20%',
           confCount:30,
           confPar:'30%',
+          coopData:[
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
+              link:'https://trump.com/',
+            }
+          ],
           tableData: [
             {
               paperId:'0',
@@ -269,22 +304,28 @@
             userId:localStorage.getItem(myId),
             resId:localStorage.getItem(resId)
           }).then(function (response) {
-             this.realName=response.data.results.realname;
-             this.insName=response.data.results.insname;
-             this.mail=response.data.results.mail;
-             this.quoteNum=response.data.results.quotenum;
-             this.paperNum=response.data.results.papernum;
-             this.resField=response.data.results.resfield;
-             this.coopList=response.data.results.cooplist;
-             this.resCount=response.data.results.rescount;
-             this.quoCount=response.data.results.quocount;
-             
-             this.magCount=response.data.results.magcount;
-             this.magPar=response.data.results.magpar;
-             this.patCount=response.data.results.patcount;
-             this.patPar=response.data.results.patpar;
-             this.confCount=response.data.results.confcount;
-             this.confPar=response.data.results.confpar;
+            this.avatar=response.data.results.avatar;
+            this.isClaimed=response.data.results.isclaimed;
+            this.isFollowing=response.data.results.isfollowing;
+            this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
+            this.visitNum=response.data.results.visitnum;
+            this.followNum=response.data.results.follownum;
+            this.realName=response.data.results.realname;
+            this.insName=response.data.results.insname;
+            this.mail=response.data.results.mail;
+            this.quoteNum=response.data.results.quotenum;
+            this.paperNum=response.data.results.papernum;
+            this.resField=response.data.results.resfield;
+            this.coopList=response.data.results.cooplist;
+            this.resCount=response.data.results.rescount;
+            this.quoCount=response.data.results.quocount;
+            
+            this.magCount=response.data.results.magcount;
+            this.magPar=response.data.results.magpar;
+            this.patCount=response.data.results.patcount;
+            this.patPar=response.data.results.patpar;
+            this.confCount=response.data.results.confcount;
+            this.confPar=response.data.results.confpar;
           })
         },
         drawLine(){
@@ -915,6 +956,26 @@
     margin-top: 2px;
     height: 140px;
     width:calc(98% + 2px);
+  }
+  .coop-item{
+    text-align: left;
+    height: 42px;
+    width:100%;
+  }
+  .avatar{
+  	position:relative;
+  	display:inline-block;
+  	width:32px;
+  	height:32px;
+  	border:2px solid #fff;
+  	overflow:hidden;
+  	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-webkit-border-radius:50%;
+  	-moz-border-radius:50%;-ms-border-radius:50%;
+  	border-radius:20%
   }
   .box-card {
     margin: auto;
