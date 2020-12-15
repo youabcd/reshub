@@ -53,11 +53,11 @@
           </div>
           <!--作者 可点击-->
           <div style="margin-top: 15px;">
-            <el-link v-for="(item,index) in tableData.author" type="primary" :underline="false">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+            <el-link v-for="(item,index) in tableData.author" type="primary" :underline="false" @click="gotoAuthor(tableData.authorId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
           </div>
           <!--机构 可点击-->
           <div style="margin-top: 10px;">
-            <el-link type="primary" :underline="false">{{tableData.title}}</el-link>
+            <el-link type="primary" :underline="false" >{{tableData.title}}</el-link>
           </div>
           <!--摘要-->
           <div style="margin-top: 15px;text-align: left;margin-left: 5px;">
@@ -191,7 +191,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -244,7 +244,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -298,7 +298,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -352,7 +352,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -464,6 +464,9 @@
   import BottomBar from "./BottomBar";
   import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
+  import axios from 'axios';
+  import baseUrl from "./baseUrl";
+  import webUrl from "./webUrl";
   export default {
     name: "SearchResult",
     components:{
@@ -493,12 +496,13 @@
           title:'',
           msg:'',
           author:[],
+          authorId:[],
           keyword:'',
           fund:'',
           reference:[],
           referenceLink:[],
           institution:[],
-          institutionLink:[],
+          institutionId:[],
           type:'',
           collectStatus: false,
           collectionSum:0,
@@ -546,12 +550,13 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: true,
             collectionSum:6,
@@ -564,12 +569,13 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:66,
@@ -582,12 +588,13 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: false,
             collectionSum:666,
@@ -600,12 +607,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:6666,
@@ -619,12 +627,13 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author:['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: true,
             collectionSum:666,
@@ -637,10 +646,11 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            referenceId:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
             institutionLink:[],
             type:"期刊",
@@ -656,12 +666,13 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:666,
@@ -675,12 +686,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:666,
@@ -694,12 +706,13 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: true,
             collectionSum:6,
@@ -712,12 +725,13 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:66,
@@ -730,12 +744,13 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: false,
             collectionSum:666,
@@ -748,12 +763,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:[],
-            institutionLink:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:6666,
@@ -818,6 +834,11 @@
       gotoPaper(url) {
         //发送点击数据
         window.open(url,url)
+      },
+
+      gotoAuthor(authorId) {
+        window.open(webUrl+'/PersonalPortal');
+        localStorage.setItem('authorId',authorId);
       },
 
       addCollection(index) {
