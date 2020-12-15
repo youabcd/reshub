@@ -9,9 +9,9 @@
         				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
+<!--                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
         			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button> -->
         			</div>
         		</div>
         		<div class="person_baseinfo">
@@ -35,7 +35,7 @@
                 </el-popover> -->
         			</div>
         			<div class="p_volume">
-        				{{visitNum}}人看过|{{followNum}}人正在关注
+        				{{visitNum}}人看过
         			</div>
         			<div class="p_affiliate">
         				{{institute}}
@@ -179,9 +179,7 @@
           totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/white.jpg'),
-          isFollowing: true,
           visitNum:'1400',
-          followNum:'0',
           name:'White House名字最多可以这么长',
           institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
@@ -329,10 +327,8 @@
           }).then(function (response) {
             this.avatar=response.data.results.avatar;
             this.isClaimed=response.data.results.isclaimed;
-            this.isFollowing=response.data.results.isfollowing;
             this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
             this.visitNum=response.data.results.visitnum;
-            this.followNum=response.data.results.follownum;
             this.realName=response.data.results.realname;
             this.insName=response.data.results.insname;
             this.mail=response.data.results.mail;
@@ -847,6 +843,7 @@
   	height:112px;
   	border:6px solid #fff;
   	overflow:hidden;
+    margin-top: 53px;
   	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
   	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
   	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
