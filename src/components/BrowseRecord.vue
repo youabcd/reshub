@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-    <div style="wpidth: 70%;margin-top: 10px;margin-left: 15%;">
+    <div style="width: 70%;margin-top: 10px;margin-left: 15%;">
       <div style="position: relative;height: 50px;margin-top: 20px">
         <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 15px">
           <i class="el-icon-search"> 成果浏览记录</i>
@@ -20,12 +20,12 @@
         @selection-change="handleSelectionChange">             <!--这是一个表格  element ui-->
         <el-table-column
           type="selection"
-          wpidth="55">
+          width="55">
         </el-table-column>
         <el-table-column
           prop="browse_time"
           label="日期"
-          wpidth="200">
+          width="200">
           <!--          <template slot-scope="scope">{{ scope.row.browse_time }}</template>-->
         </el-table-column>
         <el-table-column
@@ -34,7 +34,7 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          wpidth="50"
+          width="50"
           label="更多">
           <template slot-scope="scope">
             <el-dropdown placement="top">
@@ -43,7 +43,7 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native.prevent="deleteHistory(scope.$index)"><i class="el-icon-delete"> 删除记录</i></el-dropdown-item>
-                <el-dropdown-item><i class="el-icon-document-copy"> 复制文本</i></el-dropdown-item>
+<!--                <el-dropdown-item><i class="el-icon-document-copy"> 复制文本</i></el-dropdown-item>-->
               </el-dropdown-menu>
             </el-dropdown>
           </template>

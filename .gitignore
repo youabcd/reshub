@@ -14,3 +14,9 @@ yarn-error.log*
 *.sln
 *.json
 package-lock.json
+package-lock.json
+package.json
+package.json
+static/js/vendor.dll.js
+package-lock.json
+*.json

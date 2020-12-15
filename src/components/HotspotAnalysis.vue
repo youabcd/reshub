@@ -47,7 +47,7 @@
     </div>
 
     <!--热门学者-->
-    <div style="margin-top: 60px;width: 86%;margin-left: 7%;">
+    <div style="margin-top: 60px;width: 86%;margin-left: 7%;margin-bottom: 30px;">
       <van-row></van-row>
       <van-row>
         <van-col span="24">
@@ -61,6 +61,8 @@
         </van-col>
       </van-row>
     </div>
+
+    <van-row></van-row>
 
   </div>
 </template>
@@ -241,14 +243,14 @@
         },
         getHot(){
           let _this=this;
-          axios.get(baseUrl+"/hot")
+          axios.get(baseUrl+"/getHotSpot")
               .then(function (response) {
                 console.log(response);
-                _this.scholarUsed=response.data.scholarUsed;
-                _this.scholarCited=response.data.scholarCited;
-                _this.scholarName=response.data.scholarName;
-                _this.paperTable=response.data.paperTable;
-                _this.hotSearch=response.data.hotSearch;
+                _this.scholarUsed=response.data.scholarUsed;//被引次数
+                _this.scholarCited=response.data.scholarCited;//发文数量
+                _this.scholarName=response.data.scholarName;//学者姓名
+                _this.paperTable=response.data.paperTable;//热门文章
+                _this.hotSearch=response.data.hotSearch;//热门搜索词
               })
         },
       },

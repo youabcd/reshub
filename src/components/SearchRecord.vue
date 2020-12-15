@@ -174,7 +174,8 @@
             date: '2016/05/01 16:00',
             history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
           }, ],
-          multipleSelection: []
+          multipleSelection: [],
+          post: []
         }
       },
       mounted() {
@@ -183,7 +184,7 @@
       methods: {
         getSearchRecord() {
           axios.post(baseUrl+'/getSearchRecord',{
-            userId:localStorage.getItem(myId)
+            userId:localStorage.getItem('myId')
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.id=response.data.results[i].id;
@@ -216,25 +217,61 @@
         },
         deleteHistory(index) {
           //传递数据
-          this.tableData.splice(index,1);
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          });
+          // console.log([this.tableData[index].id])
+          axios.post(baseUrl+'/deleteSearchRecord',{
+            userId: localStorage.getItem('myId'),
+            Id: [this.tableData[index].id]
+          }).then(function (response) {
+            if (response.data.succeed===true) {
+              this.tableData.splice(index,1);
+              this.$message({
+                type: 'success',
+                message: '删除成功'
+              });
+            }
+            else {
+              this.$message({
+                type: 'error',
+                message: '删除失败'
+              });
+            }
+          })
+
         },
         deleteSelectHistory() {
-          //传递数据
-          let result = this.multipleSelection.map(a => {return a.id});
-          for (let i=0; i<result.length; i++) {
-            for (let j=0; j<this.tableData.length; j++) {
-              if (this.tableData[j].id === result[i]) {
-                console.log(this.tableData[j].id);
-                this.tableData.splice(j,1);
-                break;
-              }
-            }
+          for (let i=0; i<this.multipleSelection.length; i++) {
+            this.post.push(this.multipleSelection[i].id)
           }
+          axios.post(baseUrl+'/deleteSearchRecord',{
+            userId: localStorage.getItem('myId'),
+            Id: this.post
+          }).then(function (response) {
+            if (response.data.succeed === true) {
+              let result = this.multipleSelection.map(a => {return a.id});
+              for (let i=0; i<result.length; i++) {
+                for (let j=0; j<this.tableData.length; j++) {
+                  if (this.tableData[j].id === result[i]) {
+                    // console.log(this.tableData[j].id);
+                    this.tableData.splice(j,1);
+                    break;
+                  }
+                }
+              }
+              this.$message({
+                type: 'success',
+                message: '批量删除成功'
+              });
+            }
+            else {
+              this.$message({
+                type: 'error',
+                message: '批量删除失败'
+              });
+            }
+          })
+
           // this.$message('批量删除成功');
+          this.post.length = 0
         },
         open() {
           this.$confirm('此操作将永久删除选中记录, 是否继续?', '提示', {

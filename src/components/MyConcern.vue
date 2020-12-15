@@ -95,6 +95,8 @@
 
 <script>
     import TopBar from "./TopBar";
+    import axios from "axios";
+    import baseUrl from "./baseUrl";
     export default {
         name: "MyConcern",
       data(){
@@ -120,8 +122,33 @@
             path:'/PersonalPortal',
           });
         },
+        getConcern(){
+          let _this=this;
+          axios.get(baseUrl+'/getMyConcern')
+            .then(function (response) {
+              console.log(response);
+              _this.myConcern=response.data.myConcern;
+              _this.myFans=response.data.myFans;
+            })
+        },
         cancelConcern(item){//取关
-          this.myConcern.splice(item.index,1);
+          let _this=this;
+          axios.post(baseUrl+'/getMyConcern',{
+            UserEmail:localStorage.getItem('myId'),
+            ResearchId:item.id,
+          }).then(function (response) {
+              console.log(response);
+              if(response.data.status==1){
+                this.myConcern.splice(item.index,1);
+                this.$message({
+                  message:response.data.message,
+                  type:'success'
+                });
+              }
+              else{
+                this.$message.error('出错啦！');
+              }
+            })
         },
         sendMessage(item){//发消息
           this.$router.push({
@@ -133,6 +160,9 @@
           localStorage.setItem("whichFriend",'-1');
         },
       },
+      mounted() {
+          this.getConcern();
+      }
     }
 </script>
 

@@ -1,4 +1,7 @@
 myId:已登入的用户id
+userHead:已登入用户头像url
 nowActive:message页面中当前激活的分栏（系统消息或私信）
 keyWords:搜索关键词
 whichFriend:当前激活的聊天框对象
+authorId:所需查看门户的作者ID
+institutionId:所需查看机构门户ID

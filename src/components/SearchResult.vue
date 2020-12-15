@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-<!--    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>-->
+    <!--    <SearchBox v-on:searchEvent="search" style="position: relative;top: -15px"></SearchBox>-->
     <el-container style="height: 100%" >
       <el-aside width="15%" style="height: 100%">
         <div style="width: 12%;display: inline;">
@@ -39,10 +39,84 @@
           <el-button type="primary" plain>筛选</el-button>
           <el-button type="danger" :disabled="checkedSubject.length === 0 && checkedAuthor.length === 0 && checkedTime.length === 0" plain @click="clearList">重置</el-button>
         </div>
-
       </el-aside>
 
       <div style="width: 85%;margin-left: 7px;margin-top: 30px">
+
+        <el-drawer
+          :visible.sync="drawer"
+          :direction="direction"
+          v-if="drawer">
+          <!--文章标题-->
+          <div style="margin-top: -10px;font-size: 30px;font-weight: 500;">
+            {{tableData.title}}
+          </div>
+          <!--作者 可点击-->
+          <div style="margin-top: 15px;">
+            <el-link v-for="(item,index) in tableData.author" :key="index" type="primary" :underline="false" @click="gotoAuthor(tableData.authorId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+          </div>
+          <!--机构 可点击-->
+          <div style="margin-top: 10px;">
+            <el-link v-for="(item,index) in tableData.institution" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData.institutionId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+          </div>
+          <!--摘要-->
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">摘要：</span>
+            <span>{{tableData.msg}}</span>
+          </div>
+          <!--关键词-->
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">关键词：</span>
+            <span>{{tableData.keyword}}</span>
+          </div>
+          <!--基金资助-->
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">基金：</span>
+            <span>{{tableData.fund}}</span>
+          </div>
+          <!--参考文献 clickable-->
+          <div  style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
+            <span><el-link v-for="(item,index) in tableData.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData.referenceLink[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link></span>
+          </div>
+          <!--文献查看  分享推荐等图标  可点击-->
+          <div style="margin-top: 24px;">
+            <van-row>
+              <van-col span="4">
+                <el-button type="primary" style="margin-left: 10px;" plain @click="gotoPaper(tableData.link)">查看原文</el-button>
+              </van-col>
+              <van-col span="10"></van-col>
+              <van-col span="10" style="margin-top: -8px;">
+                <!--收藏-->
+                <span>
+                    <el-tooltip v-if="tableData.collectStatus === false" class="item" effect="dark" content="收藏">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData.paperId)"></i>
+                    </el-tooltip>
+                </span>
+                <span>
+                    <el-tooltip v-if="tableData.collectStatus === true" class="item" effect="dark" content="已收藏">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                </span>
+                <!--微博-->
+                <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData.link,tableData.title)" style="height: 20px;">
+                </span>
+                <!--微信-->
+                <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData.link)" style="height: 20px;">
+                </span>
+                <!--复制连接-->
+                <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData.link" @click="Copy"></i>
+                    </el-tooltip>
+                </span>
+              </van-col>
+            </van-row>
+          </div>
+        </el-drawer>
+
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
             <div>
@@ -70,9 +144,9 @@
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
                 <el-menu-item index="0" style="width: 120px">●全部</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●期刊</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●会议</el-menu-item>
-                <el-menu-item index="3" style="width: 120px">●报告</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●论文</el-menu-item>
+                <el-menu-item index="2" style="width: 120px">●专利</el-menu-item>
+                <el-menu-item index="3" style="width: 120px">●项目</el-menu-item>
               </el-menu>
             </div>
             <el-dialog
@@ -90,8 +164,8 @@
             </el-dialog>
             <div>
 
-<!--全部-->
-              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
+              <!--全部-->
+              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -118,14 +192,14 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData0[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -142,10 +216,8 @@
                 </div>
               </el-card>
 
-<!--期刊-->
-              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
+              <!--论文-->
+              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -172,16 +244,15 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -198,10 +269,8 @@
                 </div>
               </el-card>
 
-<!--会议-->
-              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
+              <!--专利-->
+              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -228,17 +297,16 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData2[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -255,10 +323,8 @@
                 </div>
               </el-card>
 
-<!--报告-->
-              <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative">
-                <!--                    {{'列表内容 ' + o }}-->
-                <!--                  <div style="height: 40px;margin-top: 10px">-->
+              <!--项目-->
+              <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -285,17 +351,16 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <!--                  </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData3[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -311,7 +376,6 @@
                   </i>
                 </div>
               </el-card>
-                            <!--              </el-card>-->
             </div>
 
             <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
@@ -369,33 +433,25 @@
           </div>
 
           <div style="position: absolute;left: 78%;top: 0;width: 21%;display: inline;">
-            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥热点</p>
+            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥推荐</p>
             <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
-<!--              <div >-->
-                <div style="text-align: left;margin-top: -20px;cursor: pointer">
-                  <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
-                </div>
+              <div style="text-align: left;margin-top: -20px;cursor: pointer">
+                <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
+              </div>
 
-                <div style="text-align: left">
-                  <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.msg}}</p>
-                </div>
+              <div style="text-align: left" @click="open(hotData[index])">
+                <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor: pointer;">{{item.msg}}</p>
+              </div>
 
-                <div>
-                  <div style="margin-top: 30px;text-align: left">
+              <div>
+                <div style="margin-top: 30px;text-align: left">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
-                  </div>
-                  <!--                    <el-tag type="info" style="position: absolute;right: 10%;width: 50px;text-align: center">-->
-                  <!--                      <span>期刊</span>-->
-                  <!--                    </el-tag>-->
-                  <!--                    <i class="el-icon-view" style="position: absolute;right: 2%">-->
-                  <!--                      <span>66666</span>-->
-                  <!--                    </i>-->
                 </div>
-<!--              </div>-->
+              </div>
             </el-card>
           </div>
 
@@ -412,18 +468,19 @@
 
 <script>
   import TopBar from "./TopBar";
-  import BottomBar from "./BottomBar";
-  import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
+  import axios from 'axios';
+  import baseUrl from "./baseUrl";
+  import webUrl from "./webUrl";
   export default {
     name: "SearchResult",
     components:{
       TopBar,
-      BottomBar,
-      SearchBox
     },
     data() {
       return {
+        drawer: false,
+        direction: 'rtl',
         currentPage: 1,
         pageSize: 10,
         btnFlag: false,
@@ -437,58 +494,91 @@
         checkedSubject: [],
         checkedAuthor: [],
         checkedTime: [],
+        tableData:{
+          paperId:'',
+          title:'',
+          msg:'',
+          author:[],
+          authorId:[],
+          keyword:'',
+          fund:'',
+          reference:[],
+          referenceLink:[],
+          institution:[],
+          institutionId:[],
+          type:'',
+          collectStatus: false,
+          collectionSum:0,
+          viewSum:0,
+          link:'',
+          collectTime:''
+        },
         authorTable: [
           {
-          name:'Zhang San',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学北京航空航天大学',
-          id:'1',
-        },{
-          name:'Zhang Si',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学1',
-          id:'2',
-        },{
-          name:'Zhang San',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学3',
-          id:'3',
-        },{
-          name:'Zhang San',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学3',
-          id:'3',
-        },{
-          name:'Zhang San',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学3',
-          id:'3',
-        },{
-          name:'Zhang San',
-          link:'https://www.bilibili.com',
-          institution:'北京航空航天大学3',
-          id:'3',
-        },
+            name:'Zhang San',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学北京航空航天大学',
+            id:'1',
+          },{
+            name:'Zhang Si',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学1',
+            id:'2',
+          },{
+            name:'Zhang San',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学3',
+            id:'3',
+          },{
+            name:'Zhang San',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学3',
+            id:'3',
+          },{
+            name:'Zhang San',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学3',
+            id:'3',
+          },{
+            name:'Zhang San',
+            link:'https://www.bilibili.com',
+            institution:'北京航空航天大学3',
+            id:'3',
+          },
 
         ],
         tableData0: [
           {
-          paperId:'1',
-          title:'Google1',
-          msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author: ['Li Ming','Zhang San','Clearlove'],
-          type:"期刊",
-          collectStatus: true,
-          collectionSum:6,
-          viewSum:7,
-          link:'https://www.google.com.hk/',
-          collectTime:'2016-05-04'
-        },
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
           {
             paperId:'2',
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:66,
@@ -501,6 +591,13 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: false,
             collectionSum:666,
@@ -513,6 +610,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:6666,
@@ -522,22 +626,36 @@
           }],
         tableData1: [
           {
-          paperId:'1',
-          title:'Google1',
-          msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-          author:['Li Ming','Zhang San','Clearlove'],
-          type:"期刊",
-          collectStatus: true,
-          collectionSum:666,
-          viewSum:777,
-          link:'https://www.google.com.hk/',
-          collectTime:'2016-05-04'
-        },
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author:['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:666,
+            viewSum:777,
+            link:'https://www.google.com.hk/',
+            collectTime:'2016-05-04'
+          },
           {
             paperId:'3',
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceId:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionLink:[],
             type:"期刊",
             collectStatus: false,
             collectionSum:666,
@@ -551,6 +669,13 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:666,
@@ -564,6 +689,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2','3'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:666,
@@ -577,6 +709,13 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San'],
+            authorId: ['1','2'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: true,
             collectionSum:6,
@@ -589,6 +728,13 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"会议",
             collectStatus: false,
             collectionSum:66,
@@ -601,6 +747,13 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"期刊",
             collectStatus: false,
             collectionSum:666,
@@ -613,6 +766,13 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
+            authorId: ['1','2'],
+            keyword:'',
+            fund:'',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:[],
+            institutionId:[],
             type:"报告",
             collectStatus: false,
             collectionSum:6666,
@@ -620,6 +780,7 @@
             link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
+
       }
     },
     created() {
@@ -676,6 +837,16 @@
       gotoPaper(url) {
         //发送点击数据
         window.open(url,url)
+      },
+
+      gotoAuthor(authorId) {
+        window.open(webUrl+'PersonalPortal');
+        localStorage.setItem('authorId',authorId);
+      },
+
+      gotoInstitution(institutionId){
+        window.open(webUrl+'ResearchInstitute');
+        localStorage.setItem('institutionId',institutionId);
       },
 
       addCollection(index) {
@@ -761,6 +932,12 @@
         })
       },
 
+      open(list) {
+        this.tableData=list;
+        // console.log(this.tableData);
+        this.drawer=true;
+      },
+
       clearList() {
         this.checkedSubject = [];
         this.checkedAuthor = [];
@@ -788,25 +965,6 @@
 </script>
 
 <style >
-  /*.result{*/
-  /*  min-height: calc(100vh - 75px);*/
-  /*}*/
-  /*.el-select .el-input {*/
-  /*  width: 100px;*/
-  /*  height: 75px;*/
-  /*}*/
-  /*.input-with-select .el-input-group__prepend {*/
-  /*  background-color: #fff;*/
-  /*  width: 100px;*/
-  /*  height: 75px;*/
-  /*}*/
-  /*.icon{*/
-  /*  height: 60px;*/
-  /*  width: 55px;*/
-  /*  position: fixed;*/
-  /*  bottom: 35px;*/
-  /*  right: 15px;*/
-  /*}*/
   .text {
     font-size: 14px;
   }

@@ -15,8 +15,10 @@ import Col from 'vant/lib/col'
 import 'vant/lib/col/style'
 import VanImage from 'vant/lib/image'
 import 'vant/lib/image/style'
+import Popup from 'vant/lib/popup'
+import 'vant/lib/popup/style'
 
-
+Vue.use(Popup)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.use(Cell)

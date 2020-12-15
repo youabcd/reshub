@@ -472,7 +472,7 @@
     methods: {
       getAdministrator() {
         axios.post(baseUrl+'/getAdministrator',{
-          userId: localStorage.getItem(myId)
+          userId: localStorage.getItem('myId')
         }).then(function (response) {
           this.administrator.name=response.data.info.name;
           this.administrator.phone=response.data.info.phone;
@@ -481,7 +481,7 @@
       },
       getList() {
         axios.post(baseUrl+'/getList1',{
-          userId: localStorage.getItem(myId)
+          userId: localStorage.getItem('myId')
         }).then(function (response) {
           this.tableData1=response.data.list1
           this.tableData2=response.data.list2
@@ -521,7 +521,7 @@
       pass1(id) {
         //发送数据
         axios.post(baseUrl+'/pass1',{
-          userId: localStorage.getItem(myId),
+          userId: localStorage.getItem('myId'),
           id: id
         }).then(function (response) {
           this.drawer1=false;
@@ -546,7 +546,7 @@
       reject1(id) {
         //发送数据
         axios.post(baseUrl+'/reject1',{
-          userId: localStorage.getItem(myId),
+          userId: localStorage.getItem('myId'),
           id: id
         }).then(function (response) {
           this.drawer1=false;
@@ -571,7 +571,7 @@
       pass2(id) {
         //发送数据
         axios.post(baseUrl+'/pass2',{
-          userId: localStorage.getItem(myId),
+          userId: localStorage.getItem('myId'),
           id: id
         }).then(function (response) {
           this.drawer1=false;
@@ -598,7 +598,7 @@
       reject2(id) {
         //发送数据
         axios.post(baseUrl+'/reject2',{
-          userId: localStorage.getItem(myId),
+          userId: localStorage.getItem('myId'),
           id: id
         }).then(function (response) {
           this.drawer1=false;
@@ -622,7 +622,7 @@
       },
       submitForm(formName) {
         axios.post(baseUrl+'/changePassword',{
-          userId: localStorage.getItem(myId),
+          userId: localStorage.getItem('myId'),
           password: this.ruleForm.pass
         }).then(function (response) {
           this.$refs[formName].validate((valid) => {
