@@ -127,8 +127,8 @@
           .then(function (response) {
             console.log(response);
             if(response.data.status==true){
-              this.userImage=response.data.url;
-              localStorage.setItem("userHead",response.data.url);
+              this.userImage=this.headImage[index];
+              localStorage.setItem("userHead",this.headImage[index]);
               this.$message({
                 message:'修改成功',
                 type:'success'

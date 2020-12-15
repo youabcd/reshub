@@ -20,7 +20,7 @@
                 <el-option label="作者" value="3"></el-option>
                 <el-option label="关键词" value="4"></el-option>
                 <el-option label="摘要" value="5"></el-option>
-                <el-option label="全文" value="6"></el-option>
+                <el-option label="学科" value="6"></el-option>
               </el-select>
             </el-autocomplete>
             <el-input v-if="index>0" placeholder="" v-model="item.words"
@@ -36,7 +36,7 @@
                 <el-option label="作者" value="3"></el-option>
                 <el-option label="关键词" value="4"></el-option>
                 <el-option label="摘要" value="5"></el-option>
-                <el-option label="全文" value="6"></el-option>
+                <el-option label="学科" value="6"></el-option>
               </el-select>
             </el-input>
           </van-col>
@@ -98,7 +98,7 @@
         //搜索框部分数据
         keyWords:'',
         /*boolType {1:AND ; 2:OR ; 3:NOT}
-        type {1：主题；2：标题；3：作者；4：关键词；5：摘要; }
+        type {1：主题；2：标题；3：作者；4：关键词；5：摘要;6:学科 }
         */
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
@@ -117,7 +117,7 @@
             type: 'error'
           });
         }
-        else{/*type {1：主题；2：标题；3：作者；4：关键词；5：摘要；6：全文}*/
+        else{/*type {1：主题；2：标题；3：作者；4：关键词；5：摘要；6：学科}*/
           var k="(";
           for (var i=0;i<this.searchKey.length;i++){
             if(i===0){
@@ -137,7 +137,7 @@
                 k=k+"摘要 "
               }
               else if(this.searchKey[i].type==='6'){
-                k=k+"全文 "
+                k=k+"学科 "
               }
               k=k+this.searchKey[i].words+")";
             }
@@ -167,7 +167,7 @@
                 k=k+"摘要 "
               }
               else if(this.searchKey[i].type==='6'){
-                k=k+"全文 "
+                k=k+"学科 "
               }
               k=k+this.searchKey[i].words+")";
             }
