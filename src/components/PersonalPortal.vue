@@ -265,7 +265,7 @@
       },
       methods:{
         getPersonalPortal() {
-          axios.post(baseUrl+'/getSearchRecord',{
+          axios.post(baseUrl+'/getPersonalPortal',{
             userId:localStorage.getItem(myId),
             resId:localStorage.getItem(resId)
           }).then(function (response) {
@@ -275,6 +275,10 @@
              this.quoteNum=response.data.results.quotenum;
              this.paperNum=response.data.results.papernum;
              this.resField=response.data.results.resfield;
+             this.coopList=response.data.results.cooplist;
+             this.resCount=response.data.results.rescount;
+             this.quoCount=response.data.results.quocount;
+             
              this.magCount=response.data.results.magcount;
              this.magPar=response.data.results.magpar;
              this.patCount=response.data.results.patcount;
