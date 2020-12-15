@@ -621,7 +621,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '专著',      
+                text: '专利',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -647,7 +647,7 @@
               data:[
                 {
                   value:this.patCount, 
-                  name:'专著',
+                  name:'专利',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
@@ -682,7 +682,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '会议',      
+                text: '项目',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -708,7 +708,7 @@
               data:[
                 {
                   value:this.confCount, 
-                  name:'会议',
+                  name:'项目',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
