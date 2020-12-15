@@ -9,9 +9,9 @@
         				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
+<!--                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
         			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button> -->
         			</div>
         		</div>
         		<div class="person_baseinfo">
@@ -35,7 +35,7 @@
                 </el-popover> -->
         			</div>
         			<div class="p_volume">
-        				{{visitNum}}人看过|{{followNum}}人正在关注
+        				{{visitNum}}人看过
         			</div>
         			<div class="p_affiliate">
         				{{institute}}
@@ -67,7 +67,7 @@
       </el-header>
       <el-main>
         <el-col :span="17">
-          <el-card class="box-card" shadow="hover">
+          <el-card class="box-card" shadow="never">
             <div slot="header" style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
               <div class="pie" ref="dPie" id="deux"></div>
@@ -138,23 +138,26 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
-            <div slot="header" class="clearfix">
-              <span>核心作品</span>
+          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">最新作品</p>
+          <el-card class="box-card" shadow="never" v-for="(item,index) in hotData" :key="index" >
+            <div style="text-align: left;margin-top: -20px;cursor: pointer">
+              <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
             </div>
-            <div v-for="o in resList" :key="o">
-              {{o}}
+          
+            <div style="text-align: left" @click="open(hotData[index])">
+              <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor: pointer;">{{item.msg}}</p>
+            </div>
+          
+            <div>
+              <div style="margin-top: 30px;text-align: left">
+                  <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
+                    <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
+                      {{author_item}}
+                    </el-link>
+                  </span>
+              </div>
             </div>
           </el-card>
-          
-          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
-            <div slot="header" class="clearfix">
-              <span>合作机构</span>
-            </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
-            </div>
-          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -179,9 +182,7 @@
           totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/white.jpg'),
-          isFollowing: true,
           visitNum:'1400',
-          followNum:'0',
           name:'White House名字最多可以这么长',
           institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
@@ -311,7 +312,84 @@
               collectTime:'2016-05-04'
             },
           ],
-          
+          hotData: [
+            {
+              paperId:'1',
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"期刊",
+              collectStatus: true,
+              collectionSum:6,
+              viewSum:7,
+              link:'https://www.google.com.hk/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'2',
+              title:'Google2',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"会议",
+              collectStatus: false,
+              collectionSum:66,
+              viewSum:77,
+              link:'https://www.youtube.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'3',
+              title:'BILIBILI3',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"期刊",
+              collectStatus: false,
+              collectionSum:666,
+              viewSum:777,
+              link:'https://www.bilibili.com/',
+              collectTime:'2016-05-04'
+            },
+            {
+              paperId:'4',
+              title:'Google4',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
+              author:['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              keyword:'',
+              fund:'',
+              reference:['1','2','3'],
+              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+              institution:[],
+              institutionId:[],
+              type:"报告",
+              collectStatus: false,
+              collectionSum:6666,
+              viewSum:7777,
+              link:'https://www.google.com/',
+              collectTime:'2016-05-04'
+            },
+          ],
         }
       },
       components:{
@@ -329,10 +407,8 @@
           }).then(function (response) {
             this.avatar=response.data.results.avatar;
             this.isClaimed=response.data.results.isclaimed;
-            this.isFollowing=response.data.results.isfollowing;
             this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
             this.visitNum=response.data.results.visitnum;
-            this.followNum=response.data.results.follownum;
             this.realName=response.data.results.realname;
             this.insName=response.data.results.insname;
             this.mail=response.data.results.mail;
@@ -637,7 +713,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '专著',      
+                text: '专利',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -663,7 +739,7 @@
               data:[
                 {
                   value:this.patCount, 
-                  name:'专著',
+                  name:'专利',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
@@ -698,7 +774,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '会议',      
+                text: '项目',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -724,7 +800,7 @@
               data:[
                 {
                   value:this.confCount, 
-                  name:'会议',
+                  name:'项目',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
@@ -847,6 +923,7 @@
   	height:112px;
   	border:6px solid #fff;
   	overflow:hidden;
+    margin-top: 53px;
   	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
   	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
   	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);

@@ -4,35 +4,36 @@
     <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
-            <div class="person_image">
-        			<a href="#" class="person_portraitwr">
+            <div v-if="id == rid" class="person_image">
+        			<a href="#" class="my_portraitwr">
         				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
-        			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
-        			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
-        			</div>
         		</div>
+            <div v-if="id != rid" class="person_image">
+            	<a href="#" class="person_portraitwr">
+            		<img :src="avatar" alt="学者头像" class="" width="112" height="112">
+            	</a>
+            	<div style="margin: auto;">
+                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要申诉</el-button>
+                <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
+            	  <el-button v-if="this.isFollowing == false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
+                <el-button v-if="this.isFollowing == true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
+            	</div>
+            </div>
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{realName}}
                 <el-popover
                     placement="bottom"
                     title="邮箱"
-                    width="200"
+                    width="250"
                     trigger="hover"
                     :content="mail">
-                <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
+                  <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
-                <!-- <el-popover
-                    placement="bottom"
-                    title="电话"
-                    width="200"
-                    trigger="hover"
-                    :content="phone">
-                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
-                </el-popover> -->
+                <el-tooltip class="item" effect="dark" content="私信ta" placement="bottom">
+                  <el-button type="info" icon="el-icon-chat-dot-square" circle ></el-button>
+                </el-tooltip>
         			</div>
         			<div class="p_volume">
         				{{visitNum}}人看过|{{followNum}}人正在关注
@@ -139,7 +140,8 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">作者关系</p>
+          <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
@@ -147,11 +149,11 @@
               <div style="text-align: left;position: absolute;">
                 <img class="avatar" src="../assets/trump.jpg" ></img>
               </div>
-              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;"><a :href="item.link"></a>{{item.name}}</div>
+              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;"><a :href="item.link">{{item.name}}</a></div>
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
@@ -178,6 +180,8 @@
       name: "PersonalPortal",
       data() {
         return {
+          id:'1',
+          rid:'2',
           currentPage: 1,
           pageSize: 5,
           totalPage: 100,
@@ -297,6 +301,8 @@
       mounted() {
         this.drawLine();
         this.getPersonalPortal();
+        this.id=localStorage.getItem(myId);
+        this.rid=localStorage.getItem(resId);
       },
       methods:{
         getPersonalPortal() {
@@ -615,7 +621,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '专著',      
+                text: '专利',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -641,7 +647,7 @@
               data:[
                 {
                   value:this.patCount, 
-                  name:'专著',
+                  name:'专利',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
@@ -676,7 +682,7 @@
               top: '50%',           
               left: 'center',          
               style: {
-                text: '会议',      
+                text: '项目',      
                 fill: '#A6A8B6',       
                 fontSize: 12,          
                 fontWeight: 'normal'
@@ -702,7 +708,7 @@
               data:[
                 {
                   value:this.confCount, 
-                  name:'会议',
+                  name:'项目',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
@@ -821,31 +827,22 @@
   	-moz-border-radius:50%;-ms-border-radius:50%;
   	border-radius:50%
   }
-  #author_intro_wr .person_portraitwr .edit_portraitbtn{
-  	_display:none;
-  	position:absolute;
-  	bottom:0;
-  	left:0;
-  	color:#fff;
-  	cursor:pointer;
-  	text-align:center;
-  	font-size:12px;
-  	height:30px;
-  	line-height:26px;
-  	width:100%;
-  	background:#000;
-  	background:rgba(0,0,0,.6);
-  	filter:alpha(opacity=80);
-  	transition:all .2s
-  }
-  #author_intro_wr .person_portraitwr:hover{
-  	text-decoration:none
-  }
-  #author_intro_wr .person_portraitwr:hover .edit_portraitbtn{
+  #author_intro_wr .my_portraitwr{
+  	position:relative;
+  	display:inline-block;
+  	width:112px;
   	height:112px;
-  	line-height:112px
+  	border:6px solid #fff;
+  	overflow:hidden;
+    margin-top: 53px;
+  	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-webkit-border-radius:50%;
+  	-moz-border-radius:50%;-ms-border-radius:50%;
+  	border-radius:50%
   }
-  
   #author_intro_wr .person_baseinfo{
   	float:left;
   	width:700px;
@@ -981,6 +978,7 @@
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
+    float: none;
     width: calc(98% + 2px);
   }
 
