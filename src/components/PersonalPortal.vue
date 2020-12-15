@@ -63,7 +63,7 @@
       </el-header>
       <el-main>
         <el-col :span="17">
-          <el-card class="box-card" shadow="hover">
+          <el-card class="box-card" shadow="never">
             <div slot="header" style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
               <div class="pie" ref="dPie" id="deux"></div>
@@ -139,23 +139,23 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
+            <div v-if="menuIndex === '0'" v-for="(item,index) in coopData" :key="index" class="coop-item" >
+              <a :href="item.link"><div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 12px;">{{item.name}}</div></a>
+              <div style="font:  7px  arial;color:#9a9a9a;padding-left: 12px;padding-top: 12px;">{{item.institute}}</div>
             </div>
           </el-card>
-          
-          <!-- <el-card class="box-card" shadow="hover" style="float: right;width: 95%;">
+          <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
             <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
-          </el-card> -->
+          </el-card>
         </el-col>
       </el-main>
     </el-container>
@@ -200,6 +200,33 @@
           patPar:'20%',
           confCount:30,
           confPar:'30%',
+          coopData:[
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              link:'https://trump.com/',
+            },
+            {
+              name:'钱诚',
+              institute:'中国科学院计算技术研究所微处理器中心',
+              link:'https://trump.com/',
+            }
+          ],
           tableData: [
             {
               paperId:'0',
@@ -921,6 +948,11 @@
     margin-top: 2px;
     height: 140px;
     width:calc(98% + 2px);
+  }
+  .coop-item{
+    text-align: left;
+    height: 42px;
+    width:100%;
   }
   .box-card {
     margin: auto;
