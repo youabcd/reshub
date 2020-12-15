@@ -144,8 +144,11 @@
               <span>合作作者</span>
             </div>
             <div v-if="menuIndex === '0'" v-for="(item,index) in coopData" :key="index" class="coop-item" >
-              <a :href="item.link"><div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 12px;">{{item.name}}</div></a>
-              <div style="font:  7px  arial;color:#9a9a9a;padding-left: 12px;padding-top: 12px;">{{item.institute}}</div>
+              <div style="text-align: left;position: absolute;">
+                <img class="avatar" src="../assets/trump.jpg" ></img>
+              </div>
+              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;"><a :href="item.link"></a>{{item.name}}</div>
+              <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
           <el-card class="box-card" shadow="never" style="float: right;width: 95%;">
@@ -204,26 +207,31 @@
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
+              avatar:'../assets/trump.jpg',
               link:'https://trump.com/',
             }
           ],
@@ -953,6 +961,21 @@
     text-align: left;
     height: 42px;
     width:100%;
+  }
+  .avatar{
+  	position:relative;
+  	display:inline-block;
+  	width:32px;
+  	height:32px;
+  	border:2px solid #fff;
+  	overflow:hidden;
+  	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-ms-box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	box-shadow:0 1px 6px rgba(0,0,0,.25);
+  	-webkit-border-radius:50%;
+  	-moz-border-radius:50%;-ms-border-radius:50%;
+  	border-radius:20%
   }
   .box-card {
     margin: auto;
