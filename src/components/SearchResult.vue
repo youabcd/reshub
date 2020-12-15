@@ -440,7 +440,7 @@
               </div>
 
               <div style="text-align: left" @click="open(hotData[index])">
-                <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.msg}}</p>
+                <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor: pointer;">{{item.msg}}</p>
               </div>
 
               <div>
