@@ -70,7 +70,7 @@
               <div class="pie" ref="tPie" id="trois"></div>
               <div class="textinpie">
                 共</br>
-                {{paperNum}}篇
+                <font style="font:  bold italic 27px  arial">{{paperNum}}</font>篇
               </div>
             </div>
             <div style="display:inline-block">

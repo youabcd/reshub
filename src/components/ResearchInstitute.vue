@@ -74,7 +74,7 @@
               <div class="pie" ref="tPie" id="trois"></div>
               <div class="textinpie">
                 共</br>
-                {{paperNum}}篇
+                <font style="font:  bold italic 27px  arial">{{paperNum}}</font><font>篇</font>
               </div>
             </div>
             <div style="display:inline-block">
@@ -198,6 +198,7 @@
           patPar:'20%',
           confCount:30,
           confPar:'30%',
+          xd:['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'],
           resData: [
             {
               paperId:'0',
@@ -326,7 +327,6 @@
           let uPie=echarts.init(document.getElementById('une'))
           let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
-          var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
@@ -360,7 +360,7 @@
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
-              data: xd,
+              data: this.xd,
               type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
                 show: true,
@@ -458,7 +458,7 @@
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
-              data: xd,
+              data: this.xd,
               type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
                 show: true,
