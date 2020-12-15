@@ -319,8 +319,38 @@
       },
       mounted() {
         this.drawLine();
+        this.getPersonalPortal();
       },
       methods:{
+        getPersonalPortal() {
+          axios.post(baseUrl+'/getPersonalPortal',{
+            userId:localStorage.getItem(myId),
+            resId:localStorage.getItem(resId)
+          }).then(function (response) {
+            this.avatar=response.data.results.avatar;
+            this.isClaimed=response.data.results.isclaimed;
+            this.isFollowing=response.data.results.isfollowing;
+            this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
+            this.visitNum=response.data.results.visitnum;
+            this.followNum=response.data.results.follownum;
+            this.realName=response.data.results.realname;
+            this.insName=response.data.results.insname;
+            this.mail=response.data.results.mail;
+            this.quoteNum=response.data.results.quotenum;
+            this.paperNum=response.data.results.papernum;
+            this.resField=response.data.results.resfield;
+            this.coopList=response.data.results.cooplist;
+            this.resCount=response.data.results.rescount;
+            this.quoCount=response.data.results.quocount;
+            
+            this.magCount=response.data.results.magcount;
+            this.magPar=response.data.results.magpar;
+            this.patCount=response.data.results.patcount;
+            this.patPar=response.data.results.patpar;
+            this.confCount=response.data.results.confcount;
+            this.confPar=response.data.results.confpar;
+          })
+        },
         drawLine(){
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
