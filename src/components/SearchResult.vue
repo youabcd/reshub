@@ -439,14 +439,14 @@
                 <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
               </div>
 
-              <div style="text-align: left">
+              <div style="text-align: left" @click="open(hotData[index])">
                 <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.msg}}</p>
               </div>
 
               <div>
                 <div style="margin-top: 30px;text-align: left">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
-                      <el-link :underline="false">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
                       </el-link>
                     </span>
@@ -713,7 +713,7 @@
             title:'Google1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
+            authorId: ['1','2'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
@@ -732,7 +732,7 @@
             title:'Google2',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
             author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
+            authorId: ['1','2'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
@@ -751,7 +751,7 @@
             title:'BILIBILI3',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
             author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
+            authorId: ['1','2'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
@@ -770,7 +770,7 @@
             title:'Google4',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
             author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
+            authorId: ['1','2'],
             keyword:'',
             fund:'',
             reference:['1','2','3'],
