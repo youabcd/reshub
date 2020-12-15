@@ -2,7 +2,10 @@
   <el-container style="height: 100vh;background-color: #545c64;">
     <el-aside width="200px">
       <div style="height: 50px;margin-top: 10px;font-size: 20px">
-        <img src="../../static/logo4.png" alt="" width="80%">
+        <a href="/">
+          <img src="../../static/logo4.png" alt="" width="80%">
+        </a>
+
       </div>
       <el-menu
         :default-active=menuIndex
@@ -133,7 +136,7 @@
           <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData.id)">拒绝</el-button>
         </el-drawer>
         <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">
-          <div style="position: absolute;left: 50px;top: 50px" class="avatar_info"></div>
+          <div style="position: absolute;left: 150px;top: 100px" class="avatar_info"></div>
           <div style="position: absolute;left: 450px;top: 100px">
             姓名 : {{administrator.name}}
           </div>
