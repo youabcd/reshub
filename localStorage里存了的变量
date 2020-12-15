@@ -1,5 +1,9 @@
 myId:已登入的用户id
 userHead:已登入用户头像url
+isPortal:是否有门户
+portalId:个人门户的ID（如果有个人门户）
+isAdministrator:是否为管理员
+label:个人简介
 nowActive:message页面中当前激活的分栏（系统消息或私信）
 keyWords:搜索关键词
 whichFriend:当前激活的聊天框对象
