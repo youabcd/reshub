@@ -182,7 +182,7 @@
           avatar:require('../assets/trump.jpg'),
           isClaimed: true,
           isFollowing: true,
-          isMyPortal: false,
+          isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
           visitNum:'1400',
           followNum:'0',
           realName:'Trump名字最多可以这么长',
