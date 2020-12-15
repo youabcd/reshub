@@ -468,8 +468,6 @@
 
 <script>
   import TopBar from "./TopBar";
-  import BottomBar from "./BottomBar";
-  import SearchBox from "./SearchBox";
   import Clipboard from 'clipboard';
   import axios from 'axios';
   import baseUrl from "./baseUrl";
@@ -478,8 +476,6 @@
     name: "SearchResult",
     components:{
       TopBar,
-      BottomBar,
-      SearchBox
     },
     data() {
       return {

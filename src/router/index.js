@@ -8,14 +8,12 @@ const HotspotAnalysis = resolve => require(['@/components/HotspotAnalysis'],reso
 const Login = resolve => require(['@/components/Login'],resolve)
 const Message = resolve => require(['@/components/Message'],resolve)
 const PersonalPortal = resolve => require(['@/components/PersonalPortal'],resolve)
-const Profession = resolve => require(['@/components/Profession'],resolve)
 const Register = resolve => require(['@/components/Register'],resolve)
 const ResearchInstitute = resolve => require(['@/components/ResearchInstitute'],resolve)
 const SearchResult = resolve => require(['@/components/SearchResult'],resolve)
 const TopBar = resolve => require(['@/components/TopBar'],resolve)
 const SearchRecord = resolve => require(['@/components/SearchRecord'],resolve)
 const MyCollection = resolve => require(['@/components/MyCollection'],resolve)
-const BottomBar = resolve => require(["@/components/BottomBar"],resolve)
 const SearchBox = resolve => require(["@/components/SearchBox"],resolve)
 const MyConcern = resolve => require(["@/components/MyConcern"],resolve)
 const BrowseRecord = resolve => require(["@/components/BrowseRecord"],resolve)
@@ -67,11 +65,6 @@ export default new Router({
       component: PersonalPortal
     },
     {
-      path: '/Profession',
-      name: 'Profession',
-      component: Profession
-    },
-    {
       path: '/Register',
       name: 'Register',
       component: Register
@@ -100,11 +93,6 @@ export default new Router({
       path: '/SearchRecord',
       name: 'SearchRecord',
       component: SearchRecord
-    },
-    {
-      path: '/BottomBar',
-      name: 'BottomBar',
-      component: BottomBar
     },
     {
       path: '/SearchBox',
