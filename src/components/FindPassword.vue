@@ -1,20 +1,178 @@
+//找回密码
+
 <template>
-  <div>
-    找回密码
-  </div>
+
+<div class="findPa" id="findPa">
+<!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
+    <div class="log-bg">
+        <div class="log-cloud cloud1"></div>
+        <div class="log-cloud cloud2"></div>
+        <div class="log-cloud cloud3"></div>
+        <div class="log-cloud cloud4"></div>
+
+        <div class="findPa-logo">Waiting for you!</div>
+        <div class="findPa-text">@reshub team</div>
+    </div>
+    <div class="findPa-email">
+        <input type="text" placeholder="Email" :class="'findPa-input' + (mail==''?' findPa-input-empty':'')" v-model="mail">
+        <span class="findPa-btn2" @click="sendVerificationCode">发送验证码</span>
+        <input type="text" placeholder="verification code" :class="'findPa-input' + (verificationCode==''?' findPa-input-empty':'')"  v-model="verificationCode">
+        <input type="password" placeholder="new password" :class="'findPa-input' + (password==''?' findPa-input-empty':'')"  v-model="password">
+        <div class="errorMessage">{{errorMessage}}</div>
+        <span class="findPa-btn" @click="ResetPassword">重置密码</span>
+    </div>
+    <Loading v-if="isLoging" marginTop="-30%"></Loading>
+</div>
 </template>
 
 <script>
     import TopBar from "./TopBar";
-
+    import Loading from './Loading.vue'
+    import axios from 'axios'
+    import baseUrl from './baseUrl'
     export default {
         name: "FindPassword",
-      components:{
-        TopBar
-      },
+        data(){
+            return {
+                mail:'',
+                verificationCode:'',
+                veri_success: false,
+                password: '',
+                errorMessage:''//出错提示信息
+            }
+        },
+        methods:{
+            sendVerificationCode(){
+                axios.get(baseUrl+'/verificationCode',{
+                    mailAddress: this.mail
+                })
+                .then(function(response){
+                    veri_success=response.data.result;
+                    if(veri_success==false){
+                        errorMessage='验证码错误'
+                    }
+                })
+   
+            },
+            ResetPassword(){
+                if(this.veri_success==true){
+                    axios.get(baseUrl+'/newPassword',{
+                    mailAddress: this.mail,
+                    newPassword: this.password
+                   })
+                   .then(function(response){
+                       var reset_success;
+                       reset_success=response.data.result;
+                       if(reset_success==true){
+                           this.$router.push({
+                            path:'/login',
+                            });
+                       }
+                       else {
+                           errorMessage='重置失败'
+                       }
+                   })
+                }
+                
+            }
+        }
     }
 </script>
 
 <style scoped>
+.errorMessage{
+    text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
+}
+.findPa{position: fixed; overflow: hidden;left: 50%; margin-left: -250px; top:50%; margin-top: -350px; width: 500px; min-height: 555px; z-index: 10; right: 140px; background: #fff;-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow:  0px 3px 16px -5px #070707}
+
+.log-cloud{background-image: url(../assets/login-cloud.png); width: 63px ;height: 40px; position: absolute; z-index: 1}
+.findPa .cloud1{top:21px; left: -30px; transform: scale(.6); animation: cloud1 20s linear infinite;}
+.findPa .cloud2{top:87px; right: 20px; animation: cloud2 19s linear infinite;}
+.findPa .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
+.findPa .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
+.log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
+.findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
+.findPa-logo,.findPa-text{z-index: 2}
+
+
+/*1*/ 
+.findPa-btns{padding: 15px 0; margin: 0 auto;}
+.findPa-btn{width:402px; display: block; text-align: left; line-height: 50px;margin:0 auto 15px; height:50px; color:#fff;
+font-size:13px;-webkit-border-radius: 5px; background-color: #3B5999;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;
+position: relative;}
+.findPa-btn.tw{background-color: #13B4E9}
+.findPa-btn.email{background-color: #50E3CE}
+.findPa-btn:hover,.findPa-btn:focus{color: #fff; opacity: .8;}
+
+.findPa-email{text-align: center; margin-top: 20px;}
+.findPa-email .findPa-btn{background-color: #50E3CE;text-align: center;}
+.findPa-input-empty{border: 1px solid #f37474 !important;}
+.isloading{background: #d6d6d6}
+.findPa-btn .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}
+.findPa-input{width: 370px;overflow: hidden; padding: 0 15px;font-size: 13px; border: 1px solid #EBEBEB; margin:0 auto 15px; height: 48px; line-height: 48px; -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;}
+.findPa-input.warn{border: 1px solid #f88787}
+/*2 begin*/
+.findPa-btn2s{padding: 15px 0; margin: 0 auto;}
+.findPa-btn2{width:200px; display: block; text-align: left; line-height: 50px;margin:0 auto 15px; height:50px; color:#fff;
+font-size:13px;-webkit-border-radius: 5px; background-color: #3B5999;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;
+position: relative;}
+.findPa-btn2.tw{background-color: #13B4E9}
+.findPa-btn2.email{background-color: #50E3CE}
+.findPa-btn2:hover,.findPa-btn2:focus{color: #fff; opacity: .8;}
+.findPa-email .findPa-btn2{background-color: #50E3CE;text-align:center}
+.findPa-btn2 .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}
+
+/*2 end*/
+ @-webkit-keyframes cloud1 {
+    0%{left: 200px}
+    100%{left:-130px;}
+}
+@keyframes cloud1{
+    0%{left: 200px}
+    100%{left:-130px;}
+}
+
+ @-webkit-keyframes cloud2 {
+    0%{left:500px;}
+    100%{left:-90px;}
+}
+@keyframes cloud2{
+    0%{left:500px;}
+    100%{left:-90px;}
+}
+
+@-webkit-keyframes cloud3 {
+    0%{left:620px;}
+    100%{left:-70px;}
+}
+@keyframes cloud3{
+    0%{left:620px;}
+    100%{left:-70px;}
+}@-webkit-keyframes cloud4 {
+    0%{left:100px;}
+    100%{left:-70px;}
+}
+@keyframes cloud4{
+    0%{left:100px;}
+    100%{left:-70px;}
+}
 
 </style>
+

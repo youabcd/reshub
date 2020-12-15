@@ -4,18 +4,20 @@
 
 <div class="login" id="login">
 <!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
-    <div class="log-bg">
+    <div class="reg-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="log-logo">Welcome to reshub!</div>
-        <div class="log-text">@reshub team</div>
+        <div class="reg-logo">Welcome back!<br />reshub</div>
+        <div class="reg-text">@reshub team</div>
     </div>
     <div class="log-email">
-        <input type="text" placeholder="Email" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="account"><input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-        <a href="javascript:;" class="log-btn" @click="login">Login</a>
+        <input type="text" placeholder="Email" :class="'log-input' + (userID==''?' log-input-empty':'')" v-model="userID">
+        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <a href="javascript:;" class="log-btn" @click="login">登录</a>
+        <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
@@ -30,25 +32,37 @@ export default {
   data(){
   	return {
       isLoging: false,
-  		account: '',
-  		password: ''
+  		userID: '',
+      password: '',
+      
+
   	}
   },
   methods:{
     login(){
       let _this=this;
-      axios.post(baseUrl+'/identityCheck')
+      axios.post(baseUrl+'/identityCheck',{
+        userID:this.userID,
+        password:this.password//怎么加密
+      })
         .then(function (response) {
           console.log(response);
           var success;
           success=response.data.result;
           if(success==true){
-            localStorage.setItem("myId",_this.account);
+            localStorage.setItem("myId",_this.userID);
+            isLoging=true;
             _this.$router.push({
               path:'/',
             });
           }
         })
+    },
+    reg(){
+        let _this=this;
+        _this.$router.push({
+              path:'/Register',
+            });
     },
   },
   components:{
@@ -71,10 +85,10 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud2{top:87px; right: 20px; animation: cloud2 19s linear infinite;}
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
-.log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
-.log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
-.log-logo,.log-text{z-index: 2}
+.reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
+.reg-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
+.reg-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
+.reg-logo,.reg-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}
 .close{height:16px;width:16px;background-position:-13px 0;}
 .login-email{height:17px;width:29px;background-position:-117px 0;}
