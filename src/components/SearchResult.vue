@@ -46,74 +46,127 @@
         <el-drawer
           :visible.sync="drawer"
           :direction="direction"
+          size=750px
           v-if="drawer">
+          <div v-if="menuIndex==='0'">
+            <!--期刊 期号+文献操作（分享等）-->
+            <div style="margin-top: -40px;">
+              <van-row>
+                <van-col span="4">
+                  <span>{{tableData00.paperIssue}}&nbsp;&nbsp;&nbsp;</span>
+                  <span>{{tableData00.paperVolume}}</span>
+                </van-col>
+                <van-col span="10"></van-col>
+                <van-col span="10" style="margin-top: -8px;">
+                  <!--收藏-->
+                  <span>
+                    <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData00.paperId)"></i>
+                    </el-tooltip>
+                </span>
+                  <span>
+                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="已收藏">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                </span>
+                  <!--微博-->
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData00.link[0],tableData00.title)" style="height: 20px;">
+                </span>
+                  <!--微信-->
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData00.link[0])" style="height: 20px;">
+                </span>
+                  <!--复制连接-->
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData00.link[0]" @click="Copy"></i>
+                    </el-tooltip>
+                </span>
+                </van-col>
+              </van-row>
+            </div>
           <!--文章标题-->
-          <div style="margin-top: -10px;font-size: 30px;font-weight: 500;">
-            {{tableData.title}}
+          <div style="margin-top: 10px;font-size: 30px;font-weight: 500;">
+            {{tableData00.title}}
           </div>
           <!--作者 可点击-->
           <div style="margin-top: 15px;">
-            <el-link v-for="(item,index) in tableData.author" :key="index" type="primary" :underline="false" @click="gotoAuthor(tableData.authorId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+            <el-link v-for="(item,index) in tableData00.author" :key="index" type="primary" :underline="false" @click="gotoAuthor(tableData00.authorId[index])">
+              {{item}}&nbsp;&nbsp;&nbsp;
+            </el-link>
           </div>
           <!--机构 可点击-->
           <div style="margin-top: 10px;">
-            <el-link v-for="(item,index) in tableData.institution" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData.institutionId[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link>
+            <el-link v-for="(item,index) in tableData00.institution" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData00.institutionId[index])">
+              {{item}}&nbsp;&nbsp;&nbsp;
+            </el-link>
           </div>
           <!--摘要-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+          <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
             <span style="font-family: 黑体;font-weight: 700">摘要：</span>
-            <span>{{tableData.msg}}</span>
+            <span>{{tableData00.msg}}</span>
           </div>
           <!--关键词-->
           <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
             <span style="font-family: 黑体;font-weight: 700">关键词：</span>
-            <span>{{tableData.keyword}}</span>
+            <span>{{tableData00.keyword}}</span>
           </div>
+            <!--DOI-->
+            <div v-if="tableData00.paperDoi.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">DOI：</span>
+              <span>{{tableData00.paperDoi}}</span>
+            </div>
           <!--基金资助-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
-            <span style="font-family: 黑体;font-weight: 700">基金：</span>
-            <span>{{tableData.fund}}</span>
+          <div v-if="tableData00.fund.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">基金资助：</span>
+            <span>{{tableData00.fund}}</span>
           </div>
+            <!--学科-->
+            <div v-if="tableData00.paperFos.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">学科：</span>
+              <span><el-link v-for="(item,index) in tableData00.paperFos" :key="index" type="primary" :underline="false">
+              {{item}}&nbsp;&nbsp;&nbsp;
+            </el-link></span>
+            </div>
+            <!--会议-->
+            <div v-if="tableData00.paperVenue.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">会议：</span>
+              <span>{{tableData00.paperVenue}}</span>
+            </div>
+            <!--各类次数-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">被引次数：</span>
+              <span>{{tableData00.citation}}</span>
+              <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">收藏次数：</span>
+              <span>{{tableData00.collectionSum}}</span>
+              <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">浏览次数：</span>
+              <span>{{tableData00.viewSum}}</span>
+            </div>
+            <!--页码-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">页码：</span>
+              <span>{{tableData00.paperStart}}-{{tableData00.paperEnd}}</span>
+            </div>
+            <!--出版-->
+            <div v-if="tableData00.paperPublisher.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">出版社：</span>
+              <span>{{tableData00.paperPublisher}}</span>
+            </div>
           <!--参考文献 clickable-->
           <div  style="margin-top: 15px;text-align: left;margin-left: 8px;">
             <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
-            <span><el-link v-for="(item,index) in tableData.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData.referenceLink[index])">{{item}}&nbsp;&nbsp;&nbsp;</el-link></span>
+            <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index])">
+              {{item}}&nbsp;&nbsp;&nbsp;
+            </el-link></span>
           </div>
           <!--文献查看  分享推荐等图标  可点击-->
-          <div style="margin-top: 24px;">
-            <van-row>
-              <van-col span="4">
-                <el-button type="primary" style="margin-left: 10px;" plain @click="gotoPaper(tableData.link)">查看原文</el-button>
-              </van-col>
-              <van-col span="10"></van-col>
-              <van-col span="10" style="margin-top: -8px;">
-                <!--收藏-->
-                <span>
-                    <el-tooltip v-if="tableData.collectStatus === false" class="item" effect="dark" content="收藏">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData.paperId)"></i>
-                    </el-tooltip>
-                </span>
-                <span>
-                    <el-tooltip v-if="tableData.collectStatus === true" class="item" effect="dark" content="已收藏">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                </span>
-                <!--微博-->
-                <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData.link,tableData.title)" style="height: 20px;">
-                </span>
-                <!--微信-->
-                <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData.link)" style="height: 20px;">
-                </span>
-                <!--复制连接-->
-                <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData.link" @click="Copy"></i>
-                    </el-tooltip>
-                </span>
-              </van-col>
-            </van-row>
+          <div style="margin-top: 24px;text-align: left;margin-left: 8px;">
+            <span style="font-family: 黑体;font-weight: 700">查看原文：</span>
+            <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index])">
+              {{item}}&nbsp;&nbsp;&nbsp;
+            </el-link>
+          </div>
           </div>
         </el-drawer>
 
@@ -143,10 +196,9 @@
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                <el-menu-item index="0" style="width: 120px">●全部</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●论文</el-menu-item>
+                <el-menu-item index="0" style="width: 120px">●论文</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●项目</el-menu-item>
                 <el-menu-item index="2" style="width: 120px">●专利</el-menu-item>
-                <el-menu-item index="3" style="width: 120px">●项目</el-menu-item>
               </el-menu>
             </div>
             <el-dialog
@@ -163,8 +215,7 @@
                   </span>
             </el-dialog>
             <div>
-
-              <!--全部-->
+              <!--论文-->
               <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
@@ -192,6 +243,7 @@
                     </el-tooltip>
                   </span>
                 </div>
+
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData0[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
@@ -216,7 +268,7 @@
                 </div>
               </el-card>
 
-              <!--论文-->
+              <!--项目-->
               <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
@@ -244,6 +296,7 @@
                     </el-tooltip>
                   </span>
                 </div>
+
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
                   <p style="height: 20px" >{{item.msg}}</p>
@@ -322,76 +375,10 @@
                   </i>
                 </div>
               </el-card>
-
-              <!--项目-->
-              <el-card shadow="hover" v-if="menuIndex === '3'" v-for="(item,index) in tableData3.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
-                </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
-
-
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData3[index])">
-                  <p style="height: 20px" >{{item.msg}}</p>
-                </div>
-
-                <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
-                        {{author_item}}
-                      </el-link>
-                    </span>
-                  </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>{{item.type}}</span>
-                  </el-tag>
-                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
-                    <span> {{item.collectionSum}}</span>
-                  </i>
-                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
-                    <span> {{item.viewSum}}</span>
-                  </i>
-                </div>
-              </el-card>
             </div>
 
+            <!--论文页码-->
             <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-size="pageSize"
-                layout="total, prev, pager, next, jumper"
-                :total="tableData0.length"
-                prev-text="上一页"
-                next-text="下一页">
-              </el-pagination>
-            </div>
-
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '1'">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -404,7 +391,8 @@
               </el-pagination>
             </div>
 
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '2'">
+            <!--专利页码-->
+            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '1'">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -417,7 +405,8 @@
               </el-pagination>
             </div>
 
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '3'">
+            <!--项目页码-->
+            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '2'">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -494,25 +483,57 @@
         checkedSubject: [],
         checkedAuthor: [],
         checkedTime: [],
-        tableData:{
+        tableData00:{//论文（期刊）
           paperId:'',
           title:'',
           msg:'',
-          author:[],
-          authorId:[],
+          author: [],
+          authorId: [],
           keyword:'',
           fund:'',
           reference:[],
           referenceLink:[],
           institution:[],
           institutionId:[],
-          type:'',
+          type:"",
           collectStatus: false,
           collectionSum:0,
           viewSum:0,
+          link:[],
+          collectTime:'',
+          paperDoi: '',
+          citation: 5, // 引用数量
+          paperStart: 0, // 论文开始页
+          paperEnd: 4, // 论文结束页
+          paperLang: 'en', // 英文
+          paperVolume: 3, // 册
+          paperIssue: 4, // 期号
+          paperPublisher: '',
+          paperFos: [], // 学科
+          paperVenue: '', // 会议
+        },
+        tableData01:{//自然基金项目
+          paperId:'',
+          title:'',
+          zhAbstract:'', // 中文摘要
+          enAbstract: '', // 英文摘要
+          finalAbstract: '结题摘要',
+          zhKeywords: '', // 中文关键字
+          enKeywords: '', // 英文关键字
+          period: '', // 研究期限
+          category: '青年科学基金项目', // 项目类别
+          year: '', //发表年份
+          author: '',
+          authorId: '1',
+          fund:'', // 基金
+          support: '浙江大学', // 支持机构
+          collectStatus: true,
+          collectionSum:666,
+          viewSum:777,
           link:'',
           collectTime:''
         },
+        tableData02:{},
         authorTable: [
           {
             name:'Zhang San',
@@ -554,8 +575,8 @@
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San','Clearlove'],
             authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
+            keyword:'123456',
+            fund:'123',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:['北京航空航天大学'],
@@ -564,105 +585,44 @@
             collectStatus: true,
             collectionSum:6,
             viewSum:7,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
           },
-          {
-            paperId:'2',
-            title:'Google2',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"会议",
-            collectStatus: false,
-            collectionSum:66,
-            viewSum:77,
-            link:'https://www.youtube.com/',
-            collectTime:'2016-05-04'
-          },
-          {
-            paperId:'3',
-            title:'BILIBILI3',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"期刊",
-            collectStatus: false,
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.bilibili.com/',
-            collectTime:'2016-05-04'
-          },
-          {
-            paperId:'4',
-            title:'Google4',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"报告",
-            collectStatus: false,
-            collectionSum:6666,
-            viewSum:7777,
-            link:'https://www.google.com/',
-            collectTime:'2016-05-04'
-          }],
-        tableData1: [
+        ],
+        tableData1: [ // 国家自然基金项目
           {
             paperId:'1',
             title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author:['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"期刊",
+            zhAbstract:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            // 中文摘要
+            enAbstract: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // 英文摘要
+            finalAbstract: '结题摘要',
+            zhKeywords: '', // 中文关键字
+            enKeywords: '', // 英文关键字
+            period: '', // 研究期限
+            category: '青年科学基金项目', // 项目类别
+            year: '', //发表年份
+            author: 'Clearlove',
+            authorId: '1',
+            fund:'23万', // 基金
+            support: '浙江大学', // 支持机构
             collectStatus: true,
             collectionSum:666,
             viewSum:777,
             link:'https://www.google.com.hk/',
             collectTime:'2016-05-04'
           },
-          {
-            paperId:'3',
-            title:'BILIBILI3',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceId:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionLink:[],
-            type:"期刊",
-            collectStatus: false,
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.bilibili.com/',
-            collectTime:'2016-05-04'
-          }],
+        ],
         tableData2: [
           {
             paperId:'2',
@@ -681,26 +641,6 @@
             collectionSum:666,
             viewSum:777,
             link:'https://www.youtube.com/',
-            collectTime:'2016-05-04'
-          }],
-        tableData3: [
-          {
-            paperId:'4',
-            title:'Google4',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"报告",
-            collectStatus: false,
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.google.com/',
             collectTime:'2016-05-04'
           }],
         hotData: [
@@ -723,64 +663,7 @@
             link:'https://www.google.com.hk/',
             collectTime:'2016-05-04'
           },
-          {
-            paperId:'2',
-            title:'Google2',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"会议",
-            collectStatus: false,
-            collectionSum:66,
-            viewSum:77,
-            link:'https://www.youtube.com/',
-            collectTime:'2016-05-04'
-          },
-          {
-            paperId:'3',
-            title:'BILIBILI3',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"期刊",
-            collectStatus: false,
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.bilibili.com/',
-            collectTime:'2016-05-04'
-          },
-          {
-            paperId:'4',
-            title:'Google4',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"报告",
-            collectStatus: false,
-            collectionSum:6666,
-            viewSum:7777,
-            link:'https://www.google.com/',
-            collectTime:'2016-05-04'
-          }],
-
+        ],
       }
     },
     created() {
@@ -933,7 +816,15 @@
       },
 
       open(list) {
-        this.tableData=list;
+        if(this.menuIndex==='0'){
+          this.tableData00=list;
+        }
+        else if(this.menuIndex==='1'){
+          this.tableData01=list;
+        }
+        else if(this.menuIndex==='2'){
+          this.tableData02=list;
+        }
         // console.log(this.tableData);
         this.drawer=true;
       },
