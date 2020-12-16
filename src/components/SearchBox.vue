@@ -59,12 +59,22 @@
             </div>
           </van-col>
           <van-col span="5" >
-            <el-date-picker type="date" placeholder="选择开始日期" v-model="dataStart" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" @change="formatStartTime"
+                            placeholder="选择开始日期" v-model="dataStart" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="5" >
-            <el-date-picker type="date" placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" @change="formatEndTime"
+                            placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
           </van-col>
-          <van-col span="6"></van-col>
+          <van-col span="3">
+            <van-row>
+              <el-radio v-model="radio" @click.native.prevent="clickItem(1)" :label="1"> 仅限中文</el-radio>
+            </van-row>
+            <van-row>
+              <el-radio v-model="radio" @click.native.prevent="clickItem(2)" :label="2"> 仅限英文</el-radio>
+            </van-row>
+          </van-col>
+          <van-col span="3"></van-col>
           <van-col span="6" style="text-align: left;font-size: 20px;">
             <span>
               <el-button type="success" size="small" @click="addSearchBox"><i class="el-icon-plus"></i> 添加行</el-button>
@@ -100,6 +110,7 @@
         /*boolType {1:AND ; 2:OR ; 3:NOT}
         type {1：主题；2：标题；3：作者；4：关键词；5：摘要;6:学科 }
         */
+        radio:'0',
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
         ],
@@ -173,9 +184,58 @@
             }
           }
           localStorage.setItem("keyWords",k);
+          localStorage.setItem("Radio",this.radio);
+          if(this.dataStart.length>0){
+            localStorage.setItem("dataStart",this.dataStart);
+          }
+          else{
+            localStorage.setItem("dataStart",'0000-01-01');
+          }
+          if(this.dataEnd.length>0){
+            localStorage.setItem("dataEnd",this.dataEnd);
+          }
+          else{
+            localStorage.setItem("dataEnd",this.getTime());
+          }
           window.open(webUrl+"SearchResult");
         }
       },//搜索
+      getTime(){
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        //以下代码依次是获取当前时间的年月日时分秒
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var minute = date.getMinutes();
+        var hour = date.getHours();
+        var second = date.getSeconds();
+        //固定时间格式
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        if (hour >= 0 && hour <= 9) {
+          hour = "0" + hour;
+        }
+        if (minute >= 0 && minute <= 9) {
+          minute = "0" + minute;
+        }
+        if (second >= 0 && second <= 9) {
+          second = "0" + second;
+        }
+        var currentdate =  year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+      },
+      formatStartTime(val){
+        this.dataStart=val;
+      },
+      formatEndTime(val){
+        this.dataEnd=val;
+      },
       //添加行
       addSearchBox(){
         var a={type:'1',words:'',isFuzzy:false,boolType:'1'};
@@ -196,6 +256,9 @@
       //删除行
       declineSearchBox(item,index){
         this.searchKey.splice(index,1);
+      },
+      clickItem(e){
+        e===this.radio ? this.radio='0' : this.radio=e;
       },
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {

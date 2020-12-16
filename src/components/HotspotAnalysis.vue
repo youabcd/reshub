@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color:rgba(233,233,233,0.6);">
+  <div style="background-color:rgba(233,233,233,0.1);">
     <TopBar></TopBar>
 
     <!--热门搜索-->

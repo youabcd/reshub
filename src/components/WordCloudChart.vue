@@ -111,7 +111,7 @@
         };
         this.chart.setOption(option);
         this.chart.on('click',function(params){
-          localStorage.setItem("keyWords",params.name);
+          localStorage.setItem("keyWords",'(主题 '+params.name+')');
           window.open(webUrl+"SearchResult");
         });
       },

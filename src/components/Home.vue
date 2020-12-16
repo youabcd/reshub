@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #eeeeee;min-height: 100vh;height: 100%">
+  <div style="min-height: 100vh;height: 100%;background-color:rgba(233,233,233,0.1);">
     <!--<div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
     </div>-->
     <div>
