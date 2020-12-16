@@ -16,6 +16,9 @@
     <div class="log-email">
         <input type="text" placeholder="Email" :class="'log-input' + (userID==''?' log-input-empty':'')" v-model="userID">
         <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div> 
+        
+        
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
@@ -43,14 +46,23 @@ export default {
       let _this=this;
       axios.post(baseUrl+'/identityCheck',{
         userID:this.userID,
-        password:this.password//怎么加密
+        password:this.password//怎么加密（可以先不急）
       })
         .then(function (response) {
           console.log(response);
-          var success;
-          success=response.data.result;
-          if(success==true){
-            localStorage.setItem("myId",_this.userID);
+          if(response.data.result==true){
+            //在文件‘localStorage里存了的变量’里面提到的都要存在这里
+            localStorage.setItem("myId",response.userID);
+            localStorage.setItem("userHead",response.userHead);
+            localStorage.setItem("isPortal",response.isPortal);
+            localStorage.setItem("portalId",response.portalId);
+            localStorage.setItem("isAdministrator",response.isAdministrator);
+            localStorage.setItem("label",response.label);
+            localStorage.setItem("nowActive",response.nowActive);
+            localStorage.setItem("keyWords",response.keyWords);
+            localStorage.setItem("whichFriend",response.whichFriend);
+            localStorage.setItem("authorId",response.authorId);
+            localStorage.setItem("institutionId",response.institutionId);
             isLoging=true;
             _this.$router.push({
               path:'/',
@@ -58,12 +70,18 @@ export default {
           }
         })
     },
+    //跳转至注册页面
     reg(){
         let _this=this;
         _this.$router.push({
               path:'/Register',
             });
     },
+    gotoFindPassword(){
+      this.$router.push({
+          path:'/FindPassword'
+      })
+    }
   },
   components:{
     Loading
@@ -105,6 +123,8 @@ position: relative;}
 .log-btn:hover,.log-btn:focus{color: #fff; opacity: .8;}
 
 .log-email{text-align: center; margin-top: 20px;}
+.log-email #findPassHref{text-align: right; margin-right: 50px;margin-bottom: 20px;font-size: 1px;color:  #50E3CE; }
+#findPassHref span{cursor: pointer;}
 .log-email .log-btn{background-color: #50E3CE;text-align: center;}
 .log-input-empty{border: 1px solid #f37474 !important;}
 .isloading{background: #d6d6d6}

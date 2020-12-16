@@ -3,7 +3,7 @@
 <template>
 
 <div class="findPa" id="findPa">
-<!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
+<!--   -->
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>
@@ -14,12 +14,15 @@
         <div class="findPa-text">@reshub team</div>
     </div>
     <div class="findPa-email">
-        <input type="text" placeholder="Email" :class="'findPa-input' + (mail==''?' findPa-input-empty':'')" v-model="mail">
-        <span class="findPa-btn2" @click="sendVerificationCode">发送验证码</span>
-        <input type="text" placeholder="verification code" :class="'findPa-input' + (verificationCode==''?' findPa-input-empty':'')"  v-model="verificationCode">
-        <input type="password" placeholder="new password" :class="'findPa-input' + (password==''?' findPa-input-empty':'')"  v-model="password">
+        <input type="text" placeholder="Email" class="findPa-input" v-model="mail">
+        <input type="password" placeholder="new password" class='findPa-input'  v-model="password">
+
+        <!-- 验证码  -->
+        <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
+        <span class="sendVeri" @click="sendVerificationCode">发送验证码</span>
+
         <div class="errorMessage">{{errorMessage}}</div>
-        <span class="findPa-btn" @click="ResetPassword">重置密码</span>
+        <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
@@ -42,18 +45,36 @@
             }
         },
         methods:{
-            sendVerificationCode(){
-                axios.get(baseUrl+'/verificationCode',{
+            //要求发送验证码
+            askVerificationCode(){
+                axios.get(baseUrl+'/askVerificationCode',{
                     mailAddress: this.mail
                 })
                 .then(function(response){
-                    veri_success=response.data.result;
-                    if(veri_success==false){
-                        errorMessage='验证码错误'
+                    
+                    if(response.data.result==false){
+                        errorMessage='发送失败'
                     }
                 })
    
             },
+            //验证码验证
+            verify_verificationCode(){
+                axios.get(baseUrl+'/verificationCode',{
+                    mailAddress: this.mail,
+                    verificationCode:this.verificationCode
+                })
+                .then(function(response){
+                    if(response.data.result==false){
+                        errorMessage='验证码错误';
+                        this.veri_success=false;
+                    }
+                    else {
+                        this.veri_success=true
+                    }
+                })
+            },
+            //要求重置密码
             ResetPassword(){
                 if(this.veri_success==true){
                     axios.get(baseUrl+'/newPassword',{
@@ -108,16 +129,18 @@ font-size:13px;-webkit-border-radius: 5px; background-color: #3B5999;
 -ms-border-radius: 5px;
 -o-border-radius: 5px;
 border-radius: 5px;
-position: relative;}
+position: relative;
+cursor: pointer;
+}
 .findPa-btn.tw{background-color: #13B4E9}
 .findPa-btn.email{background-color: #50E3CE}
 .findPa-btn:hover,.findPa-btn:focus{color: #fff; opacity: .8;}
-
-.findPa-email{text-align: center; margin-top: 20px;}
 .findPa-email .findPa-btn{background-color: #50E3CE;text-align: center;}
-.findPa-input-empty{border: 1px solid #f37474 !important;}
+.findPa-email{text-align: center; margin-top: 20px;}
+
+/*.findPa-input-empty{border: 1px solid #f37474 !important;}*/
 .isloading{background: #d6d6d6}
-.findPa-btn .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}
+
 .findPa-input{width: 370px;overflow: hidden; padding: 0 15px;font-size: 13px; border: 1px solid #EBEBEB; margin:0 auto 15px; height: 48px; line-height: 48px; -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
@@ -125,8 +148,8 @@ position: relative;}
 border-radius: 5px;}
 .findPa-input.warn{border: 1px solid #f88787}
 /*2 begin*/
-.findPa-btn2s{padding: 15px 0; margin: 0 auto;}
-.findPa-btn2{width:200px; display: block; text-align: left; line-height: 50px;margin:0 auto 15px; height:50px; color:#fff;
+/*.findPa-btn2s{padding: 15px 0; margin: 0 auto;}
+.findPa-btn2{text-align: left; line-height: 50px;margin:0 auto 15px; height:50px; color:#fff;
 font-size:13px;-webkit-border-radius: 5px; background-color: #3B5999;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
@@ -137,7 +160,26 @@ position: relative;}
 .findPa-btn2.email{background-color: #50E3CE}
 .findPa-btn2:hover,.findPa-btn2:focus{color: #fff; opacity: .8;}
 .findPa-email .findPa-btn2{background-color: #50E3CE;text-align:center}
-.findPa-btn2 .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}
+.findPa-btn2 .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}*/
+
+.sendVeri{
+    text-align: center;
+    color:  #50E3CE;
+    font-size: 3px;
+    cursor: pointer;
+    
+}
+.sendVeri:hover{
+    color: #b8f0e4;
+}
+
+.findPa-input2{width: 305px;overflow: hidden; padding: 0 15px;font-size: 13px; border: 1px solid #EBEBEB; margin:0 auto 15px; height: 48px; line-height: 48px; -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;}
+.findPa-input2.warn{border: 1px solid #f88787}
+
 
 /*2 end*/
  @-webkit-keyframes cloud1 {

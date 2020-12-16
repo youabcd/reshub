@@ -20,6 +20,7 @@
         <input type="password" placeholder="Password" :class="'reg-input' + (password==''?' reg-input-empty':'')"  v-model="password">
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
+        <a href="javascript:;" class="log-btn" @click="Abandon">随便看看</a>
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
@@ -42,6 +43,7 @@ import baseUrl from './baseUrl'
             }
         },
         methods:{
+            //登录信息发送
             Reg(){
                 let _this=this;
                 axios.post(baseUrl+'/registerInformation',{
@@ -63,6 +65,11 @@ import baseUrl from './baseUrl'
                     else {
                         errorMessage='请稍后重试'
                     }
+                })
+            },
+            Abandon(){
+                this.$router.push({
+                    path:'/'
                 })
             }
         }
