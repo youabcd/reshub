@@ -109,8 +109,8 @@
             </div>
             <div style="text-align: left;position: absolute;top: 43px;width: 96%">
               <p style="line-height: 27px;" >{{item.msg}}<a :href="item.link" target="_blank">>>查看详情</a></p>
-              
-            </div>         
+
+            </div>
             <div>
               <el-tag type="info" style="position: absolute;right: 161px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
                 <span>{{item.type}}</span>
@@ -301,14 +301,14 @@
       mounted() {
         this.drawLine();
         this.getPersonalPortal();
-        this.id=localStorage.getItem(myId);
-        this.rid=localStorage.getItem(resId);
+        this.id=localStorage.getItem('myId');
+        this.rid=localStorage.getItem('authorId');
       },
       methods:{
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
-            userId:localStorage.getItem(myId),
-            resId:localStorage.getItem(resId)
+            userId:localStorage.getItem('myId'),
+            resId:localStorage.getItem('authorId')
           }).then(function (response) {
             this.avatar=response.data.results.avatar;
             this.isClaimed=response.data.results.isclaimed;
@@ -325,7 +325,7 @@
             this.coopList=response.data.results.cooplist;
             this.resCount=response.data.results.rescount;
             this.quoCount=response.data.results.quocount;
-            
+
             this.magCount=response.data.results.magcount;
             this.magPar=response.data.results.magpar;
             this.patCount=response.data.results.patcount;
@@ -539,36 +539,36 @@
           });
           uPie.setOption({
             title: {//标题组件
-              textStyle: {    
-                color: "#333333",    
-                fontSize: 12,   
+              textStyle: {
+                color: "#333333",
+                fontSize: 12,
               }
             },
-            graphic:[		       	       
+            graphic:[
             {
-              type: 'text',              
-              top: '37%',           
-              left: 'center',          
+              type: 'text',
+              top: '37%',
+              left: 'center',
               style: {
-                text: this.magPar,      
-                fill: '#333333',       
-                fontSize: 20,          
+                text: this.magPar,
+                fill: '#333333',
+                fontSize: 20,
                 fontWeight: 'normal'
-              }  		      		        
+              }
             },{
-              type: 'text',              
-              top: '50%',           
-              left: 'center',          
+              type: 'text',
+              top: '50%',
+              left: 'center',
               style: {
-                text: '期刊',      
-                fill: '#A6A8B6',       
-                fontSize: 12,          
+                text: '期刊',
+                fill: '#A6A8B6',
+                fontSize: 12,
                 fontWeight: 'normal'
-              }  		      		        
-            },      
+              }
+            },
             ],
             //圆环的颜色
-            color:['#66b1ff','#dfe6ee'], 		  
+            color:['#66b1ff','#dfe6ee'],
             series: [
             {
               name:'工资占比图',//代表a的值，系列名称
@@ -585,12 +585,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:this.magCount, 
+                  value:this.magCount,
                   name:'期刊',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.patCount+this.confCount, 
+                  value:this.patCount+this.confCount,
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -600,36 +600,36 @@
           });
           dPie.setOption({
             title: {//标题组件
-              textStyle: {    
-                color: "#333333",    
-                fontSize: 12,   
+              textStyle: {
+                color: "#333333",
+                fontSize: 12,
               }
             },
-            graphic:[		       	       
+            graphic:[
             {
-              type: 'text',              
-              top: '37%',           
-              left: 'center',          
+              type: 'text',
+              top: '37%',
+              left: 'center',
               style: {
-                text: this.patPar,      
-                fill: '#333333',       
-                fontSize: 20,          
+                text: this.patPar,
+                fill: '#333333',
+                fontSize: 20,
                 fontWeight: 'normal'
-              }  		      		        
+              }
             },{
-              type: 'text',              
-              top: '50%',           
-              left: 'center',          
+              type: 'text',
+              top: '50%',
+              left: 'center',
               style: {
-                text: '专利',      
-                fill: '#A6A8B6',       
-                fontSize: 12,          
+                text: '专利',
+                fill: '#A6A8B6',
+                fontSize: 12,
                 fontWeight: 'normal'
-              }  		      		        
-            },      
+              }
+            },
             ],
             //圆环的颜色
-            color:['#66b1ff','#dfe6ee'], 		  
+            color:['#66b1ff','#dfe6ee'],
             series: [
             {
               name:'工资占比图',//代表a的值，系列名称
@@ -646,12 +646,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:this.patCount, 
+                  value:this.patCount,
                   name:'专利',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.confCount+this.magCount, 
+                  value:this.confCount+this.magCount,
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -661,36 +661,36 @@
           });
           tPie.setOption({
             title: {//标题组件
-              textStyle: {    
-                color: "#333333",    
-                fontSize: 12,   
+              textStyle: {
+                color: "#333333",
+                fontSize: 12,
               }
             },
-            graphic:[		       	       
+            graphic:[
             {
-              type: 'text',              
-              top: '37%',           
-              left: 'center',          
+              type: 'text',
+              top: '37%',
+              left: 'center',
               style: {
-                text: this.confPar,      
-                fill: '#333333',       
-                fontSize: 20,          
+                text: this.confPar,
+                fill: '#333333',
+                fontSize: 20,
                 fontWeight: 'normal'
-              }  		      		        
+              }
             },{
-              type: 'text',              
-              top: '50%',           
-              left: 'center',          
+              type: 'text',
+              top: '50%',
+              left: 'center',
               style: {
-                text: '项目',      
-                fill: '#A6A8B6',       
-                fontSize: 12,          
+                text: '项目',
+                fill: '#A6A8B6',
+                fontSize: 12,
                 fontWeight: 'normal'
-              }  		      		        
-            },      
+              }
+            },
             ],
             //圆环的颜色
-            color:['#66b1ff','#dfe6ee'], 		  
+            color:['#66b1ff','#dfe6ee'],
             series: [
             {
               name:'工资占比图',//代表a的值，系列名称
@@ -707,12 +707,12 @@
               // 系列中的数据内容数组。
               data:[
                 {
-                  value:this.confCount, 
+                  value:this.confCount,
                   name:'项目',
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.magCount+this.patCount, 
+                  value:this.magCount+this.patCount,
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
