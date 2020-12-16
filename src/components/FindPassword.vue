@@ -19,12 +19,13 @@
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <span class="sendVeri" @click="sendVerificationCode">发送验证码</span>
+        <span class="sendVeri" @click="askVerificationCode">发送验证码</span>
 
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
+        <!--<span class="findPa-btn" @click="test">测试</span>-->
     </div>
-    <Loading v-if="isLoging" marginTop="-30%"></Loading>
+    
 </div>
 </template>
 
@@ -41,22 +42,49 @@
                 verificationCode:'',
                 veri_success: false,
                 password: '',
-                errorMessage:''//出错提示信息
+                errorMessage:'',//出错提示信息
+                timeLeft: true
             }
         },
         methods:{
+            /*test(){
+                setTimeout(() => {
+                    this.timeLeft=true
+                }, 60000);
+                console.log('before if:'+this.timeLeft);
+                if(this.timeLeft==true){
+                    this.timeLeft=false;
+                    this.errorMessage='234234';
+                    console.log('In if:'+this.timeLeft);
+                }
+                else {
+                    console.log('In else:'+this.timeLeft);
+                    this.errorMessage='请稍后再次发送'
+                }
+                console.log('After else:'+this.timeLeft);
+                //document.write('djsfidsa')
+            },*/
+
             //要求发送验证码
             askVerificationCode(){
-                axios.get(baseUrl+'/askVerificationCode',{
-                    mailAddress: this.mail
-                })
-                .then(function(response){
+                setTimeout(() => {
+                    this.timeLeft=true
+                }, 60000);
+                if(this.timeLeft=true){
+                    axios.get(baseUrl+'/askVerificationCode',{
+                        mailAddress: this.mail
+                    })
+                    .then(function(response){
                     
-                    if(response.data.result==false){
-                        errorMessage='发送失败'
-                    }
-                })
-   
+                        if(response.data.result==false){
+                            this.errorMessage='发送失败'
+                        }
+                    })
+                    this.timeLeft=false
+                }
+                else {
+                    this.errorMessage='请稍后再次发送'
+                }
             },
             //验证码验证
             verify_verificationCode(){
