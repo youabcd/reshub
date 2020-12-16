@@ -52,11 +52,12 @@
             <!--期刊 期号+文献操作（分享等）-->
             <div style="margin-top: -40px;">
               <van-row>
-                <van-col span="4">
+                <van-col span="6">
                   <span>{{tableData00.paperIssue}}&nbsp;&nbsp;&nbsp;</span>
-                  <span>{{tableData00.paperVolume}}</span>
+                  <span>{{tableData00.paperVolume}}&nbsp;&nbsp;</span>
+                  <span>{{tableData00.paperStart}}-{{tableData00.paperEnd}}</span>
                 </van-col>
-                <van-col span="10"></van-col>
+                <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <!--收藏-->
                   <span>
@@ -143,11 +144,6 @@
               <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">浏览次数：</span>
               <span>{{tableData00.viewSum}}</span>
             </div>
-            <!--页码-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
-              <span style="font-family: 黑体;font-weight: 700">页码：</span>
-              <span>{{tableData00.paperStart}}-{{tableData00.paperEnd}}</span>
-            </div>
             <!--出版-->
             <div v-if="tableData00.paperPublisher.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
               <span style="font-family: 黑体;font-weight: 700">出版社：</span>
@@ -167,6 +163,101 @@
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link>
           </div>
+          </div>
+          <div v-if="menuIndex==='1'">
+            <!--项目类型+发表年份+文献操作（分享等）-->
+            <div style="margin-top: -40px;">
+              <van-row>
+                <van-col span="6">
+                  <span>{{tableData01.category}}&nbsp;&nbsp;&nbsp;</span>
+                  <span>{{tableData01.year}}</span>
+                </van-col>
+                <van-col span="8"></van-col>
+                <van-col span="10" style="margin-top: -8px;">
+                  <!--收藏-->
+                  <span>
+                    <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData01.paperId)"></i>
+                    </el-tooltip>
+                </span>
+                  <span>
+                    <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="已收藏">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
+                    </el-tooltip>
+                </span>
+                  <!--微博-->
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
+                </span>
+                  <!--微信-->
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData01.link)" style="height: 20px;">
+                </span>
+                  <!--复制连接-->
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData01.link" @click="Copy"></i>
+                    </el-tooltip>
+                </span>
+                </van-col>
+              </van-row>
+            </div>
+            <!--文章标题-->
+            <div style="margin-top: 10px;font-size: 30px;font-weight: 500;">
+              {{tableData01.title}}
+            </div>
+            <!--作者 可点击-->
+            <div style="margin-top: 15px;">
+              <el-link type="primary" :underline="false" @click="gotoAuthor(tableData01.authorId)">
+                {{tableData01.author}}
+              </el-link>
+            </div>
+            <!--机构-->
+            <div style="margin-top: 10px;">
+              {{tableData01.support}}
+            </div>
+            <!--摘要-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+              <span style="font-family: 黑体;font-weight: 700">摘要：</span>
+              <span>{{tableData01.zhAbstract}}</span>
+            </div>
+            <!--english摘要-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+              <span style="font-family: 黑体;font-weight: 700">Abstract:</span>
+              <span>{{tableData01.enAbstract}}</span>
+            </div>
+            <!--结题摘要-->
+            <div v-if="tableData01.finalAbstract.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+              <span style="font-family: 黑体;font-weight: 700">结题摘要：</span>
+              <span>{{tableData01.finalAbstract}}</span>
+            </div>
+            <!--关键词-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">关键词：</span>
+              <span>{{tableData01.zhKeywords}}</span>
+            </div>
+            <!--关键词-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">Keywords:</span>
+              <span>{{tableData01.enKeywords}}</span>
+            </div>
+            <!--基金资助-->
+            <div v-if="tableData01.fund.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700">基金资助：</span>
+              <span>{{tableData01.fund}}</span>
+            </div>
+            <!--各类次数-->
+            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+              <span style="font-family: 黑体;font-weight: 700;">收藏次数：</span>
+              <span>{{tableData01.collectionSum}}</span>
+              <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">浏览次数：</span>
+              <span>{{tableData01.viewSum}}</span>
+            </div>
+
+            <!--文献查看   可点击-->
+            <div style="margin-top: 24px;text-align: left;margin-left: 8px;">
+              <el-button type="primary" plain @click="gotoPaper(tableData01.link)">查看原文</el-button>
+            </div>
           </div>
         </el-drawer>
 
