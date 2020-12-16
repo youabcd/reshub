@@ -10,19 +10,20 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="findPa-logo">Waiting for you!</div>
+        <div class="findPa-logo" @click="backToHome">Waiting for you!</div>
         <div class="findPa-text">@reshub team</div>
     </div>
     <div class="findPa-email">
         <input type="text" placeholder="Email" class="findPa-input" v-model="mail">
-        <input type="password" placeholder="new password" class='findPa-input'  v-model="password">
+        <input type="password" placeholder="new password" class='findPa-input' v-model="password">
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
+        <el-button size="small" class="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
+        <span class="findPa-btn" @click="backToLogin">返回登录</span>
         <!--<span class="findPa-btn" @click="test">测试</span>-->
     </div>
 
@@ -53,6 +54,13 @@
                 setTimeout(() => {
                     this.timeLeft=true
                 }, 60000);
+                var name='23集散地礼服43j3第三方454';
+                if(name.match(/[A-Za-z]/)!=null){
+                    console.log('yes!!not null!');
+                }
+                else {
+                    console.log('no!!it is null');
+                }
                 console.log('before if:'+this.timeLeft);
                 if(this.timeLeft==true){
                     this.timeLeft=false;
@@ -67,7 +75,7 @@
                 //document.write('djsfidsa')
             },*/
 
-            //要求发送验证码
+            /*要求发送验证码(不再使用这一个)
             askVerificationCode(){
                 setTimeout(() => {
                     this.timeLeft=true
@@ -87,7 +95,7 @@
                 else {
                     this.errorMessage='请稍后再次发送'
                 }
-            },
+            },*/
 
 
           //发送验证码
@@ -159,6 +167,16 @@
                    })
                 }
 
+            },
+            backToLogin(){
+                this.$router.push({
+                    path:'/login',
+                });
+            },
+            backToHome(){
+                this.$router.push({
+                    path:'/',
+                });
             }
         }
     }
@@ -168,7 +186,8 @@
 .errorMessage{
     text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
 }
-.findPa{position: fixed; overflow: hidden;left: 50%; margin-left: -250px; top:50%; margin-top: -350px; width: 500px; min-height: 555px; z-index: 10; right: 140px; background: #fff;-webkit-border-radius: 5px;
+.findPa{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px;
+z-index: 10; background: #fff;-webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
 -o-border-radius: 5px;
@@ -180,7 +199,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .findPa .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .findPa .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .findPa-logo,.findPa-text{z-index: 2}
 
@@ -229,8 +248,8 @@ position: relative;}
 .sendVeri{
     text-align: center;
     color:  #50E3CE;
-    font-size: 3px;
     cursor: pointer;
+    width: 30px;
 
 }
 .sendVeri:hover{

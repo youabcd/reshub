@@ -1,4 +1,11 @@
 //登录
+//12.16 23:35更新内容
+1.昵称格式验证
+2.找回密码页面跳转至登录
+3.点击上方文字回到首页
+4.滚动条（现在无论窗口大小都能够显示全部内容）
+5.样式
+目前只有element-ui的那个按钮宽度无法解决
 
 <template>
 
@@ -10,12 +17,12 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="reg-logo">Welcome back!<br />reshub</div>
-        <div class="reg-text">@reshub team</div>
+        <div class="log-logo" @click="backToHome">Welcome back!<br />reshub</div>
+        <div class="log-text">@reshub team</div>
     </div>
     <div class="log-email">
-        <input type="text" placeholder="Email" :class="'log-input' + (userID==''?' log-input-empty':'')" v-model="userID">
-        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <input type="text" placeholder="Email" class="log-input" v-model="userID">
+        <input type="password" placeholder="Password" class="log-input"  v-model="password">
         <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div> 
         
         
@@ -47,7 +54,7 @@ export default {
                 //Email地址
                 let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
                 //密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)
-                let password_pattern=/^[a-zA-Z]\w{5,17}$/;
+                let password_pattern=/^\w{6,18}$/;
                 if(mail_pattern.test(mail)==false){
                     console.log('mail_pattern error');
                     this.errorMessage='邮件格式错误';
@@ -67,7 +74,7 @@ export default {
                             this.errorMessage='密码长度必须小于18';
                         }
                         else {
-                            this.errorMessage='只能含有字母、数字、下划线，不能以下划线开头';
+                            this.errorMessage='密码只能含有字母、数字、下划线';
                         }
                         
                         return false;
@@ -120,6 +127,11 @@ export default {
       this.$router.push({
           path:'/FindPassword'
       })
+    },
+    backToHome(){
+      this.$router.push({
+        path:'/',
+      });
     }
   },
   components:{
@@ -129,7 +141,8 @@ export default {
 </script>
 
 <style scoped>
-.login{position: fixed; overflow: hidden;left: 50%; margin-left: -250px; top:50%; margin-top: -350px; width: 500px; min-height: 555px; z-index: 10; right: 140px; background: #fff;-webkit-border-radius: 5px;
+.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px;
+z-index: 10; background: #fff;-webkit-border-radius: 5px; 
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
 -o-border-radius: 5px;
@@ -143,9 +156,9 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.reg-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
-.reg-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
-.reg-logo,.reg-text{z-index: 2}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
+.log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
+.log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}
 .close{height:16px;width:16px;background-position:-13px 0;}
 .login-email{height:17px;width:29px;background-position:-117px 0;}
@@ -175,6 +188,7 @@ position: relative;}
 -o-border-radius: 5px;
 border-radius: 5px;}
 .log-input.warn{border: 1px solid #f88787}
+
 
  @-webkit-keyframes cloud1 {
     0%{left: 200px}
