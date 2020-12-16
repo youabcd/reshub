@@ -59,18 +59,6 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <!--收藏-->
-<!--                  <span>-->
-<!--                    <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏">-->
-<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData00.paperId)"></i>-->
-<!--                    </el-tooltip>-->
-<!--                </span>-->
-<!--                  <span>-->
-<!--                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="已收藏">-->
-<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
-<!--                    </el-tooltip>-->
-<!--                </span>-->
-                  <!--微博-->
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData00.link[0],tableData00.title)" style="height: 20px;">
                 </span>
@@ -104,39 +92,39 @@
             </el-link>
           </div>
           <!--摘要-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+          <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">摘要：</span>
             <span>{{tableData00.msg}}</span>
           </div>
           <!--关键词-->
-          <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+          <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">关键词：</span>
             <span>{{tableData00.keyword}}</span>
           </div>
             <!--DOI-->
-            <div v-if="tableData00.paperDoi.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div v-if="tableData00.paperDoi.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">DOI：</span>
               <span>{{tableData00.paperDoi}}</span>
             </div>
           <!--基金资助-->
-          <div v-if="tableData00.fund.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+          <div v-if="tableData00.fund.length>0" class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">基金资助：</span>
             <span>{{tableData00.fund}}</span>
           </div>
             <!--学科-->
-            <div v-if="tableData00.paperFos.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div v-if="tableData00.paperFos.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">学科：</span>
               <span><el-link v-for="(item,index) in tableData00.paperFos" :key="index" type="primary" :underline="false">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link></span>
             </div>
             <!--会议-->
-            <div v-if="tableData00.paperVenue.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div v-if="tableData00.paperVenue.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">会议：</span>
               <span>{{tableData00.paperVenue}}</span>
             </div>
             <!--各类次数-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">被引次数：</span>
               <span>{{tableData00.citation}}</span>
               <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">收藏次数：</span>
@@ -145,19 +133,19 @@
               <span>{{tableData00.viewSum}}</span>
             </div>
             <!--出版-->
-            <div v-if="tableData00.paperPublisher.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div v-if="tableData00.paperPublisher.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">出版社：</span>
               <span>{{tableData00.paperPublisher}}</span>
             </div>
           <!--参考文献 clickable-->
-          <div  style="margin-top: 15px;text-align: left;margin-left: 8px;">
+          <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
             <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index])">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link></span>
           </div>
-          <!--文献查看  分享推荐等图标  可点击-->
-          <div style="margin-top: 24px;text-align: left;margin-left: 8px;">
+          <!--文献查看  可点击-->
+          <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">查看原文：</span>
             <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index])">
               {{item}}&nbsp;&nbsp;&nbsp;
@@ -174,18 +162,6 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <!--收藏-->
-<!--                  <span>-->
-<!--                    <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏">-->
-<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData01.paperId)"></i>-->
-<!--                    </el-tooltip>-->
-<!--                </span>-->
-<!--                  <span>-->
-<!--                    <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="已收藏">-->
-<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
-<!--                    </el-tooltip>-->
-<!--                </span>-->
-                  <!--微博-->
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
                 </span>
@@ -217,37 +193,37 @@
               {{tableData01.support}}
             </div>
             <!--摘要-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">摘要：</span>
               <span>{{tableData01.zhAbstract}}</span>
             </div>
             <!--english摘要-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">Abstract:</span>
               <span>{{tableData01.enAbstract}}</span>
             </div>
             <!--结题摘要-->
-            <div v-if="tableData01.finalAbstract.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;margin-right: 5px;">
+            <div v-if="tableData01.finalAbstract.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">结题摘要：</span>
               <span>{{tableData01.finalAbstract}}</span>
             </div>
             <!--关键词-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">关键词：</span>
               <span>{{tableData01.zhKeywords}}</span>
             </div>
             <!--关键词-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">Keywords:</span>
               <span>{{tableData01.enKeywords}}</span>
             </div>
             <!--基金资助-->
-            <div v-if="tableData01.fund.length>0" style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div v-if="tableData01.fund.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">基金资助：</span>
               <span>{{tableData01.fund}}</span>
             </div>
             <!--各类次数-->
-            <div style="margin-top: 15px;text-align: left;margin-left: 8px;">
+            <div class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700;">收藏次数：</span>
               <span>{{tableData01.collectionSum}}</span>
               <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">浏览次数：</span>
@@ -255,7 +231,7 @@
             </div>
 
             <!--文献查看   可点击-->
-            <div style="margin-top: 24px;text-align: left;margin-left: 8px;">
+            <div class="Details" style="">
               <el-button type="primary" plain @click="gotoPaper(tableData01.link)">查看原文</el-button>
             </div>
           </div>
@@ -263,26 +239,6 @@
 
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 80%;position: relative;">
-<!--            <div>-->
-<!--              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-left: 20px">-->
-<!--                <h4>学者推荐</h4>-->
-<!--              </div>-->
-<!--              <div v-if="authorTable.length !== 0"  style="text-align: left;">-->
-<!--                <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">-->
-<!--                  <div>-->
-<!--                    <el-link :href="item.link" target="_blank">-->
-<!--                      {{item.name}}-->
-<!--                    </el-link>-->
-<!--                  </div>-->
-<!--                  <div style="margin-top: 10px">-->
-<!--                    <el-link :href="item.link" target="_blank">-->
-<!--                      {{item.institution}}-->
-<!--                    </el-link>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
 
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
@@ -419,11 +375,6 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-<!--                  <span>-->
-<!--                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">-->
-<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>-->
-<!--                    </el-tooltip>-->
-<!--                  </span>-->
                   <span>
                     <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -965,6 +916,13 @@
   }
   .box-card {
     width: 100%;
+  }
+
+  .Details{
+    margin-top: 15px;
+    text-align: left;
+    margin-left: 30px;
+    margin-right: 30px;
   }
 
   .back-top-circle{

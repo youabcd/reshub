@@ -67,11 +67,10 @@
                             placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="3">
+            <van-row></van-row>
             <van-row>
-              <el-radio v-model="radio" @click.native.prevent="clickItem(1)" :label="1"> 仅限中文</el-radio>
-            </van-row>
-            <van-row>
-              <el-radio v-model="radio" @click.native.prevent="clickItem(2)" :label="2"> 仅限英文</el-radio>
+              <el-checkbox style="margin-top: 15px;" v-model="radio">中英文扩展</el-checkbox>
+              <!--<el-radio style="margin-top: 15px;" v-model="radio" @click.native.prevent="clickItem(1)" :label="1"> 中英文扩展</el-radio>-->
             </van-row>
           </van-col>
           <van-col span="3"></van-col>
@@ -110,7 +109,7 @@
         /*boolType {1:AND ; 2:OR ; 3:NOT}
         type {1：主题；2：标题；3：作者；4：关键词；5：摘要;6:学科 }
         */
-        radio:'0',
+        radio:false,
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
         ],
@@ -186,13 +185,13 @@
           localStorage.setItem("keyWords",k);
           localStorage.setItem("Radio",this.radio);
           if(this.dataStart.length>0){
-            localStorage.setItem("dataStart",this.dataStart);
+            localStorage.setItem("dataStart",this.dataStart.substring(0,4));
           }
           else{
-            localStorage.setItem("dataStart",'0000-01-01');
+            localStorage.setItem("dataStart",'0000');
           }
           if(this.dataEnd.length>0){
-            localStorage.setItem("dataEnd",this.dataEnd);
+            localStorage.setItem("dataEnd",this.dataEnd.substring(0,4));
           }
           else{
             localStorage.setItem("dataEnd",this.getTime());
@@ -227,7 +226,7 @@
         if (second >= 0 && second <= 9) {
           second = "0" + second;
         }
-        var currentdate =  year + seperator1 + month + seperator1 + strDate;
+        var currentdate =  year;
         return currentdate;
       },
       formatStartTime(val){
