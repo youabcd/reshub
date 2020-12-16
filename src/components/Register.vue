@@ -14,12 +14,12 @@
         <div class="log-text">@reshub team</div>
     </div>
     <div class="reg-email">
-        <input type="text" placeholder="昵称" :class="'reg-input' + (nickname==''?' reg-input-empty':'')" v-model="nickname">
-        <input type="text" placeholder="Email" :class="'reg-input' + (account==''?' reg-input-empty':'')" v-model="account">
-        <input type="text" placeholder="一句话介绍" :class="'reg-input' + (descrip==''?' reg-input-empty':'')" v-model="descrip">
-        <input type="password" placeholder="Password" :class="'reg-input' + (password==''?' reg-input-empty':'')"  v-model="password">
-      <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-      <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
+        <input type="text" placeholder="昵称" class="reg-input" v-model="nickname">
+        <input type="text" placeholder="Email" class="reg-input" v-model="account">
+        <input type="text" placeholder="一句话介绍" class="reg-input" v-model="descrip">
+        <input type="password" placeholder="Password" class="reg-input"  v-model="password">
+        <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
+      <el-button size="small" class="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
@@ -235,7 +235,7 @@ position: relative;}
 
 .reg-email{text-align: center; margin-top: 20px;}
 .reg-email .log-btn{background-color: #50E3CE;text-align: center;}
-.reg-input-empty{border: 1px solid #f37474 !important;}
+
 .isloading{background: #d6d6d6}
 .log-btn .icons{margin-left: 30px; vertical-align: middle;}
 .log-btn .text{left: 95px; line-height: 50px; text-align: left; position: absolute;}
@@ -245,6 +245,16 @@ position: relative;}
 -o-border-radius: 5px;
 border-radius: 5px;}
 .reg-input.warn{border: 1px solid #f88787}
+
+/* new begin */
+.findPa-input2{width: 305px;overflow: hidden; padding: 0 15px;font-size: 13px; border: 1px solid #EBEBEB; margin:0 auto 15px; height: 48px; line-height: 48px; -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;}
+.findPa-input2.warn{border: 1px solid #f88787}
+/* new end */
+
 
  @-webkit-keyframes cloud1 {
     0%{left: 200px}

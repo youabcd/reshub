@@ -15,16 +15,16 @@
     </div>
     <div class="findPa-email">
         <input type="text" placeholder="Email" class="findPa-input" v-model="mail">
-        <input type="password" placeholder="new password" class='findPa-input'  v-model="password">
+        <input type="password" placeholder="new password" class='findPa-input' v-model="password">
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
+        <el-button size="small" class="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
-        <span class="findPa-btn" @click="test">测试</span>
+        <!--<span class="findPa-btn" @click="test">测试</span>-->
     </div>
 
 </div>
@@ -50,7 +50,7 @@
             }
         },
         methods:{
-            test(){
+            /*test(){
                 setTimeout(() => {
                     this.timeLeft=true
                 }, 60000);
@@ -73,7 +73,7 @@
                 }
                 console.log('After else:'+this.timeLeft);
                 //document.write('djsfidsa')
-            },
+            },*/
 
             //要求发送验证码
             askVerificationCode(){
@@ -248,8 +248,8 @@ position: relative;}
 .sendVeri{
     text-align: center;
     color:  #50E3CE;
-    font-size: 3px;
     cursor: pointer;
+    width: 30px;
 
 }
 .sendVeri:hover{

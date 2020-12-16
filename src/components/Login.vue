@@ -1,4 +1,11 @@
 //登录
+//12.16 23:35更新内容
+1.昵称格式验证
+2.找回密码页面跳转至登录
+3.点击上方文字回到首页
+4.滚动条（现在无论窗口大小都能够显示全部内容）
+5.样式
+目前只有element-ui的那个按钮宽度无法解决
 
 <template>
 
@@ -14,8 +21,8 @@
         <div class="log-text">@reshub team</div>
     </div>
     <div class="log-email">
-        <input type="text" placeholder="Email" :class="'log-input' + (userID==''?' log-input-empty':'')" v-model="userID">
-        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <input type="text" placeholder="Email" class="log-input" v-model="userID">
+        <input type="password" placeholder="Password" class="log-input"  v-model="password">
         <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div> 
         
         
@@ -181,6 +188,7 @@ position: relative;}
 -o-border-radius: 5px;
 border-radius: 5px;}
 .log-input.warn{border: 1px solid #f88787}
+
 
  @-webkit-keyframes cloud1 {
     0%{left: 200px}
