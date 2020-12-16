@@ -11,17 +11,17 @@
       <el-main>
         <!--输入信息框-->
         <div id="insert_information">
+          <!--用户名称-->
+          <div class="identity_number">
+            <label><span style="color: red">*</span>用户名称：</label>     <!--需要加id吗？ 另外v-model还是input吗-->
+            <el-input style="width: 300px" v-model="PortalForm.username" placeholder="请输入用户名称"></el-input>
+            <br><br>
+          </div>
+
           <!--真实姓名-->
           <div class="real_name">
             <label><span style="color: red">*</span>真实姓名：</label>     <!--需要加id吗？-->
             <el-input style="width: 300px" v-model="PortalForm.realname" placeholder="请输入您的真实姓名"></el-input>
-            <br><br>
-          </div>
-
-          <!--身份证号-->
-          <div class="identity_number">
-            <label><span style="color: red">*</span>身份证号：</label>     <!--需要加id吗？ 另外v-model还是input吗-->
-            <el-input style="width: 300px" v-model="PortalForm.idnumber" placeholder="请输入身份证号"></el-input>
             <br><br>
           </div>
 
@@ -85,8 +85,8 @@
 
           return{
             PortalForm:{
+              username:'',
               realname:'',
-              idnumber:'',
               institude:'',
               cemail:''
             },
@@ -95,17 +95,17 @@
               auth_code:"",
 
             rule:{
+              username:[
+                {
+                  requied:true,
+                  message:'请输入用户名称！',
+                  trigger:'change'         //what is this
+                }
+              ],
               realname:[
                 {
                   requied:true,
                   message:'请输入真实姓名！',
-                  trigger:'change'         //what is this
-                }
-              ],
-              idnumber:[
-                {
-                  requied:true,
-                  message:'请输入身份证号！',
                   trigger:'change'         //what is this
                 }
               ],
@@ -154,12 +154,12 @@
             },1000);
         },
 
-        //上传信息
+        //上传信息，用户认领门户
         submit(){
           let _this=this;
           axios.post(baseUrl+'/CatchPortal',{
-            name: this.PortalForm.realname,
-            id: this.PortalForm.idnumber,
+            username: this.PortalForm.username,
+            realname: this.PortalForm.realname,
             institude: this.PortalForm.institude,
             email: this.PortalForm.cemail
           }).then(res =>{
@@ -196,7 +196,7 @@
          */
         /*thisAjax(){
           const realnameData = this.PortalForm.realname;
-          const idnumberData = this.PortalForm.idnumber;
+          const usernameData = this.PortalForm.usernamenumber;
           const institudeData = this.PortalForm.institude;
           const cemailData = this.PortalForm.cemail;
 
