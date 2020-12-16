@@ -60,16 +60,16 @@
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <!--收藏-->
-                  <span>
-                    <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData00.paperId)"></i>
-                    </el-tooltip>
-                </span>
-                  <span>
-                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="已收藏">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                </span>
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏">-->
+<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData00.paperId)"></i>-->
+<!--                    </el-tooltip>-->
+<!--                </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="已收藏">-->
+<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
+<!--                    </el-tooltip>-->
+<!--                </span>-->
                   <!--微博-->
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData00.link[0],tableData00.title)" style="height: 20px;">
@@ -175,16 +175,16 @@
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <!--收藏-->
-                  <span>
-                    <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData01.paperId)"></i>
-                    </el-tooltip>
-                </span>
-                  <span>
-                    <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="已收藏">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                </span>
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏">-->
+<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(tableData01.paperId)"></i>-->
+<!--                    </el-tooltip>-->
+<!--                </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="已收藏">-->
+<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>-->
+<!--                    </el-tooltip>-->
+<!--                </span>-->
                   <!--微博-->
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
@@ -348,7 +348,7 @@
                     </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>{{item.type}}</span>
+                    <span>论文</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                     <span> {{item.collectionSum}}</span>
@@ -390,19 +390,19 @@
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
-                  <p style="height: 20px" >{{item.msg}}</p>
+                  <p style="height: 20px" >{{item.zhAbstract}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
-                        {{author_item}}
+                    <span style="margin-left: 15px;">
+                      <el-link :underline="false" @click="gotoAuthor(tableData1[index].authorId)">
+                      {{tableData1[index].author}}
                       </el-link>
                     </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>{{item.type}}</span>
+                    <span>项目</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                     <span> {{item.collectionSum}}</span>
@@ -419,11 +419,11 @@
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                    </el-tooltip>
-                  </span>
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">-->
+<!--                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
                   <span>
                     <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
@@ -456,7 +456,7 @@
                     </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>{{item.type}}</span>
+                    <span>专利</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                     <span> {{item.collectionSum}}</span>
@@ -476,7 +476,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData1.length"
+                :total="tableData0.length"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -490,7 +490,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData2.length"
+                :total="tableData1.length"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -504,7 +504,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData3.length"
+                :total="tableData2.length"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -559,6 +559,7 @@
     },
     data() {
       return {
+        QRlink:'',
         drawer: false,
         direction: 'rtl',
         currentPage: 1,
@@ -694,7 +695,7 @@
           {
             paperId:'1',
             title:'Google1',
-            zhAbstract:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            zhAbstract:'GGG文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             // 中文摘要
             enAbstract: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // 英文摘要
             finalAbstract: '结题摘要',
@@ -728,7 +729,7 @@
             institution:[],
             institutionId:[],
             type:"会议",
-            collectStatus: false,
+            collectStatus: true,
             collectionSum:666,
             viewSum:777,
             link:'https://www.youtube.com/',
