@@ -42,7 +42,46 @@ export default {
   	}
   },
   methods:{
+    //邮件和密码的格式验证
+    patternMatching(mail,pa){
+                //Email地址
+                let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                //密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)
+                let password_pattern=/^[a-zA-Z]\w{5,17}$/;
+                if(mail_pattern.test(mail)==false){
+                    console.log('mail_pattern error');
+                    this.errorMessage='邮件格式错误';
+                    return false;
+                }
+                else if(password_pattern.test(pa)==false){
+                        console.log('password_pattern error');
+                        //分情况提示错误信息
+                        //console.log('password is '+pa);
+                        //console.log('password-length is:'+pa.length);
+
+                        if(pa.length<6||pa.length==0){
+                            
+                            this.errorMessage='密码长度必须大于6';
+                        }
+                        else if(pa.length>18){
+                            this.errorMessage='密码长度必须小于18';
+                        }
+                        else {
+                            this.errorMessage='只能含有字母、数字、下划线，不能以下划线开头';
+                        }
+                        
+                        return false;
+                }
+                else {
+                    return true;
+                }
+                
+    },
     login(){
+      if(this.patternMatching(this.userID,this.password)==false){
+        return;
+      }
+      
       let _this=this;
       axios.post(baseUrl+'/identityCheck',{
         userID:this.userID,
