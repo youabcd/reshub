@@ -19,13 +19,13 @@
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <span class="sendVeri" @click="askVerificationCode">发送验证码</span>
+        <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
         <!--<span class="findPa-btn" @click="test">测试</span>-->
     </div>
-    
+
 </div>
 </template>
 
@@ -43,7 +43,9 @@
                 veri_success: false,
                 password: '',
                 errorMessage:'',//出错提示信息
-                timeLeft: true
+                timeLeft: true,
+              disabled:false,
+              timeContent: '发送验证码',
             }
         },
         methods:{
@@ -75,7 +77,7 @@
                         mailAddress: this.mail
                     })
                     .then(function(response){
-                    
+
                         if(response.data.result==false){
                             this.errorMessage='发送失败'
                         }
@@ -86,6 +88,40 @@
                     this.errorMessage='请稍后再次发送'
                 }
             },
+
+
+          //发送验证码
+          submitIdCode() {
+            var _this = this;
+            if(this.timeContent=='发送验证码'){
+              let time=59;
+              let timer=setInterval(()=>{
+                if(time>0){
+                  this.timeContent=time+'s';
+                  this.disabled=true;
+                  time--;
+                }
+                else{
+                  window.clearInterval(timer);
+                  this.disabled=false;
+                  this.timeContent='发送验证码';
+                }
+              },1000);
+            }
+            let data = new FormData();
+            data.append('userId',this.useremail);
+            axios.post(baseUrl+'/sendEmail',data)
+              .then(function (response){
+                Toast(response.data.message);
+                console.log(response);
+                _this.subidcode = response.data.result;
+              })
+              .catch(function (error) { // 请求失败处理
+                console.log(error);
+              });
+          },
+
+
             //验证码验证
             verify_verificationCode(){
                 axios.get(baseUrl+'/verificationCode',{
@@ -122,7 +158,7 @@
                        }
                    })
                 }
-                
+
             }
         }
     }
@@ -149,7 +185,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .findPa-logo,.findPa-text{z-index: 2}
 
 
-/*1*/ 
+/*1*/
 .findPa-btns{padding: 15px 0; margin: 0 auto;}
 .findPa-btn{width:402px; display: block; text-align: left; line-height: 50px;margin:0 auto 15px; height:50px; color:#fff;
 font-size:13px;-webkit-border-radius: 5px; background-color: #3B5999;
@@ -195,7 +231,7 @@ position: relative;}
     color:  #50E3CE;
     font-size: 3px;
     cursor: pointer;
-    
+
 }
 .sendVeri:hover{
     color: #b8f0e4;

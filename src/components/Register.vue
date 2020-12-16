@@ -18,6 +18,8 @@
         <input type="text" placeholder="Email" :class="'reg-input' + (account==''?' reg-input-empty':'')" v-model="account">
         <input type="text" placeholder="一句话介绍" :class="'reg-input' + (descrip==''?' reg-input-empty':'')" v-model="descrip">
         <input type="password" placeholder="Password" :class="'reg-input' + (password==''?' reg-input-empty':'')"  v-model="password">
+      <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
+      <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
         <a href="javascript:;" class="log-btn" @click="Abandon">随便看看</a>
@@ -39,7 +41,9 @@ import baseUrl from './baseUrl'
                 account: '',
                 descrip: '',
                 password: '',
-                errorMessage:''//出错提示信息
+                errorMessage:'',//出错提示信息
+              disabled:false,
+              timeContent: '发送验证码',
             }
         },
         methods:{
@@ -51,7 +55,7 @@ import baseUrl from './baseUrl'
                     password: this.password,
                     mailAddress: this.account,
                     userDescription: this.descrip
-                    
+
                 })
                 .then(function(response){
                     console.log(response);
@@ -67,6 +71,36 @@ import baseUrl from './baseUrl'
                     }
                 })
             },
+          //发送验证码
+          submitIdCode() {
+            var _this = this;
+            if(this.timeContent=='发送验证码'){
+              let time=59;
+              let timer=setInterval(()=>{
+                if(time>0){
+                  this.timeContent=time+'s';
+                  this.disabled=true;
+                  time--;
+                }
+                else{
+                  window.clearInterval(timer);
+                  this.disabled=false;
+                  this.timeContent='发送验证码';
+                }
+              },1000);
+            }
+            let data = new FormData();
+            data.append('userId',this.useremail);
+            axios.post(baseUrl+'/sendEmail',data)
+              .then(function (response){
+                Toast(response.data.message);
+                console.log(response);
+                _this.subidcode = response.data.result;
+              })
+              .catch(function (error) { // 请求失败处理
+                console.log(error);
+              });
+          },
             Abandon(){
                 this.$router.push({
                     path:'/'
@@ -74,7 +108,7 @@ import baseUrl from './baseUrl'
             }
         }
 
-       
+
     }
 </script>
 
