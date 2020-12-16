@@ -10,7 +10,7 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="log-logo">Welcome to reshub!</div>
+        <div class="log-logo" @click="backToHome">Welcome to reshub!</div>
         <div class="log-text">@reshub team</div>
     </div>
     <div class="reg-email">
@@ -22,7 +22,7 @@
       <el-button size="small" type="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
-        <a href="javascript:;" class="log-btn" @click="Abandon">随便看看</a>
+        <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
@@ -47,8 +47,87 @@ import baseUrl from './baseUrl'
             }
         },
         methods:{
+            //昵称格式验证
+            nicknameMatching(name){
+                //昵称格式（英文昵称由1-20个字母、数字或下划线组成，中文昵称由1-7个汉字及其后的0-3个数字组成）
+                let nickname_pattern=/^[a-zA-Z0-9_]{1,20}|[\u4e00-\u9fa5]{1,7}[0-9]{0,3}$/;
+                let is_eng_name=false;
+                //判断是否输入了昵称
+                if(name.length==0){
+                    this.errorMessage='请输入昵称';
+                    return false;
+                }
+
+                //判断是否含有英文字母，若含有认为是英文昵称
+                if(name.match(/[A-Za-z]/)!=null){
+                    is_eng_name=true;
+                }
+
+                //如果昵称格式错误，按照情况输出错误信息
+                if(nickname_pattern.test(name)==false){
+                    console.log('nickname_pattern error');
+                    if(is_eng_name==true){
+                        if(name.length>20){
+                            this.errorMessage='英文名长度应当小于20个字符';
+                        }
+                        else{
+                            this.errorMessage='英文名仅可由字母、数字和下划线组成';
+                        }
+                    }
+                    else {
+                        this.errorMessage='中文名由1-7个汉字后跟0-3个数字组成';
+                    }
+                    return false;
+                    
+                }
+            },
+
+
+            //邮件和密码的格式验证
+            patternMatching(mail,pa){
+                //Email地址
+                let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                //密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)
+                let password_pattern=/^\w{6,18}$/;
+                if(mail_pattern.test(mail)==false){
+                    console.log('mail_pattern error');
+                    this.errorMessage='邮件格式错误';
+                    return false;
+                }
+                else if(password_pattern.test(pa)==false){
+                        console.log('password_pattern error');
+                        //分情况提示错误信息
+                        //console.log('password is '+pa);
+                        //console.log('password-length is:'+pa.length);
+
+                        if(pa.length<6||pa.length==0){
+                            
+                            this.errorMessage='密码长度必须大于6';
+                        }
+                        else if(pa.length>18){
+                            this.errorMessage='密码长度必须小于18';
+                        }
+                        else {
+                            this.errorMessage='只能含有字母、数字、下划线';
+                        }
+                        
+                        return false;
+                }
+                else {
+                    return true;
+                }
+                
+            },
             //登录信息发送
             Reg(){
+                //验证邮件地址格式和密码格式
+                //if(this.patternMatching(this.account,this.password)==false){
+                //    return;
+                //}
+                //验证昵称格式
+                if(this.nicknameMatching(this.nickname)==false){
+                    return;
+                }
                 let _this=this;
                 axios.post(baseUrl+'/registerInformation',{
                     userName: this.nickname,
@@ -71,40 +150,45 @@ import baseUrl from './baseUrl'
                     }
                 })
             },
-          //发送验证码
-          submitIdCode() {
-            var _this = this;
-            if(this.timeContent=='发送验证码'){
-              let time=59;
-              let timer=setInterval(()=>{
-                if(time>0){
-                  this.timeContent=time+'s';
-                  this.disabled=true;
-                  time--;
+            //发送验证码
+            submitIdCode() {
+                var _this = this;
+                if(this.timeContent=='发送验证码'){
+                let time=59;
+                let timer=setInterval(()=>{
+                    if(time>0){
+                    this.timeContent=time+'s';
+                    this.disabled=true;
+                    time--;
+                    }
+                    else{
+                    window.clearInterval(timer);
+                    this.disabled=false;
+                    this.timeContent='发送验证码';
+                    }
+                },1000);
                 }
-                else{
-                  window.clearInterval(timer);
-                  this.disabled=false;
-                  this.timeContent='发送验证码';
-                }
-              },1000);
-            }
-            let data = new FormData();
-            data.append('userId',this.useremail);
-            axios.post(baseUrl+'/sendEmail',data)
-              .then(function (response){
-                Toast(response.data.message);
-                console.log(response);
-                _this.subidcode = response.data.result;
-              })
-              .catch(function (error) { // 请求失败处理
-                console.log(error);
-              });
-          },
-            Abandon(){
-                this.$router.push({
-                    path:'/'
+                let data = new FormData();
+                data.append('userId',this.useremail);
+                axios.post(baseUrl+'/sendEmail',data)
+                .then(function (response){
+                    Toast(response.data.message);
+                    console.log(response);
+                    _this.subidcode = response.data.result;
                 })
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            },
+            backToLogin(){
+                this.$router.push({
+                    path:'/login',
+                });
+            },
+            backToHome(){
+                this.$router.push({
+                    path:'/',
+                });
             }
         }
 
@@ -116,7 +200,8 @@ import baseUrl from './baseUrl'
 .errorMessage{
     text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
 }
-.login{position: fixed; overflow: hidden;left: 50%; margin-left: -250px; top:50%; margin-top: -350px; width: 500px; min-height: 555px; z-index: 10; right: 140px; background: #fff;-webkit-border-radius: 5px;
+.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px; 
+z-index: 10; background: #fff;-webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
 -o-border-radius: 5px;
@@ -130,7 +215,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px;}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}
