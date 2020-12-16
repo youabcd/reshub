@@ -4,7 +4,7 @@
     <div style="width: 70%;margin-top: 10px;margin-left: 15%;">
       <div style="position: relative;height: 50px;margin-top: 20px">
         <div style="float: left;text-align: left;position: absolute;left: 10px;font-size: 18px;margin-top: 15px">
-          <i class="el-icon-search"> 成果浏览记录</i>
+          <i class="el-icon-s-management"> 浏览记录</i>
         </div>
         <div style="float: right">
           <el-button type="danger" :disabled="multipleSelection.length === 0" @click="open">删除选中记录</el-button>
@@ -17,7 +17,8 @@
         tooltip-effect="dark"
         stripe
         style="wpidth: 100%;margin-top: 10px"
-        @selection-change="handleSelectionChange">             <!--这是一个表格  element ui-->
+        @selection-change="handleSelectionChange" @row-click="openDialog">             <!--这是一个表格  element ui-->
+
         <el-table-column
           type="selection"
           width="55">
@@ -30,8 +31,13 @@
         </el-table-column>
         <el-table-column
           prop="paper_name"
-          label="成果浏览记录"
+          label="浏览记录"
+
           show-overflow-tooltip>
+          <template slot-scope="scope">
+            <!--555我打不开链接 SOS-->
+            <el-link herf="https://element.eleme.io">{{scope.row.paper_name}}</el-link>
+          </template>
         </el-table-column>
         <el-table-column
           width="50"
@@ -65,25 +71,30 @@
         return {
           //visible: false,
           RecordForm:{
-            paperID:'',
-            paperName:'',
-            browseTime:''
+            pid:'',
+            paper_name:'',
+            paperLink:'',
+            browse_time:''
           },
           tableData: [{
             pid: '001',
             browse_time: '2020/01/01 15:00',
+            paperLink:'https://www.bilibili.com',
             paper_name: '我是paper的名字'
           }, {
             pid: '002',
             browse_time: '2020/01/01 15:00',
+            paperLink:'https://www.bilibili.com',
             paper_name: '关于为何文档浏览记录的代码和搜索记录这么像的研究成果'
           }, {
             pid: '003',
             browse_time: '2020/11/19 16:00',
+            paperLink:'https://www.bilibili.com',
             paper_name: '感谢写searchrecord的大佬'
           }, {
             pid: '004',
             browse_time: '2020/11/19 20:00',
+            paperLink:'https://www.bilibili.com',
             paper_name: '注意：本页面对应的接口文档已修改'
           },],
           multipleSelection: []
@@ -99,10 +110,12 @@
               this.temp.pid=response.data.results[i].pid;
               this.temp.browse_time=response.data.results[i].browse_time;
               this.temp.paper_name=response.data.results[i].paper_name;
+              this.temp.paperLink = response.data.results[i].paperLink;//
               this.tableData.push({
                 pid: this.temp.pid,
                 browse_time: this.temp.browse_time,
                 paper_name: this.temp.paper_name,
+                paperLinke: this.temp.paperLink,
               })
             }
           })
@@ -197,6 +210,13 @@
               message: '删除成功'
             });
           })
+        },
+
+        gotoPaper(url){
+          window.open(url)
+        },
+        openDialog(){
+
         }
       }
 

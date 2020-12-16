@@ -11,13 +11,6 @@
       <el-main>
         <!--输入信息框-->
         <div id="insert_information">
-          <!--用户名称-->
-          <div class="identity_number">
-            <label><span style="color: red">*</span>用户名称：</label>     <!--需要加id吗？ 另外v-model还是input吗-->
-            <el-input style="width: 300px" v-model="PortalForm.username" placeholder="请输入用户名称"></el-input>
-            <br><br>
-          </div>
-
           <!--真实姓名-->
           <div class="real_name">
             <label><span style="color: red">*</span>真实姓名：</label>     <!--需要加id吗？-->
@@ -52,7 +45,20 @@
           <br>
           <div class="form-group">
             <label class="checkbox">
-              <input id="read" type="checkbox" name="remember" value="1" /> 我已看过并同意《门户认领用户协议》
+              <input id="read" type="checkbox" onclick="confirmBox()" value="1" checked="checked"/> 我已看过并同意
+              <el-button type="text" @click="dialogVisible = true">《门户认领用户协议》</el-button>
+
+              <el-dialog
+                title="门户认领用户协议"
+                :visible.sync="dialogVisible"
+                width="30%"
+                :before-close="handleClose">
+                <span>请仔细阅读以下内容......</span>
+                <span slot="footer" class="dialog-footer">
+              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+              </el-dialog>
+
               <!--<a class="xy" href="/Agreement/ServiceAgreement" target="_blank">《门户认领用户协议》</a>-->
             </label>
           </div>
@@ -82,10 +88,27 @@
           //let comfirmpassword =
 
           //以下内容参考了https://www.php.cn/js-tutorial-401539.html
+          //https://blog.csdn.net/qq_41800649/article/details/106507224
+
+        //自定义的邮箱和手机验证规则
+        var checkEmail = (rule, value, callback) => {
+          //var email = $(".email").val();
+          const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          //if(!email.match(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/) || email.indexOf('edu')==-1){
+          //  callback(new Error("请输入正确的教育邮箱！"));
+          //}
+          if (regEmail.test(value) && value.indexOf('edu')!=-1) {
+            return callback();
+          }
+          callback(new Error("请输入正确的教育邮箱！"));
+        };
+
 
           return{
+
+            dialogVisible: false,
+
             PortalForm:{
-              username:'',
               realname:'',
               institude:'',
               cemail:''
@@ -95,33 +118,28 @@
               auth_code:"",
 
             rule:{
-              username:[
-                {
-                  requied:true,
-                  message:'请输入用户名称！',
-                  trigger:'change'         //what is this
-                }
-              ],
               realname:[
                 {
                   requied:true,
                   message:'请输入真实姓名！',
-                  trigger:'change'         //what is this
+                  trigger:'blur'
                 }
               ],
               institude:[
                 {
                   requied:true,
                   message:'请输入所在机构！',
-                  trigger:'change'         //what is this
+                  trigger:'blur'
                 }
               ],
               cemail:[
                 {
+                  validator:checkEmail,
                   requied:true,
                   message:'请输入自己的邮箱！',
-                  trigger:'change'         //what is this
-                }
+                  trigger:'blur'
+                },
+
               ]
             },
 
@@ -130,6 +148,13 @@
       },
 
       methods:{
+        confirmBox(){
+          var confirmbox = this.getElementById("read");
+          if(!confirmbox.checked){
+            alert("请阅读用户协议并同意");
+          }
+        },
+
         //发送验证码        need change
         getAuthCode(){
           const verification = this.PortalForm.cemail;
@@ -158,7 +183,6 @@
         submit(){
           let _this=this;
           axios.post(baseUrl+'/CatchPortal',{
-            username: this.PortalForm.username,
             realname: this.PortalForm.realname,
             institude: this.PortalForm.institude,
             email: this.PortalForm.cemail
@@ -185,7 +209,17 @@
             });
             console.log(err)
           })
+        },
+
+        //弹窗
+        handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
         }
+
 
         //发送请求认证
         /*
