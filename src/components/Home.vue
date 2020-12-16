@@ -50,9 +50,9 @@
     data() {
       return {
         /*back:[
-          {name:'陈振涛',isCatch:false},
-          {name:'李柯凡',isCatch:false},
-          {name:'刘禹辰',isCatch:false},
+          {name:'陈',isCatch:false},
+          {name:'李',isCatch:false},
+          {name:'刘',isCatch:false},
         ],
         whichPic:parseInt(Math.random() * 3),*/
         hotWords: [
