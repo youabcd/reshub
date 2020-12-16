@@ -262,26 +262,26 @@
         </el-drawer>
 
         <div style="position: relative">
-          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 77%;position: relative;">
-            <div>
-              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-left: 20px">
-                <h4>学者推荐</h4>
-              </div>
-              <div v-if="authorTable.length !== 0"  style="text-align: left;">
-                <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
-                  <div>
-                    <el-link :href="item.link" target="_blank">
-                      {{item.name}}
-                    </el-link>
-                  </div>
-                  <div style="margin-top: 10px">
-                    <el-link :href="item.link" target="_blank">
-                      {{item.institution}}
-                    </el-link>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 80%;position: relative;">
+<!--            <div>-->
+<!--              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-left: 20px">-->
+<!--                <h4>学者推荐</h4>-->
+<!--              </div>-->
+<!--              <div v-if="authorTable.length !== 0"  style="text-align: left;">-->
+<!--                <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">-->
+<!--                  <div>-->
+<!--                    <el-link :href="item.link" target="_blank">-->
+<!--                      {{item.name}}-->
+<!--                    </el-link>-->
+<!--                  </div>-->
+<!--                  <div style="margin-top: 10px">-->
+<!--                    <el-link :href="item.link" target="_blank">-->
+<!--                      {{item.institution}}-->
+<!--                    </el-link>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
 
             <div>
@@ -512,27 +512,36 @@
 
           </div>
 
-          <div style="position: absolute;left: 78%;top: 0;width: 21%;display: inline;">
-            <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">🔥推荐</p>
-            <el-card class="box-card" shadow="hover" v-for="(item,index) in hotData" :key="index" style="height: 160px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4">
-              <div style="text-align: left;margin-top: -20px;cursor: pointer">
-                <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
-              </div>
-
-              <div style="text-align: left" @click="open(hotData[index])">
-                <p style="height: 20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor: pointer;">{{item.msg}}</p>
-              </div>
-
+          <div style="position: absolute;left: 81%;top: 0;width: 18%;display: inline;">
+            <div>
               <div>
-                <div style="margin-top: 30px;text-align: left">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;position: relative;right: 15px">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
-                        {{author_item}}
+                <h4>学者推荐</h4>
+              </div>
+              <div v-if="authorTable.length !== 0"  style="text-align: left;">
+                <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
+                  <div>
+                    <i class="el-icon-user"></i>
+                    <el-link :href="item.link" target="_blank" style="font-size: 18px">
+                      {{item.name}}
+                    </el-link>
+                  </div>
+                  <div style="margin-top: 10px;position: relative">
+                    <div style="position: absolute;float: left">
+                      <i class="el-icon-house"></i>
+                    </div>
+                    <div style="position: absolute;float: right;left: 20px">
+                      <span>
+                      <el-link :href="item.link" target="_blank">
+                        {{item.institution}}
                       </el-link>
                     </span>
+                    </div>
+
+
+                  </div>
                 </div>
               </div>
-            </el-card>
+            </div>
           </div>
 
           <div>
