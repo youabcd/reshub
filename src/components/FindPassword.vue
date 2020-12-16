@@ -75,7 +75,7 @@
                 //document.write('djsfidsa')
             },*/
 
-            //要求发送验证码
+            /*要求发送验证码(不再使用这一个)
             askVerificationCode(){
                 setTimeout(() => {
                     this.timeLeft=true
@@ -95,7 +95,7 @@
                 else {
                     this.errorMessage='请稍后再次发送'
                 }
-            },
+            },*/
 
 
           //发送验证码
