@@ -185,6 +185,7 @@
           // totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/trump.jpg'),
+          isHave: true,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
@@ -778,7 +779,16 @@
             });
             clipboard.destroy()
           })
-        }
+        },
+        
+        gotoWeibo(url,title) {
+          window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
+        },
+        
+        openQRcode(url) {
+          this.QRlink=url;
+          this.dialogVisible=true;
+        },
       },
       components:{
         TopBar
