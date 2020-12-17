@@ -304,9 +304,9 @@
       methods:{
         gotoPortal(link) {
           localStorage.setItem(authorId,link);
-            this.$router.push({
-                path: "/user/user"
-            });
+          this.$router.push({
+            path: "/PersonalPortal"
+          });
         },
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
