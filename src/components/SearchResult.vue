@@ -20,24 +20,50 @@
           <el-menu>
             <el-checkbox-group v-model="checkedAuthor" >
               <div class="checkBox">
-                <el-checkbox v-for="Author in authorOptions" :label="Author" :key="Author" class="checkBox">{{Author}}</el-checkbox>
+                <el-checkbox v-for="(Author,index) in authorTable" :label="Author.id" :key="index" class="checkBox">{{Author.name}}</el-checkbox>
               </div>
             </el-checkbox-group>
           </el-menu>
         </div>
-        <div style="width: 12%;display: inline;">
+        <div style="width: 12%;display: inline;margin-left: 3px;">
           <h5>年限</h5>
-          <el-menu>
-            <el-checkbox-group v-model="checkedTime" >
-              <div class="checkBox">
-                <el-checkbox v-for="Time in timeOptions" :label="Time" :key="Time" class="checkBox">{{Time}}</el-checkbox>
-              </div>
-            </el-checkbox-group>
-          </el-menu>
+          <div>
+            <van-row>
+              <van-col span="11">
+                <span>起始</span>
+              </van-col>
+              <van-col span="2" style="font-size: 20px;">-</van-col>
+              <van-col span="11">
+                终止
+              </van-col>
+            </van-row>
+            <van-row>
+              <van-col span="11">
+                <el-autocomplete
+                  class="inline-input"
+                  v-model="dataStart"
+                  :fetch-suggestions="querySearch"
+                  placeholder="输入起始年"
+                ></el-autocomplete>
+              </van-col>
+              <van-col span="2" style="font-size: 20px;margin-top: 8px;">-</van-col>
+              <van-col span="11">
+                <div>
+                  <el-autocomplete
+                    class="inline-input"
+                    v-model="dataEnd"
+                    :fetch-suggestions="querySearch"
+                    placeholder="输入终止年"
+                  ></el-autocomplete>
+                </div>
+              </van-col>
+            </van-row>
+          </div>
+
         </div>
         <div style="margin-top: 30px">
-          <el-button type="primary" plain>筛选</el-button>
-          <el-button type="danger" :disabled="checkedSubject.length === 0 && checkedAuthor.length === 0 && checkedTime.length === 0" plain @click="clearList">重置</el-button>
+          <el-button type="primary" plain @click="filter">筛选</el-button>
+          <el-button type="danger" :disabled="checkedSubject.length === 0 && checkedAuthor.length === 0 &&dataStart.length===0&&dataEnd.length===0" plain @click="clearList">重置</el-button>
         </div>
       </el-aside>
 
@@ -50,7 +76,7 @@
           v-if="drawer">
           <div v-if="menuIndex==='0'">
             <!--期刊 期号+文献操作（分享等）-->
-            <div style="margin-top: -40px;">
+            <div style="margin-top: -30px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData00.paperIssue}}&nbsp;&nbsp;&nbsp;</span>
@@ -106,11 +132,6 @@
               <span style="font-family: 黑体;font-weight: 700">DOI：</span>
               <span>{{tableData00.paperDoi}}</span>
             </div>
-          <!--基金资助-->
-          <div v-if="tableData00.fund.length>0" class="Details" style="">
-            <span style="font-family: 黑体;font-weight: 700">基金资助：</span>
-            <span>{{tableData00.fund}}</span>
-          </div>
             <!--学科-->
             <div v-if="tableData00.paperFos.length>0" class="Details" style="">
               <span style="font-family: 黑体;font-weight: 700">学科：</span>
@@ -154,7 +175,7 @@
           </div>
           <div v-if="menuIndex==='1'">
             <!--项目类型+发表年份+文献操作（分享等）-->
-            <div style="margin-top: -40px;">
+            <div style="margin-top: -30px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData01.category}}&nbsp;&nbsp;&nbsp;</span>
@@ -235,6 +256,64 @@
               <el-button type="primary" plain @click="gotoPaper(tableData01.link)">查看原文</el-button>
             </div>
           </div>
+          <div v-if="menuIndex==='2'">
+            <!--日期+文献操作（分享等）-->
+            <div style="margin-top: -30px;">
+              <van-row>
+                <van-col span="6">
+                  <span>{{tableData02.date}}</span>
+                </van-col>
+                <van-col span="8"></van-col>
+                <van-col span="10" style="margin-top: -8px;">
+                  <span>
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link,tableData02.title)" style="height: 20px;">
+                </span>
+                  <!--微信-->
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData02.link)" style="height: 20px;">
+                </span>
+                  <!--复制连接-->
+                  <span>
+                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData02.link" @click="Copy"></i>
+                    </el-tooltip>
+                </span>
+                </van-col>
+              </van-row>
+            </div>
+            <!--文章标题-->
+            <div style="margin-top: 10px;font-size: 30px;font-weight: 500;">
+              {{tableData02.title}}
+            </div>
+            <!--作者 可点击-->
+            <div style="margin-top: 15px;">
+              <el-link type="primary" :underline="false" @click="gotoAuthor(tableData02.authorId)">
+                {{tableData02.author}}
+              </el-link>
+            </div>
+            <!--摘要-->
+            <div class="Details" style="">
+              <span style="font-family: 黑体;font-weight: 700">摘要：</span>
+              <span>{{tableData02.abstract}}</span>
+            </div>
+            <!--专利号-->
+            <div class="Details" style="">
+              <span style="font-family: 黑体;font-weight: 700;">专利号：</span>
+              <span>{{tableData02.paperId}}</span>
+            </div>
+            <!--各类次数-->
+            <div class="Details" style="">
+              <span style="font-family: 黑体;font-weight: 700;">收藏次数：</span>
+              <span>{{tableData02.collectionSum}}</span>
+              <span style="font-family: 黑体;font-weight: 700;margin-left: 10px;">浏览次数：</span>
+              <span>{{tableData02.viewSum}}</span>
+            </div>
+
+            <!--文献查看   可点击-->
+            <div class="Details" style="">
+              <el-button type="primary" plain @click="gotoPaper(tableData02.link)">查看原文</el-button>
+            </div>
+          </div>
         </el-drawer>
 
         <div style="position: relative">
@@ -262,8 +341,15 @@
                   </span>
             </el-dialog>
             <div>
+              <!--等待加载-->
+              <div v-if="isLoading" style="margin: 30px;font-size: 50px;">
+                <i class="el-icon-loading"></i>
+              </div>
+
+              <div v-if="isLoading===false">
               <!--论文-->
-              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index"
+                       class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -291,7 +377,7 @@
                   </span>
                 </div>
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData0[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" >{{item.msg}}</p>
                 </div>
 
@@ -316,7 +402,7 @@
               </el-card>
 
               <!--项目-->
-              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -345,7 +431,7 @@
                 </div>
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" >{{item.zhAbstract}}</p>
                 </div>
 
@@ -370,7 +456,7 @@
               </el-card>
 
               <!--专利-->
-              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -394,15 +480,15 @@
                 </div>
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData2[index])">
-                  <p style="height: 20px" >{{item.msg}}</p>
+                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
+                  <p style="height: 20px" >{{item.abstract}}</p>
                 </div>
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
-                        {{author_item}}
+                    <span style="margin-left: 15px;">
+                      <el-link :underline="false" @click="gotoAuthor(item.authorId)">
+                        {{item.author}}
                       </el-link>
                     </span>
                   </div>
@@ -417,6 +503,8 @@
                   </i>
                 </div>
               </el-card>
+
+              </div>
             </div>
 
             <!--论文页码-->
@@ -427,7 +515,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData0.length"
+                :total="sizeOfTable0"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -441,7 +529,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData1.length"
+                :total="sizeOfTable1"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -455,7 +543,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData2.length"
+                :total="sizeOfTable2"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -519,7 +607,14 @@
     },
     data() {
       return {
+        isLoading:false,
+        sizeOfTable0:101,
+        sizeOfTable1:91,
+        sizeOfTable2:81,
         QRlink:'',
+        dataStart:'',
+        dataEnd:'',
+        years:[],
         drawer: false,
         direction: 'rtl',
         currentPage: 1,
@@ -529,12 +624,11 @@
         keyWords:'',
         activeIndex: "0",
         menuIndex: "0",
-        subjectOptions : ['🤺', '👨‍❤️‍👨', '你🐎呢？'],
+        subjectOptions : ['人工智能', '软件工程', '操作系统'],
         authorOptions : ['Zhang San', 'Li Ming'],
         timeOptions : ['1990', '2000', '2010', '2020'],
         checkedSubject: [],
         checkedAuthor: [],
-        checkedTime: [],
         tableData00:{//论文（期刊）
           paperId:'',
           title:'',
@@ -542,7 +636,6 @@
           author: [],
           authorId: [],
           keyword:'',
-          fund:'',
           reference:[],
           referenceLink:[],
           institution:[],
@@ -585,7 +678,23 @@
           link:'',
           collectTime:''
         },
-        tableData02:{},
+        //专利
+        tableData02:{
+          id:123,
+          paperId:'2',
+          title:'Google2',
+          viewSum:777,
+          link:'https://www.youtube.com/',
+          collectionSum:666,
+          isUserUpload:1,
+          abstract:'文字文字字文字zhaiyao文字文字文字文字2',
+          date:new Date(),
+          author:'niubility',
+          authorId: '2333',
+          type:"专利",
+          collectStatus: true,
+          collectTime:'2016-05-04'
+        },
         authorTable: [
           {
             name:'Zhang San',
@@ -606,17 +715,17 @@
             name:'Zhang San',
             link:'https://www.bilibili.com',
             institution:'北京航空航天大学3',
-            id:'3',
+            id:'4',
           },{
             name:'Zhang San',
             link:'https://www.bilibili.com',
             institution:'北京航空航天大学3',
-            id:'3',
+            id:'5',
           },{
             name:'Zhang San',
             link:'https://www.bilibili.com',
             institution:'北京航空航天大学3',
-            id:'3',
+            id:'6',
           },
 
         ],
@@ -628,7 +737,314 @@
             author: ['Li Ming','Zhang San','Clearlove'],
             authorId: ['1','2','3'],
             keyword:'123456',
-            fund:'123',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
+            reference:['1','2','3'],
+            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
+            institution:['北京航空航天大学'],
+            institutionId:['1'],
+            type:"期刊",
+            collectStatus: true,
+            collectionSum:6,
+            viewSum:7,
+            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
+            collectTime:'2016-05-04',
+            paperDoi: 'doidoi',
+            citation: 5, // 引用数量
+            paperStart: 0, // 论文开始页
+            paperEnd: 4, // 论文结束页
+            paperLang: 'en', // 英文
+            paperVolume: 3, // 册
+            paperIssue: 4, // 期号
+            paperPublisher: '工业出版社',
+            paperFos: ['1','2'], // 学科
+            paperVenue: '456', // 会议
+          },
+          {
+            paperId:'1',
+            title:'Google1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            author: ['Li Ming','Zhang San','Clearlove'],
+            authorId: ['1','2','3'],
+            keyword:'123456',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:['北京航空航天大学'],
@@ -677,45 +1093,21 @@
         ],
         tableData2: [
           {
+            id:123,
             paperId:'2',
             title:'Google2',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-            author:['Li Ming','Zhang San'],
-            authorId: ['1','2','3'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"会议",
-            collectStatus: true,
-            collectionSum:666,
             viewSum:777,
             link:'https://www.youtube.com/',
-            collectTime:'2016-05-04'
-          }],
-        hotData: [
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San'],
-            authorId: ['1','2'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"期刊",
+            collectionSum:666,
+            isUserUpload:1,
+            abstract:'文字文字字文字zhaiyao文字文字文字文字2',
+            date:new Date(),
+            author:'niubility',
+            authorId: '2333',
+            type:"专利",
             collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
-          },
-        ],
+            collectTime:'2016-05-04',
+          }],
       }
     },
     created() {
@@ -724,17 +1116,104 @@
       window.addEventListener('scroll', this.scrollToTop);
       this.search(localStorage.getItem("keyWords"));
       this.keyWords=localStorage.getItem("keyWords");
+      this.getTable0(1);
+      this.loadYear();
     },
     destroyed () {
       window.removeEventListener('scroll', this.scrollToTop)
     },
     methods: {
+      //获取数据
+      getTable0(page){
+        this.isLoading=true;
+        let _this=this;
+        axios.get(baseUrl+'/search',{
+          params:{
+            'keyWords':localStorage.getItem("KeyWords"),
+            'dataStart':localStorage.getItem("dataStart"),
+            'dataEnd':localStorage.getItem("dataEnd"),
+            'Radio':localStorage.getItem("Radio"),
+            'page':page,
+            'type':'paper',
+          }
+        })
+          .then(function (response) {
+          console.log(response);
+          _this.tableData0=response.data.tableData0;
+          _this.sizeOfTable0=response.data.size0;
+        })
+        _this.isLoading=false;
+      },
+      getTable1(page){
+        let _this=this;
+        axios.get(baseUrl+'/search',{
+          params:{
+            'keyWords':localStorage.getItem("KeyWords"),
+            'dataStart':localStorage.getItem("dataStart"),
+            'dataEnd':localStorage.getItem("dataEnd"),
+            'Radio':localStorage.getItem("Radio"),
+            'page':page,
+            'type':'project',
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+            _this.tableData1=response.data.tableData1;
+            _this.sizeOfTable1=response.data.size1;
+          })
+      },
+      getTable2(page){
+        let _this=this;
+        axios.get(baseUrl+'/search',{
+          params:{
+            'keyWords':localStorage.getItem("KeyWords"),
+            'dataStart':localStorage.getItem("dataStart"),
+            'dataEnd':localStorage.getItem("dataEnd"),
+            'Radio':localStorage.getItem("Radio"),
+            'page':page,
+            'type':'patent',
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+            _this.tableData2=response.data.tableData2;
+            _this.sizeOfTable2=response.data.size2;
+          })
+      },
+
+      //年限选择
+      querySearch(queryString, cb) {
+        var years = this.years;
+        var results = queryString ? years.filter(this.createFilter(queryString)) : years;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      },
+      createFilter(queryString) {
+        return (year) => {
+          return (year.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      loadYear(){
+        for(var i=1900;i<=2020;i++){
+          this.years.push({"value":i.toString()});
+        }
+      },
+
       handleSizeChange: function(size) {
         this.pageSize = size;
       },
       //点击第几页
       handleCurrentChange: function(currentPage) {
         this.currentPage = currentPage;
+        if(this.menuIndex=='0'){
+          this.getTable0(currentPage);
+        }
+        else if(this.menuIndex=='1'){
+          this.getTable1(currentPage);
+        }
+        else{
+          this.getTable2(currentPage);
+        }
       },
       // 点击图片回到顶部方法，加计时器是为了过渡顺滑
       backTop () {
@@ -767,6 +1246,15 @@
       handleSelect (key) {
         this.menuIndex = key;
         this.currentPage = 1;
+        if(key=='0'){
+          this.getTable0(1);
+        }
+        else if(key=='1'){
+          this.getTable1(1);
+        }
+        else{
+          this.getTable2(1);
+        }
       },
 
       gotoPaper(url) {
@@ -867,28 +1355,62 @@
         })
       },
 
-      open(list) {
+      open(index) {
+        this.drawer=true;
+        let _this=this;
         if(this.menuIndex==='0'){
-          this.tableData00=list;
+          this.tableData00=this.tableData0[index];
+          axios.post(baseUrl+'/search',{paperId:_this.tableData00.paperId})
+          .then(function (response) {
+            console.log(response);
+            _this.tableData00=response.data;
+            _this.tableData0[index]=response.data;
+          })
         }
         else if(this.menuIndex==='1'){
-          this.tableData01=list;
+          this.tableData01=this.tableData1[index];
+          axios.post(baseUrl+'/search',{paperId:_this.tableData01.paperId})
+            .then(function (response) {
+              console.log(response);
+              _this.tableData01=response.data;
+              _this.tableData1[index]=response.data;
+            })
         }
         else if(this.menuIndex==='2'){
-          this.tableData02=list;
+          this.tableData02=this.tableData2[index];
+          axios.post(baseUrl+'/search',{paperId:_this.tableData02.id})
+            .then(function (response) {
+              console.log(response);
+              _this.tableData02=response.data;
+              _this.tableData2[index]=response.data;
+            })
         }
-        // console.log(this.tableData);
-        this.drawer=true;
       },
 
       clearList() {
         this.checkedSubject = [];
         this.checkedAuthor = [];
-        this.checkedTime = [];
+        this.dataStart='';
+        this.dataEnd='';
       },
 
       filter() {
-
+        let _this=this;
+        axios.get(baseUrl+'/filter',{
+          params:{
+            'keyWords':localStorage.getItem("KeyWords"),
+            'dataStart':_this.dataStart,
+            'dataEnd':_this.dataEnd,
+            'checkedSubject':_this.checkedSubject,
+            'checkedAuthor':_this.checkedAuthor,
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+            _this.tableData0=response.data.tableData0;
+            _this.tableData1=response.data.tableData1;
+            _this.tableData2=response.data.tableData2;
+          })
       },
 
       gotoWeibo(url,title) {

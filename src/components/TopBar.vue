@@ -81,7 +81,7 @@
       name: "TopBar",
       data(){
           return{
-            userId:'123',//localStorage.getItem("myId"),
+            userId:localStorage.getItem("myId"),//'123',
             userImage:localStorage.getItem("userHead"),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,

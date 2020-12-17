@@ -12,7 +12,6 @@ name: 'HelloWorld',
       }
     },
     created() {
-      var nowPath=this.$route.query.nowPath;
       this.$router.push({
         path:'/',
       });
