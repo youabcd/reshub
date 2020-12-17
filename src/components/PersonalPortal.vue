@@ -4,12 +4,12 @@
     <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
-            <div v-if="id == rid" class="person_image">
+            <div v-if="isMyPortal" class="person_image">
         			<a href="#" class="my_portraitwr">
         				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         		</div>
-            <div v-if="id != rid" class="person_image">
+            <div v-if="!isMyPortal" class="person_image">
             	<a href="#" class="person_portraitwr">
             		<img :src="avatar" alt="学者头像" class="" width="112" height="112">
             	</a>
@@ -153,14 +153,14 @@
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-          <el-card class="box-card" shadow="never">
+<!--         <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
             <div v-for="o in coopList" :key="o">
               {{o}}
             </div>
-          </el-card>
+          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -180,13 +180,12 @@
       name: "PersonalPortal",
       data() {
         return {
-          id:'1',
-          rid:'2',
-          currentPage: 1,
-          pageSize: 5,
-          totalPage: 100,
+          // currentPage: 1,
+          // pageSize: 5,
+          // totalPage: 100,
           menuIndex: '0',
           avatar:require('../assets/trump.jpg'),
+          isHave: true,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
@@ -212,7 +211,7 @@
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
               avatar:'../assets/trump.jpg',
-              link:'https://trump.com/',
+              link:'https://trump.com/', //resid门户id
             },
             {
               name:'钱诚',
@@ -301,8 +300,6 @@
       mounted() {
         this.drawLine();
         this.getPersonalPortal();
-        this.id=localStorage.getItem('myId');
-        this.rid=localStorage.getItem('authorId');
       },
       methods:{
         getPersonalPortal() {
@@ -782,7 +779,16 @@
             });
             clipboard.destroy()
           })
-        }
+        },
+        
+        gotoWeibo(url,title) {
+          window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
+        },
+        
+        openQRcode(url) {
+          this.QRlink=url;
+          this.dialogVisible=true;
+        },
       },
       components:{
         TopBar
