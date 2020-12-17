@@ -1,7 +1,5 @@
 <template>
   <div style="min-height: 100vh;height: 100%;background-color:rgba(233,233,233,0.1);">
-    <!--<div class="background" v-bind:style="{backgroundImage:'url('+back[whichPic]+')'}">
-    </div>-->
     <div>
       <TopBar></TopBar>
     </div>
@@ -10,10 +8,6 @@
         <SearchBox></SearchBox>
       </div>
     </div>
-
-    <!--<div style="margin-top: 100px;color: red"><p>{{back[whichPic].name}}</p>
-      <el-button @click="backPic">next</el-button>
-    </div>-->
 
     <div style="margin-left: 12%;margin-top: 50px;margin-bottom: 20px;">
       <WordCloudChart
@@ -27,15 +21,6 @@
 
     <van-row></van-row>
 
-    <!--<div>
-      <div class="back-top-circle1" @click="nextPic">
-        <i class="el-icon-arrow-right" ></i>
-      </div>
-
-      <div class="back-top-circle2" @click="backPic">
-        <i class="el-icon-arrow-left" ></i>
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -49,12 +34,6 @@
     name: "Home",
     data() {
       return {
-        /*back:[
-          {name:'陈',isCatch:false},
-          {name:'李',isCatch:false},
-          {name:'刘',isCatch:false},
-        ],
-        whichPic:parseInt(Math.random() * 3),*/
         hotWords: [
           {
             name: "十九大精神",
@@ -156,17 +135,6 @@
       }
     },
     methods:{
-      nextPic(){
-        if(this.whichPic<this.back.length-1){
-          this.whichPic++;
-        }
-        else{
-          this.whichPic=0;
-        }
-      },
-      backPic(){
-        this.whichPic=parseInt(Math.random() *3);
-      },
       getEhartsData(){
         let _this=this;
         axios.get(baseUrl+"/home")
