@@ -149,7 +149,7 @@
               <div style="text-align: left;position: absolute;">
                 <img class="avatar" src="../assets/trump.jpg" ></img>
               </div>
-              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;"><a :href="item.link">{{item.name}}</a></div>
+              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;" @click="gotoPortal(item.link)">{{item.name}}</div>
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
@@ -302,6 +302,12 @@
         this.getPersonalPortal();
       },
       methods:{
+        gotoPortal(link) {
+          localStorage.setItem(authorId,link);
+            this.$router.push({
+                path: "/user/user"
+            });
+        },
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
             userId:localStorage.getItem('myId'),
