@@ -145,11 +145,13 @@
             <div slot="header" class="clearfix">
               <span>合作作者</span>
             </div>
-            <div v-if="menuIndex === '0'" v-for="(item,index) in coopData" :key="index" class="coop-item" >
+            <div v-for="(item,index) in coopData" :key="index" class="coop-item" >
               <div style="text-align: left;position: absolute;">
                 <img class="avatar" src="../assets/trump.jpg" ></img>
               </div>
-              <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;" @click="gotoPortal(item.link)">{{item.name}}</div>
+              <el-link :underline="false" @click="gotoAuthor(item.link)">
+                <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;">{{item.name}}</div>
+              </el-link>
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
@@ -303,11 +305,9 @@
         this.getPersonalPortal();
       },
       methods:{
-        gotoPortal(link) {
-          localStorage.setItem(authorId,link);
-          this.$router.push({
-            path: "/PersonalPortal"
-          });
+        gotoAuthor(authorId) {
+          window.open(webUrl+'PersonalPortal');
+          localStorage.setItem('authorId',authorId);
         },
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
