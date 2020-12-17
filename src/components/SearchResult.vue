@@ -1129,7 +1129,7 @@
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("keyWords"),
+            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1145,10 +1145,11 @@
         _this.isLoading=false;
       },
       getTable1(page){
+        this.isLoading=true;
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("keyWords"),
+            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1161,12 +1162,14 @@
             _this.tableData1=response.data.tableData1;
             _this.sizeOfTable1=response.data.size1;
           })
+        _this.isLoading=false;
       },
       getTable2(page){
+        _this.isLoading=true;
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("keyWords"),
+            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1179,6 +1182,7 @@
             _this.tableData2=response.data.tableData2;
             _this.sizeOfTable2=response.data.size2;
           })
+        _this.isLoading=false;
       },
 
       //年限选择
@@ -1398,7 +1402,7 @@
         let _this=this;
         axios.get(baseUrl+'/filter',{
           params:{
-            'keyWords':localStorage.getItem("keyWords"),
+            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
             'dateStart':_this.dataStart,
             'dateEnd':_this.dataEnd,
             'checkedSubject':_this.checkedSubject,
