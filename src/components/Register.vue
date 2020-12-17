@@ -19,7 +19,9 @@
         <input type="text" placeholder="一句话介绍" class="reg-input" v-model="descrip">
         <input type="password" placeholder="Password" class="reg-input"  v-model="password">
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-      <el-button size="small" class="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
+        <el-button style="width: 110px;height: 50px;" class="primary" @click="submitIdCode()" :disabled="disabled">
+          {{timeContent}}
+        </el-button>
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
@@ -78,7 +80,7 @@ import baseUrl from './baseUrl'
                         this.errorMessage='中文名由1-7个汉字后跟0-3个数字组成';
                     }
                     return false;
-                    
+
                 }
             },
 
@@ -101,7 +103,7 @@ import baseUrl from './baseUrl'
                         //console.log('password-length is:'+pa.length);
 
                         if(pa.length<6||pa.length==0){
-                            
+
                             this.errorMessage='密码长度必须大于6';
                         }
                         else if(pa.length>18){
@@ -110,13 +112,13 @@ import baseUrl from './baseUrl'
                         else {
                             this.errorMessage='只能含有字母、数字、下划线';
                         }
-                        
+
                         return false;
                 }
                 else {
                     return true;
                 }
-                
+
             },
             //登录信息发送
             Reg(){
@@ -200,7 +202,7 @@ import baseUrl from './baseUrl'
 .errorMessage{
     text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
 }
-.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px; 
+.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px;
 z-index: 10; background: #fff;-webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;

@@ -2,8 +2,9 @@
 
 <template>
 
-<div class="findPa" id="findPa">
+<div>
 <!--   -->
+  <div class="findPa" id="findPa">
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>
@@ -19,14 +20,16 @@
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <el-button size="small" class="primary" @click="submitIdCode()" :disabled="disabled">{{timeContent}}</el-button>
+      <el-button style="width: 110px;height: 50px;" class="primary" @click="submitIdCode()" :disabled="disabled">
+        {{timeContent}}
+      </el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
         <!--<span class="findPa-btn" @click="test">测试</span>-->
     </div>
-
+  </div>
 </div>
 </template>
 
