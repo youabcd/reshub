@@ -1127,11 +1127,11 @@
       getTable0(page){
         this.isLoading=true;
         let _this=this;
-        axios.get(baseUrl+'/search',{
+        axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("KeyWords"),
-            'dataStart':localStorage.getItem("dataStart"),
-            'dataEnd':localStorage.getItem("dataEnd"),
+            'keyWords':localStorage.getItem("keyWords"),
+            'dateStart':localStorage.getItem("dateStart"),
+            'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'paper',
@@ -1146,11 +1146,11 @@
       },
       getTable1(page){
         let _this=this;
-        axios.get(baseUrl+'/search',{
+        axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("KeyWords"),
-            'dataStart':localStorage.getItem("dataStart"),
-            'dataEnd':localStorage.getItem("dataEnd"),
+            'keyWords':localStorage.getItem("keyWords"),
+            'dateStart':localStorage.getItem("dateStart"),
+            'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'project',
@@ -1164,11 +1164,11 @@
       },
       getTable2(page){
         let _this=this;
-        axios.get(baseUrl+'/search',{
+        axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':localStorage.getItem("KeyWords"),
-            'dataStart':localStorage.getItem("dataStart"),
-            'dataEnd':localStorage.getItem("dataEnd"),
+            'keyWords':localStorage.getItem("keyWords"),
+            'dateStart':localStorage.getItem("dateStart"),
+            'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'patent',
@@ -1360,7 +1360,7 @@
         let _this=this;
         if(this.menuIndex==='0'){
           this.tableData00=this.tableData0[index];
-          axios.post(baseUrl+'/search',{paperId:_this.tableData00.paperId})
+          axios.post(baseUrl+'/searchWords',{paperId:_this.tableData00.paperId})
           .then(function (response) {
             console.log(response);
             _this.tableData00=response.data;
@@ -1369,7 +1369,7 @@
         }
         else if(this.menuIndex==='1'){
           this.tableData01=this.tableData1[index];
-          axios.post(baseUrl+'/search',{paperId:_this.tableData01.paperId})
+          axios.post(baseUrl+'/searchWords',{paperId:_this.tableData01.paperId})
             .then(function (response) {
               console.log(response);
               _this.tableData01=response.data;
@@ -1378,7 +1378,7 @@
         }
         else if(this.menuIndex==='2'){
           this.tableData02=this.tableData2[index];
-          axios.post(baseUrl+'/search',{paperId:_this.tableData02.id})
+          axios.post(baseUrl+'/searchWords',{paperId:_this.tableData02.id})
             .then(function (response) {
               console.log(response);
               _this.tableData02=response.data;
@@ -1398,9 +1398,9 @@
         let _this=this;
         axios.get(baseUrl+'/filter',{
           params:{
-            'keyWords':localStorage.getItem("KeyWords"),
-            'dataStart':_this.dataStart,
-            'dataEnd':_this.dataEnd,
+            'keyWords':localStorage.getItem("keyWords"),
+            'dateStart':_this.dataStart,
+            'dateEnd':_this.dataEnd,
             'checkedSubject':_this.checkedSubject,
             'checkedAuthor':_this.checkedAuthor,
           }
