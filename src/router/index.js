@@ -9,6 +9,7 @@ const Login = resolve => require(['@/components/Login'],resolve)
 const Message = resolve => require(['@/components/Message'],resolve)
 const PersonalPortal = resolve => require(['@/components/PersonalPortal'],resolve)
 const Register = resolve => require(['@/components/Register'],resolve)
+const rty_test = resolve => require(['@/components/rty_test'], resolve)
 const ResearchInstitute = resolve => require(['@/components/ResearchInstitute'],resolve)
 const SearchResult = resolve => require(['@/components/SearchResult'],resolve)
 const TopBar = resolve => require(['@/components/TopBar'],resolve)
@@ -68,6 +69,11 @@ export default new Router({
       path: '/Register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/rty_test',
+      name: 'rty_test',
+      component: rty_test
     },
     {
       path: '/ResearchInstitute',

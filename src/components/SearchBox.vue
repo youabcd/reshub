@@ -60,11 +60,11 @@
           </van-col>
           <van-col span="5" >
             <el-date-picker type="date" value-format="yyyy-MM-dd" @change="formatStartTime"
-                            placeholder="选择开始日期" v-model="dataStart" style="width: 100%;"></el-date-picker>
+                            placeholder="选择开始日期" v-model="dateStart" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="5" >
             <el-date-picker type="date" value-format="yyyy-MM-dd" @change="formatEndTime"
-                            placeholder="选择结束日期" v-model="dataEnd" style="width: 100%;"></el-date-picker>
+                            placeholder="选择结束日期" v-model="dateEnd" style="width: 100%;"></el-date-picker>
           </van-col>
           <van-col span="3">
             <van-row></van-row>
@@ -113,8 +113,8 @@
         searchKey:[
           {type:'1',words:'',isFuzzy:false,boolType:'1'},
         ],
-        dataStart:'',
-        dataEnd:'',
+        dateStart:'',
+        dateEnd:'',
         recommend: [],
       }
     },
@@ -184,17 +184,17 @@
           }
           localStorage.setItem("keyWords",k);
           localStorage.setItem("Radio",this.radio);
-          if(this.dataStart.length>0){
-            localStorage.setItem("dataStart",this.dataStart.substring(0,4));
+          if(this.dateStart.length>0){
+            localStorage.setItem("dateStart",this.dateStart.substring(0,4));
           }
           else{
-            localStorage.setItem("dataStart",'0000');
+            localStorage.setItem("dateStart",'0000');
           }
-          if(this.dataEnd.length>0){
-            localStorage.setItem("dataEnd",this.dataEnd.substring(0,4));
+          if(this.dateEnd.length>0){
+            localStorage.setItem("dateEnd",this.dateEnd.substring(0,4));
           }
           else{
-            localStorage.setItem("dataEnd",this.getTime());
+            localStorage.setItem("dateEnd",this.getTime());
           }
           window.open(webUrl+"SearchResult");
         }

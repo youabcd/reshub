@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import crypto from 'crypto'
 import Loading from './Loading.vue'
 import axios from 'axios'
 import baseUrl from './baseUrl'
@@ -49,6 +50,7 @@ export default {
   	}
   },
   methods:{
+    
     //邮件和密码的格式验证
     patternMatching(mail,pa){
                 //Email地址
@@ -88,11 +90,15 @@ export default {
       if(this.patternMatching(this.userID,this.password)==false){
         return;
       }
-      
+      //md5加密
+      const md5 = crypto.createHash('md5');
+      md5.update(this.password);
+      let md5password = md5.digest('hex') ;
+
       let _this=this;
       axios.post(baseUrl+'/identityCheck',{
         userID:this.userID,
-        password:this.password//怎么加密（可以先不急）
+        password:md5password
       })
         .then(function (response) {
           console.log(response);
@@ -157,7 +163,8 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
+/*color: #1fcab3;*/ 
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}

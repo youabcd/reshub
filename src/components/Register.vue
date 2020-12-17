@@ -18,6 +18,7 @@
         <input type="text" placeholder="Email" class="reg-input" v-model="account">
         <input type="text" placeholder="一句话介绍" class="reg-input" v-model="descrip">
         <input type="password" placeholder="Password" class="reg-input"  v-model="password">
+        <input type="password" placeholder="Password Again" class="reg-input"  v-model="password2">
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
         <el-button style="width: 110px;height: 50px;" class="primary" @click="submitIdCode()" :disabled="disabled">
           {{timeContent}}
@@ -25,12 +26,14 @@
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
+        
     </div>
     <Loading v-if="isLoging" marginTop="-30%"></Loading>
 </div>
 </template>
 
 <script>
+import crypto from 'crypto'
 import Loading from './Loading.vue'
 import axios from 'axios'
 import baseUrl from './baseUrl'
@@ -43,6 +46,8 @@ import baseUrl from './baseUrl'
                 account: '',
                 descrip: '',
                 password: '',
+                password2:'',
+                verificationCode:'',
                 errorMessage:'',//出错提示信息
               disabled:false,
               timeContent: '发送验证码',
@@ -51,6 +56,7 @@ import baseUrl from './baseUrl'
         methods:{
             //昵称格式验证
             nicknameMatching(name){
+                this.errorMessage='';
                 //昵称格式（英文昵称由1-20个字母、数字或下划线组成，中文昵称由1-7个汉字及其后的0-3个数字组成）
                 let nickname_pattern=/^[a-zA-Z0-9_]{1,20}|[\u4e00-\u9fa5]{1,7}[0-9]{0,3}$/;
                 let is_eng_name=false;
@@ -63,6 +69,8 @@ import baseUrl from './baseUrl'
                 //判断是否含有英文字母，若含有认为是英文昵称
                 if(name.match(/[A-Za-z]/)!=null){
                     is_eng_name=true;
+                    //for debug
+                    this.errorMessage='英文昵称';
                 }
 
                 //如果昵称格式错误，按照情况输出错误信息
@@ -82,11 +90,13 @@ import baseUrl from './baseUrl'
                     return false;
 
                 }
+                console.log('nickname_pattern  pass!');
             },
 
 
             //邮件和密码的格式验证
-            patternMatching(mail,pa){
+            patternMatching2(mail,pa,pa2){
+                this.errorMessage='';
                 //Email地址
                 let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
                 //密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)
@@ -94,6 +104,12 @@ import baseUrl from './baseUrl'
                 if(mail_pattern.test(mail)==false){
                     console.log('mail_pattern error');
                     this.errorMessage='邮件格式错误';
+                    return false;
+                }
+                //验证两次输入的密码是否一致
+                if(pa!=pa2){
+                    console.log('two password not same');
+                    this.errorMessage='两次输入的密码不一致';
                     return false;
                 }
                 else if(password_pattern.test(pa)==false){
@@ -120,20 +136,25 @@ import baseUrl from './baseUrl'
                 }
 
             },
-            //登录信息发送
+            //注册信息发送
             Reg(){
                 //验证邮件地址格式和密码格式
-                //if(this.patternMatching(this.account,this.password)==false){
-                //    return;
-                //}
+                if(this.patternMatching2(this.account,this.password,this.password2)==false){
+                    return;
+                }
                 //验证昵称格式
                 if(this.nicknameMatching(this.nickname)==false){
                     return;
                 }
+                //md5加密
+                const md5 = crypto.createHash('md5');
+                md5.update(this.password);
+                let md5password = md5.digest('hex') ;
+
                 let _this=this;
                 axios.post(baseUrl+'/registerInformation',{
                     userName: this.nickname,
-                    password: this.password,
+                    password: md5password,
                     mailAddress: this.account,
                     userDescription: this.descrip
 
@@ -182,6 +203,22 @@ import baseUrl from './baseUrl'
                     console.log(error);
                 });
             },
+            //验证码验证
+            verify_verificationCode(){
+                axios.get(baseUrl+'/verificationCode',{
+                    mailAddress: this.mail,
+                    verificationCode:this.verificationCode
+                })
+                .then(function(response){
+                    if(response.data.result==false){
+                        errorMessage='验证码错误';
+                        this.veri_success=false;
+                    }
+                    else {
+                        this.veri_success=true
+                    }
+                })
+            },
             backToLogin(){
                 this.$router.push({
                     path:'/login',
@@ -218,7 +255,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}
