@@ -153,7 +153,7 @@
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-<!--          <el-card class="box-card" shadow="never">
+<!--         <el-card class="box-card" shadow="never">
             <div slot="header" class="clearfix">
               <span>合作机构</span>
             </div>
@@ -183,7 +183,7 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
-          // menuIndex: '0',
+          menuIndex: '0',
           avatar:require('../assets/trump.jpg'),
           isClaimed: true,
           isFollowing: true,
