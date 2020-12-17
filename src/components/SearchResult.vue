@@ -341,8 +341,14 @@
                   </span>
             </el-dialog>
             <div>
+              <!--等待加载-->
+              <div v-if="isLoading" style="margin: 30px;font-size: 50px;">
+                <i class="el-icon-loading"></i>
+              </div>
+
+              <div v-if="isLoading===false">
               <!--论文-->
-              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index"
+                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
@@ -396,7 +402,7 @@
               </el-card>
 
               <!--项目-->
-              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -450,7 +456,7 @@
               </el-card>
 
               <!--专利-->
-              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -497,6 +503,8 @@
                   </i>
                 </div>
               </el-card>
+
+              </div>
             </div>
 
             <!--论文页码-->
@@ -507,7 +515,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData0.length"
+                :total="sizeOfTable0"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -521,7 +529,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData1.length"
+                :total="sizeOfTable1"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -535,7 +543,7 @@
                 :current-page="currentPage"
                 :page-size="pageSize"
                 layout="total, prev, pager, next, jumper"
-                :total="tableData2.length"
+                :total="sizeOfTable2"
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
@@ -599,6 +607,10 @@
     },
     data() {
       return {
+        isLoading:false,
+        sizeOfTable0:101,
+        sizeOfTable1:91,
+        sizeOfTable2:81,
         QRlink:'',
         dataStart:'',
         dataEnd:'',
@@ -1113,6 +1125,7 @@
     methods: {
       //获取数据
       getTable0(page){
+        this.isLoading=true;
         let _this=this;
         axios.get(baseUrl+'/search',{
           params:{
@@ -1127,7 +1140,9 @@
           .then(function (response) {
           console.log(response);
           _this.tableData0=response.data.tableData0;
+          _this.sizeOfTable0=response.data.size0;
         })
+        _this.isLoading=false;
       },
       getTable1(page){
         let _this=this;
@@ -1144,6 +1159,7 @@
           .then(function (response) {
             console.log(response);
             _this.tableData1=response.data.tableData1;
+            _this.sizeOfTable1=response.data.size1;
           })
       },
       getTable2(page){
@@ -1161,6 +1177,7 @@
           .then(function (response) {
             console.log(response);
             _this.tableData2=response.data.tableData2;
+            _this.sizeOfTable2=response.data.size2;
           })
       },
 
