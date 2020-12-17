@@ -1129,7 +1129,7 @@
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
+            'keyWords':(localStorage.getItem("keyWordsList")),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1149,7 +1149,7 @@
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
+            'keyWords':(localStorage.getItem("keyWordsList")),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1169,7 +1169,7 @@
         let _this=this;
         axios.get(baseUrl+'/searchWords',{
           params:{
-            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
+            'keyWords': localStorage.getItem("keyWordsList"),
             'dateStart':localStorage.getItem("dateStart"),
             'dateEnd':localStorage.getItem("dateEnd"),
             'Radio':localStorage.getItem("Radio"),
@@ -1402,7 +1402,7 @@
         let _this=this;
         axios.get(baseUrl+'/filter',{
           params:{
-            'keyWords':JSON.parse(localStorage.getItem("keyWordsList")),
+            'keyWords':(localStorage.getItem("keyWordsList")),
             'dateStart':_this.dataStart,
             'dateEnd':_this.dataEnd,
             'checkedSubject':_this.checkedSubject,
