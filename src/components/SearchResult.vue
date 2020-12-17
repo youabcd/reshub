@@ -348,7 +348,7 @@
 
               <div v-if="isLoading===false">
               <!--论文-->
-                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index"
+                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
@@ -402,7 +402,7 @@
               </el-card>
 
               <!--项目-->
-                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -456,7 +456,7 @@
               </el-card>
 
               <!--专利-->
-                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
                 </div>
@@ -1116,6 +1116,7 @@
       window.addEventListener('scroll', this.scrollToTop);
       this.search(localStorage.getItem("keyWords"));
       this.keyWords=localStorage.getItem("keyWords");
+      this.isLoading=true;
       this.getTable0(1);
       this.loadYear();
     },
@@ -1125,8 +1126,9 @@
     methods: {
       //获取数据
       getTable0(page){
-        this.isLoading=true;
         let _this=this;
+        _this.backTop();
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1137,16 +1139,16 @@
             'type':'paper',
           }
         })
-          .then(function (response) {
+        .then(function (response) {
           console.log(response);
-          _this.tableData0=response.data.tableData0;
-          _this.sizeOfTable0=response.data.size0;
+          _this.tableData0=response.data.result;
+          _this.sizeOfTable0=response.data.num;
+          _this.isLoading=false;
         })
-        _this.isLoading=false;
       },
       getTable1(page){
-        this.isLoading=true;
         let _this=this;
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1159,14 +1161,14 @@
         })
           .then(function (response) {
             console.log(response);
-            _this.tableData1=response.data.tableData1;
-            _this.sizeOfTable1=response.data.size1;
+            _this.tableData1=response.data.result;
+            _this.sizeOfTable1=response.data.num;
+            _this.isLoading=false;
           })
-        _this.isLoading=false;
       },
       getTable2(page){
-        _this.isLoading=true;
         let _this=this;
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords': localStorage.getItem("keyWordsList"),
@@ -1179,10 +1181,10 @@
         })
           .then(function (response) {
             console.log(response);
-            _this.tableData2=response.data.tableData2;
-            _this.sizeOfTable2=response.data.size2;
+            _this.tableData2=response.data.result;
+            _this.sizeOfTable2=response.data.num;
+            _this.isLoading=false;
           })
-        _this.isLoading=false;
       },
 
       //年限选择
