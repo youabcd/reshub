@@ -11,3 +11,4 @@
 11.npm run dll
 12.npm install echarts -S
 13.npm install echarts-wordcloud
+14.npm install crypto --save (加密算法)

@@ -7,7 +7,7 @@
   <div class="findPa" id="findPa">
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
-        <div class="log-cloud cloud2"></div>
+        <div class="log-cloud cloud2"></div> 
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
@@ -16,7 +16,7 @@
     </div>
     <div class="findPa-email">
         <input type="text" placeholder="Email" class="findPa-input" v-model="mail">
-        <input type="password" placeholder="new password" class='findPa-input' v-model="password">
+        <input type="password" placeholder="new password"  class='findPa-input' v-model="password">
         <input type="password" placeholder="new password again" class='findPa-input' v-model="password2">
 
         <!-- 验证码  -->
@@ -29,9 +29,9 @@
         <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
 
-        <!-- for debug  
+        <!-- for debug  -->
         <input type="text" placeholder="testVar" class="findPa-input" v-model="testVar">
-        <span class="findPa-btn" @click="test">测试</span>-->
+        <span class="findPa-btn" @click="test">测试</span>
     </div>
   </div>
 </div>
@@ -60,34 +60,14 @@
             }
         },
         methods:{
-            /*test(){
-                this.errorMessage='';
-                let name=this.testVar;
-                let is_eng_name;
-                let nickname_pattern=/^[a-zA-Z0-9_]{1,20}$|^[\u4e00-\u9fa5]{1,7}[0-9]{0,3}$/;
-                if(name.match(/[A-Za-z]/)!=null){
-                    is_eng_name=true;
-                    //for debug
-                    this.errorMessage='英文昵称';
-                    console.log('english name!');
-                }
-                if(nickname_pattern.test(name)==false){
-                    console.log('nickname_pattern error');
-                    if(is_eng_name==true){
-                        if(name.length>20){
-                            this.errorMessage='英文名长度应当小于20个字符';
-                        }
-                        else{
-                            this.errorMessage='英文名仅可由字母、数字和下划线组成';
-                        }
-                    }
-                    else {
-                        this.errorMessage='中文名由1-7个汉字后跟0-3个数字组成';
-                    }
-                    return false;
-                }
-                console.log('nickname_pattern pass!\n\n');
-            },*/
+            test(){
+                let password = '123456';
+                const md5 = crypto.createHash('md5');
+                md5.update(password);
+                let md5password = md5.digest('hex');
+                console.log('password:'+password);
+                console.log('md5password:'+md5password);
+            },
 
             /*要求发送验证码(不再使用这一个)
             askVerificationCode(){
@@ -265,7 +245,12 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .findPa .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .findPa .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+/*修改前
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
+.findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
+.findPa-logo,.findPa-text{z-index: 2}
+*/
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .findPa-logo,.findPa-text{z-index: 2}
 
