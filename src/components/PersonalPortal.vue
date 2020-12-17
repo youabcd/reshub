@@ -174,6 +174,7 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    import webUrl from "./webUrl";
     let echarts = require('echarts/lib/echarts')
     require('echarts/lib/chart/line')
     require('echarts/lib/chart/pie')
@@ -329,6 +330,7 @@
             this.followNum=response.data.results.follownum;
             this.realName=response.data.results.realname;
             this.insName=response.data.results.insname;
+            this.insId=response.data.results.insid;
             this.mail=response.data.results.mail;
             this.quoteNum=response.data.results.quotenum;
             this.paperNum=response.data.results.papernum;
