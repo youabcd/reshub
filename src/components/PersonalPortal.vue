@@ -184,6 +184,7 @@
           // pageSize: 5,
           // totalPage: 100,
           menuIndex: '0',
+          is_have: true,
           avatar:require('../assets/trump.jpg'),
           isHave: true,
           isClaimed: true,
@@ -304,9 +305,9 @@
       methods:{
         gotoPortal(link) {
           localStorage.setItem(authorId,link);
-            this.$router.push({
-                path: "/user/user"
-            });
+          this.$router.push({
+            path: "/PersonalPortal"
+          });
         },
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
@@ -335,6 +336,8 @@
             this.patPar=response.data.results.patpar;
             this.confCount=response.data.results.confcount;
             this.confPar=response.data.results.confpar;
+            
+            this.coopData=response.data.results.coopdata;
           })
         },
         drawLine(){
