@@ -6,7 +6,8 @@ isAdministrator:是否为管理员
 label:个人简介
 nowActive:message页面中当前激活的分栏（系统消息或私信）
 
-keyWords:搜索关键词
+keyWords:搜索关键词string
+keyWordsList:搜索关键词list
 Radio:false/true
 dateStart:搜索时间范围开始点
 dateEnd:搜索时间范围结束点

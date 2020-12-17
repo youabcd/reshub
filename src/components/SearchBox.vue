@@ -183,6 +183,7 @@
             }
           }
           localStorage.setItem("keyWords",k);
+          localStorage.setItem("keyWordsList",JSON.stringify(this.searchKey));
           localStorage.setItem("Radio",this.radio);
           if(this.dateStart.length>0){
             localStorage.setItem("dateStart",this.dateStart.substring(0,4));
