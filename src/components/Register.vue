@@ -202,7 +202,8 @@ import baseUrl from './baseUrl'
 .errorMessage{
     text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
 }
-.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:10%; width: 500px; min-height: 555px; margin-bottom: 30px;
+.login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px;top:3%;width: 500px; min-height: 555px; margin-bottom: 3%;
+padding-bottom: 30px;
 z-index: 10; background: #fff;-webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
