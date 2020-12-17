@@ -39,7 +39,9 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-        				{{insName}}
+                <el-link :underline="false" @click="gotoAuthor(this.insId)">
+                  {{insName}}
+                </el-link>
         			</div>
               </br>
         			<div class="p_ach_wr">
@@ -196,6 +198,7 @@
           followNum:'0',
           realName:'Trump名字最多可以这么长',
           insName:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
+          insId:1,
           mail:'邮箱大概也就这么@长吧.别太长了',
           quoteNum:'132',
           paperNum:'321',
@@ -308,6 +311,10 @@
         gotoAuthor(authorId) {
           window.open(webUrl+'PersonalPortal');
           localStorage.setItem('authorId',authorId);
+        },
+        gotoInstitution(institutionId){
+          window.open(webUrl+'ResearchInstitute');
+          localStorage.setItem('institutionId',institutionId);
         },
         getPersonalPortal() {
           axios.post(baseUrl+'/getPersonalPortal',{
