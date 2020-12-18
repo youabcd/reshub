@@ -189,7 +189,7 @@
           // pageSize: 5,
           // totalPage: 100,
           menuIndex: '0',
-          is_have: true,
+          isHave: true,
           avatar:require('../assets/trump.jpg'),
           isHave: true,
           isClaimed: true,
@@ -322,6 +322,7 @@
             userId:localStorage.getItem('myId'),
             resId:localStorage.getItem('authorId')
           }).then(function (response) {
+            this.isHave=response.data.results.ishave;
             this.avatar=response.data.results.avatar;
             this.isClaimed=response.data.results.isclaimed;
             this.isFollowing=response.data.results.isfollowing;
