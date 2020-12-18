@@ -350,8 +350,13 @@
               <!--论文-->
                 <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 50%">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title}}
+                  </span>
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title.substring(0,40)+'...'}}
+                  </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
@@ -378,7 +383,8 @@
                 </div>
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" >{{item.msg}}</p>
+                  <p style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</p>
+                  <p style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</p>
                 </div>
 
                 <div>
@@ -388,6 +394,10 @@
                         {{author_item}}
                       </el-link>
                     </span>
+                    <span style="font-weight: 700;margin-left: 20px">
+                      关键词:
+                    </span>
+                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>论文</span>
@@ -404,7 +414,12 @@
               <!--项目-->
                 <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title}}
+                  </span>
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title.substring(0,40)+'...'}}
+                  </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
@@ -432,7 +447,8 @@
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" >{{item.zhAbstract}}</p>
+                  <p style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</p>
+                  <p style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</p>
                 </div>
 
                 <div>
@@ -442,6 +458,10 @@
                       {{tableData1[index].author}}
                       </el-link>
                     </span>
+                    <span style="font-weight: 700;margin-left: 20px">
+                      关键词:
+                    </span>
+                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>项目</span>
@@ -458,7 +478,12 @@
               <!--专利-->
                 <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title}}
+                  </span>
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                    {{item.title.substring(0,40)+'...'}}
+                  </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
@@ -481,7 +506,8 @@
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" >{{item.abstract}}</p>
+                  <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>
+                  <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>
                 </div>
 
                 <div>
@@ -491,6 +517,10 @@
                         {{item.author}}
                       </el-link>
                     </span>
+                    <span style="font-weight: 700;margin-left: 20px">
+                      关键词:
+                    </span>
+                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>专利</span>
@@ -732,8 +762,8 @@
         tableData0: [
           {
             paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            title:'Gooaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagle1',
+            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San','Clearlove'],
             authorId: ['1','2','3'],
             keyword:'123456',
@@ -1116,7 +1146,7 @@
       window.addEventListener('scroll', this.scrollToTop);
       this.search(localStorage.getItem("keyWords"));
       this.keyWords=localStorage.getItem("keyWords");
-      this.isLoading=true;
+      // this.isLoading=true;
       this.getTable0(1);
       this.loadYear();
     },
@@ -1128,7 +1158,7 @@
       getTable0(page){
         let _this=this;
         _this.backTop();
-        _this.isLoading=true;
+        // _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1148,7 +1178,7 @@
       },
       getTable1(page){
         let _this=this;
-        _this.isLoading=true;
+        // _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1168,7 +1198,7 @@
       },
       getTable2(page){
         let _this=this;
-        _this.isLoading=true;
+        // _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords': localStorage.getItem("keyWordsList"),
