@@ -4,16 +4,16 @@
     <el-container style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
-            <div class="person_image">
+            <!-- <div class="person_image">
         			<a href="#" class="person_portraitwr">
         				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
         			</a>
         			<div style="margin: auto;">
-<!--                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
+                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
         			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button> -->
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
         			</div>
-        		</div>
+        		</div> -->
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{insName}}
@@ -173,7 +173,7 @@
           pageSize: 10,
           totalPage: 100,
           menuIndex: '0',
-          avatar:require('../assets/white.jpg'),
+          // avatar:require('../assets/white.jpg'),
           visitNum:'1400',
           insName:'White House名字最多可以这么长',
           // institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
@@ -346,7 +346,7 @@
           var that = this;
           this.$axios.get(baseUrl+'/getResearchInstitute?userId='+this.userId
           ).then(function (response) {
-            that.avatar=response.data.results.avatar;
+            //that.avatar=response.data.results.avatar;
             that.visitNum=response.data.results.visitnum;
             that.realName=response.data.results.realname;
             that.insName=response.data.results.insname;

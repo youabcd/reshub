@@ -6,12 +6,12 @@
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
         			<a href="#" class="my_portraitwr">
-        				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
+        				<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
         			</a>
         		</div>
             <div v-if="!isMyPortal" class="person_image">
             	<a href="#" class="person_portraitwr">
-            		<img :src="avatar" alt="学者头像" class="" width="112" height="112">
+            		<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
             	</a>
             	<div style="margin: auto;">
                 <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要申诉</el-button>
@@ -125,7 +125,7 @@
               </i> -->
             </div>
           </el-card>
-          <div>
+          <!-- <div>
             <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
               <el-pagination
                 @size-change="handleSizeChange"
@@ -139,7 +139,7 @@
                 next-text="下一页">
               </el-pagination>
             </div>
-          </div>
+          </div> -->
         </el-col>
         <el-col :span="7">
           <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">作者关系</p>
@@ -149,7 +149,7 @@
             </div>
             <div v-for="(item,index) in coopData" :key="index" class="coop-item" >
               <div style="text-align: left;position: absolute;">
-                <img class="avatar" src="../assets/trump.jpg" ></img>
+                <img :src="require('../assets/Head/'+item.avatar)" class="avatar"></img>
               </div>
               <el-link :underline="false" @click="gotoAuthor(item.link)">
                 <div style="font:  bold 14px arial;color: #0000FF;height: 12px;padding-left: 42px;">{{item.name}}</div>
@@ -194,7 +194,7 @@
           resId:2,
           menuIndex: '0',
           isHave: true,
-          avatar:require('../assets/trump.jpg'),
+          avatar:'trump.jpg',
           isHave: true,
           isClaimed: true,
           isFollowing: true,
@@ -221,31 +221,31 @@
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'../assets/trump.jpg',
+              avatar:'head01.png',
               link:'https://trump.com/', //resid门户id
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'../assets/trump.jpg',
+              avatar:'head01.png',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'../assets/trump.jpg',
+              avatar:'head07.png',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'../assets/trump.jpg',
+              avatar:'head01.png',
               link:'https://trump.com/',
             },
             {
               name:'钱诚',
               institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'../assets/trump.jpg',
+              avatar:'head01.png',
               link:'https://trump.com/',
             }
           ],
