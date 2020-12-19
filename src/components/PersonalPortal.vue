@@ -323,8 +323,7 @@
           localStorage.setItem('institutionId',institutionId);
         },
         getPersonalPortal() {
-          var that = this;
-          this.axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+          axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
           ).then(function (response) {
             this.isHave=response.data.ishave;
             this.avatar=response.data.avatar;

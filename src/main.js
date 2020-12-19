@@ -27,7 +27,6 @@ Vue.use(CellGroup)
 Vue.use(Col)
 Vue.use(Row)
 Vue.use(VanImage)
-Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
 new Vue({
