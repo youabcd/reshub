@@ -418,14 +418,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -482,14 +482,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -539,14 +539,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
