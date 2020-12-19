@@ -342,8 +342,6 @@
 
             this.magCount=response.data.results.magcount;
             this.magPar=response.data.results.magpar;
-            this.patCount=response.data.results.patcount;
-            this.patPar=response.data.results.patpar;
             this.confCount=response.data.results.confcount;
             this.confPar=response.data.results.confpar;
             
@@ -987,9 +985,10 @@
   .avatar{
   	position:relative;
   	display:inline-block;
-  	width:32px;
-  	height:32px;
+  	width:33px;
+  	height:33px;
   	border:2px solid #fff;
+    margin-top: 5px;
   	overflow:hidden;
   	-webkit-box-shadow:0 1px 6px rgba(0,0,0,.25);
   	-moz-box-shadow:0 1px 6px rgba(0,0,0,.25);

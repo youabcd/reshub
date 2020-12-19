@@ -16,7 +16,7 @@
         		</div>
         		<div class="person_baseinfo">
         			<div class="p_name">
-        				{{name}}
+        				{{insName}}
                 <el-popover
                     placement="bottom"
                     title="邮箱"
@@ -25,20 +25,12 @@
                     :content="mail">
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
-                <!-- <el-popover
-                    placement="bottom"
-                    title="电话"
-                    width="200"
-                    trigger="hover"
-                    :content="phone">
-                <el-button class="commun" slot="reference" type="info" icon="el-icon-phone-outline" :data-clipboard-text="phone" @click="Copy" circle></el-button>
-                </el-popover> -->
         			</div>
         			<div class="p_volume">
         				{{visitNum}}人看过
         			</div>
         			<div class="p_affiliate">
-        				{{institute}}
+        				<!-- {{institute}} -->
         			</div>
               </br>
         			<div class="p_ach_wr">
@@ -85,7 +77,7 @@
           <el-divider content-position="left">合作专家</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.link)">{{item.title}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.resId)">{{item.name}}</span>
               <el-popover
                 placement="right"
                 title="邮箱"
@@ -183,14 +175,13 @@
           menuIndex: '0',
           avatar:require('../assets/white.jpg'),
           visitNum:'1400',
-          name:'White House名字最多可以这么长',
-          institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
+          insName:'White House名字最多可以这么长',
+          // institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
           quoted:'132',
           paperNum:'321',
           researchers:'32123',
           domain:'政治',
-          resList:['BiliBili','NicoNico','Acfun','Pixiv','Patreoon'],
           resCount:['3', '5', '4', '2', '3', '9', '2','3'],
           quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
           magCount:50,
@@ -199,117 +190,96 @@
           patPar:'20%',
           confCount:30,
           confPar:'30%',
-          xd:['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'],
           resData: [
             {
-              paperId:'0',
-              title:'MAGA',
+              resId:'0',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'1',
+              resId:'1',
               title:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'2',
-              title:'MAGA',
+              resId:'2',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'3',
-              title:'MAGA',
+              resId:'3',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'4',
-              title:'MAGA',
+              resId:'4',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'5',
-              title:'MAGA',
+              resId:'5',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'6',
-              title:'MAGA',
+              resId:'6',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'7',
-              title:'MAGA',
+              resId:'7',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'8',
-              title:'MAGA',
+              resId:'8',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
-              paperId:'9',
-              title:'MAGA',
+              resId:'9',
+              name:'MAGA',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
-              link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
           ],
           hotData: [
@@ -319,75 +289,39 @@
               msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
               author: ['Li Ming','Zhang San'],
               authorId: ['1','2'],
-              keyword:'',
-              fund:'',
-              reference:['1','2','3'],
-              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-              institution:[],
-              institutionId:[],
-              type:"期刊",
-              collectStatus: true,
-              collectionSum:6,
-              viewSum:7,
               link:'https://www.google.com.hk/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'2',
-              title:'Google2',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字2',
-              author:['Li Ming','Zhang San'],
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
               authorId: ['1','2'],
-              keyword:'',
-              fund:'',
-              reference:['1','2','3'],
-              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-              institution:[],
-              institutionId:[],
-              type:"会议",
-              collectStatus: false,
-              collectionSum:66,
-              viewSum:77,
-              link:'https://www.youtube.com/',
-              collectTime:'2016-05-04'
+              link:'https://www.google.com.hk/',
             },
             {
               paperId:'3',
-              title:'BILIBILI3',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字3',
-              author:['Li Ming','Zhang San'],
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
               authorId: ['1','2'],
-              keyword:'',
-              fund:'',
-              reference:['1','2','3'],
-              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-              institution:[],
-              institutionId:[],
-              type:"期刊",
-              collectStatus: false,
-              collectionSum:666,
-              viewSum:777,
-              link:'https://www.bilibili.com/',
-              collectTime:'2016-05-04'
+              link:'https://www.google.com.hk/',
             },
             {
               paperId:'4',
-              title:'Google4',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字4',
-              author:['Li Ming','Zhang San'],
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
               authorId: ['1','2'],
-              keyword:'',
-              fund:'',
-              reference:['1','2','3'],
-              referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-              institution:[],
-              institutionId:[],
-              type:"报告",
-              collectStatus: false,
-              collectionSum:6666,
-              viewSum:7777,
-              link:'https://www.google.com/',
-              collectTime:'2016-05-04'
+              link:'https://www.google.com.hk/',
+            },
+            {
+              paperId:'5',
+              title:'Google1',
+              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+              author: ['Li Ming','Zhang San'],
+              authorId: ['1','2'],
+              link:'https://www.google.com.hk/',
             },
           ],
         }
@@ -406,25 +340,24 @@
             resId:localStorage.getItem(resId)
           }).then(function (response) {
             this.avatar=response.data.results.avatar;
-            this.isClaimed=response.data.results.isclaimed;
-            this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
             this.visitNum=response.data.results.visitnum;
             this.realName=response.data.results.realname;
             this.insName=response.data.results.insname;
             this.mail=response.data.results.mail;
             this.quoteNum=response.data.results.quotenum;
             this.paperNum=response.data.results.papernum;
-            this.resField=response.data.results.resfield;
-            this.coopList=response.data.results.cooplist;
+            this.paperNum=response.data.results.researchers;
+            this.domain=response.data.results.domain;
+            
             this.resCount=response.data.results.rescount;
             this.quoCount=response.data.results.quocount;
-            
             this.magCount=response.data.results.magcount;
             this.magPar=response.data.results.magpar;
-            this.patCount=response.data.results.patcount;
-            this.patPar=response.data.results.patpar;
             this.confCount=response.data.results.confcount;
             this.confPar=response.data.results.confpar;
+            
+            this.resdata=response.data.results.resdata;
+            this.hotData=response.data.results.hotdata;
           })
         },
         drawLine(){
@@ -433,6 +366,7 @@
           let uPie=echarts.init(document.getElementById('une'))
           let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
+          var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
@@ -466,7 +400,7 @@
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
-              data: this.xd,
+              data: xd,
               type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
                 show: true,
@@ -564,7 +498,7 @@
             color: ['#59c4e6'],
             xAxis: {                //设置x轴
               boundaryGap: false,     //坐标轴两边不留白
-              data: this.xd,
+              data: xd,
               type: 'category',
               axisLine: {             //坐标轴轴线相关设置。
                 show: true,
