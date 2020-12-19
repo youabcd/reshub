@@ -39,7 +39,7 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-                <el-link :underline="false" @click="gotoAuthor(this.insId)">
+                <el-link :underline="false" @click="gotoInstitution(this.insId)">
                   {{insName}}
                 </el-link>
         			</div>
