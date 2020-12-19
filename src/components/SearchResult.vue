@@ -329,6 +329,8 @@
                     <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
                   </el-menu>
                 </van-col>
+
+                <!--排序-->
                 <van-col span="12">
                   <van-row></van-row>
                   <van-row style="margin-top: 30px;">
@@ -384,6 +386,8 @@
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
                   </span>
             </el-dialog>
+
+            <!--中间块-->
             <div>
               <!--等待加载-->
               <div v-if="isLoading" style="margin: 30px;font-size: 50px;">
@@ -395,10 +399,10 @@
                 <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 50%">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
@@ -809,7 +813,7 @@
             paperIssue: 4, // 期号
             paperPublisher: '工业出版社',
             paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
+            paperVenue: '456', // 会议*/
           },
         ],
         tableData1: [ // 国家自然基金项目
