@@ -320,13 +320,57 @@
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 80%;position: relative;">
 
             <div>
-              <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+              <van-row>
+                <van-col span="12">
+                  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                <el-menu-item index="0" style="width: 120px">●论文({{sizeOfTable0}})</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●项目({{sizeOfTable1}})</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
-              </el-menu>
+                    <el-menu-item index="0" style="width: 120px">●论文({{sizeOfTable0}})</el-menu-item>
+                    <el-menu-item index="1" style="width: 120px">●项目({{sizeOfTable1}})</el-menu-item>
+                    <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
+                  </el-menu>
+                </van-col>
+                <van-col span="12">
+                  <van-row></van-row>
+                  <van-row style="margin-top: 30px;">
+                    <van-col span="6"></van-col>
+                    <van-col span="4" style="font-size: 13px;font-weight: bold;">
+                      <span><i class="el-icon-sort"></i></span>
+                      <span>排序:</span>
+                    </van-col>
+                    <van-col span="4" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortDefault">
+                      <span v-if="whichSort===0" style="color: #3a8ee6">
+                        <span>默认排序</span>
+                      </span>
+                      <span v-if="whichSort===2||whichSort===1">
+                        <span>默认排序</span>
+                      </span>
+                    </van-col>
+                    <van-col span="4" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortByTime">
+                      <span v-if="whichSort===1" style="color: #3a8ee6">
+                        <span>发表时间</span>
+                        <span v-if="changeSortTime%2==0"><i class="el-icon-top"></i></span>
+                        <span v-if="changeSortTime%2==1"><i class="el-icon-bottom"></i></span>
+                      </span>
+                      <span v-if="whichSort===2||whichSort===0">
+                        <span>发表时间</span>
+                      </span>
+                    </van-col>
+                    <van-col span="4" style="font-size: 13px;cursor:pointer;text-align: left" @click="sortByCited">
+                      <span v-if="whichSort===1||whichSort===0">
+                        <span>被引频次</span>
+                      </span>
+                      <span v-if="whichSort===2" style="color: #3a8ee6">
+                        <span>被引频次</span>
+                        <span v-if="changeSortCited%2==0"><i class="el-icon-top"></i></span>
+                        <span v-if="changeSortCited%2==1"><i class="el-icon-bottom"></i></span>
+                      </span>
+                    </van-col>
+                    <van-col span="2"></van-col>
+                  </van-row>
+                </van-col>
+              </van-row>
             </div>
+
             <el-dialog
               title="使用微信扫一扫"
               :visible.sync="dialogVisible"
@@ -452,9 +496,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(tableData1[index].authorId)">
                       {{tableData1[index].author}}
-                      </el-link>
                     </span>
                     <span style="font-weight: 700;margin-left: 20px">
                       关键词:
@@ -511,9 +553,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId)">
                         {{item.author}}
-                      </el-link>
                     </span>
                     <span style="font-weight: 700;margin-left: 20px">
                       关键词:
@@ -635,6 +675,9 @@
     },
     data() {
       return {
+        changeSortTime:0,
+        changeSortCited:0,
+        whichSort:0,
         isLoading:false,
         sizeOfTable0:0,
         sizeOfTable1:0,
@@ -819,7 +862,7 @@
       this.search(localStorage.getItem("keyWords"));
       this.keyWords=localStorage.getItem("keyWords");
       this.isLoading=true;
-      this.getTable0(1);
+      this.getTable00(1);
       this.loadYear();
     },
     destroyed () {
@@ -827,6 +870,26 @@
     },
     methods: {
       //获取数据
+      getTable00(page){
+        let _this=this;
+        _this.isLoading=true;
+        axios.get(baseUrl+'/searchWords',{
+          params:{
+            'keyWords':(localStorage.getItem("keyWordsList")),
+            'dateStart':localStorage.getItem("dateStart"),
+            'dateEnd':localStorage.getItem("dateEnd"),
+            'Radio':localStorage.getItem("Radio"),
+            'page':page,
+            'type':'paper',
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+            _this.tableData0=response.data.result;
+            _this.sizeOfTable0=response.data.num;
+            _this.isLoading=false;
+          })
+      },
       getTable0(page){
         let _this=this;
         _this.backTop();
@@ -887,6 +950,43 @@
             _this.sizeOfTable2=response.data.num;
             _this.isLoading=false;
           })
+      },
+
+      //排序
+      sortDefault(){
+        let _this=this;
+        _this.whichSort=0;
+        axios.get(baseUrl+'sort',{
+          params:{
+            'sortType':0,//默认排序
+            'howSort':-1,
+          }
+        }).then(function (response) {
+        })
+      },
+      sortByTime(){
+        let _this=this;
+        _this.changeSortTime++;
+        _this.whichSort=1;
+        axios.get(baseUrl+'sort',{
+          params:{
+            'sortType':1,//按时间排序
+            'howSort':_this.changeSortTime%2,//0为升序 1为降序
+          }
+        }).then(function (response) {
+        })
+      },
+      sortByCited(){
+        let _this=this;
+        _this.changeSortCited++;
+        _this.whichSort=2;
+        axios.get(baseUrl+'sort',{
+          params:{
+            'sortType':2,//按被引频次排序
+            'howSort':_this.changeSortCited%2,//0为升序 1为降序
+          }
+        }).then(function (response) {
+        })
       },
 
       //年限选择
