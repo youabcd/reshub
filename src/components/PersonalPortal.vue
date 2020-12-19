@@ -174,7 +174,9 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    import baseUrl from "./baseUrl";
     import webUrl from "./webUrl";
+    import axios from 'axios';
     let echarts = require('echarts/lib/echarts')
     require('echarts/lib/chart/line')
     require('echarts/lib/chart/pie')
@@ -321,8 +323,9 @@
           localStorage.setItem('institutionId',institutionId);
         },
         getPersonalPortal() {
-        this.axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
-        ).then(function (response) {
+          var that = this;
+          this.axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+          ).then(function (response) {
             this.isHave=response.data.ishave;
             this.avatar=response.data.avatar;
             this.isClaimed=response.data.isclaimed;

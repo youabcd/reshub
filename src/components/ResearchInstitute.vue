@@ -331,11 +331,11 @@
       },
       mounted() {
         this.drawLine();
-        this.getPersonalPortal();
+        this.getResearchInstitute();
       },
       methods:{
-        getPersonalPortal() {
-          axios.post(baseUrl+'/getPersonalPortal',{
+        getResearchInstitute() {
+          this.axios.post(baseUrl+'/getResearchInstitute',{
             userId:localStorage.getItem(myId),
             resId:localStorage.getItem(resId)
           }).then(function (response) {
