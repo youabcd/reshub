@@ -115,6 +115,7 @@
           //发送验证码
           askVerificationCode() {
             var _this = this;
+            //计时器
             if(this.timeContent=='发送验证码'){
               let time=59;
               let timer=setInterval(()=>{
@@ -130,25 +131,25 @@
                 }
               },1000);
             }
-            //let data = new FormData();
-            //data.append('userId',this.useremail);
-            //axios.post(baseUrl+'/passwordLost',data)
-
-
-
+            console.log('这个就是Email:'+_this.mail);
             axios.get(baseUrl+'/passwordLost',{
-                    UserEmail:_this.mail
+                UserEmail:_this.mail
             })
+            
               .then(function (response){
                 //Toast(response.data.message);
                 console.log(response);
-                _this.subidcode = response.data.result;
+                //_this.subidcode = response.data.result;
+                console.log('response.data.result:'+response.data.result);
               })
               .catch(function (error) { // 请求失败处理
                 console.log(error);
               });
           },
-
+          //let data = new FormData();
+            //data.append('userId',this.useremail);
+            //axios.get(baseUrl+'/passwordLost',data)
+            
 
             //验证码验证
             verify_verificationCode(){
