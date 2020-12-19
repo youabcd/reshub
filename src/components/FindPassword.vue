@@ -134,7 +134,7 @@
             console.log('这个就是Email:'+_this.mail);
             axios.get(baseUrl+'/passwordLost',{
               params:{
-                'mailAddress':_this.mail
+                mailAddress:_this.mail
               }
             })
 
@@ -155,9 +155,13 @@
 
             //验证码验证
             verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',{
-                    mailAddress: this.mail,
-                    verificationCode:this.verificationCode
+                axios.get(baseUrl+'/verificationCode',
+                {
+                    params:{
+                        mailAddress: this.mail,
+                        verificationCode:this.verificationCode
+                    }
+                    
                 })
                 .then(function(response){
                     if(response.data.result==false){
@@ -216,12 +220,16 @@
                 this.errorMessage='重置密码';
                 //验证邮件地址和密码的格式
                 if(this.patternMatching2(this.mail,this.password,this.password2)==false){
+                    
                     return;
                 }
+                console.log('Patterns of mail and password are right!');
                 //验证验证码正确
                 if(this.verify_verificationCode()==false){
+                    
                     return;
                 }
+                console.log('Verification code is right!');
 
                 //md5加密
                 const md5 = crypto.createHash('md5');
@@ -230,18 +238,23 @@
 
                 if(this.veri_success==true){
                     axios.get(baseUrl+'/newPassword',{
-                    mailAddress: this.mail,
-                    newPassword: md5password
+                    params:{
+                        mailAddress: this.mail,
+                        newPassword: md5password
+                        }
                    })
                    .then(function(response){
+                       console.log('进入重置');
                        var reset_success;
                        reset_success=response.data.result;
                        if(reset_success==true){
+                           console.log('重置成功');
                            this.$router.push({
                             path:'/login',
                             });
                        }
                        else {
+                           console.log('重置失败');
                            errorMessage='重置失败'
                        }
                    })

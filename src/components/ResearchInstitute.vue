@@ -86,18 +86,18 @@
                 <i class="el-icon-message" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="item.mail" @click="CopyResMail" circle></i>
               </el-popover>
             </div>
-            <div style="display: inline;position: absolute;right: 10px;top: 5px">
+            <!-- <div style="display: inline;position: absolute;right: 10px;top: 5px">
               <span>
                 <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
                   <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
                 </el-tooltip>
               </span>
-            </div>
+            </div> -->
             <div style="text-align: left;position: absolute;left:95px;top: 44px;">
               <p style="height: 7px" >领域：{{item.domain}}</p>
             </div>
             <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
-              <el-button style="width: 79px;" size="mini" type="primary" @click="gotoPortal(item.link)" round>查看详情</el-button>
+              <el-button style="width: 79px;" size="mini" type="primary" @click="gotoAuthor(item.link)" round>查看详情</el-button>
               <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
               <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
@@ -334,6 +334,14 @@
         this.getResearchInstitute();
       },
       methods:{
+        gotoAuthor(authorId) {
+          window.open(webUrl+'PersonalPortal');
+          localStorage.setItem('authorId',authorId);
+        },
+        gotoInstitution(institutionId){
+          window.open(webUrl+'ResearchInstitute');
+          localStorage.setItem('institutionId',institutionId);
+        },
         getResearchInstitute() {
           var that = this;
           this.$axios.get(baseUrl+'/getResearchInstitute?userId='+this.userId

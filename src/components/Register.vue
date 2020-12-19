@@ -138,9 +138,13 @@ import baseUrl from './baseUrl'
             },
             //验证码验证
             verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',{
-                    mailAddress: this.mail,
-                    verificationCode:this.verificationCode
+                axios.get(baseUrl+'/verificationCode',
+                {
+                    params:{
+                        mailAddress: this.mail,
+                        verificationCode:this.verificationCode
+                    }
+                    
                 })
                 .then(function(response){
                     if(response.data.result==false){
