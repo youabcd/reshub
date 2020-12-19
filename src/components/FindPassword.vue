@@ -29,7 +29,7 @@
         <span class="findPa-btn" @click="ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
 
-        <!-- for debug  
+        <!-- for debug
         <input type="text" placeholder="testVar" class="findPa-input" v-model="testVar">
         <span class="findPa-btn" @click="test">测试</span>-->
     </div>
@@ -114,7 +114,8 @@
 
           //发送验证码
           askVerificationCode() {
-            var _this = this;
+            let _this = this;
+            //计时器
             if(this.timeContent=='发送验证码'){
               let time=59;
               let timer=setInterval(()=>{
@@ -130,31 +131,37 @@
                 }
               },1000);
             }
-            //let data = new FormData();
-            //data.append('userId',this.useremail);
-            //axios.post(baseUrl+'/passwordLost',data)
-
-
-
+            console.log('这个就是Email:'+_this.mail);
             axios.get(baseUrl+'/passwordLost',{
-                    UserEmail:_this.mail
+              params:{
+                mailAddress:_this.mail
+              }
             })
+
               .then(function (response){
                 //Toast(response.data.message);
                 console.log(response);
-                _this.subidcode = response.data.result;
+                //_this.subidcode = response.data.result;
+                console.log('response.data.result:'+response.data.result);
               })
               .catch(function (error) { // 请求失败处理
                 console.log(error);
               });
           },
+          //let data = new FormData();
+            //data.append('userId',this.useremail);
+            //axios.get(baseUrl+'/passwordLost',data)
 
 
             //验证码验证
             verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',{
-                    mailAddress: this.mail,
-                    verificationCode:this.verificationCode
+                axios.get(baseUrl+'/verificationCode',
+                {
+                    params:{
+                        mailAddress: this.mail,
+                        verificationCode:this.verificationCode
+                    }
+                    
                 })
                 .then(function(response){
                     if(response.data.result==false){
@@ -213,12 +220,16 @@
                 this.errorMessage='重置密码';
                 //验证邮件地址和密码的格式
                 if(this.patternMatching2(this.mail,this.password,this.password2)==false){
+                    
                     return;
                 }
+                console.log('Patterns of mail and password are right!');
                 //验证验证码正确
                 if(this.verify_verificationCode()==false){
+                    
                     return;
                 }
+                console.log('Verification code is right!');
 
                 //md5加密
                 const md5 = crypto.createHash('md5');
@@ -227,18 +238,23 @@
 
                 if(this.veri_success==true){
                     axios.get(baseUrl+'/newPassword',{
-                    mailAddress: this.mail,
-                    newPassword: md5password
+                    params:{
+                        mailAddress: this.mail,
+                        newPassword: md5password
+                        }
                    })
                    .then(function(response){
+                       console.log('进入重置');
                        var reset_success;
                        reset_success=response.data.result;
                        if(reset_success==true){
+                           console.log('重置成功');
                            this.$router.push({
                             path:'/login',
                             });
                        }
                        else {
+                           console.log('重置失败');
                            errorMessage='重置失败'
                        }
                    })
