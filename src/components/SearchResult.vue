@@ -322,9 +322,9 @@
             <div>
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                <el-menu-item index="0" style="width: 120px">●论文</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●项目</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●专利</el-menu-item>
+                <el-menu-item index="0" style="width: 120px">●论文({{sizeOfTable0}})</el-menu-item>
+                <el-menu-item index="1" style="width: 120px">●项目({{sizeOfTable1}})</el-menu-item>
+                <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
               </el-menu>
             </div>
             <el-dialog
@@ -390,9 +390,7 @@
                 <div>
                   <div style="position: absolute;left: 5px;top: 130px;">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                      <el-link :underline="false" @click="gotoAuthor(item.authorId[author_index])">
                         {{author_item}}
-                      </el-link>
                     </span>
                     <span style="font-weight: 700;margin-left: 20px">
                       关键词:
@@ -638,9 +636,9 @@
     data() {
       return {
         isLoading:false,
-        sizeOfTable0:101,
-        sizeOfTable1:91,
-        sizeOfTable2:81,
+        sizeOfTable0:0,
+        sizeOfTable1:0,
+        sizeOfTable2:0,
         QRlink:'',
         dataStart:'',
         dataEnd:'',
@@ -664,6 +662,7 @@
           title:'',
           msg:'',
           author: [],
+          authorOrg:[],
           authorId: [],
           keyword:'',
           reference:[],
@@ -731,33 +730,13 @@
             link:'https://www.bilibili.com',
             institution:'北京航空航天大学北京航空航天大学',
             id:'1',
-          },{
+          },
+          {
             name:'Zhang Si',
             link:'https://www.bilibili.com',
             institution:'北京航空航天大学1',
             id:'2',
-          },{
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学3',
-            id:'3',
-          },{
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学3',
-            id:'4',
-          },{
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学3',
-            id:'5',
-          },{
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学3',
-            id:'6',
           },
-
         ],
         tableData0: [
           {
@@ -765,314 +744,7 @@
             title:'Gooaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagle1',
             msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
-          },
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
+            authorOrg:[],
             authorId: ['1','2','3'],
             keyword:'123456',
             reference:['1','2','3'],
@@ -1146,7 +818,7 @@
       window.addEventListener('scroll', this.scrollToTop);
       this.search(localStorage.getItem("keyWords"));
       this.keyWords=localStorage.getItem("keyWords");
-      // this.isLoading=true;
+      this.isLoading=true;
       this.getTable0(1);
       this.loadYear();
     },
@@ -1158,7 +830,7 @@
       getTable0(page){
         let _this=this;
         _this.backTop();
-        // _this.isLoading=true;
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1178,7 +850,7 @@
       },
       getTable1(page){
         let _this=this;
-        // _this.isLoading=true;
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1198,7 +870,7 @@
       },
       getTable2(page){
         let _this=this;
-        // _this.isLoading=true;
+        _this.isLoading=true;
         axios.get(baseUrl+'/searchWords',{
           params:{
             'keyWords': localStorage.getItem("keyWordsList"),
@@ -1432,6 +1104,16 @@
 
       filter() {
         let _this=this;
+        let type='';
+        if(_this.menuIndex==='0'){
+          type='paper';
+        }
+        else if(_this.menuIndex==='1'){
+          type='project';
+        }
+        else if(_this.menuIndex==='2'){
+          type='patent';
+        }
         axios.get(baseUrl+'/filter',{
           params:{
             'keyWords':(localStorage.getItem("keyWordsList")),
@@ -1439,13 +1121,20 @@
             'dateEnd':_this.dataEnd,
             'checkedSubject':_this.checkedSubject,
             'checkedAuthor':_this.checkedAuthor,
+            'type':type,
           }
         })
           .then(function (response) {
             console.log(response);
-            _this.tableData0=response.data.tableData0;
-            _this.tableData1=response.data.tableData1;
-            _this.tableData2=response.data.tableData2;
+            if(type==='paper'){
+              _this.tableData0=response.data.tableData0;
+            }
+            else if(type==='project'){
+              _this.tableData1=response.data.tableData1;
+            }
+            else if(type==='patent'){
+              _this.tableData2=response.data.tableData2;
+            }
           })
       },
 
