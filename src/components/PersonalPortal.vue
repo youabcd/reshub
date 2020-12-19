@@ -114,15 +114,15 @@
 
             </div>
             <div>
-              <el-tag type="info" style="position: absolute;right: 161px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
+              <el-tag type="info" style="position: absolute;right: 80px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
                 <span>{{item.type}}</span>
               </el-tag>
-              <i class="el-icon-star-on" style="position: absolute;right: 86px;top: 110px">
+              <i class="el-icon-star-on" style="position: absolute;right: 20px;top: 110px">
                 <span> {{item.collectionSum}}</span>
               </i>
-              <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
+              <!-- <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
                 <span> {{item.viewSum}}</span>
-              </i>
+              </i> -->
             </div>
           </el-card>
           <div>
@@ -257,9 +257,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'1',
@@ -268,9 +266,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'2',
@@ -279,9 +275,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'3',
@@ -290,9 +284,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'4',
@@ -301,9 +293,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             }
           ],
         }
