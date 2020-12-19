@@ -128,7 +128,7 @@
           /*this.showChangeHead=false;
           this.userImage=item;
           localStorage.setItem("userHead",item);*/
-          axios.post(baseUrl+'/changeHead',{url:item})
+          axios.post(baseUrl+'/changeHead',{userId:localStorage.getItem('myId'),url:item})
           .then(function (response) {
             console.log(response);
             if(response.data.status==true){
