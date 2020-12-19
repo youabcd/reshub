@@ -188,6 +188,8 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          userId:1,
+          resId:2,
           menuIndex: '0',
           isHave: true,
           avatar:require('../assets/trump.jpg'),
@@ -305,8 +307,9 @@
         }
       },
       mounted() {
-        this.drawLine();
         this.getPersonalPortal();
+        this.userId=localStorage.getItem('myId'),
+        this.resId=localStorage.getItem('authorId')
       },
       methods:{
         gotoAuthor(authorId) {
@@ -318,34 +321,33 @@
           localStorage.setItem('institutionId',institutionId);
         },
         getPersonalPortal() {
-          axios.post(baseUrl+'/getPersonalPortal',{
-            userId:localStorage.getItem('myId'),
-            resId:localStorage.getItem('authorId')
-          }).then(function (response) {
-            this.isHave=response.data.results.ishave;
-            this.avatar=response.data.results.avatar;
-            this.isClaimed=response.data.results.isclaimed;
-            this.isFollowing=response.data.results.isfollowing;
-            this.isMyPortal=response.data.results.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
-            this.visitNum=response.data.results.visitnum;
-            this.followNum=response.data.results.follownum;
-            this.realName=response.data.results.realname;
-            this.insName=response.data.results.insname;
-            this.insId=response.data.results.insid;
-            this.mail=response.data.results.mail;
-            this.quoteNum=response.data.results.quotenum;
-            this.paperNum=response.data.results.papernum;
-            this.resField=response.data.results.resfield;
-            this.coopList=response.data.results.cooplist;
-            this.resCount=response.data.results.rescount;
-            this.quoCount=response.data.results.quocount;
+        this.axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+        ).then(function (response) {
+            this.isHave=response.data.ishave;
+            this.avatar=response.data.avatar;
+            this.isClaimed=response.data.isclaimed;
+            this.isFollowing=response.data.isfollowing;
+            this.isMyPortal=response.data.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
+            this.visitNum=response.data.visitnum;
+            this.followNum=response.data.follownum;
+            this.realName=response.data.realname;
+            this.insName=response.data.insname;
+            this.insId=response.data.insid;
+            this.mail=response.data.mail;
+            this.quoteNum=response.data.quotenum;
+            this.paperNum=response.data.papernum;
+            this.resField=response.data.resfield;
+            this.coopList=response.data.cooplist;
+            this.resCount=response.data.rescount;
+            this.quoCount=response.data.quocount;
 
-            this.magCount=response.data.results.magcount;
-            this.magPar=response.data.results.magpar;
-            this.confCount=response.data.results.confcount;
-            this.confPar=response.data.results.confpar;
+            this.magCount=response.data.magcount;
+            this.magPar=response.data.magpar;
+            this.confCount=response.data.confcount;
+            this.confPar=response.data.confpar;
             
-            this.coopData=response.data.results.coopdata;
+            this.coopData=response.data.coopdata;
+            this.drawLine();
           })
         },
         drawLine(){
