@@ -114,15 +114,15 @@
 
             </div>
             <div>
-              <el-tag type="info" style="position: absolute;right: 161px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
+              <el-tag type="info" style="position: absolute;right: 80px;top: 100px;width: 50px;text-align: center;margin-top: 0px">
                 <span>{{item.type}}</span>
               </el-tag>
-              <i class="el-icon-star-on" style="position: absolute;right: 86px;top: 110px">
+              <i class="el-icon-star-on" style="position: absolute;right: 20px;top: 110px">
                 <span> {{item.collectionSum}}</span>
               </i>
-              <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
+              <!-- <i class="el-icon-view" style="position: absolute;right: 20px;top: 110px">
                 <span> {{item.viewSum}}</span>
-              </i>
+              </i> -->
             </div>
           </el-card>
           <div>
@@ -257,9 +257,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'1',
@@ -268,9 +266,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'2',
@@ -279,9 +275,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'3',
@@ -290,9 +284,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             },
             {
               paperId:'4',
@@ -301,9 +293,7 @@
               type:"扯淡",
               collectStatus:true,
               collectionSum:666,
-              viewSum:777,
               link:'https://trump.com/',
-              collectTime:'2016-05-04'
             }
           ],
         }
@@ -324,34 +314,34 @@
         },
         getPersonalPortal() {
           var that = this;
-          this.axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+          this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
           ).then(function (response) {
-            this.isHave=response.data.ishave;
-            this.avatar=response.data.avatar;
-            this.isClaimed=response.data.isclaimed;
-            this.isFollowing=response.data.isfollowing;
-            this.isMyPortal=response.data.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
-            this.visitNum=response.data.visitnum;
-            this.followNum=response.data.follownum;
-            this.realName=response.data.realname;
-            this.insName=response.data.insname;
-            this.insId=response.data.insid;
-            this.mail=response.data.mail;
-            this.quoteNum=response.data.quotenum;
-            this.paperNum=response.data.papernum;
-            this.resField=response.data.resfield;
-            this.coopList=response.data.cooplist;
-            this.resCount=response.data.rescount;
-            this.quoCount=response.data.quocount;
-            // this.tableData=response.data.tabledata;
+            that.isHave=response.data.ishave;
+            that.avatar=response.data.avatar;
+            that.isClaimed=response.data.isclaimed;
+            that.isFollowing=response.data.isfollowing;
+            that.isMyPortal=response.data.ismyportal;        //如果是我自己的门户则不显示关注取消关注按钮
+            that.visitNum=response.data.visitnum;
+            that.followNum=response.data.follownum;
+            that.realName=response.data.realname;
+            that.insName=response.data.insname;
+            that.insId=response.data.insid;
+            that.mail=response.data.mail;
+            that.quoteNum=response.data.quotenum;
+            that.paperNum=response.data.papernum;
+            that.resField=response.data.resfield;
+            that.coopList=response.data.cooplist;
+            that.resCount=response.data.rescount;
+            that.quoCount=response.data.quocount;
+            // that.tableData=response.data.tabledata;
             
-            this.magCount=response.data.magcount;
-            this.magPar=response.data.magpar;
-            this.confCount=response.data.confcount;
-            this.confPar=response.data.confpar;
+            that.magCount=response.data.magcount;
+            that.magPar=response.data.magpar;
+            that.confCount=response.data.confcount;
+            that.confPar=response.data.confpar;
             
-            this.coopData=response.data.coopdata;
-            this.drawLine();
+            that.coopData=response.data.coopdata;
+            that.drawLine();
           })
         },
         drawLine(){
