@@ -112,6 +112,10 @@
         this.chart.setOption(option);
         this.chart.on('click',function(params){
           localStorage.setItem("keyWords",'(主题 '+params.name+')');
+          let searchKey=[
+            {type:'1',words:params.name,isFuzzy:false,boolType:'1'},
+          ];
+          localStorage.setItem("keyWordsList",JSON.stringify(searchKey));
           window.open(webUrl+"SearchResult");
         });
       },

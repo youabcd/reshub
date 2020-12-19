@@ -26,7 +26,7 @@
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
-        
+
     </div>
     <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
 </div>
@@ -179,7 +179,6 @@ import baseUrl from './baseUrl'
                     password: md5password,
                     mailAddress: this.account,
                     userDescription: this.descrip
-
                 })
                 .then(function(response){
                     console.log(response);
@@ -225,7 +224,7 @@ import baseUrl from './baseUrl'
                     console.log(error);
                 });
             },
-            
+
             backToLogin(){
                 this.$router.push({
                     path:'/login',

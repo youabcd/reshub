@@ -23,8 +23,8 @@
     <div class="log-email">
         <input type="text" placeholder="Email" class="log-input" v-model="userID">
         <input type="password" placeholder="Password" class="log-input"  v-model="password">
-        <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div> 
-        
+        <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div>
+
         <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
@@ -46,16 +46,16 @@ export default {
   		userID: '',
       password: '',
       errorMessage:''
-      
+
 
   	}
   },
   methods:{
-    
+
     //邮件和密码的格式验证
     patternMatching(mail,pa){
                 //Email地址
-                let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\w+([-.]\w+)*$/;
                 //密码(以字母开头，长度在6~18之间，只能包含字母、数字和下划线)
                 let password_pattern=/^\w{6,18}$/;
                 if(mail_pattern.test(mail)==false){
@@ -70,7 +70,7 @@ export default {
                         //console.log('password-length is:'+pa.length);
 
                         if(pa.length<6||pa.length==0){
-                            
+
                             this.errorMessage='密码长度必须大于6';
                         }
                         else if(pa.length>18){
@@ -79,13 +79,13 @@ export default {
                         else {
                             this.errorMessage='密码只能含有字母、数字、下划线';
                         }
-                        
+
                         return false;
                 }
                 else {
                     return true;
                 }
-                
+
     },
     login(){
       if(this.patternMatching(this.userID,this.password)==false){
@@ -98,14 +98,14 @@ export default {
 
       let _this=this;
       axios.post(baseUrl+'/identityCheck',{
-        userID:this.userID,
+        userId:this.userID,
         password:md5password
       })
         .then(function (response) {
           console.log(response);
-          if(response.data.result==true){
+          if(response.data.result===true){
             //在文件‘localStorage里存了的变量’里面提到的都要存在这里
-            localStorage.setItem("myId",response.userID);
+            localStorage.setItem("myId",response.userId);
             localStorage.setItem("userHead",response.userHead);
             localStorage.setItem("isPortal",response.isPortal);
             localStorage.setItem("portalId",response.portalId);
@@ -156,7 +156,7 @@ export default {
 }
 .login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:3%;  width: 500px; min-height: 555px; margin-bottom: 3%;
 padding-bottom: 30px;
-z-index: 10; background: #fff;-webkit-border-radius: 5px; 
+z-index: 10; background: #fff;-webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 -ms-border-radius: 5px;
 -o-border-radius: 5px;
@@ -170,7 +170,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-/*color: #1fcab3;*/ 
+/*color: #1fcab3;*/
 .log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}

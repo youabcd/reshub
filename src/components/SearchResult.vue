@@ -329,6 +329,8 @@
                     <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
                   </el-menu>
                 </van-col>
+
+                <!--排序-->
                 <van-col span="12">
                   <van-row></van-row>
                   <van-row style="margin-top: 30px;">
@@ -384,6 +386,8 @@
                     <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
                   </span>
             </el-dialog>
+
+            <!--中间块-->
             <div>
               <!--等待加载-->
               <div v-if="isLoading" style="margin: 30px;font-size: 50px;">
@@ -394,11 +398,11 @@
               <!--论文-->
                 <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 50%">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 70%">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
@@ -414,14 +418,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -431,15 +435,18 @@
                   <p style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</p>
                 </div>
 
+                  <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      关键词:
+                    </span>
+                    <span>{{item.keywords}}</span>
+                  </div>
+
                 <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
+                  <div style="position: absolute;left: 5px;top: 140px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
                     <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
                         {{author_item}}
                     </span>
-                    <span style="font-weight: 700;margin-left: 20px">
-                      关键词:
-                    </span>
-                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>论文</span>
@@ -475,14 +482,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -532,14 +539,14 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -675,6 +682,7 @@
     },
     data() {
       return {
+        commentWidth:'620',
         changeSortTime:0,
         changeSortCited:0,
         whichSort:0,
@@ -707,7 +715,7 @@
           author: [],
           authorOrg:[],
           authorId: [],
-          keyword:'',
+          keywords:'',
           reference:[],
           referenceLink:[],
           institution:[],
@@ -784,12 +792,12 @@
         tableData0: [
           {
             paperId:'1',
-            title:'Gooaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagle1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
+            title:'',
+            msg:'',
             author: ['Li Ming','Zhang San','Clearlove'],
             authorOrg:[],
             authorId: ['1','2','3'],
-            keyword:'123456',
+            keywords:'123456',
             reference:['1','2','3'],
             referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
             institution:['北京航空航天大学'],
@@ -809,7 +817,7 @@
             paperIssue: 4, // 期号
             paperPublisher: '工业出版社',
             paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
+            paperVenue: '456', // 会议*/
           },
         ],
         tableData1: [ // 国家自然基金项目
