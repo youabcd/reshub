@@ -103,7 +103,7 @@ export default {
       })
         .then(function (response) {
           console.log(response);
-          if(response.data.result==true){
+          if(response.data.result===true){
             //在文件‘localStorage里存了的变量’里面提到的都要存在这里
             localStorage.setItem("myId",response.userId);
             localStorage.setItem("userHead",response.userHead);
