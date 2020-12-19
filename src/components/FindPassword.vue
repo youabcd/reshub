@@ -29,7 +29,7 @@
         <span class="findPa-btn" @click="ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
 
-        <!-- for debug  
+        <!-- for debug
         <input type="text" placeholder="testVar" class="findPa-input" v-model="testVar">
         <span class="findPa-btn" @click="test">测试</span>-->
     </div>
@@ -114,7 +114,7 @@
 
           //发送验证码
           askVerificationCode() {
-            var _this = this;
+            let _this = this;
             //计时器
             if(this.timeContent=='发送验证码'){
               let time=59;
@@ -133,9 +133,11 @@
             }
             console.log('这个就是Email:'+_this.mail);
             axios.get(baseUrl+'/passwordLost',{
-                UserEmail:_this.mail
+              params:{
+                'mailAddress':_this.mail
+              }
             })
-            
+
               .then(function (response){
                 //Toast(response.data.message);
                 console.log(response);
@@ -149,7 +151,7 @@
           //let data = new FormData();
             //data.append('userId',this.useremail);
             //axios.get(baseUrl+'/passwordLost',data)
-            
+
 
             //验证码验证
             verify_verificationCode(){
