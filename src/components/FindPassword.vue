@@ -28,6 +28,7 @@
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
+        <span class="findPa-btn" @click="verify_verificationCode">测试验证码验证</span>
 
         <!-- for debug
         <input type="text" placeholder="testVar" class="findPa-input" v-model="testVar">
@@ -117,6 +118,7 @@
                 .then(function(response){
                     if(response.data.result==false){
                         _this.errorMessage='验证码错误';
+                        console.log('When verify the code,find error!');
                         _this.veri_success=false;
                     }
                     else {
