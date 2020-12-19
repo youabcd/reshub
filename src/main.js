@@ -17,6 +17,7 @@ import VanImage from 'vant/lib/image'
 import 'vant/lib/image/style'
 import Popup from 'vant/lib/popup'
 import 'vant/lib/popup/style'
+import axios from 'axios'
 
 Vue.use(Popup)
 Vue.use(ElementUI)
@@ -26,7 +27,7 @@ Vue.use(CellGroup)
 Vue.use(Col)
 Vue.use(Row)
 Vue.use(VanImage)
-
+Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */
 new Vue({
