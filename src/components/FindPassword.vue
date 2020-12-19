@@ -130,11 +130,17 @@
                 }
               },1000);
             }
-            let data = new FormData();
-            data.append('userId',this.useremail);
-            axios.post(baseUrl+'/passwordLost',data)
+            //let data = new FormData();
+            //data.append('userId',this.useremail);
+            //axios.post(baseUrl+'/passwordLost',data)
+
+
+
+            axios.get(baseUrl+'/passwordLost',{
+                    UserEmail:_this.mail
+            })
               .then(function (response){
-                Toast(response.data.message);
+                //Toast(response.data.message);
                 console.log(response);
                 _this.subidcode = response.data.result;
               })

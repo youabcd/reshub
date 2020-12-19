@@ -124,7 +124,11 @@
         },
         getConcern(){
           let _this=this;
-          axios.get(baseUrl+'/getMyConcern')
+          axios.get(baseUrl+'/getMyConcern',{
+            params:{
+              userId:localStorage.getItem("myId"),
+            }
+          })
             .then(function (response) {
               console.log(response);
               _this.myConcern=response.data.myConcern;
