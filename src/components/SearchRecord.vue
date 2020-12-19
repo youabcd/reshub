@@ -183,8 +183,10 @@
       },
       methods: {
         getSearchRecord() {
-          axios.post(baseUrl+'/getSearchRecord',{
-            userId:localStorage.getItem('myId')
+          axios.get(baseUrl+'/getSearchRecord',{
+            params:{
+              userId:localStorage.getItem('myId')
+            }
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.id=response.data.results[i].id;
@@ -218,9 +220,11 @@
         deleteHistory(index) {
           //传递数据
           // console.log([this.tableData[index].id])
-          axios.post(baseUrl+'/deleteSearchRecord',{
-            userId: localStorage.getItem('myId'),
-            Id: [this.tableData[index].id]
+          axios.get(baseUrl+'/deleteSearchRecord',{
+            params:{
+              userId: localStorage.getItem('myId'),
+              Id: [this.tableData[index].id]
+            }
           }).then(function (response) {
             if (response.data.succeed===true) {
               this.tableData.splice(index,1);
@@ -242,9 +246,11 @@
           for (let i=0; i<this.multipleSelection.length; i++) {
             this.post.push(this.multipleSelection[i].id)
           }
-          axios.post(baseUrl+'/deleteSearchRecord',{
-            userId: localStorage.getItem('myId'),
-            Id: this.post
+          axios.get(baseUrl+'/deleteSearchRecord',{
+            params:{
+              userId: localStorage.getItem('myId'),
+              Id: this.post
+            }
           }).then(function (response) {
             if (response.data.succeed === true) {
               let result = this.multipleSelection.map(a => {return a.id});
