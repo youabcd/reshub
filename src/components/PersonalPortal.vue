@@ -299,9 +299,9 @@
         }
       },
       mounted() {
+        this.userId=localStorage.getItem('myId');
+        this.resId=localStorage.getItem('authorId');
         this.getPersonalPortal();
-        this.userId=localStorage.getItem('myId'),
-        this.resId=localStorage.getItem('authorId')
       },
       methods:{
         gotoAuthor(authorId) {

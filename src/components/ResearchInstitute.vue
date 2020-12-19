@@ -330,34 +330,33 @@
         TopBar
       },
       mounted() {
-        this.drawLine();
+        this.userId=localStorage.getItem('myId');
         this.getResearchInstitute();
       },
       methods:{
         getResearchInstitute() {
-          this.axios.post(baseUrl+'/getResearchInstitute',{
-            userId:localStorage.getItem(myId),
-            resId:localStorage.getItem(resId)
-          }).then(function (response) {
-            this.avatar=response.data.results.avatar;
-            this.visitNum=response.data.results.visitnum;
-            this.realName=response.data.results.realname;
-            this.insName=response.data.results.insname;
-            this.mail=response.data.results.mail;
-            this.quoteNum=response.data.results.quotenum;
-            this.paperNum=response.data.results.papernum;
-            this.paperNum=response.data.results.researchers;
-            this.domain=response.data.results.domain;
+          var that = this;
+          this.$axios.get(baseUrl+'/getResearchInstitute?userId='+this.userId
+          ).then(function (response) {
+            that.avatar=response.data.results.avatar;
+            that.visitNum=response.data.results.visitnum;
+            that.realName=response.data.results.realname;
+            that.insName=response.data.results.insname;
+            that.mail=response.data.results.mail;
+            that.quoteNum=response.data.results.quotenum;
+            that.paperNum=response.data.results.papernum;
+            that.paperNum=response.data.results.researchers;
+            that.domain=response.data.results.domain;
             
-            this.resCount=response.data.results.rescount;
-            this.quoCount=response.data.results.quocount;
-            this.magCount=response.data.results.magcount;
-            this.magPar=response.data.results.magpar;
-            this.confCount=response.data.results.confcount;
-            this.confPar=response.data.results.confpar;
+            that.resCount=response.data.results.rescount;
+            that.quoCount=response.data.results.quocount;
+            that.confCount=response.data.results.confcount;
+            that.confPar=response.data.results.confpar;
             
-            this.resdata=response.data.results.resdata;
-            this.hotData=response.data.results.hotdata;
+            that.resdata=response.data.results.resdata;
+            that.hotData=response.data.results.hotdata;
+            
+            that.drawLine();
           })
         },
         drawLine(){
