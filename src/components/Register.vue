@@ -20,7 +20,7 @@
         <input type="password" placeholder="Password" class="reg-input"  v-model="password">
         <input type="password" placeholder="Password Again" class="reg-input"  v-model="password2">
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-        <el-button style="width: 110px;height: 50px;" class="primary" @click="submitIdCode()" :disabled="disabled">
+        <el-button style="width: 110px;height: 50px;" class="primary" @click="askVerificationCode" :disabled="disabled">
           {{timeContent}}
         </el-button>
         <div class="errorMessage">{{errorMessage}}</div>
@@ -28,7 +28,7 @@
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
         
     </div>
-    <Loading v-if="isLoging" marginTop="-30%"></Loading>
+    <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
 </div>
 </template>
 
@@ -136,6 +136,22 @@ import baseUrl from './baseUrl'
                 }
 
             },
+            //验证码验证
+            verify_verificationCode(){
+                axios.get(baseUrl+'/verificationCode',{
+                    mailAddress: this.mail,
+                    verificationCode:this.verificationCode
+                })
+                .then(function(response){
+                    if(response.data.result==false){
+                        this.errorMessage='验证码错误';
+                        this.veri_success=false;
+                    }
+                    else {
+                        this.veri_success=true
+                    }
+                })
+            },
             //注册信息发送
             Reg(){
                 //验证邮件地址格式和密码格式
@@ -152,6 +168,12 @@ import baseUrl from './baseUrl'
                 let md5password = md5.digest('hex') ;
 
                 let _this=this;
+
+                //验证验证码正确性
+                if(this.verify_verificationCode()==false){
+                    return;
+                }
+                console.log('verificationCode verified!');
                 axios.post(baseUrl+'/registerInformation',{
                     userName: this.nickname,
                     password: md5password,
@@ -169,12 +191,12 @@ import baseUrl from './baseUrl'
                             });
                     }
                     else {
-                        errorMessage='请稍后重试'
+                        _this.errorMessage='注册失败，请稍后重试'
                     }
                 })
             },
             //发送验证码
-            submitIdCode() {
+            askVerificationCode() {
                 var _this = this;
                 if(this.timeContent=='发送验证码'){
                 let time=59;
@@ -193,7 +215,7 @@ import baseUrl from './baseUrl'
                 }
                 let data = new FormData();
                 data.append('userId',this.useremail);
-                axios.post(baseUrl+'/sendEmail',data)
+                axios.post(baseUrl+'/passwordLost',data)
                 .then(function (response){
                     Toast(response.data.message);
                     console.log(response);
@@ -203,22 +225,7 @@ import baseUrl from './baseUrl'
                     console.log(error);
                 });
             },
-            //验证码验证
-            verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',{
-                    mailAddress: this.mail,
-                    verificationCode:this.verificationCode
-                })
-                .then(function(response){
-                    if(response.data.result==false){
-                        errorMessage='验证码错误';
-                        this.veri_success=false;
-                    }
-                    else {
-                        this.veri_success=true
-                    }
-                })
-            },
+            
             backToLogin(){
                 this.$router.push({
                     path:'/login',

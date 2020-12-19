@@ -25,11 +25,11 @@
         <input type="password" placeholder="Password" class="log-input"  v-model="password">
         <div id="findPassHref"><span @click="gotoFindPassword">找回密码</span></div> 
         
-        
+        <div class="errorMessage">{{errorMessage}}</div>
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
-    <Loading v-if="isLoging" marginTop="-30%"></Loading>
+    <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
 </div>
 </template>
 
@@ -45,6 +45,7 @@ export default {
       isLoging: false,
   		userID: '',
       password: '',
+      errorMessage:''
       
 
   	}
@@ -120,6 +121,9 @@ export default {
               path:'/',
             });
           }
+          else {
+            _this.errorMessage='账号或密码错误';
+          }
         })
     },
     //跳转至注册页面
@@ -147,6 +151,9 @@ export default {
 </script>
 
 <style scoped>
+.errorMessage{
+    text-align: center; margin-top: 20px;margin-bottom: 20px;color: #f88787;
+}
 .login{position: absolute; overflow: hidden;left: 50%; margin-left: -250px; top:3%;  width: 500px; min-height: 555px; margin-bottom: 3%;
 padding-bottom: 30px;
 z-index: 10; background: #fff;-webkit-border-radius: 5px; 

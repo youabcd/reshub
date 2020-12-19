@@ -21,12 +21,12 @@
 
         <!-- 验证码  -->
         <input type="text" placeholder="verification code" class='findPa-input2'  v-model="verificationCode">
-      <el-button style="width: 110px;height: 50px;" class="primary" @click="submitIdCode()" :disabled="disabled">
+      <el-button style="width: 110px;height: 50px;" class="primary" @click="askVerificationCode" :disabled="disabled">
         {{timeContent}}
       </el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
-        <span class="findPa-btn" @click="verify_verificationCode;ResetPassword">重置密码</span>
+        <span class="findPa-btn" @click="ResetPassword">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
 
         <!-- for debug  
@@ -113,7 +113,7 @@
 
 
           //发送验证码
-          submitIdCode() {
+          askVerificationCode() {
             var _this = this;
             if(this.timeContent=='发送验证码'){
               let time=59;
@@ -132,7 +132,7 @@
             }
             let data = new FormData();
             data.append('userId',this.useremail);
-            axios.post(baseUrl+'/sendEmail',data)
+            axios.post(baseUrl+'/passwordLost',data)
               .then(function (response){
                 Toast(response.data.message);
                 console.log(response);
@@ -204,10 +204,16 @@
             },
             //要求重置密码
             ResetPassword(){
+                this.errorMessage='重置密码';
                 //验证邮件地址和密码的格式
-                if(patternMatching2(this.mail,this.password,this.password2)==false){
+                if(this.patternMatching2(this.mail,this.password,this.password2)==false){
                     return;
                 }
+                //验证验证码正确
+                if(this.verify_verificationCode()==false){
+                    return;
+                }
+
                 //md5加密
                 const md5 = crypto.createHash('md5');
                 md5.update(this.password);
