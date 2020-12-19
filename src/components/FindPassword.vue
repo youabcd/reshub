@@ -60,56 +60,7 @@
             }
         },
         methods:{
-            /*test(){
-                this.errorMessage='';
-                let name=this.testVar;
-                let is_eng_name;
-                let nickname_pattern=/^[a-zA-Z0-9_]{1,20}$|^[\u4e00-\u9fa5]{1,7}[0-9]{0,3}$/;
-                if(name.match(/[A-Za-z]/)!=null){
-                    is_eng_name=true;
-                    //for debug
-                    this.errorMessage='英文昵称';
-                    console.log('english name!');
-                }
-                if(nickname_pattern.test(name)==false){
-                    console.log('nickname_pattern error');
-                    if(is_eng_name==true){
-                        if(name.length>20){
-                            this.errorMessage='英文名长度应当小于20个字符';
-                        }
-                        else{
-                            this.errorMessage='英文名仅可由字母、数字和下划线组成';
-                        }
-                    }
-                    else {
-                        this.errorMessage='中文名由1-7个汉字后跟0-3个数字组成';
-                    }
-                    return false;
-                }
-                console.log('nickname_pattern pass!\n\n');
-            },*/
-
-            /*要求发送验证码(不再使用这一个)
-            askVerificationCode(){
-                setTimeout(() => {
-                    this.timeLeft=true
-                }, 60000);
-                if(this.timeLeft=true){
-                    axios.get(baseUrl+'/askVerificationCode',{
-                        mailAddress: this.mail
-                    })
-                    .then(function(response){
-
-                        if(response.data.result==false){
-                            this.errorMessage='发送失败'
-                        }
-                    })
-                    this.timeLeft=false
-                }
-                else {
-                    this.errorMessage='请稍后再次发送'
-                }
-            },*/
+            
 
 
           //发送验证码
@@ -142,7 +93,7 @@
                 //Toast(response.data.message);
                 console.log(response);
                 //_this.subidcode = response.data.result;
-                console.log('response.data.result:'+response.data.result);
+                console.log('askVerificationCode:response.data.result:'+response.data.result);
               })
               .catch(function (error) { // 请求失败处理
                 console.log(error);
@@ -155,22 +106,23 @@
 
             //验证码验证
             verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',
-                {
+                let _this=this;
+                axios.get(baseUrl+'/verificationCode',{
                     params:{
-                        mailAddress: this.mail,
-                        verificationCode:this.verificationCode
+                        mailAddress: _this.mail,
+                        verificationCode:_this.verificationCode
                     }
                     
                 })
                 .then(function(response){
                     if(response.data.result==false){
-                        errorMessage='验证码错误';
-                        this.veri_success=false;
+                        _this.errorMessage='验证码错误';
+                        _this.veri_success=false;
                     }
                     else {
-                        this.veri_success=true
+                        _this.veri_success=true
                     }
+                    return _this.veri_success;
                 })
             },
             //邮件和密码的格式验证
@@ -218,32 +170,34 @@
             //要求重置密码
             ResetPassword(){
                 this.errorMessage='重置密码';
+                let successTmp;
                 //验证邮件地址和密码的格式
-                if(this.patternMatching2(this.mail,this.password,this.password2)==false){
-                    
+                successTmp=this.patternMatching2(this.mail,this.password,this.password2);
+                console.log('pattern is right? '+successTmp);
+                if(successTmp!=true){
                     return;
                 }
-                console.log('Patterns of mail and password are right!');
                 //验证验证码正确
-                if(this.verify_verificationCode()==false){
-                    
-                    return;
-                }
-                console.log('Verification code is right!');
+                successTmp=this.verify_verificationCode();
+                console.log('verification code is right? '+successTmp);
+                //if(successTmp!=true){
+                //    return;
+                //}
+                
 
                 //md5加密
                 const md5 = crypto.createHash('md5');
                 md5.update(this.password);
                 let md5password = md5.digest('hex') ;
 
-                if(this.veri_success==true){
-                    axios.get(baseUrl+'/newPassword',{
+                //重置密码的接口
+                axios.get(baseUrl+'/newPassword',{
                     params:{
                         mailAddress: this.mail,
                         newPassword: md5password
                         }
-                   })
-                   .then(function(response){
+                })
+                .then(function(response){
                        console.log('进入重置');
                        var reset_success;
                        reset_success=response.data.result;
@@ -257,8 +211,8 @@
                            console.log('重置失败');
                            errorMessage='重置失败'
                        }
-                   })
-                }
+                })
+                
 
             },
             backToLogin(){
