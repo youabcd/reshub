@@ -160,11 +160,11 @@
         </el-col>
       </el-main>
     </el-container>
-    <div v-if="!isHave">
-      你还没有个人门户</br>
-      <el-button @click="gotoCatch()">去认证</el-button></br>
-      或者</br>
-      <el-button>去搜索你自己</el-button></br>
+    <div v-if="!isHave" style="padding-top: 15%;">
+      <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
+      <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">去认证</el-button></br>
+      <font style="font:  bold italic 40px  arial">或者</font></br>
+      <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
     </div>
   </div>
 </template>
@@ -188,11 +188,12 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          message:'',
           userId:1,
           resId:2,
           menuIndex: '0',
           avatar:'trump.jpg',
-          isHave: false,
+          isHave: true,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
@@ -304,7 +305,12 @@
         gotoCatch() {
           this.$router.push({
             path:'/CatchPortal',
-            quer:{resId:this.resId}
+            query:{resId:this.resId}
+          });
+        },
+        gotoSearch() {
+          this.$router.push({
+            path:'/'
           });
         },
         gotoAuthor(authorId) {
@@ -321,15 +327,40 @@
         },
         AddConcern(){
           var that = this;
-           axios.post(baseUrl+'/addConcern',{
+          axios.post(baseUrl+'/addConcern',{
             userId:localStorage.getItem('myId'),
             resId:localStorage.getItem('authorId')
           }).then(function (response) {
-            
+            if(response.data.status==1) {
+              that.isFollowing=true;
+            }
+            else if(response.data.status==3) {
+              that.message='不能重复关注';
+              this.$notify({
+                        title: '警告',
+                        message: that.message,
+                        type: 'warning'
+                      });
+              callback(new Error(that.message));
+            }
+            else {
+              that.message='oh no';
+            }
           })
         },
         CancelConcern(){
-          
+          var that = this;
+          axios.post(baseUrl+'/cancelConcern',{
+            userId:localStorage.getItem('myId'),
+            resId:localStorage.getItem('authorId')
+          }).then(function (response) {
+            if(response.data.status==1) {
+              that.isFollowing=false;
+            }
+            else {
+              that.message='oh no';
+            }
+          })
         },
         getPersonalPortal() {
           var that = this;
