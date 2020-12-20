@@ -251,7 +251,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .findPa .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .findPa .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .findPa-logo,.findPa-text{z-index: 2}
 
