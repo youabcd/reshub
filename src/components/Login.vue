@@ -23,7 +23,7 @@
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
-    <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
+
 </div>
 </template>
 
@@ -91,10 +91,11 @@ export default {
       let md5password = md5.digest('hex') ;
 
       let _this=this;
-      axios.post(baseUrl+'/identityCheck',{
-        userId:this.userID,
-        password:md5password
-      })
+      let data = new FormData();
+      data.append('userId', this.userID);
+      data.append('password', md5password);
+
+      axios.post(baseUrl+'/identityCheck',data)
         .then(function (response) {
           console.log(response);
           if(response.data.result===true){
@@ -105,12 +106,6 @@ export default {
             localStorage.setItem("portalId",response.portalId);
             localStorage.setItem("isAdministrator",response.isAdministrator);
             localStorage.setItem("label",response.label);
-            localStorage.setItem("nowActive",response.nowActive);
-            localStorage.setItem("keyWords",response.keyWords);
-            localStorage.setItem("whichFriend",response.whichFriend);
-            localStorage.setItem("authorId",response.authorId);
-            localStorage.setItem("institutionId",response.institutionId);
-            isLoging=true;
             _this.$router.push({
               path:'/',
             });
