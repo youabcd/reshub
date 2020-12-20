@@ -21,7 +21,7 @@
         </el-aside>
 
         <el-main>
-          <div v-if="nowActive=='1'" style="margin-top: 17px;">
+          <div v-if="nowActive==='1'" style="margin-top: 17px;">
             <van-cell v-for="(item,index) in myConcern" :key="index" title-style="text-align: left; margin-left: 20px">
               <template #title>
                 <el-link :underline="false" @click="toPersonalPortal(item)">{{item.name}}</el-link>
@@ -33,7 +33,7 @@
                   width="40"
                   height="40"
                   style="cursor: pointer"
-                  v-bind:src="require('../assets/'+item.headImg)">
+                  v-bind:src="require('../assets/Head/'+item.headImage)">
                 </van-image>
               </template>
               <template #default>
@@ -55,7 +55,7 @@
             </van-cell>
           </div>
 
-          <div v-if="nowActive=='2'" style="margin-top: 17px;">
+          <div v-if="nowActive==='2'" style="margin-top: 17px;">
             <van-cell v-for="(item,index) in myFans" :key="index" title-style="text-align: left; margin-left: 20px">
               <template #title>
                 <el-link :underline="false" @click="toPersonalPortal(item)">{{item.name}}</el-link>
@@ -67,7 +67,7 @@
                   width="40"
                   height="40"
                   style="cursor: pointer"
-                  v-bind:src="require('../assets/'+item.headImg)">
+                  v-bind:src="require('../assets/Head/'+item.headImage)">
                 </van-image>
               </template>
               <template #default>
@@ -105,13 +105,13 @@
             textLength:'450',
 
             myConcern:[
-              {name:'youabcd',headImg:'background01.jpg',state:'已关注',label:'这是一个人',id:'123'},
-              {name:'youabcd',headImg:'background01.jpg',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
+              {name:'youabcd',headImage:'head02.png',state:'已关注',label:'这是一个人',id:'123'},
+              {name:'youabcd',headImage:'head01.png',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ],
 
             myFans:[
-              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'这是一个人',id:'123'},
-              {headImg:'background01.jpg',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
+              {headImage:'head02.png',name:'youabcd_fans',state:'已关注',label:'这是一个人',id:'123'},
+              {headImage:'head01.png',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ]
           }
       },
@@ -126,13 +126,12 @@
           let _this=this;
           axios.get(baseUrl+'/getMyConcern',{
             params:{
-              userId:localStorage.getItem("myId"),
+              UserEmail:localStorage.getItem("myId"),
             }
           })
             .then(function (response) {
               console.log(response);
-              _this.myConcern=response.data.myConcern;
-              _this.myFans=response.data.myFans;
+              _this.myConcern=response.data.ConcernList;
             })
         },
         cancelConcern(item){//取关
@@ -159,7 +158,7 @@
           this.$router.push({
             path:'/Message',
             name:'Message',
-            params:{newFriendId:item.id,newFriendName:item.name,newFriendHead:item.headImg},
+            params:{newFriendId:item.id,newFriendName:item.name,newFriendHead:item.headImage},
           });
           localStorage.setItem("nowActive",'2');
           localStorage.setItem("whichFriend",'-1');

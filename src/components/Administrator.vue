@@ -78,16 +78,16 @@
           </el-form>
         </el-dialog>
         <el-drawer
-          :visible.sync="drawer1"
+          :visible.sync="drawer0"
           :direction="direction"
-          v-if="drawer1">
+          v-if="drawer0">
           <div>
             <van-row>
               <van-col span="8">
                 <span>日期</span>
               </van-col>
               <van-col span="8" style="margin-top: 3px;text-align: left">
-                <span>{{drawerData.date}}</span>
+                <span>{{drawerData0.UploadTime}}</span>
               </van-col>
               <van-col span="8"></van-col>
             </van-row>
@@ -96,10 +96,10 @@
           <div style="margin-top: 20px">
             <van-row>
               <van-col span="8">
-                <span>姓名</span>
+                <span>账号</span>
               </van-col>
               <van-col span="8" style="text-align: left">
-                <span>{{drawerData.name}}</span>
+                <span>{{drawerData0.UserEmail}}</span>
               </van-col>
               <van-col span="8"></van-col>
             </van-row>
@@ -111,7 +111,7 @@
                 <span>上传内容</span>
               </van-col>
               <van-col span="16" style="text-align: left">
-                <span>{{drawerData.title}}</span>
+                <span>{{drawerData0.content}}</span>
               </van-col>
             </van-row>
           </div>
@@ -122,7 +122,7 @@
                 <span>链接</span>
               </van-col>
               <van-col span="16" style="text-align: left">
-                <el-link type="primary" @click="gotoUrl(drawerData.link)">点击跳转</el-link>
+                <el-link type="primary" @click="gotoUrl(drawerData0.ReviewPath)">点击跳转</el-link>
               </van-col>
             </van-row>
           </div>
@@ -130,10 +130,69 @@
 <!--            <div style="display: inline;float: left;margin-left: 100px">姓名</div>-->
 <!--            <div style="display: inline;border: 1px solid rgba(0,0,0,.1);padding: 10px;width: 200px">{{drawerData.name}}</div>-->
 <!--          </div>-->
-          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData.id)">通过</el-button>
-          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData.id)">拒绝</el-button>
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData.id)">通过</el-button>
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData.id)">拒绝</el-button>
+          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData0.id)">通过</el-button>
+          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData0.id)">拒绝</el-button>
+<!--          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData.id)">通过</el-button>-->
+<!--          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData.id)">拒绝</el-button>-->
+        </el-drawer>
+
+        <el-drawer
+          :visible.sync="drawer1"
+          :direction="direction"
+          v-if="drawer1">
+          <div>
+            <van-row>
+              <van-col span="8">
+                <span>日期</span>
+              </van-col>
+              <van-col span="8" style="margin-top: 3px;text-align: left">
+                <span>{{drawerData1.AppealTime}}</span>
+              </van-col>
+              <van-col span="8"></van-col>
+            </van-row>
+          </div>
+
+          <div style="margin-top: 20px">
+            <van-row>
+              <van-col span="8">
+                <span>账号</span>
+              </van-col>
+              <van-col span="8" style="text-align: left">
+                <span>{{drawerData1.UserEmail}}</span>
+              </van-col>
+              <van-col span="8"></van-col>
+            </van-row>
+          </div>
+
+          <div style="margin-top: 20px">
+            <van-row>
+              <van-col span="8">
+                <span>申诉内容</span>
+              </van-col>
+              <van-col span="16" style="text-align: left">
+                <span>{{drawerData1.content}}</span>
+              </van-col>
+            </van-row>
+          </div>
+
+<!--          <div style="margin-top: 20px" v-if="menuIndex === '3-1'||menuIndex === '3-2'">-->
+<!--            <van-row>-->
+<!--              <van-col span="8">-->
+<!--                <span>链接</span>-->
+<!--              </van-col>-->
+<!--              <van-col span="16" style="text-align: left">-->
+<!--                <el-link type="primary" @click="gotoUrl(drawerData1.link)">点击跳转</el-link>-->
+<!--              </van-col>-->
+<!--            </van-row>-->
+<!--          </div>-->
+          <!--          <div style="margin-top: 30px">-->
+          <!--            <div style="display: inline;float: left;margin-left: 100px">姓名</div>-->
+          <!--            <div style="display: inline;border: 1px solid rgba(0,0,0,.1);padding: 10px;width: 200px">{{drawerData.name}}</div>-->
+          <!--          </div>-->
+<!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData.id)">通过</el-button>-->
+<!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData.id)">拒绝</el-button>-->
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData1.id)">通过</el-button>
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData1.id)">拒绝</el-button>
         </el-drawer>
 <!--        <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">-->
 <!--          <div style="position: absolute;left: 150px;top: 100px" class="avatar_info"></div>-->
@@ -156,17 +215,17 @@
             :data="tableData1"
             style="width: 100%">
             <el-table-column
-              prop="date"
+              prop="UploadTime"
               label="日期"
               width="300">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="姓名"
+              prop="UserEmail"
+              label="账号"
               width="150">
             </el-table-column>
             <el-table-column
-              prop="title"
+              prop="content"
               label="上传内容"
               >
             </el-table-column>
@@ -185,17 +244,17 @@
             :data="tableData2"
             style="width: 100%">
             <el-table-column
-              prop="date"
+              prop="UploadTime"
               label="日期"
               width="300">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="姓名"
+              prop="UserEmail"
+              label="账号"
               width="150">
             </el-table-column>
             <el-table-column
-              prop="title"
+              prop="content"
               label="上传内容"
             >
             </el-table-column>
@@ -206,11 +265,11 @@
               width="100"
             >
               <template slot-scope="scope1">
-                <div v-if="scope1.row.status==='通过'">
-                  <el-tag type="success">{{scope1.row.status}}</el-tag>
+                <div v-if="scope1.row.ReviewState==='2'">
+                  <el-tag type="success">已通过</el-tag>
                 </div>
-                <div v-if="scope1.row.status==='拒绝'">
-                  <el-tag type="danger">{{scope1.row.status}}</el-tag>
+                <div v-if="scope1.row.ReviewState==='1'">
+                  <el-tag type="danger">已拒绝</el-tag>
                 </div>
               </template>
             </el-table-column>
@@ -219,20 +278,19 @@
         <div v-if="menuIndex === '3-1'">
           <el-table
             :data="tableData3"
-
             style="width: 100%">
             <el-table-column
-              prop="date"
+              prop="AppealTime"
               label="日期"
               width="300">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="姓名"
+              prop="UserEmail"
+              label="账号"
               width="150">
             </el-table-column>
             <el-table-column
-              prop="title"
+              prop="content"
               label="申诉内容"
             >
             </el-table-column>
@@ -251,17 +309,17 @@
             :data="tableData4"
             style="width: 100%">
             <el-table-column
-              prop="date"
+              prop="AppealTime"
               label="日期"
               width="300">
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="姓名"
+              prop="UserEmail"
+              label="账号"
               width="150">
             </el-table-column>
             <el-table-column
-              prop="title"
+              prop="content"
               label="申诉内容"
             >
             </el-table-column>
@@ -271,11 +329,11 @@
               label="审核内容"
             >
               <template slot-scope="scope1">
-                <div v-if="scope1.row.status==='通过'">
-                  <el-tag type="success">{{scope1.row.status}}</el-tag>
+                <div v-if="scope1.row.AppealState==='1'">
+                  <el-tag type="success">已拒绝</el-tag>
                 </div>
-                <div v-if="scope1.row.status==='拒绝'">
-                  <el-tag type="danger">{{scope1.row.status}}</el-tag>
+                <div v-if="scope1.row.AppealState==='2'">
+                  <el-tag type="danger">已通过</el-tag>
                 </div>
               </template>
             </el-table-column>
@@ -293,7 +351,7 @@
   export default {
     name: "Administrator",
     mounted() {
-      this.getAdministrator()
+      // this.getAdministrator()
       this.getList()
     },
     data() {
@@ -319,6 +377,7 @@
       return {
         menuIndex: "2-1",
         dialogVisible: false,
+        drawer0:false,
         drawer1: false,
         direction: 'rtl',
         // img: require('../assets/bing01.jpg'),
@@ -327,134 +386,55 @@
           phone: '',
           ID_card: '',
         },
-        drawerData: {
+        drawerData0: {
           id: '',
-          date: '',
-          name: '',
-          title: '',
-          status: '',
-          link: '',
+          ReviewPath: '',
+          UserEmail: '',
+          UploadTime: '',
+          ReviewState: '',
+          content: '',
+        },
+        drawerData1: {
+          id: '',
+          UserEmail:'',
+          AppealState:'',
+          AppealTime:'',
+          content:'',
         },
         ruleForm: {
           pass: '',
           checkPass: '',
         },
-        tableData2: [{
-          id: '11',
-          date: '2016-05-02',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1518 弄11',
-          status:'通过',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '12',
-          date: '2016-05-04',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1517 弄12',
-          status:'通过',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '13',
-          date: '2016-05-01',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1519 弄13',
-          status:'拒绝',
-          link: 'https://www.bilibili.com',
-        }],
         tableData1: [{
-          id: '1',
-          date: '2016-05-02',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1518 弄1',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '2',
-          date: '2016-05-04',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1517 弄2',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '3',
-          date: '2016-05-01',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1519 弄3',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '4',
-          date: '2016-05-03',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1516 弄4',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '5',
-          date: '2016-05-03',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1516 弄5',
-          link: 'https://www.bilibili.com',
+          id: '',
+          ReviewPath: '',
+          UserEmail: '',
+          UploadTime: '',
+          ReviewState: '',
+          content: '',
+        }],
+        tableData2: [{
+          id: '',
+          ReviewPath: '',
+          UserEmail: '',
+          UploadTime: '',
+          ReviewState: '',
+          content: '',
         }],
         tableData3: [{
-          id: '21',
-          date: '2016-05-02',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1518 弄21上海市普陀区金沙江路 1518 弄21上海市普陀区金沙江路 1518 弄21上海市普陀区金沙江路 1518 弄21上海市普陀区金沙江路 1518 弄21',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '22',
-          date: '2016-05-04',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1517 弄22',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '23',
-          date: '2016-05-01',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1519 弄23',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '24',
-          date: '2016-05-03',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1516 弄24',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '25',
-          date: '2016-05-03',
-          name: '王小虎',
-          status: '未审核',
-          title: '上海市普陀区金沙江路 1516 弄25',
-          link: 'https://www.bilibili.com',
+          id: '',
+          UserEmail:'',
+          AppealState:'',
+          AppealTime:'',
+          content:'',
         }],
         tableData4: [{
-          id: '41',
-          date: '2016-05-02',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1518 弄11',
-          status:'通过',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '42',
-          date: '2016-05-04',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1517 弄12',
-          status:'通过',
-          link: 'https://www.bilibili.com',
-        }, {
-          id: '43',
-          date: '2016-05-01',
-          name: '王小虎',
-          title: '上海市普陀区金沙江路 1519 弄13',
-          status:'拒绝',
-          link: 'https://www.bilibili.com',
-        },],
+          id: '',
+          UserEmail:'',
+          AppealState:'',
+          AppealTime:'',
+          content:'',
+        }],
         rules: {
           pass: [
             { validator: validatePass, trigger: 'blur' }
@@ -478,38 +458,37 @@
         })
       },
       getList() {
-        axios.get(baseUrl+'/getList1',{
+        axios.get(baseUrl+'/getList',{
           params:{
-            userId: localStorage.getItem('myId')
+            // userId: localStorage.getItem('myId')
           }
         }).then(function (response) {
-          this.tableData1=response.data.list1
-          this.tableData2=response.data.list2
-          this.tableData3=response.data.list3
-          this.tableData4=response.data.list4
+          this.tableData1=response.data.ReviewList0
+          this.tableData2=response.data.ReviewList1
+          this.tableData3=response.data.AppealList0
+          this.tableData4=response.data.AppealList1
         })
       },
       handleSelect (key) {
         this.menuIndex = key;
       },
       view1(index) {
-        this.drawerData.id=this.tableData1[index].id;
-        this.drawerData.date=this.tableData1[index].date;
-        this.drawerData.name=this.tableData1[index].name;
-        this.drawerData.title=this.tableData1[index].title;
-        this.drawerData.status=this.tableData1[index].status;
-        this.drawerData.link=this.tableData1[index].link;
-        this.drawer1=true;
+        this.drawerData0.id=this.tableData1[index].id;
+        this.drawerData0.ReviewPath=this.tableData1[index].ReviewPath;
+        this.drawerData0.UserEmail=this.tableData1[index].UserEmail;
+        this.drawerData0.UploadTime=this.tableData1[index].UploadTime;
+        this.drawerData0.ReviewState=this.tableData1[index].ReviewState;
+        this.drawerData0.content=this.tableData1[index].content;
+        this.drawer0=true;
         // console.log(this.drawerData);
       },
 
       view2(index) {
-        this.drawerData.id=this.tableData3[index].id;
-        this.drawerData.date=this.tableData3[index].date;
-        this.drawerData.name=this.tableData3[index].name;
-        this.drawerData.title=this.tableData3[index].title;
-        this.drawerData.status=this.tableData3[index].status;
-        this.drawerData.link=this.tableData3[index].link;
+        this.drawerData1.id=this.tableData3[index].id;
+        this.drawerData1.UserEmail=this.tableData3[index].UserEmail;
+        this.drawerData1.AppealTime=this.tableData3[index].AppealTime;
+        this.drawerData1.AppealState=this.tableData3[index].AppealState;
+        this.drawerData1.content=this.tableData3[index].content;
         this.drawer1=true;
         // console.log(this.drawerData);
       },
@@ -526,11 +505,11 @@
             id: id
           }
         }).then(function (response) {
-          this.drawer1=false;
-          this.drawerData.status='通过';
+          this.drawer0=false;
+          this.drawerData0.status='2';
           for (let i=0; i<this.tableData1.length; i++) {
-            if (this.drawerData.id === this.tableData1[i].id) {
-              this.tableData1[i].status='通过';
+            if (this.drawerData0.id === this.tableData1[i].id) {
+              this.tableData1[i].ReviewState='2';
               this.tableData2.unshift(this.tableData1[i]);
               this.tableData1.splice(i,1);
               break;
@@ -553,11 +532,11 @@
             id: id
           }
         }).then(function (response) {
-          this.drawer1=false;
-          this.drawerData.status='拒绝';
+          this.drawer0=false;
+          this.drawerData0.status='1';
           for (let i=0; i<this.tableData1.length; i++) {
-            if (this.drawerData.id === this.tableData1[i].id) {
-              this.tableData1[i].status='拒绝';
+            if (this.drawerData0.id === this.tableData1[i].id) {
+              this.tableData1[i].status='1';
               this.tableData2.unshift(this.tableData1[i]);
               this.tableData1.splice(i,1);
               break;
@@ -581,10 +560,10 @@
           }
         }).then(function (response) {
           this.drawer1=false;
-          this.drawerData.status='通过';
+          this.drawerData1.status='2';
           for (let i=0; i<this.tableData3.length; i++) {
-            if (this.drawerData.id === this.tableData3[i].id) {
-              this.tableData3[i].status='通过';
+            if (this.drawerData1.id === this.tableData3[i].id) {
+              this.tableData3[i].status='2';
               this.tableData4.unshift(this.tableData3[i]);
               this.tableData3.splice(i,1);
               break;
@@ -610,10 +589,10 @@
           }
         }).then(function (response) {
           this.drawer1=false;
-          this.drawerData.status='拒绝';
+          this.drawerData1.status='1';
           for (let i=0; i<this.tableData3.length; i++) {
-            if (this.drawerData.id === this.tableData3[i].id) {
-              this.tableData3[i].status='拒绝';
+            if (this.drawerData1.id === this.tableData3[i].id) {
+              this.tableData3[i].status='1';
               this.tableData4.unshift(this.tableData3[i]);
               this.tableData3.splice(i,1);
               break;

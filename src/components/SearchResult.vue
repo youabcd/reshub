@@ -69,14 +69,13 @@
 
       <div style="width: 85%;margin-left: 7px;margin-top: 30px">
 
-        <el-drawer
-          :visible.sync="drawer"
-          :direction="direction"
-          size=750px
-          v-if="drawer">
+        <van-popup
+          position="right"
+          :style="{ height: '100%',width:'750px' }"
+          v-model="drawer">
           <div v-if="menuIndex==='0'">
             <!--期刊 期号+文献操作（分享等）-->
-            <div style="margin-top: -30px;">
+            <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData00.paperIssue}}&nbsp;&nbsp;&nbsp;</span>
@@ -138,7 +137,7 @@
           <!--关键词-->
           <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">关键词：</span>
-            <span>{{tableData00.keyword}}</span>
+            <span>{{tableData00.keywords}}</span>
           </div>
             <!--DOI-->
             <div v-if="tableData00.paperDoi.length>0" class="Details" style="">
@@ -172,7 +171,7 @@
               <span>{{tableData00.paperPublisher}}</span>
             </div>
           <!--参考文献 clickable-->
-          <div class="Details" style="">
+          <div v-if="tableData00.reference.length>0" class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
             <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index])">
               {{item}}&nbsp;&nbsp;&nbsp;
@@ -346,7 +345,7 @@
               <el-button type="primary" plain @click="gotoPaper(tableData02.link)">查看原文</el-button>
             </div>
           </div>
-        </el-drawer>
+        </van-popup>
 
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 80%;position: relative;">
@@ -1229,16 +1228,17 @@
         let _this=this;
         _this.drawer=true;
         if(this.menuIndex==='0'){
-          this.tableData00=this.tableData0[index];
+          //this.tableData00=this.tableData0[index];
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
-          data.append('id', _this.tableData00.paperId);
+          data.append('id', _this.tableData0[index].paperId);
           data.append('type', 'paper');
           axios.post(baseUrl+'/openPaper',data)
           .then(function (response) {
             console.log(response);
             _this.tableData00=response.data;
-            _this.tableData0[index]=response.data;
+            console.log(_this.tableData00)
+            //_this.tableData0[index]=response.data;
           })
         }
         else if(this.menuIndex==='1'){
@@ -1328,7 +1328,7 @@
   }
 </script>
 
-<style >
+<style>
   .text {
     font-size: 14px;
   }
