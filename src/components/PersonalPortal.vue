@@ -162,8 +162,8 @@
     </el-container>
     <div v-if="!isHave" style="padding-top: 15%;">
       <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
-      <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
-      <font style="font:  bold italic 40px  arial">或者</font></br>
+      <!-- <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
+      <font style="font:  bold italic 40px  arial">或者</font></br> -->
       <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
     </div>
   </div>
