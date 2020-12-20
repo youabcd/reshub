@@ -134,7 +134,7 @@
           axios.post(baseUrl+'/changeHead',data)
           .then(function (response) {
             console.log(response);
-            if(response.data.status===true){
+            if(response.data.status===1){
               this.showChangeHead=false;
               this.userImage=item;
               localStorage.setItem("userHead",item);
