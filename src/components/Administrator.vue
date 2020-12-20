@@ -15,10 +15,10 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         style="height: 25%;text-align: left;margin-top: 20px">
-        <el-menu-item index="1">
-          <i class="el-icon-document" style="margin-left: 25px"></i>
-          <span slot="title">个人信息</span>
-        </el-menu-item>
+<!--        <el-menu-item index="1">-->
+<!--          <i class="el-icon-document" style="margin-left: 25px"></i>-->
+<!--          <span slot="title">个人信息</span>-->
+<!--        </el-menu-item>-->
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-s-check" style="margin-left: 25px"></i>
@@ -135,22 +135,22 @@
           <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData.id)">通过</el-button>
           <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData.id)">拒绝</el-button>
         </el-drawer>
-        <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">
-          <div style="position: absolute;left: 150px;top: 100px" class="avatar_info"></div>
-          <div style="position: absolute;left: 450px;top: 100px">
-            姓名 : {{administrator.name}}
-          </div>
-          <div style="position: absolute;left: 450px;top: 150px">
-            手机号 : {{administrator.phone}}
-          </div>
-          <div style="position: absolute;left: 450px;top: 200px">
-            身份证 : {{administrator.ID_card}}
-          </div>
-          <div style="position: absolute;left: 450px;top: 250px">
-            密码 :
-            <el-button @click="dialogVisible = true">修改密码</el-button>
-          </div>
-        </div>
+<!--        <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">-->
+<!--          <div style="position: absolute;left: 150px;top: 100px" class="avatar_info"></div>-->
+<!--          <div style="position: absolute;left: 450px;top: 100px">-->
+<!--            姓名 : {{administrator.name}}-->
+<!--          </div>-->
+<!--          <div style="position: absolute;left: 450px;top: 150px">-->
+<!--            手机号 : {{administrator.phone}}-->
+<!--          </div>-->
+<!--          <div style="position: absolute;left: 450px;top: 200px">-->
+<!--            身份证 : {{administrator.ID_card}}-->
+<!--          </div>-->
+<!--          <div style="position: absolute;left: 450px;top: 250px">-->
+<!--            密码 :-->
+<!--            <el-button @click="dialogVisible = true">修改密码</el-button>-->
+<!--          </div>-->
+<!--        </div>-->
         <div v-if="menuIndex === '2-1'">
           <el-table
             :data="tableData1"
@@ -317,7 +317,7 @@
         }
       };
       return {
-        menuIndex: "1",
+        menuIndex: "2-1",
         dialogVisible: false,
         drawer1: false,
         direction: 'rtl',
@@ -467,8 +467,10 @@
     },
     methods: {
       getAdministrator() {
-        axios.post(baseUrl+'/getAdministrator',{
-          userId: localStorage.getItem('myId')
+        axios.get(baseUrl+'/getAdministrator',{
+          params:{
+            userId: localStorage.getItem('myId')
+          }
         }).then(function (response) {
           this.administrator.name=response.data.info.name;
           this.administrator.phone=response.data.info.phone;
@@ -476,8 +478,10 @@
         })
       },
       getList() {
-        axios.post(baseUrl+'/getList1',{
-          userId: localStorage.getItem('myId')
+        axios.get(baseUrl+'/getList1',{
+          params:{
+            userId: localStorage.getItem('myId')
+          }
         }).then(function (response) {
           this.tableData1=response.data.list1
           this.tableData2=response.data.list2
@@ -516,9 +520,11 @@
 
       pass1(id) {
         //发送数据
-        axios.post(baseUrl+'/pass1',{
-          userId: localStorage.getItem('myId'),
-          id: id
+        axios.get(baseUrl+'/pass1',{
+          params:{
+            userId: localStorage.getItem('myId'),
+            id: id
+          }
         }).then(function (response) {
           this.drawer1=false;
           this.drawerData.status='通过';
@@ -541,9 +547,11 @@
       },
       reject1(id) {
         //发送数据
-        axios.post(baseUrl+'/reject1',{
-          userId: localStorage.getItem('myId'),
-          id: id
+        axios.get(baseUrl+'/reject1',{
+          params:{
+            userId: localStorage.getItem('myId'),
+            id: id
+          }
         }).then(function (response) {
           this.drawer1=false;
           this.drawerData.status='拒绝';
@@ -566,9 +574,11 @@
       },
       pass2(id) {
         //发送数据
-        axios.post(baseUrl+'/pass2',{
-          userId: localStorage.getItem('myId'),
-          id: id
+        axios.get(baseUrl+'/pass2',{
+          params:{
+            userId: localStorage.getItem('myId'),
+            id: id
+          }
         }).then(function (response) {
           this.drawer1=false;
           this.drawerData.status='通过';
@@ -593,9 +603,11 @@
       },
       reject2(id) {
         //发送数据
-        axios.post(baseUrl+'/reject2',{
-          userId: localStorage.getItem('myId'),
-          id: id
+        axios.get(baseUrl+'/reject2',{
+          params:{
+            userId: localStorage.getItem('myId'),
+            id: id
+          }
         }).then(function (response) {
           this.drawer1=false;
           this.drawerData.status='拒绝';
