@@ -193,7 +193,7 @@
           resId:2,
           menuIndex: '0',
           avatar:'trump.jpg',
-          isHave: false,
+          isHave: true,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
