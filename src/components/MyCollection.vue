@@ -249,26 +249,26 @@
               <!--论文-->
               <el-card shadow="hover" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
+                  <span style="cursor: pointer">
                     <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection0(index, item.paperId)"></i>
                     </el-tooltip>
                   </span>
-                  <span>
+                  <span style="cursor: pointer">
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
                   </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
+                  <span style="margin-left: 5px;margin-right: 2px;cursor: pointer">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;">
                   </span>
-                  <span>
+                  <span style="cursor: pointer">
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
                       <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
                     </el-tooltip>
@@ -652,7 +652,7 @@
             userId:localStorage.getItem('myId')
           }
         }).then(function (response) {
-          console.log(response.data.list)
+          // console.log(response.data.list)
           _this.tableData0=response.data.list;
         })
       },
@@ -708,7 +708,7 @@
         axios.get(baseUrl+'/cancelCollection',{
           params:{
             paperId: paperId,
-            type:'paper',
+            type:_this.tableData0[index].type,
             userId:localStorage.getItem('myId'),
           }
         }).then(function (response) {
