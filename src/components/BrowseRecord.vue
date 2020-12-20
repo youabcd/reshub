@@ -79,12 +79,12 @@
             paperLink:'',
             browse_time:''
           },
-          temp: [{      //use this
+          temp: {      //use this
             pid:'',
             paper_name:'',
             paperLink:'',
             browse_time:''
-          }],
+          },
           tableData: [{
             pid: '001',
             browse_time: '2020/01/01 15:00',
@@ -109,35 +109,22 @@
       methods: {
         getBrowseRecord(){//url很想加个get
           console.log('getbr');
-          axios.get(baseUrl+'/getBrowseRecord',{
+          let _this=this;
+          axios.get(baseUrl+'/BrowseHistory',{
             params:{
-              userEmail:localStorage.getItem('myId')
+              UserEmail:localStorage.getItem('myId'),
             }
-          }).then(function (response) {
-            console.log(this.userEmail)
+          })
+            .then(function (response) {
             console.log(response.data.status)
-            for (let i=0, length=response.data.results[i].length; i<length; i++) {
-              this.temp.pid=response.data.results[i].pid;
-              this.temp.browse_time=response.data.results[i].browse_time;
-              this.temp.paper_name=response.data.results[i].paper_name;
-              this.temp.paperLink = response.data.results[i].paperLink;//
-              this.tableData.push({
-                pid: this.temp.pid,
-                browse_time: this.temp.browse_time,
-                paper_name: this.temp.paper_name,
-                paperLink: this.temp.paperLink,
-              })
-
+              _this.tableData=[];
+            for (let i=0,length=response.data.Timelist.length; i<length; i++) {
+              _this.temp.pid=i;
+              _this.temp.browse_time=response.data.Timelist[i];
+              _this.temp.paper_name=response.data.PaperTitleList[i];
+              _this.temp.paperLink = response.data.PaperUrlList[i];
+              _this.tableData.push(_this.temp);
             }
-
-            for (let i=0, length=response.data.Timelist.length; i<length; i++) {
-              this.temp.browse_time=response.data.Timelist[i];
-              this.tableData.push({
-                browse_time: this.temp.browse_time
-              })
-
-            }
-
           })
         },
         handleSizeChange: function(size) {

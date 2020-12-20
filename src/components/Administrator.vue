@@ -265,10 +265,10 @@
               width="100"
             >
               <template slot-scope="scope1">
-                <div v-if="scope1.row.ReviewState==='2'">
+                <div v-if="scope1.row.ReviewState===2">
                   <el-tag type="success">已通过</el-tag>
                 </div>
-                <div v-if="scope1.row.ReviewState==='1'">
+                <div v-if="scope1.row.ReviewState===1">
                   <el-tag type="danger">已拒绝</el-tag>
                 </div>
               </template>
@@ -326,14 +326,14 @@
             <el-table-column
               fixed="right"
               width="100"
-              label="审核内容"
+              label="审核结果"
             >
               <template slot-scope="scope1">
-                <div v-if="scope1.row.AppealState==='1'">
-                  <el-tag type="success">已拒绝</el-tag>
+                <div v-if="scope1.row.AppealState===2">
+                  <el-tag type="success">已通过</el-tag>
                 </div>
-                <div v-if="scope1.row.AppealState==='2'">
-                  <el-tag type="danger">已通过</el-tag>
+                <div v-if="scope1.row.AppealState===1">
+                  <el-tag type="danger">已拒绝</el-tag>
                 </div>
               </template>
             </el-table-column>
@@ -350,10 +350,6 @@
   import baseUrl from "./baseUrl";
   export default {
     name: "Administrator",
-    mounted() {
-      // this.getAdministrator()
-      this.getList()
-    },
     data() {
       let validatePass = (rule, value, callback) => {
         if (value === '') {
@@ -406,12 +402,12 @@
           checkPass: '',
         },
         tableData1: [{
-          id: '',
           ReviewPath: '',
           UserEmail: '',
           UploadTime: '',
-          ReviewState: '',
+          ReviewState: 1,
           content: '',
+          id: 1,
         }],
         tableData2: [{
           id: '',
@@ -445,6 +441,10 @@
         }
       }
     },
+    mounted() {
+      // this.getAdministrator()
+      this.getList()
+    },
     methods: {
       getAdministrator() {
         axios.get(baseUrl+'/getAdministrator',{
@@ -458,19 +458,25 @@
         })
       },
       getList() {
+        console.log(this.tableData1)
+        let _this=this
         axios.get(baseUrl+'/getList',{
           params:{
             // userId: localStorage.getItem('myId')
           }
         }).then(function (response) {
-          this.tableData1=response.data.ReviewList0
-          this.tableData2=response.data.ReviewList1
-          this.tableData3=response.data.AppealList0
-          this.tableData4=response.data.AppealList1
+
+          console.log(response.data)
+          console.log(_this.tableData1)
+          _this.tableData1=response.data.ReviewList0
+          _this.tableData2=response.data.ReviewList1
+          _this.tableData3=response.data.AppealList0
+          _this.tableData4=response.data.AppealList1
         })
       },
       handleSelect (key) {
         this.menuIndex = key;
+        this.getList();
       },
       view1(index) {
         this.drawerData0.id=this.tableData1[index].id;
@@ -499,24 +505,26 @@
 
       pass1(id) {
         //发送数据
+        let _this=this
         axios.get(baseUrl+'/pass1',{
           params:{
             userId: localStorage.getItem('myId'),
             id: id
           }
         }).then(function (response) {
-          this.drawer0=false;
-          this.drawerData0.status='2';
-          for (let i=0; i<this.tableData1.length; i++) {
-            if (this.drawerData0.id === this.tableData1[i].id) {
-              this.tableData1[i].ReviewState='2';
-              this.tableData2.unshift(this.tableData1[i]);
-              this.tableData1.splice(i,1);
+          _this.drawer0=false;
+          _this.drawerData0.status=2;
+          for (let i=0; i<_this.tableData1.length; i++) {
+            if (_this.drawerData0.id === _this.tableData1[i].id) {
+              // _this.tableData1[i].ReviewState=2;
+              // _this.tableData2.unshift(_this.tableData1[i]);
+              _this.tableData1.splice(i,1);
               break;
             }
           }
+          console.log(_this.tableData2)
           if (response.data.succeed) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '已通过该审核',
               type: 'success'
@@ -526,24 +534,25 @@
       },
       reject1(id) {
         //发送数据
+        let _this=this
         axios.get(baseUrl+'/reject1',{
           params:{
             userId: localStorage.getItem('myId'),
             id: id
           }
         }).then(function (response) {
-          this.drawer0=false;
-          this.drawerData0.status='1';
-          for (let i=0; i<this.tableData1.length; i++) {
-            if (this.drawerData0.id === this.tableData1[i].id) {
-              this.tableData1[i].status='1';
-              this.tableData2.unshift(this.tableData1[i]);
-              this.tableData1.splice(i,1);
+          _this.drawer0=false;
+          _this.drawerData0.status=1;
+          for (let i=0; i<_this.tableData1.length; i++) {
+            if (_this.drawerData0.id === _this.tableData1[i].id) {
+              // _this.tableData1[i].status=1;
+              // _this.tableData2.unshift(_this.tableData1[i]);
+              _this.tableData1.splice(i,1);
               break;
             }
           }
           if (response.data.succeed) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '已拒绝该请求',
               type: 'error'
@@ -553,53 +562,54 @@
       },
       pass2(id) {
         //发送数据
+        let _this=this
         axios.get(baseUrl+'/pass2',{
           params:{
             userId: localStorage.getItem('myId'),
             id: id
           }
         }).then(function (response) {
-          this.drawer1=false;
-          this.drawerData1.status='2';
-          for (let i=0; i<this.tableData3.length; i++) {
-            if (this.drawerData1.id === this.tableData3[i].id) {
-              this.tableData3[i].status='2';
-              this.tableData4.unshift(this.tableData3[i]);
-              this.tableData3.splice(i,1);
+          _this.drawer1=false;
+          _this.drawerData1.status=2;
+          for (let i=0; i<_this.tableData3.length; i++) {
+            if (_this.drawerData1.id === _this.tableData3[i].id) {
+              // _this.tableData3[i].status=2;
+              // _this.tableData4.unshift(_this.tableData3[i]);
+              _this.tableData3.splice(i,1);
               break;
             }
           }
           if (response.data.succeed) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '已通过该审核',
               type: 'success'
             });
           }
-
         })
 
       },
       reject2(id) {
         //发送数据
+        let _this=this
         axios.get(baseUrl+'/reject2',{
           params:{
             userId: localStorage.getItem('myId'),
             id: id
           }
         }).then(function (response) {
-          this.drawer1=false;
-          this.drawerData1.status='1';
-          for (let i=0; i<this.tableData3.length; i++) {
-            if (this.drawerData1.id === this.tableData3[i].id) {
-              this.tableData3[i].status='1';
-              this.tableData4.unshift(this.tableData3[i]);
-              this.tableData3.splice(i,1);
+          _this.drawer1=false;
+          _this.drawerData1.status=1;
+          for (let i=0; i<_this.tableData3.length; i++) {
+            if (_this.drawerData1.id === _this.tableData3[i].id) {
+              // _this.tableData3[i].status=1;
+              // _this.tableData4.unshift(_this.tableData3[i]);
+              _this.tableData3.splice(i,1);
               break;
             }
           }
           if (response.data.succeed) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '已拒绝该请求',
               type: 'error'
