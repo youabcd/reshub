@@ -157,14 +157,6 @@
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-<!--         <el-card class="box-card" shadow="never">
-            <div slot="header" class="clearfix">
-              <span>合作机构</span>
-            </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
-            </div>
-          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
@@ -193,7 +185,6 @@
           userId:1,
           resId:2,
           menuIndex: '0',
-          isHave: true,
           avatar:'trump.jpg',
           isHave: true,
           isClaimed: true,
