@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 1152px;margin:0 auto">
+    <el-container v-if="isHave" style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
@@ -157,17 +157,15 @@
               <div style="font:  7px  arial;color:#9a9a9a;padding-top: 9px;padding-left: 42px;">{{item.institute}}</div>
             </div>
           </el-card>
-<!--         <el-card class="box-card" shadow="never">
-            <div slot="header" class="clearfix">
-              <span>合作机构</span>
-            </div>
-            <div v-for="o in coopList" :key="o">
-              {{o}}
-            </div>
-          </el-card> -->
         </el-col>
       </el-main>
     </el-container>
+    <div v-if="!isHave">
+      你还没有个人门户</br>
+      <el-button @click="gotoCatch()">去认证</el-button></br>
+      或者</br>
+      <el-button>去搜索你自己</el-button></br>
+    </div>
   </div>
 </template>
 
@@ -193,9 +191,8 @@
           userId:1,
           resId:2,
           menuIndex: '0',
-          isHave: true,
           avatar:'trump.jpg',
-          isHave: true,
+          isHave: false,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
@@ -300,22 +297,45 @@
       },
       mounted() {
         this.userId=localStorage.getItem('myId');
-        this.resId=localStorage.getItem('authorId');
+        //this.resId=localStorage.getItem('authorId');
         this.getPersonalPortal();
       },
       methods:{
+        gotoCatch() {
+          this.$router.push({
+            path:'/CatchPortal',
+            quer:{resId:this.resId}
+          });
+        },
         gotoAuthor(authorId) {
-          window.open(webUrl+'PersonalPortal');
           localStorage.setItem('authorId',authorId);
+          this.$router.push({
+            path:'/PersonalPortal',
+          });
         },
         gotoInstitution(institutionId){
-          window.open(webUrl+'ResearchInstitute');
           localStorage.setItem('institutionId',institutionId);
+          this.$router.push({
+            path:'/ResearchInstitute',
+          });
+        },
+        AddConcern(){
+          var that = this;
+           axios.post(baseUrl+'/addConcern',{
+            userId:localStorage.getItem('myId'),
+            resId:localStorage.getItem('authorId')
+          }).then(function (response) {
+            
+          })
+        },
+        CancelConcern(){
+          
         },
         getPersonalPortal() {
           var that = this;
-          this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+          this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+localStorage.getItem('authorId')
           ).then(function (response) {
+            that.resId=response.data.authorid;
             that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
             that.isClaimed=response.data.isclaimed;
