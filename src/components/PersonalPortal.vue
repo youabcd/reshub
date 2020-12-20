@@ -297,33 +297,45 @@
       },
       mounted() {
         this.userId=localStorage.getItem('myId');
-        this.resId=localStorage.getItem('authorId');
+        //this.resId=localStorage.getItem('authorId');
         this.getPersonalPortal();
       },
       methods:{
         gotoCatch() {
-          _this.$router.push({
+          this.$router.push({
             path:'/CatchPortal',
             quer:{resId:this.resId}
           });
         },
         gotoAuthor(authorId) {
           localStorage.setItem('authorId',authorId);
-          _this.$router.push({
+          this.$router.push({
             path:'/PersonalPortal',
           });
         },
         gotoInstitution(institutionId){
           localStorage.setItem('institutionId',institutionId);
-          _this.$router.push({
+          this.$router.push({
             path:'/ResearchInstitute',
           });
         },
+        AddConcern(){
+          var that = this;
+           axios.post(baseUrl+'/addConcern',{
+            userId:localStorage.getItem('myId'),
+            resId:localStorage.getItem('authorId')
+          }).then(function (response) {
+            
+          })
+        },
+        CancelConcern(){
+          
+        },
         getPersonalPortal() {
           var that = this;
-          this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
+          this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+localStorage.getItem('authorId')
           ).then(function (response) {
-            that.resId=response.data.authorId;
+            that.resId=response.data.authorid;
             that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
             that.isClaimed=response.data.isclaimed;
