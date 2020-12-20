@@ -70,8 +70,16 @@
 
       data() {
         return {
-          //visible: false,
+          currentPage: 1,
+          pageSize: 10,
+          visible: false,
           RecordForm:{
+            pid:'',
+            paper_name:'',
+            paperLink:'',
+            browse_time:''
+          },
+          temp: {      //use this
             pid:'',
             paper_name:'',
             paperLink:'',
@@ -87,39 +95,35 @@
             browse_time: '2020/01/01 15:00',
             paperLink:'https://www.bilibili.com',
             paper_name: '关于为何文档浏览记录的代码和搜索记录这么像的研究成果'
-          }, {
-            pid: '003',
-            browse_time: '2020/11/19 16:00',
-            paperLink:'https://www.bilibili.com',
-            paper_name: '感谢写searchrecord的大佬'
-          }, {
-            pid: '004',
-            browse_time: '2020/11/19 20:00',
-            paperLink:'https://www.bilibili.com',
-            paper_name: '注意：本页面对应的接口文档已修改'
-          },],
-          multipleSelection: []
+          }],
+          multipleSelection: [],
+          post: [],
+          Timelist:[],
+          PaperUrlList:[],
+          PaperTitleList:[],
         }
       },
-
+      mounted() {
+        this.getBrowseRecord()
+      },
       methods: {
         getBrowseRecord(){//url很想加个get
-          axios.get(baseUrl+'/getBrowseRecord',{
+          console.log('getbr');
+          let _this=this;
+          axios.get(baseUrl+'/BrowseHistory',{
             params:{
-              UserEmail:localStorage.getItem('myId')
+              UserEmail:localStorage.getItem('myId'),
             }
-          }).then(function (response) {
-            for (let i=0, length=response.data.results.length; i<length; i++) {
-              this.temp.pid=response.data.results[i].pid;
-              this.temp.browse_time=response.data.results[i].browse_time;
-              this.temp.paper_name=response.data.results[i].paper_name;
-              this.temp.paperLink = response.data.results[i].paperLink;//
-              this.tableData.push({
-                pid: this.temp.pid,
-                browse_time: this.temp.browse_time,
-                paper_name: this.temp.paper_name,
-                paperLink: this.temp.paperLink,
-              })
+          })
+            .then(function (response) {
+            console.log(response.data.status)
+              _this.tableData=[];
+            for (let i=0,length=response.data.Timelist.length; i<length; i++) {
+              _this.temp.pid=i;
+              _this.temp.browse_time=response.data.Timelist[i];
+              _this.temp.paper_name=response.data.PaperTitleList[i];
+              _this.temp.paperLink = response.data.PaperUrlList[i];
+              _this.tableData.push(_this.temp);
             }
           })
         },
@@ -146,7 +150,7 @@
 
         deleteHistory(index) {
           //传递数据
-          // console.log([this.tableData[index].id])
+          console.log([this.tableData[index].id])
           axios.get(baseUrl+'/deleteBrowseRecord',{
             params:{
               userId: localStorage.getItem('myId'),
@@ -172,9 +176,11 @@
           for (let i=0; i<this.multipleSelection.length; i++) {
             this.post.push(this.multipleSelection[i].id)
           }
-          axios.post(baseUrl+'/deleteBrowseRecord',{
-            userId: localStorage.getItem('myId'),
-            Id: this.post
+          axios.get(baseUrl+'/deleteBrowseRecord',{
+            params:{
+              userId: localStorage.getItem('myId'),
+              Id: this.post
+            }
           }).then(function (response) {
             if (response.data.succeed === true) {
               let result = this.multipleSelection.map(a => {return a.id});
