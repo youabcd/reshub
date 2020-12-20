@@ -117,9 +117,12 @@
           </div>
           <!--作者 可点击-->
           <div style="margin-top: 15px;">
-            <el-link v-for="(item,index) in tableData00.author" :key="index" type="primary" :underline="false" @click="gotoAuthor(tableData00.authorId[index])">
-              {{item}}&nbsp;&nbsp;&nbsp;
-            </el-link>
+            <span v-for="(item,index) in tableData00.author" :key="index">
+              <el-link v-if="tableData00.authorId[index].length>0" type="primary" :underline="false" @click="gotoAuthor(tableData00.authorId[index])">
+                {{item}}&nbsp;&nbsp;&nbsp;
+              </el-link>
+              <span v-if="tableData00.authorId[index].length===0">{{item}}&nbsp;&nbsp;&nbsp;</span>
+            </span>
           </div>
           <!--机构 可点击-->
           <div style="margin-top: 10px;">
@@ -224,9 +227,10 @@
             <!--作者 可点击-->
             <div style="margin-top: 15px;">
               {{tableData01.authorTitle}}:
-              <el-link type="primary" :underline="false" @click="gotoAuthor(tableData01.authorId)">
+              <el-link v-if="tableData01.authorId.length>0" type="primary" :underline="false" @click="gotoAuthor(tableData01.authorId)">
                 {{tableData01.author}}
               </el-link>
+              <span v-if="tableData01.authorId.length===0">{{tableData01.author}}</span>
             </div>
             <!--机构-->
             <div style="margin-top: 10px;">
@@ -314,9 +318,10 @@
             </div>
             <!--作者 可点击-->
             <div style="margin-top: 15px;">
-              <el-link type="primary" :underline="false" @click="gotoAuthor(tableData02.authorId)">
+              <el-link v-if="tableData02.authorId.length>0" type="primary" :underline="false" @click="gotoAuthor(tableData02.authorId)">
                 {{tableData02.author}}
               </el-link>
+              <span v-if="tableData02.authorId.length===0">{{tableData02.author}}</span>
             </div>
             <!--摘要-->
             <div class="Details" style="">
