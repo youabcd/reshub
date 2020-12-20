@@ -4,7 +4,7 @@
 
 <div>
 <!--   -->
-  <div class="findPa" id="findPa">
+  <div class="findPa" id="findPa" @keyup.enter="ResetPassword">
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>

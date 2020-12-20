@@ -3,7 +3,7 @@
 
 <template>
 
-<div class="login" id="login">
+<div class="login" id="login" @keyup.enter="login">
 <!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
     <div class="reg-bg">
         <div class="log-cloud cloud1"></div>
