@@ -23,7 +23,7 @@
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
-    <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
+    
 </div>
 </template>
 
@@ -111,7 +111,7 @@ export default {
             localStorage.setItem("whichFriend",response.whichFriend);
             localStorage.setItem("authorId",response.authorId);
             localStorage.setItem("institutionId",response.institutionId);
-            isLoging=true;
+            
             _this.$router.push({
               path:'/',
             });
