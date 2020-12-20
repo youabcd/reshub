@@ -188,7 +188,7 @@ import baseUrl from './baseUrl'
                 data.append('userDescription',_this.descrip);
                 axios.post(baseUrl+'/registerInformation',data)
                 .then(function(response){
-                    console.log(response);
+                    console.log('注册response.data.result:'+response.data.result);
                     var success;
                     success=response.data.result;
                     if(success==true){

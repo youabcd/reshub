@@ -108,6 +108,7 @@
             //验证码验证
             verify_verificationCode(){
                 let _this=this;
+                _this.veri_success=false;
                 axios.get(baseUrl+'/verificationCode',{
                     params:{
                         mailAddress: _this.mail,
@@ -116,16 +117,15 @@
                     
                 })
                 .then(function(response){
-                    if(response.data.result==false){
-                        _this.errorMessage='验证码错误';
-                        console.log('When verify the code,find error!');
-                        _this.veri_success=false;
+                    console.log('验证码验证,response.data.result:'+response.data.result);
+                    _this.veri_success=response.data.result;
+                    console.log('验证码验证,_this.veri_success:'+_this.veri_success);
+                    if(_this.veri_success==false){
+                        _this.errorMessage='验证码错误';  
                     }
-                    else {
-                        _this.veri_success=true;
-                    }
-                    return _this.veri_success;
+                    
                 })
+                return _this.veri_success;
             },
             //邮件和密码的格式验证
             patternMatching2(mail,pa,pa2){
@@ -182,7 +182,7 @@
                 }
                 //验证验证码正确
                 successTmp=_this.verify_verificationCode();
-                console.log('verification code is right? '+successTmp);
+                console.log('重置密码中验证验证码正确返回的结果： '+successTmp);
                 //if(successTmp!=true){
                 //    return;
                 //}
@@ -202,6 +202,7 @@
                 })
                 .then(function(response){
                        console.log('进入重置');
+                       console.log('重置response.data.result：'+response.data.result);
                        var reset_success;
                        reset_success=response.data.result;
                        if(reset_success==true){
