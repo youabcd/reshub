@@ -89,11 +89,11 @@ export default {
       const md5 = crypto.createHash('md5');
       md5.update(this.password);
       let md5password = md5.digest('hex') ;
-
+      alert(this.userID);
       let _this=this;
       axios.post(baseUrl+'/identityCheck',{
-        userId:this.userID,
-        password:md5password
+        'userId':_this.userID,
+        'password':md5password
       })
         .then(function (response) {
           console.log(response);
