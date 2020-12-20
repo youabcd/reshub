@@ -102,7 +102,7 @@
               <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
             <div style="text-align: left;position: absolute;">
-              <img class="avatar" src="../assets/jiang.jpg" ></img>
+              <img class="avatar" :src="require('../assets/Head/'+item.avatar)" ></img>
             </div>
             <div>
               <i class="el-icon-star-on" style="position: absolute;right: 65px;top: 110px">
@@ -194,6 +194,7 @@
             {
               resId:'0',
               name:'MAGA',
+              avatar:'trump.jpg',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
@@ -202,85 +203,15 @@
             },
             {
               resId:'1',
-              title:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'2',
               name:'MAGA',
+              avatar:'trump.jpg',
               mail:'romeo.yang.zheng@centralepekin.cn',
               domain:'吹牛',
               collectStatus:true,
               collectionSum:666,
               viewSum:777,
             },
-            {
-              resId:'3',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'4',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'5',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'6',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'7',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'8',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
-            {
-              resId:'9',
-              name:'MAGA',
-              mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
-              collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
-            },
+            
           ],
           hotData: [
             {
