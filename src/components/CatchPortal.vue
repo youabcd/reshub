@@ -195,7 +195,7 @@
         //上传信息，用户认领门户
         submit(){
           let _this=this;
-          axios.post(baseUrl+'/CatchPortal',{  //按接口列表写的
+          axios.get(baseUrl+'/CatchPortal',{  //按接口列表写的
             realName: this.PortalForm.realname,
             personCommunication: this.PortalForm.cemail,
             researchInstitute: this.PortalForm.institude
