@@ -145,9 +145,11 @@
         deleteHistory(index) {
           //传递数据
           // console.log([this.tableData[index].id])
-          axios.post(baseUrl+'/deleteBrowseRecord',{
-            userId: localStorage.getItem('myId'),
-            Id: [this.tableData[index].id]
+          axios.get(baseUrl+'/deleteBrowseRecord',{
+            params:{
+              userId: localStorage.getItem('myId'),
+              Id: [this.tableData[index].id]
+            }
           }).then(function (response) {
             if (response.data.succeed===true) {
               this.tableData.splice(index,1);

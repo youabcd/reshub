@@ -195,10 +195,11 @@
         //上传信息，用户认领门户
         submit(){
           let _this=this;
-          axios.post(baseUrl+'/CatchPortal',{
-            realname: this.PortalForm.realname,
-            institude: this.PortalForm.institude,
-            email: this.PortalForm.cemail
+          axios.post(baseUrl+'/CatchPortal',{  //按接口列表写的
+            realName: this.PortalForm.realname,
+            personCommunication: this.PortalForm.cemail,
+            researchInstitute: this.PortalForm.institude
+
           }).then(res =>{
            if(res.data.message === 'SUCCESS'){
              this.$notify({
