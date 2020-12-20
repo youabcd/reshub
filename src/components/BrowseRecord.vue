@@ -106,6 +106,10 @@
         getBrowseRecord(){//url很想加个get
           axios.get(baseUrl+'/getBrowseRecord',{
             params:{
+              paperId:this.RecordForm.pid,
+              paperName:this.RecordForm.paper_name,
+              browseTime:this.RecordForm.browse_time,
+
               userId:localStorage.getItem('myId')
             }
           }).then(function (response) {
