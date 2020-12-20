@@ -104,8 +104,10 @@
 
       methods: {
         getBrowseRecord(){//url很想加个get
-          axios.post(baseUrl+'/getBrowseRecord',{
-            userId:localStorage.getItem(myId)
+          axios.get(baseUrl+'/getBrowseRecord',{
+            params:{
+              userId:localStorage.getItem('myId')
+            }
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.pid=response.data.results[i].pid;
