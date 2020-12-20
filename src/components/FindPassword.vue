@@ -122,7 +122,7 @@
                         _this.veri_success=false;
                     }
                     else {
-                        _this.veri_success=true
+                        _this.veri_success=true;
                     }
                     return _this.veri_success;
                 })
@@ -171,16 +171,17 @@
             },
             //要求重置密码
             ResetPassword(){
-                this.errorMessage='重置密码';
+                let _this=this;
+                _this.errorMessage='重置密码';
                 let successTmp;
                 //验证邮件地址和密码的格式
-                successTmp=this.patternMatching2(this.mail,this.password,this.password2);
+                successTmp=_this.patternMatching2(_this.mail,_this.password,_this.password2);
                 console.log('pattern is right? '+successTmp);
                 if(successTmp!=true){
                     return;
                 }
                 //验证验证码正确
-                successTmp=this.verify_verificationCode();
+                successTmp=_this.verify_verificationCode();
                 console.log('verification code is right? '+successTmp);
                 //if(successTmp!=true){
                 //    return;
@@ -189,13 +190,13 @@
 
                 //md5加密
                 const md5 = crypto.createHash('md5');
-                md5.update(this.password);
+                md5.update(_this.password);
                 let md5password = md5.digest('hex') ;
 
                 //重置密码的接口
                 axios.get(baseUrl+'/newPassword',{
                     params:{
-                        mailAddress: this.mail,
+                        mailAddress: _this.mail,
                         newPassword: md5password
                         }
                 })
@@ -205,13 +206,13 @@
                        reset_success=response.data.result;
                        if(reset_success==true){
                            console.log('重置成功');
-                           this.$router.push({
+                           _this.$router.push({
                             path:'/login',
                             });
                        }
                        else {
                            console.log('重置失败');
-                           errorMessage='重置失败'
+                           _this.errorMessage='重置失败'
                        }
                 })
                 
