@@ -28,7 +28,7 @@
         <div class="errorMessage">{{errorMessage}}</div>
         <span class="findPa-btn" @click="verify_verificationCode">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
-        <span class="findPa-btn" @click="ResetPassword">重置密码测试</span>
+        <!--<span class="findPa-btn" @click="ResetPassword">重置密码测试</span>-->
 
         <!-- for debug
         <input type="text" placeholder="testVar" class="findPa-input" v-model="testVar">
@@ -193,10 +193,10 @@
                 
                 //验证验证码正确
                 
-                //console.log('重置密码中验证验证码正确返回的结果： '+_this.veri_success);
-                //if(_this.veri_success!=true){
-                //    return;
-                //}
+                console.log('重置密码中验证验证码正确返回的结果： '+_this.veri_success);
+                if(_this.veri_success!=true){
+                    return;
+                }
                 
 
                 //md5加密
@@ -215,7 +215,6 @@
                        console.log('进入重置');
                        console.log(response.data);
                        console.log('重置response.data.result：'+response.data.result);
-                       console.log('重置response.data.message：'+response.data.message);
                        var reset_success;
                        reset_success=response.data.result;
                        if(reset_success==true){
