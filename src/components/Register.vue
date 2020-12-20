@@ -2,7 +2,7 @@
 
 <template>
 
-<div class="login" id="login">
+<div class="login" id="login" @keyup.enter="Reg">
 <!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
     <div class="reg-bg">
         <div class="log-cloud cloud1"></div>
@@ -177,10 +177,10 @@ import baseUrl from './baseUrl'
                 
 
                 //验证验证码正确性
-                if(_this.verify_verificationCode()==false){
-                    return;
-                }
-                console.log('verificationCode verified!');
+                //if(_this.verify_verificationCode()==false){
+                //    return;
+                //}
+                //console.log('verificationCode verified!');
                 let data = new FormData();
                 data.append('userName', _this.nickname);
                 data.append('password',md5password);
