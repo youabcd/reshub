@@ -183,19 +183,20 @@
       },
       methods: {
         getSearchRecord() {
+          let _this=this
           axios.get(baseUrl+'/getSearchRecord',{
             params:{
               userId:localStorage.getItem('myId')
             }
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
-              this.temp.id=response.data.results[i].id;
-              this.temp.date=response.data.results[i].searchTime;
-              this.temp.history=response.data.results[i].keyword;
-              this.tableData.push({
-                id: this.temp.id,
-                date: this.temp.date,
-                history: this.temp.history,
+              _this.temp.id=response.data.results[i].id;
+              _this.temp.date=response.data.results[i].searchTime;
+              _this.temp.history=response.data.results[i].keyword;
+              _this.tableData.push({
+                id: _this.temp.id,
+                date: _this.temp.date,
+                history: _this.temp.history,
               })
             }
           })
@@ -220,15 +221,16 @@
         deleteHistory(index) {
           //传递数据
           // console.log([this.tableData[index].id])
+          let _this=this
           axios.get(baseUrl+'/deleteSearchRecord',{
             params:{
               userId: localStorage.getItem('myId'),
-              Id: [this.tableData[index].id]
+              Id: [_this.tableData[index].id]
             }
           }).then(function (response) {
             if (response.data.succeed===true) {
-              this.tableData.splice(index,1);
-              this.$message({
+              _this.tableData.splice(index,1);
+              _this.$message({
                 type: 'success',
                 message: '删除成功'
               });
@@ -243,41 +245,40 @@
 
         },
         deleteSelectHistory() {
+          let _this=this
           for (let i=0; i<this.multipleSelection.length; i++) {
             this.post.push(this.multipleSelection[i].id)
           }
           axios.get(baseUrl+'/deleteSearchRecord',{
             params:{
               userId: localStorage.getItem('myId'),
-              Id: this.post
+              Id: _this.post
             }
           }).then(function (response) {
             if (response.data.succeed === true) {
-              let result = this.multipleSelection.map(a => {return a.id});
+              let result = _this.multipleSelection.map(a => {return a.id});
               for (let i=0; i<result.length; i++) {
-                for (let j=0; j<this.tableData.length; j++) {
-                  if (this.tableData[j].id === result[i]) {
+                for (let j=0; j<_this.tableData.length; j++) {
+                  if (_this.tableData[j].id === result[i]) {
                     // console.log(this.tableData[j].id);
-                    this.tableData.splice(j,1);
+                    _this.tableData.splice(j,1);
                     break;
                   }
                 }
               }
-              this.$message({
+              _this.$message({
                 type: 'success',
                 message: '批量删除成功'
               });
             }
             else {
-              this.$message({
+              _this.$message({
                 type: 'error',
                 message: '批量删除失败'
               });
             }
           })
-
-          // this.$message('批量删除成功');
-          this.post.length = 0
+          _this.post.length = 0
         },
         open() {
           this.$confirm('此操作将永久删除选中记录, 是否继续?', '提示', {

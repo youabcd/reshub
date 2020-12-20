@@ -224,14 +224,14 @@
 
         <div style="position: relative">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 10%;width: 80%;position: relative;">
-            <div>
-              <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
-                       active-text-color="#0079fe" >
-                <el-menu-item index="0" style="width: 120px">●论文({{tableData0.length}})</el-menu-item>
-                <el-menu-item index="1" style="width: 120px">●项目({{tableData1.length}})</el-menu-item>
-                <el-menu-item index="2" style="width: 120px">●专利({{tableData2.length}})</el-menu-item>
-              </el-menu>
-            </div>
+<!--            <div>-->
+<!--              <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"-->
+<!--                       active-text-color="#0079fe" >-->
+<!--                <el-menu-item index="0" style="width: 120px">●论文({{tableData0.length}})</el-menu-item>-->
+<!--                <el-menu-item index="1" style="width: 120px">●项目({{tableData1.length}})</el-menu-item>-->
+<!--                <el-menu-item index="2" style="width: 120px">●专利({{tableData2.length}})</el-menu-item>-->
+<!--              </el-menu>-->
+<!--            </div>-->
             <el-dialog
               title="使用微信扫一扫"
               :visible.sync="dialogVisible"
@@ -242,23 +242,23 @@
                 <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
               </div>
               <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
-                  </span>
+                <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+              </span>
             </el-dialog>
             <div>
               <!--论文-->
-              <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+              <el-card shadow="hover" v-for="(item,index) in tableData0.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
+                    <el-tooltip class="item" effect="dark" content="取消收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection0(index, item.paperId)"></i>
                     </el-tooltip>
                   </span>
@@ -280,21 +280,26 @@
                   <p style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</p>
                 </div>
 
-                <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                    <span style="font-weight: 700;margin-left: 15px">
-                      关键词:
-                    </span>
-                  <span>{{item.keywords}}</span>
-                </div>
+<!--                <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">-->
+<!--                    <span style="font-weight: 700;margin-left: 15px">-->
+<!--                      关键词:-->
+<!--                    </span>-->
+<!--                  <span>{{item.keywords}}</span>-->
+<!--                </div>-->
 
                 <div>
-                  <div style="position: absolute;left: 5px;top: 140px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
-                        {{author_item}}
+                  <div style="position: absolute;left: 5px;top: 140px;text-align: left;" v-bind:style="{width: 620+'px'}" class="van-ellipsis">
+<!--                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">-->
+<!--                        {{author_item}}-->
+<!--                    </span>-->
+                    <span style="margin-left: 15px;">
+                        {{item.author}}
                     </span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>论文</span>
+                    <span v-if="item.type===1">论文</span>
+                    <span v-if="item.type===2">专利</span>
+                    <span v-if="item.type===3">项目</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                     <span> {{item.collectionSum}}</span>
@@ -306,118 +311,118 @@
               </el-card>
 
               <!--项目-->
-              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title}}
-                  </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title.substring(0,40)+'...'}}
-                  </span>
-                </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection1(index, item.paperId)"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
+<!--              <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >-->
+<!--                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">-->
+<!--                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">-->
+<!--                    {{item.title}}-->
+<!--                  </span>-->
+<!--                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">-->
+<!--                    {{item.title.substring(0,40)+'...'}}-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">-->
+<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection1(index, item.paperId)"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">
-                  <p style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</p>
-                  <p style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</p>
-                </div>
+<!--                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData1[index])">-->
+<!--                  <p style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</p>-->
+<!--                  <p style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</p>-->
+<!--                </div>-->
 
-                <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
-                      {{tableData1[index].author}}
-                    </span>
-                    <span style="font-weight: 700;margin-left: 20px">
-                      关键词:
-                    </span>
-                    <span>{{item.keyword}}</span>
-                  </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>项目</span>
-                  </el-tag>
-                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
-                    <span> {{item.collectionSum}}</span>
-                  </i>
-                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
-                    <span> {{item.viewSum}}</span>
-                  </i>
-                </div>
-              </el-card>
+<!--                <div>-->
+<!--                  <div style="position: absolute;left: 5px;top: 130px;">-->
+<!--                    <span style="margin-left: 15px;">-->
+<!--                      {{tableData1[index].author}}-->
+<!--                    </span>-->
+<!--                    <span style="font-weight: 700;margin-left: 20px">-->
+<!--                      关键词:-->
+<!--                    </span>-->
+<!--                    <span>{{item.keyword}}</span>-->
+<!--                  </div>-->
+<!--                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">-->
+<!--                    <span>项目</span>-->
+<!--                  </el-tag>-->
+<!--                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">-->
+<!--                    <span> {{item.collectionSum}}</span>-->
+<!--                  </i>-->
+<!--                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">-->
+<!--                    <span> {{item.viewSum}}</span>-->
+<!--                  </i>-->
+<!--                </div>-->
+<!--              </el-card>-->
 
-              <!--专利-->
-              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
-                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title}}
-                  </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title.substring(0,40)+'...'}}
-                  </span>
-                </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection2(index, item.paperId)"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
+<!--              &lt;!&ndash;专利&ndash;&gt;-->
+<!--              <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >-->
+<!--                <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">-->
+<!--                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">-->
+<!--                    {{item.title}}-->
+<!--                  </span>-->
+<!--                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">-->
+<!--                    {{item.title.substring(0,40)+'...'}}-->
+<!--                  </span>-->
+<!--                </div>-->
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">-->
+<!--                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection2(index, item.paperId)"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="item.link" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
 
 
-                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData2[index])">
-                  <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>
-                  <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>
-                </div>
+<!--                <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(tableData2[index])">-->
+<!--                  <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>-->
+<!--                  <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>-->
+<!--                </div>-->
 
-                <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
-                        {{item.author}}
-                    </span>
-                    <span style="font-weight: 700;margin-left: 20px">
-                      关键词:
-                    </span>
-                    <span>{{item.keyword}}</span>
-                  </div>
-                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span>专利</span>
-                  </el-tag>
-                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
-                    <span> {{item.collectionSum}}</span>
-                  </i>
-                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">
-                    <span> {{item.viewSum}}</span>
-                  </i>
-                </div>
-              </el-card>
+<!--                <div>-->
+<!--                  <div style="position: absolute;left: 5px;top: 130px;">-->
+<!--                    <span style="margin-left: 15px;">-->
+<!--                        {{item.author}}-->
+<!--                    </span>-->
+<!--                    <span style="font-weight: 700;margin-left: 20px">-->
+<!--                      关键词:-->
+<!--                    </span>-->
+<!--                    <span>{{item.keyword}}</span>-->
+<!--                  </div>-->
+<!--                  <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">-->
+<!--                    <span>专利</span>-->
+<!--                  </el-tag>-->
+<!--                  <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">-->
+<!--                    <span> {{item.collectionSum}}</span>-->
+<!--                  </i>-->
+<!--                  <i class="el-icon-view" style="position: absolute;right: 20px;top: 130px">-->
+<!--                    <span> {{item.viewSum}}</span>-->
+<!--                  </i>-->
+<!--                </div>-->
+<!--              </el-card>-->
             </div>
 
             <!--论文页码-->
@@ -435,32 +440,32 @@
             </div>
 
             <!--专利页码-->
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '1'">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-size="pageSize"
-                layout="total, prev, pager, next, jumper"
-                :total="tableData1.length"
-                prev-text="上一页"
-                next-text="下一页">
-              </el-pagination>
-            </div>
+<!--            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '1'">-->
+<!--              <el-pagination-->
+<!--                @size-change="handleSizeChange"-->
+<!--                @current-change="handleCurrentChange"-->
+<!--                :current-page="currentPage"-->
+<!--                :page-size="pageSize"-->
+<!--                layout="total, prev, pager, next, jumper"-->
+<!--                :total="tableData1.length"-->
+<!--                prev-text="上一页"-->
+<!--                next-text="下一页">-->
+<!--              </el-pagination>-->
+<!--            </div>-->
 
-            <!--项目页码-->
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '2'">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-size="pageSize"
-                layout="total, prev, pager, next, jumper"
-                :total="tableData2.length"
-                prev-text="上一页"
-                next-text="下一页">
-              </el-pagination>
-            </div>
+<!--            &lt;!&ndash;项目页码&ndash;&gt;-->
+<!--            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '2'">-->
+<!--              <el-pagination-->
+<!--                @size-change="handleSizeChange"-->
+<!--                @current-change="handleCurrentChange"-->
+<!--                :current-page="currentPage"-->
+<!--                :page-size="pageSize"-->
+<!--                layout="total, prev, pager, next, jumper"-->
+<!--                :total="tableData2.length"-->
+<!--                prev-text="上一页"-->
+<!--                next-text="下一页">-->
+<!--              </el-pagination>-->
+<!--            </div>-->
 
           </div>
           <div>
@@ -587,99 +592,47 @@
           },
 
         ],
-        tableData0: [
+        tableData0: [//全部
           {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San','Clearlove'],
-            authorId: ['1','2','3'],
-            keyword:'123456',
-            fund:'123',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:['北京航空航天大学'],
-            institutionId:['1'],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:['https://www.google.com.hk/','https://www.google.com.hk/'],
-            collectTime:'2016-05-04',
-            paperDoi: 'doidoi',
-            citation: 5, // 引用数量
-            paperStart: 0, // 论文开始页
-            paperEnd: 4, // 论文结束页
-            paperLang: 'en', // 英文
-            paperVolume: 3, // 册
-            paperIssue: 4, // 期号
-            paperPublisher: '工业出版社',
-            paperFos: ['1','2'], // 学科
-            paperVenue: '456', // 会议
+            paperId:'',
+            title:'',
+            msg:'',
+            author: [],
+            author_link: [],
+            type:0,
+            collectionSum:0,
+            viewSum:0,
+            link:[],
+            collectTime:'',
           },
         ],
-        tableData1: [ // 国家自然基金项目
+        tableData1: [ // 项目
           {
-            paperId:'1',
-            title:'Google1',
-            zhAbstract:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            // 中文摘要
-            enAbstract: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', // 英文摘要
-            finalAbstract: '结题摘要',
-            zhKeywords: '', // 中文关键字
-            enKeywords: '', // 英文关键字
-            period: '', // 研究期限
-            category: '青年科学基金项目', // 项目类别
-            year: '', //发表年份
-            author: 'Clearlove',
-            authorId: '1',
-            fund:'23万', // 基金
-            support: '浙江大学', // 支持机构
-            collectStatus: true,
-            collectionSum:666,
-            viewSum:777,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
+            paperId:'',
+            title:'',
+            msg:'',
+            author: [],
+            author_link: [],
+            type:1,
+            collectionSum:0,
+            viewSum:0,
+            link:'',
+            collectTime:'',
           },
         ],
-        tableData2: [
+        tableData2: [//专利
           {
-            id:123,
-            paperId:'2',
-            title:'Google2',
-            viewSum:777,
-            link:'https://www.youtube.com/',
-            collectionSum:666,
-            isUserUpload:1,
-            abstract:'文字文字字文字zhaiyao文字文字文字文字2',
-            date:new Date(),
-            author:'niubility',
-            authorId: '2333',
-            type:"专利",
-            collectStatus: true,
-            collectTime:'2016-05-04',
+            paperId:'',
+            title:'',
+            msg:'',
+            author: [],
+            author_link: [],
+            type:2,
+            collectionSum:0,
+            viewSum:0,
+            link:'',
+            collectTime:'',
           }],
-        hotData: [
-          {
-            paperId:'1',
-            title:'Google1',
-            msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-            author: ['Li Ming','Zhang San'],
-            authorId: ['1','2'],
-            keyword:'',
-            fund:'',
-            reference:['1','2','3'],
-            referenceLink:['https://www.bilibili.com','https://www.baidu.com','https://www.qq.com'],
-            institution:[],
-            institutionId:[],
-            type:"期刊",
-            collectStatus: true,
-            collectionSum:6,
-            viewSum:7,
-            link:'https://www.google.com.hk/',
-            collectTime:'2016-05-04'
-          },
-        ],
       }
     },
     created() {
@@ -693,14 +646,14 @@
     },
     methods: {
       getMyCollection () {
+        let _this=this;
         axios.get(baseUrl+'/getMyCollection',{
           params:{
             userId:localStorage.getItem('myId')
           }
         }).then(function (response) {
-          this.tableData0=response.data.list0;
-          this.tableData1=response.data.list1;
-          this.tableData2=response.data.list2;
+          console.log(response.data.list)
+          _this.tableData0=response.data.list;
         })
       },
 
@@ -736,7 +689,7 @@
 
       gotoPaper(url) {
         //发送点击数据
-        window.open(url,url)
+        window.open(url)
       },
 
       gotoAuthor(authorId) {
@@ -751,23 +704,23 @@
 
       deleteCollection0 (index, paperId) {
         //发送请求
+        let _this=this;
         axios.get(baseUrl+'/cancelCollection',{
           params:{
             paperId: paperId,
             type:'paper',
             userId:localStorage.getItem('myId'),
-
           }
         }).then(function (response) {
           if (response.data.succeed===true) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏成功',
               type: 'success'
             });
-            this.tableData0.splice(index, 1);
+            _this.tableData0.splice(index, 1);
           } else {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏失败，请重试',
               type: 'error'
@@ -784,18 +737,17 @@
             paperId: paperId,
             type:'project',
             userId:localStorage.getItem('myId'),
-
           }
         }).then(function (response) {
           if (response.data.succeed===true) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏成功',
               type: 'success'
             });
-            this.tableData1.splice(index, 1);
+            _this.tableData1.splice(index, 1);
           } else {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏失败，请重试',
               type: 'error'
@@ -812,25 +764,23 @@
             paperId: paperId,
             type:'patent',
             userId:localStorage.getItem('myId'),
-
           }
         }).then(function (response) {
           if (response.data.succeed===true) {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏成功',
               type: 'success'
             });
-            this.tableData2.splice(index, 1);
+            _this.tableData2.splice(index, 1);
           } else {
-            this.$message({
+            _this.$message({
               showClose: true,
               message: '取消收藏失败，请重试',
               type: 'error'
             });
           }
         })
-        // this.reload();
       },
 
       Copy() {
