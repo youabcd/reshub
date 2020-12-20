@@ -15,9 +15,9 @@
             	</a>
             	<div style="margin: auto;">
                 <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要申诉</el-button>
-                <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要认证</el-button></br>
-            	  <el-button v-if="this.isFollowing == false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing == true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
+                <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
+            	  <el-button v-if="this.isFollowing == false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
+                <el-button v-if="this.isFollowing == true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
             	</div>
             </div>
         		<div class="person_baseinfo">
@@ -162,8 +162,8 @@
     </el-container>
     <div v-if="!isHave" style="padding-top: 15%;">
       <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
-      <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">去认证</el-button></br>
-      <font style="font:  bold italic 40px  arial">或者</font></br>
+      <!-- <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
+      <font style="font:  bold italic 40px  arial">或者</font></br> -->
       <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
     </div>
   </div>
@@ -190,7 +190,7 @@
           // totalPage: 100,
           message:'',
           userId:1,
-          resId:2,
+          resId:1,
           menuIndex: '0',
           avatar:'trump.jpg',
           isHave: true,
@@ -325,7 +325,7 @@
             path:'/ResearchInstitute',
           });
         },
-        AddConcern(){
+        addConcern(){
           var that = this;
           axios.post(baseUrl+'/addConcern',{
             userId:localStorage.getItem('myId'),
@@ -348,7 +348,7 @@
             }
           })
         },
-        CancelConcern(){
+        cancelConcern(){
           var that = this;
           axios.post(baseUrl+'/cancelConcern',{
             userId:localStorage.getItem('myId'),
