@@ -37,7 +37,7 @@
             <label><span style="color: red">*</span>邮箱验证码：</label>
             <el-input style="width: 300px" v-model="auth_code" placeholder="请输入验证码"></el-input>
             <el-button onclick="askVerificationCode()" type="primary" plain>发送验证码</el-button>
-            <span v-show="!sendAuthCode"><span>{{auth_time}}</span>秒后重新发送验证码</span>
+
             <!--需要加入一个“发送成功”和“等待发送  ”-->
           </div>
 
@@ -177,7 +177,7 @@
           console.log('这个就是Email:'+_this.mail);
           axios.get(baseUrl+'/passwordLost',{// need this?
             params:{
-              mailAddress:_this.mail
+              mailAddress:this.PortalForm.cemail
             }
           })
 
