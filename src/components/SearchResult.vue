@@ -1172,8 +1172,8 @@
       },
 
       open(index) {
-        this.drawer=true;
         let _this=this;
+        _this.drawer=true;
         if(this.menuIndex==='0'){
           this.tableData00=this.tableData0[index];
           axios.post(baseUrl+'/openPaper',{id:_this.tableData00.paperId,type:'paper'})
