@@ -91,10 +91,11 @@ export default {
       let md5password = md5.digest('hex') ;
 
       let _this=this;
-      axios.post(baseUrl+'/identityCheck',{
-        userId:this.userID,
-        password:md5password
-      })
+      let data = new FormData();
+      data.append('userId', this.userID);
+      data.append('password', md5password);
+
+      axios.post(baseUrl+'/identityCheck',data)
         .then(function (response) {
           console.log(response);
           if(response.data.result===true){
