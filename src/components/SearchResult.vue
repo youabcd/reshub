@@ -223,6 +223,7 @@
             </div>
             <!--作者 可点击-->
             <div style="margin-top: 15px;">
+              {{tableData01.authorTitle}}:
               <el-link type="primary" :underline="false" @click="gotoAuthor(tableData01.authorId)">
                 {{tableData01.author}}
               </el-link>
@@ -750,6 +751,7 @@
           category: '青年科学基金项目', // 项目类别
           year: '', //发表年份
           author: '',
+          authorTitle:'组长',
           authorId: '1',
           fund:'', // 基金
           support: '浙江大学', // 支持机构
@@ -835,6 +837,7 @@
             category: '青年科学基金项目', // 项目类别
             year: '', //发表年份
             author: 'Clearlove',
+            authorTitle:'组长',
             authorId: '1',
             fund:'23万', // 基金
             support: '浙江大学', // 支持机构
@@ -1223,6 +1226,7 @@
         if(this.menuIndex==='0'){
           this.tableData00=this.tableData0[index];
           let data = new FormData();
+          data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData00.paperId);
           data.append('type', 'paper');
           axios.post(baseUrl+'/openPaper',data)
@@ -1235,6 +1239,7 @@
         else if(this.menuIndex==='1'){
           this.tableData01=this.tableData1[index];
           let data = new FormData();
+          data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData01.paperId);
           data.append('type', 'project');
           axios.post(baseUrl+'/openPaper',data)
@@ -1247,6 +1252,7 @@
         else if(this.menuIndex==='2'){
           this.tableData02=this.tableData2[index];
           let data = new FormData();
+          data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData02.paperId);
           data.append('type', 'patent');
           axios.post(baseUrl+'/openPaper',data)

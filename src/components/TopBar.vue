@@ -128,6 +128,7 @@
           /*this.showChangeHead=false;
           this.userImage=item;
           localStorage.setItem("userHead",item);*/
+          let _this=this;
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('url',item);
@@ -135,8 +136,8 @@
           .then(function (response) {
             console.log(response);
             if(response.data.status===1){
-              this.showChangeHead=false;
-              this.userImage=item;
+              _this.showChangeHead=false;
+              _this.userImage=item;
               localStorage.setItem("userHead",item);
               this.$message({
                 message:'修改成功',
