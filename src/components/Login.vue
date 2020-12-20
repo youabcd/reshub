@@ -3,7 +3,7 @@
 
 <template>
 
-<div class="login" id="login">
+<div class="login" id="login" @keyup.enter="login">
 <!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
     <div class="reg-bg">
         <div class="log-cloud cloud1"></div>
@@ -23,7 +23,7 @@
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
-    <!--<Loading v-if="isLoging" marginTop="-30%"></Loading>-->
+
 </div>
 </template>
 
@@ -91,29 +91,32 @@ export default {
       let md5password = md5.digest('hex') ;
 
       let _this=this;
-      axios.post(baseUrl+'/identityCheck',{
-        userId:this.userID,
-        password:md5password
-      })
+      let data = new FormData();
+      data.append('userId', _this.userID);
+      data.append('password', md5password);
+
+      axios.post(baseUrl+'/identityCheck',data)
         .then(function (response) {
           console.log(response);
           if(response.data.result===true){
             //在文件‘localStorage里存了的变量’里面提到的都要存在这里
-            localStorage.setItem("myId",response.userId);
-            localStorage.setItem("userHead",response.userHead);
-            localStorage.setItem("isPortal",response.isPortal);
-            localStorage.setItem("portalId",response.portalId);
-            localStorage.setItem("isAdministrator",response.isAdministrator);
-            localStorage.setItem("label",response.label);
-            localStorage.setItem("nowActive",response.nowActive);
-            localStorage.setItem("keyWords",response.keyWords);
-            localStorage.setItem("whichFriend",response.whichFriend);
-            localStorage.setItem("authorId",response.authorId);
-            localStorage.setItem("institutionId",response.institutionId);
-            isLoging=true;
-            _this.$router.push({
-              path:'/',
-            });
+            localStorage.setItem("myId",response.data.userId);
+            localStorage.setItem("userHead",response.data.userHead);
+            localStorage.setItem("isPortal",response.data.isPortal);
+            localStorage.setItem("portalId",response.data.portalId);
+            localStorage.setItem("isAdministrator",response.data.isAdministrator);
+            localStorage.setItem("label",response.data.label);
+            if(_this.userID!='root@root'){
+              _this.$router.push({
+                path:'/',
+              });
+            }
+            else {
+              _this.$router.push({
+                path:'/Administrator',
+              });
+            }
+            
           }
           else {
             _this.errorMessage='账号或密码错误';
@@ -165,7 +168,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
 /*color: #1fcab3;*/
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}

@@ -128,12 +128,16 @@
           /*this.showChangeHead=false;
           this.userImage=item;
           localStorage.setItem("userHead",item);*/
-          axios.post(baseUrl+'/changeHead',{userId:localStorage.getItem('myId'),url:item})
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('url',item);
+          axios.post(baseUrl+'/changeHead',data)
           .then(function (response) {
             console.log(response);
-            if(response.data.status==true){
-              this.showChangeHead=false;
-              this.userImage=item;
+            if(response.data.status===1){
+              _this.showChangeHead=false;
+              _this.userImage=item;
               localStorage.setItem("userHead",item);
               this.$message({
                 message:'修改成功',

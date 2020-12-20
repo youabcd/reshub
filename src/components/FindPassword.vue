@@ -4,7 +4,7 @@
 
 <div>
 <!--   -->
-  <div class="findPa" id="findPa">
+  <div class="findPa" id="findPa" @keyup.enter="ResetPassword">
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>
@@ -108,6 +108,7 @@
             //验证码验证
             verify_verificationCode(){
                 let _this=this;
+                _this.veri_success=false;
                 axios.get(baseUrl+'/verificationCode',{
                     params:{
                         mailAddress: _this.mail,
@@ -116,16 +117,15 @@
                     
                 })
                 .then(function(response){
-                    if(response.data.result==false){
-                        _this.errorMessage='验证码错误';
-                        console.log('When verify the code,find error!');
-                        _this.veri_success=false;
+                    console.log('验证码验证,response.data.result:'+response.data.result);
+                    _this.veri_success=response.data.result;
+                    console.log('验证码验证,_this.veri_success:'+_this.veri_success);
+                    if(_this.veri_success==false){
+                        _this.errorMessage='验证码错误';  
                     }
-                    else {
-                        _this.veri_success=true
-                    }
-                    return _this.veri_success;
+                    
                 })
+                return _this.veri_success;
             },
             //邮件和密码的格式验证
             patternMatching2(mail,pa,pa2){
@@ -171,17 +171,18 @@
             },
             //要求重置密码
             ResetPassword(){
-                this.errorMessage='重置密码';
+                let _this=this;
+                _this.errorMessage='重置密码';
                 let successTmp;
                 //验证邮件地址和密码的格式
-                successTmp=this.patternMatching2(this.mail,this.password,this.password2);
+                successTmp=_this.patternMatching2(_this.mail,_this.password,_this.password2);
                 console.log('pattern is right? '+successTmp);
                 if(successTmp!=true){
                     return;
                 }
                 //验证验证码正确
-                successTmp=this.verify_verificationCode();
-                console.log('verification code is right? '+successTmp);
+                successTmp=_this.verify_verificationCode();
+                console.log('重置密码中验证验证码正确返回的结果： '+successTmp);
                 //if(successTmp!=true){
                 //    return;
                 //}
@@ -189,29 +190,30 @@
 
                 //md5加密
                 const md5 = crypto.createHash('md5');
-                md5.update(this.password);
+                md5.update(_this.password);
                 let md5password = md5.digest('hex') ;
 
                 //重置密码的接口
                 axios.get(baseUrl+'/newPassword',{
                     params:{
-                        mailAddress: this.mail,
+                        mailAddress: _this.mail,
                         newPassword: md5password
                         }
                 })
                 .then(function(response){
                        console.log('进入重置');
+                       console.log('重置response.data.result：'+response.data.result);
                        var reset_success;
                        reset_success=response.data.result;
                        if(reset_success==true){
                            console.log('重置成功');
-                           this.$router.push({
+                           _this.$router.push({
                             path:'/login',
                             });
                        }
                        else {
                            console.log('重置失败');
-                           errorMessage='重置失败'
+                           _this.errorMessage='重置失败'
                        }
                 })
                 
@@ -249,7 +251,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .findPa .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .findPa .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .log-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+.findPa-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .findPa-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .findPa-logo,.findPa-text{z-index: 2}
 

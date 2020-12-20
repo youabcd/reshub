@@ -259,7 +259,7 @@
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
                     <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, item.paperId)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection0(index, item.paperId)"></i>
                     </el-tooltip>
                   </span>
                   <span>
@@ -318,7 +318,7 @@
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
                     <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, item.paperId)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection1(index, item.paperId)"></i>
                     </el-tooltip>
                   </span>
                   <span>
@@ -375,7 +375,7 @@
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
                     <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(index, item.paperId)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection2(index, item.paperId)"></i>
                     </el-tooltip>
                   </span>
                   <span>
@@ -749,12 +749,14 @@
         localStorage.setItem('institutionId',institutionId);
       },
 
-      deleteCollection (index, paperId) {
+      deleteCollection0 (index, paperId) {
         //发送请求
         axios.get(baseUrl+'/cancelCollection',{
           params:{
+            paperId: paperId,
+            type:'paper',
             userId:localStorage.getItem('myId'),
-            paperId: paperId
+
           }
         }).then(function (response) {
           if (response.data.succeed===true) {
@@ -763,13 +765,63 @@
               message: '取消收藏成功',
               type: 'success'
             });
-            if (this.menuIndex === '0') {
-              this.tableData0.splice(index, 1);
-            } else if (this.menuIndex === '1') {
-              this.tableData1.splice(index, 1);
-            } else if (this.menuIndex === '2') {
-              this.tableData2.splice(index, 1);
-            }
+            this.tableData0.splice(index, 1);
+          } else {
+            this.$message({
+              showClose: true,
+              message: '取消收藏失败，请重试',
+              type: 'error'
+            });
+          }
+        })
+        // this.reload();
+      },
+
+      deleteCollection1 (index, paperId) {
+        //发送请求
+        axios.get(baseUrl+'/cancelCollection',{
+          params:{
+            paperId: paperId,
+            type:'project',
+            userId:localStorage.getItem('myId'),
+
+          }
+        }).then(function (response) {
+          if (response.data.succeed===true) {
+            this.$message({
+              showClose: true,
+              message: '取消收藏成功',
+              type: 'success'
+            });
+            this.tableData1.splice(index, 1);
+          } else {
+            this.$message({
+              showClose: true,
+              message: '取消收藏失败，请重试',
+              type: 'error'
+            });
+          }
+        })
+        // this.reload();
+      },
+
+      deleteCollection2 (index, paperId) {
+        //发送请求
+        axios.get(baseUrl+'/cancelCollection',{
+          params:{
+            paperId: paperId,
+            type:'patent',
+            userId:localStorage.getItem('myId'),
+
+          }
+        }).then(function (response) {
+          if (response.data.succeed===true) {
+            this.$message({
+              showClose: true,
+              message: '取消收藏成功',
+              type: 'success'
+            });
+            this.tableData2.splice(index, 1);
           } else {
             this.$message({
               showClose: true,

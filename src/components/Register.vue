@@ -2,7 +2,7 @@
 
 <template>
 
-<div class="login" id="login">
+<div class="login" id="login" @keyup.enter="Reg">
 <!--    <a href="javascript:;" class="log-close"><i class="icons close"></i></a>-->
     <div class="reg-bg">
         <div class="log-cloud cloud1"></div>
@@ -15,7 +15,7 @@
     </div>
     <div class="reg-email">
         <input type="text" placeholder="昵称" class="reg-input" v-model="nickname">
-        <input type="text" placeholder="Email" class="reg-input" v-model="account">
+        <input type="text" placeholder="Email" class="reg-input" v-model="mail">
         <input type="text" placeholder="一句话介绍" class="reg-input" v-model="descrip">
         <input type="password" placeholder="Password" class="reg-input"  v-model="password">
         <input type="password" placeholder="Password Again" class="reg-input"  v-model="password2">
@@ -43,7 +43,7 @@ import baseUrl from './baseUrl'
             return {
                 isLoging: false,
                 nickname: '',
-                account: '',
+                mail: '',
                 descrip: '',
                 password: '',
                 password2:'',
@@ -138,54 +138,57 @@ import baseUrl from './baseUrl'
             },
             //验证码验证
             verify_verificationCode(){
-                axios.get(baseUrl+'/verificationCode',
-                {
+                let _this=this;
+                axios.get(baseUrl+'/verificationCode',{
                     params:{
-                        mailAddress: this.mail,
-                        verificationCode:this.verificationCode
+                        mailAddress: _this.mail,
+                        verificationCode:_this.verificationCode
                     }
                     
                 })
                 .then(function(response){
                     if(response.data.result==false){
-                        this.errorMessage='验证码错误';
-                        this.veri_success=false;
+                        _this.errorMessage='验证码错误';
+                        console.log('When verify the code,find error!');
+                        _this.veri_success=false;
                     }
                     else {
-                        this.veri_success=true
+                        _this.veri_success=true
                     }
+                    return _this.veri_success;
                 })
             },
             //注册信息发送
             Reg(){
+                let _this=this;
                 //验证邮件地址格式和密码格式
-                if(this.patternMatching2(this.account,this.password,this.password2)==false){
+                if(_this.patternMatching2(_this.mail,_this.password,_this.password2)==false){
                     return;
                 }
                 //验证昵称格式
-                if(this.nicknameMatching(this.nickname)==false){
+                if(_this.nicknameMatching(_this.nickname)==false){
                     return;
                 }
                 //md5加密
                 const md5 = crypto.createHash('md5');
-                md5.update(this.password);
+                md5.update(_this.password);
                 let md5password = md5.digest('hex') ;
 
-                let _this=this;
+                
 
                 //验证验证码正确性
-                if(this.verify_verificationCode()==false){
-                    return;
-                }
-                console.log('verificationCode verified!');
-                axios.post(baseUrl+'/registerInformation',{
-                    userName: this.nickname,
-                    password: md5password,
-                    mailAddress: this.account,
-                    userDescription: this.descrip
-                })
+                //if(_this.verify_verificationCode()==false){
+                //    return;
+                //}
+                //console.log('verificationCode verified!');
+                let data = new FormData();
+                data.append('userName', _this.nickname);
+                data.append('password',md5password);
+                data.append('mailAddress',_this.mail);
+                data.append('userDescription',_this.descrip);
+                axios.post(baseUrl+'/registerInformation',data)
                 .then(function(response){
-                    console.log(response);
+                    console.log('注册response.data.result:'+response.data.result);
                     var success;
                     success=response.data.result;
                     if(success==true){
@@ -199,35 +202,41 @@ import baseUrl from './baseUrl'
                 })
             },
             //发送验证码
-            askVerificationCode() {
-                var _this = this;
-                if(this.timeContent=='发送验证码'){
-                let time=59;
-                let timer=setInterval(()=>{
-                    if(time>0){
-                    this.timeContent=time+'s';
-                    this.disabled=true;
-                    time--;
-                    }
-                    else{
-                    window.clearInterval(timer);
-                    this.disabled=false;
-                    this.timeContent='发送验证码';
-                    }
-                },1000);
+          askVerificationCode() {
+            let _this = this;
+            //计时器
+            if(this.timeContent=='发送验证码'){
+              let time=59;
+              let timer=setInterval(()=>{
+                if(time>0){
+                  this.timeContent=time+'s';
+                  this.disabled=true;
+                  time--;
                 }
-                let data = new FormData();
-                data.append('userId',this.useremail);
-                axios.post(baseUrl+'/passwordLost',data)
-                .then(function (response){
-                    Toast(response.data.message);
-                    console.log(response);
-                    _this.subidcode = response.data.result;
-                })
-                .catch(function (error) { // 请求失败处理
-                    console.log(error);
-                });
-            },
+                else{
+                  window.clearInterval(timer);
+                  this.disabled=false;
+                  this.timeContent='发送验证码';
+                }
+              },1000);
+            }
+            console.log('这个就是Email:'+_this.mail);
+            axios.get(baseUrl+'/passwordLost',{
+              params:{
+                mailAddress:_this.mail
+              }
+            })
+
+              .then(function (response){
+                //Toast(response.data.message);
+                console.log(response);
+                //_this.subidcode = response.data.result;
+                console.log('askVerificationCode:response.data.result:'+response.data.result);
+              })
+              .catch(function (error) { // 请求失败处理
+                console.log(error);
+              });
+          },
 
             backToLogin(){
                 this.$router.push({
@@ -265,7 +274,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud3{top:160px; left: 5px;transform: scale(.8);animation: cloud3 21s linear infinite;}
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}

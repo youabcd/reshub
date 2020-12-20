@@ -198,6 +198,13 @@
             localStorage.setItem("dateEnd",this.getTime());
           }
           window.open(webUrl+"SearchResult");
+          // let data = new FormData();
+          // data.append('userId',localStorage.getItem("myId"));
+          // data.append('keyWords',k);
+          // axios.post(baseUrl+'addSearchRecord',data)
+          // .then(function (response) {
+          //
+          // })
         }
       },//搜索
       getTime(){

@@ -36,8 +36,10 @@
           <div class="identify_code">
             <label><span style="color: red">*</span>邮箱验证码：</label>
             <el-input style="width: 300px" v-model="auth_code" placeholder="请输入验证码"></el-input>
-            <el-button onclick="getAuthCode()" type="primary" plain>发送验证码</el-button>
-            <span v-show="!sendAuthCode"><span>{{auth_time}}</span>秒后重新发送验证码</span>
+            <el-button @click="askVerificationCode()" type="primary" plain>
+              {{timeContent}}
+            </el-button>
+
             <!--需要加入一个“发送成功”和“等待发送  ”-->
           </div>
 
@@ -107,6 +109,7 @@
           return{
 
             dialogVisible: false,
+            timeContent: '发送验证码',
 
             PortalForm:{
               realname:'',
@@ -155,37 +158,51 @@
           }
         },
 
-        //发送验证码        need change
-        getAuthCode(){
-          const verification = this.PortalForm.cemail;
-          const url =" "
-            console.log("url",url);
-          //axios
-              this.$http.get(url).then(function(response){
-                console.log("请求成功",response)
-              },function(error){
-              console.log("请求失败",error);
-              })
-            this.sendAuthCode=false;
-          //倒计时
-          this.auth_time = 10;
-          var auth_timetimer = setInterval(
-            ()=>{
-              this.auth_time--;
-              if(this.auth_time<=0){
-                this.sendAuthCode = true;
-                clearInterval(auth_timetimer);
+        //发送验证码        感谢登录界面的验证码接口
+        askVerificationCode() {
+          let _this = this;
+          //计时器
+          if(this.timeContent=='发送验证码'){
+            let time=59;
+            let timer=setInterval(()=>{
+              if(time>0){
+                this.timeContent=time+'s';
+                this.disabled=true;
+                time--;
+              }
+              else{
+                window.clearInterval(timer);
+                this.disabled=false;
+                this.timeContent='发送验证码';
               }
             },1000);
+          }
+          console.log('这个就是Email:'+_this.mail);
+          axios.get(baseUrl+'/passwordLost',{// need this?
+            params:{
+              mailAddress:this.PortalForm.cemail
+            }
+          })
+
+            .then(function (response){
+              //Toast(response.data.message);
+              console.log(response);
+              //_this.subidcode = response.data.result;
+              console.log('askVerificationCode:response.data.result:'+response.data.result);
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
         },
 
         //上传信息，用户认领门户
         submit(){
           let _this=this;
-          axios.post(baseUrl+'/CatchPortal',{
-            realname: this.PortalForm.realname,
-            institude: this.PortalForm.institude,
-            email: this.PortalForm.cemail
+          axios.get(baseUrl+'/CatchPortal',{  //按接口列表写的
+            realName: this.PortalForm.realname,
+            personCommunication: this.PortalForm.cemail,
+            researchInstitute: this.PortalForm.institude
+
           }).then(res =>{
            if(res.data.message === 'SUCCESS'){
              this.$notify({

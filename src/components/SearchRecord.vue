@@ -190,8 +190,8 @@
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.id=response.data.results[i].id;
-              this.temp.date=response.data.results[i].date;
-              this.temp.history=response.data.results[i].history;
+              this.temp.date=response.data.results[i].searchTime;
+              this.temp.history=response.data.results[i].keyword;
               this.tableData.push({
                 id: this.temp.id,
                 date: this.temp.date,

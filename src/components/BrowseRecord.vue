@@ -15,6 +15,7 @@
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
+        @cell-click="gotoPaper"
         stripe
         style="wpidth: 100%;margin-top: 10px"
         @selection-change="handleSelectionChange" @row-click="openDialog">             <!--这是一个表格  element ui-->
@@ -35,8 +36,8 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <!--555我打不开链接 SOS-->
-            <el-link herf="https://element.eleme.io">{{scope.row.paper_name}}</el-link>
+            <!--链接终于能点了 感谢大佬们的帮助-->
+            <el-link >{{scope.row.paper_name}}</el-link>
           </template>
         </el-table-column>
         <el-table-column
@@ -103,8 +104,10 @@
 
       methods: {
         getBrowseRecord(){//url很想加个get
-          axios.post(baseUrl+'/getBrowseRecord',{
-            userId:localStorage.getItem(myId)
+          axios.get(baseUrl+'/getBrowseRecord',{
+            params:{
+              userId:localStorage.getItem('myId')
+            }
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
               this.temp.pid=response.data.results[i].pid;
@@ -144,9 +147,11 @@
         deleteHistory(index) {
           //传递数据
           // console.log([this.tableData[index].id])
-          axios.post(baseUrl+'/deleteBrowseRecord',{
-            userId: localStorage.getItem('myId'),
-            Id: [this.tableData[index].id]
+          axios.get(baseUrl+'/deleteBrowseRecord',{
+            params:{
+              userId: localStorage.getItem('myId'),
+              Id: [this.tableData[index].id]
+            }
           }).then(function (response) {
             if (response.data.succeed===true) {
               this.tableData.splice(index,1);
@@ -212,8 +217,8 @@
           })
         },
 
-        gotoPaper(url){
-          window.open(url)
+        gotoPaper(row){
+          window.open(row.paperLink,row.paperLink)
         },
         openDialog(){
 
