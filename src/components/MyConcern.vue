@@ -105,8 +105,8 @@
             textLength:'450',
 
             myConcern:[
-              {name:'youabcd',headImage:'head02.png',state:'已关注',label:'这是一个人',id:'123'},
-              {name:'youabcd',headImage:'head01.png',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
+              {name:'youabcd',headImage:'head02.png',userEmail:'',label:'这是一个人',id:'123'},
+              {name:'youabcd',headImage:'head01.png',userEmail:'',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ],
 
             myFans:[
@@ -132,6 +132,7 @@
             .then(function (response) {
               console.log(response);
               _this.myConcern=response.data.ConcernList;
+              console.log(_this.myConcern);
             })
         },
         cancelConcern(item){//取关
@@ -139,11 +140,12 @@
           let data = new FormData();
           data.append('UserEmail', localStorage.getItem('myId'));
           data.append('ResearchId', item.id);
-          axios.post(baseUrl+'/getMyConcern',data).
+          console.log(item.id);
+          axios.post(baseUrl+'/cancelConcern',data).
           then(function (response) {
               console.log(response);
-              if(response.data.status==1){
-                this.myConcern.splice(item.index,1);
+              if(response.data.status===1){
+                _this.myConcern.splice(item.index,1);
                 this.$message({
                   message:response.data.message,
                   type:'success'
