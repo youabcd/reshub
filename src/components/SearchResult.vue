@@ -1238,7 +1238,8 @@
           .then(function (response) {
             console.log(response);
             _this.tableData00=response.data;
-            _this.tableData0[index]=response.data;
+            console.log(_this.tableData00)
+            //_this.tableData0[index]=response.data;
           })
         }
         else if(this.menuIndex==='1'){
