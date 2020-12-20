@@ -85,6 +85,16 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
+                  <!--收藏-->
+                  <span>
+                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(0)"></i>
+                    </el-tooltip>
+                    <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(0)"></i>
+                    </el-tooltip>
+                  </span>
+                  <!--微博-->
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData00.link[0],tableData00.title)" style="height: 20px;">
                 </span>
@@ -184,6 +194,14 @@
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <span>
+                    <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(1)"></i>
+                    </el-tooltip>
+                    <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(1)"></i>
+                    </el-tooltip>
+                  </span>
+                  <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
                 </span>
                   <!--微信-->
@@ -265,6 +283,14 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
+                  <span>
+                    <el-tooltip v-if="tableData02.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(2)"></i>
+                    </el-tooltip>
+                    <el-tooltip v-if="tableData02.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
+                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(2)"></i>
+                    </el-tooltip>
+                  </span>
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link,tableData02.title)" style="height: 20px;">
                 </span>
@@ -408,16 +434,6 @@
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
@@ -472,16 +488,6 @@
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
-                      <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                  </span>
-                  <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
@@ -533,11 +539,6 @@
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
-                    </el-tooltip>
-                  </span>
                   <span>
                     <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
                   </span>
@@ -960,6 +961,114 @@
           })
       },
 
+      //取消/收藏
+      deleteCollection(i){
+        if(i===0){
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData00.paperId);
+          data.append('type', 'paper');
+          axios.post(baseUrl+'/cancelCollection',data)
+          .then(function (response) {
+            console.log(response);
+            if(response.data.status===true){
+              _this.tableData00.collectStatus=false;
+            }
+            else{
+              console.log('失败')
+            }
+          })
+        }
+        else if(i===1){
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData01.paperId);
+          data.append('type', 'project');
+          axios.post(baseUrl+'/cancelCollection',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===true){
+                _this.tableData01.collectStatus=false;
+              }
+              else{
+                console.log('失败')
+              }
+            })
+        }
+        else{
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData02.id);
+          data.append('type', 'patent');
+          axios.post(baseUrl+'/cancelCollection',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===true){
+                _this.tableData02.collectStatus=false;
+              }
+              else{
+                console.log('失败')
+              }
+            })
+        }
+      },
+      Collection(i){
+        if(i===0){
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData00.paperId);
+          data.append('type', 'paper');
+          axios.post(baseUrl+'/cancelCollection',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===true){
+                _this.tableData00.collectStatus=true;
+              }
+              else{
+                console.log('失败')
+              }
+            })
+        }
+        else if(i===1){
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData01.paperId);
+          data.append('type', 'project');
+          axios.post(baseUrl+'/cancelCollection',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===true){
+                _this.tableData01.collectStatus=true;
+              }
+              else{
+                console.log('失败')
+              }
+            })
+        }
+        else{
+          let _this=this;
+          let data = new FormData();
+          data.append('userId',localStorage.getItem("myId"));
+          data.append('paperId',_this.tableData02.id);
+          data.append('type', 'patent');
+          axios.post(baseUrl+'/cancelCollection',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===true){
+                _this.tableData02.collectStatus=true;
+              }
+              else{
+                console.log('失败')
+              }
+            })
+        }
+      },
+
       //排序
       sortDefault(){
         let _this=this;
@@ -1086,69 +1195,6 @@
       gotoInstitution(institutionId){
         window.open(webUrl+'ResearchInstitute');
         localStorage.setItem('institutionId',institutionId);
-      },
-
-      addCollection(index) {
-        //发送数据
-        console.log(1);
-        if (this.menuIndex === '0') {
-          let temp = this.tableData0[index];
-          if (temp.type === "期刊") {
-            for (let i=0; i<this.tableData1.length; i++) {
-              if (temp.paperId === this.tableData1[i].paperId) {
-                this.tableData1[i].collectStatus=true;
-                break;
-              }
-            }
-          } else if (temp.type === "会议") {
-            for (let i=0; i<this.tableData2.length; i++) {
-              if (temp.paperId === this.tableData2[i].paperId) {
-                this.tableData2[i].collectStatus=true;
-                break;
-              }
-            }
-          } else if (temp.type === "报告") {
-            for (let i=0; i<this.tableData3.length; i++) {
-              if (temp.paperId === this.tableData3[i].paperId) {
-                this.tableData3[i].collectStatus=true;
-                break;
-              }
-            }
-          }
-          this.tableData0[index].collectStatus=true;
-        } else if (this.menuIndex === '1') {
-          let temp = this.tableData1[index];
-          for (let i=0; i<this.tableData0.length; i++) {
-            if (temp.paperId === this.tableData0[i].paperId) {
-              this.tableData0[i].collectStatus=true;
-              break;
-            }
-          }
-          this.tableData1[index].collectStatus=true;
-        } else if (this.menuIndex === '2') {
-          let temp = this.tableData2[index];
-          for (let i=0; i<this.tableData0.length; i++) {
-            if (temp.paperId === this.tableData0[i].paperId) {
-              this.tableData0[i].collectStatus=true;
-              break;
-            }
-          }
-          this.tableData2[index].collectStatus=true;
-        } else if (this.menuIndex === '3') {
-          let temp = this.tableData3[index];
-          for (let i=0; i<this.tableData0.length; i++) {
-            if (temp.paperId === this.tableData0[i].paperId) {
-              this.tableData0[i].collectStatus=true;
-              break;
-            }
-          }
-          this.tableData3[index].collectStatus=true;
-        }
-        this.$message({
-          showClose: true,
-          message: '收藏成功',
-          type: 'success'
-        });
       },
 
       Copy() {
