@@ -100,12 +100,12 @@ export default {
           console.log(response);
           if(response.data.result===true){
             //在文件‘localStorage里存了的变量’里面提到的都要存在这里
-            localStorage.setItem("myId",response.userId);
-            localStorage.setItem("userHead",response.userHead);
-            localStorage.setItem("isPortal",response.isPortal);
-            localStorage.setItem("portalId",response.portalId);
-            localStorage.setItem("isAdministrator",response.isAdministrator);
-            localStorage.setItem("label",response.label);
+            localStorage.setItem("myId",response.data.userId);
+            localStorage.setItem("userHead",response.data.userHead);
+            localStorage.setItem("isPortal",response.data.isPortal);
+            localStorage.setItem("portalId",response.data.portalId);
+            localStorage.setItem("isAdministrator",response.data.isAdministrator);
+            localStorage.setItem("label",response.data.label);
             _this.$router.push({
               path:'/',
             });
