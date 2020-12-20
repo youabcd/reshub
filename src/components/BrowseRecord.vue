@@ -15,6 +15,7 @@
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
+        @cell-click="gotoPaper"
         stripe
         style="wpidth: 100%;margin-top: 10px"
         @selection-change="handleSelectionChange" @row-click="openDialog">             <!--这是一个表格  element ui-->
@@ -36,7 +37,7 @@
           show-overflow-tooltip>
           <template slot-scope="scope">
             <!--555我打不开链接 SOS-->
-            <el-link herf="https://element.eleme.io">{{scope.row.paper_name}}</el-link>
+            <el-link >{{scope.row.paper_name}}</el-link>
           </template>
         </el-table-column>
         <el-table-column
@@ -212,8 +213,8 @@
           })
         },
 
-        gotoPaper(url){
-          window.open(url)
+        gotoPaper(row){
+          window.open(row.paperLink,row.paperLink)
         },
         openDialog(){
 
