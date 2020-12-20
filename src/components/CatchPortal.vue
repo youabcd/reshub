@@ -36,7 +36,9 @@
           <div class="identify_code">
             <label><span style="color: red">*</span>邮箱验证码：</label>
             <el-input style="width: 300px" v-model="auth_code" placeholder="请输入验证码"></el-input>
-            <el-button onclick="askVerificationCode()" type="primary" plain>发送验证码</el-button>
+            <el-button @click="askVerificationCode()" type="primary" plain>
+              {{timeContent}}
+            </el-button>
 
             <!--需要加入一个“发送成功”和“等待发送  ”-->
           </div>
@@ -107,6 +109,7 @@
           return{
 
             dialogVisible: false,
+            timeContent: '发送验证码',
 
             PortalForm:{
               realname:'',
