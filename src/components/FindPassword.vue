@@ -4,7 +4,7 @@
 
 <div>
 <!--   -->
-  <div class="findPa" id="findPa" @keyup.enter="ResetPassword">
+  <div class="findPa" id="findPa" @keyup.enter="verify_verificationCode">
     <div class="log-bg">
         <div class="log-cloud cloud1"></div>
         <div class="log-cloud cloud2"></div>
@@ -26,7 +26,7 @@
       </el-button>
 
         <div class="errorMessage">{{errorMessage}}</div>
-        <span class="findPa-btn" @click="ResetPassword">重置密码</span>
+        <span class="findPa-btn" @click="verify_verificationCode">重置密码</span>
         <span class="findPa-btn" @click="backToLogin">返回登录</span>
         <span class="findPa-btn" @click="verify_verificationCode">测试验证码验证</span>
 
@@ -109,6 +109,13 @@
             verify_verificationCode(){
                 let _this=this;
                 _this.veri_success=false;
+                //要求验证码必须为6位数字
+                let verificationCode_pattern=/^[0-9]{6}$/;
+                if(verificationCode_pattern.test(_this.verificationCode)==false){
+                    console.log('verificationCode_pattern error');
+                    this.errorMessage='验证码为6位数字';
+                    return false;
+                }
                 axios.get(baseUrl+'/verificationCode',{
                     params:{
                         mailAddress: _this.mail,
@@ -117,15 +124,18 @@
                     
                 })
                 .then(function(response){
-                    console.log('验证码验证,response.data.result:'+response.data.result);
+                    console.log('验证码验证返回的response.data.result:'+response.data.result);
                     _this.veri_success=response.data.result;
-                    console.log('验证码验证,_this.veri_success:'+_this.veri_success);
+                    
                     if(_this.veri_success==false){
                         _this.errorMessage='验证码错误';  
                     }
+                    console.log('验证码验证最后,_this.veri_success:'+_this.veri_success);
+                    
+                    _this.ResetPassword();
                     
                 })
-                return _this.veri_success;
+                
             },
             //邮件和密码的格式验证
             patternMatching2(mail,pa,pa2){
@@ -180,12 +190,13 @@
                 if(successTmp!=true){
                     return;
                 }
+                
                 //验证验证码正确
-                successTmp=_this.verify_verificationCode();
-                console.log('重置密码中验证验证码正确返回的结果： '+successTmp);
-                //if(successTmp!=true){
-                //    return;
-                //}
+                //_this.verify_verificationCode();
+                console.log('重置密码中验证验证码正确返回的结果： '+_this.veri_success);
+                if(_this.veri_success!=true){
+                    return;
+                }
                 
 
                 //md5加密
