@@ -162,6 +162,56 @@
             });
         },
 
+        //用户创建门户
+        create(){
+          let _this=this;
+          axios.post(baseUrl+'/newPortal',{
+            resId: this.resId,
+            resEmail: this.PortalForm.ProEmail,
+            userEmail:localStorage.getItem('myId'),
+          }).then(res=>{
+            console.log(res.data.status);
+            if(res.data.status === 2){
+              this.$notify({
+                title: '提示',
+                message: '门户创建成功',
+                duration: 3000
+              });
+            }else{
+              this.$notify({
+                title: '提示',
+                message: '门户创建失败',
+                duration: 3000
+              });
+            }
+          })
+        },
+
+        //用户申诉门户
+        appeal(){
+          let _this=this;
+          axios.post(baseUrl+'/appealPortal',{
+            resId: this.resId,
+            resEmail: this.PortalForm.ProEmail,
+            userEmail:localStorage.getItem('myId'),
+          }).then(res=>{
+            console.log(res.data.status);
+            if(res.data.status === 4){
+              this.$notify({
+                title: '提示',
+                message: '提交门户申诉成功',
+                duration: 3000
+              });
+            }else{
+              this.$notify({
+                title: '提示',
+                message: '提交申诉失败',
+                duration: 3000
+              });
+            }
+          })
+        },
+
         //上传信息，用户认领门户
         submit(){
           let _this=this;
@@ -210,28 +260,7 @@
         }
 
 
-        //发送请求认证
-        /*
-        realname:'',
-              idnumber:'',
-              institude:'',
-              ProEmail:''
-         */
-        /*thisAjax(){
-          const realnameData = this.PortalForm.realname;
-          const usernameData = this.PortalForm.usernamenumber;
-          const institudeData = this.PortalForm.institude;
-          const ProEmailData = this.PortalForm.ProEmail;
 
-          //网上写的注册
-          //emulateJSON:true 设置后post可跨域？
-          const url=" 填接口"
-            this.$http.post(url,{传入的参数},{emulateJSON:true}).then(function (response)
-              {
-
-              }
-            )
-        }*/
       },
 
       components:{
