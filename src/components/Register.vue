@@ -1,4 +1,8 @@
 //注册
+所有接口都经过了测试
+注册，之后登录，之后更改密码
+这个过程中使用了发送和验证验证码
+全流程成功
 
 <template>
 
@@ -24,7 +28,7 @@
           {{timeContent}}
         </el-button>
         <div class="errorMessage">{{errorMessage}}</div>
-        <a href="javascript:;" class="log-btn" @click="Reg">注册</a>
+        <a href="javascript:;" class="log-btn" @click="verify_verificationCode">注册</a>
         <a href="javascript:;" class="log-btn" @click="backToLogin">返回登录</a>
 
     </div>
@@ -49,6 +53,7 @@ import baseUrl from './baseUrl'
                 password2:'',
                 verificationCode:'',
                 errorMessage:'',//出错提示信息
+                veri_success: false,
               disabled:false,
               timeContent: '发送验证码',
             }
@@ -137,8 +142,17 @@ import baseUrl from './baseUrl'
 
             },
             //验证码验证
+            //验证码验证
             verify_verificationCode(){
                 let _this=this;
+                _this.veri_success=false;
+                //要求验证码必须为6位数字
+                let verificationCode_pattern=/^[0-9]{6}$/;
+                if(verificationCode_pattern.test(_this.verificationCode)==false){
+                    console.log('verificationCode_pattern error');
+                    this.errorMessage='验证码为6位数字';
+                    return false;
+                }
                 axios.get(baseUrl+'/verificationCode',{
                     params:{
                         mailAddress: _this.mail,
@@ -147,16 +161,18 @@ import baseUrl from './baseUrl'
                     
                 })
                 .then(function(response){
-                    if(response.data.result==false){
-                        _this.errorMessage='验证码错误';
-                        console.log('When verify the code,find error!');
-                        _this.veri_success=false;
+                    console.log('验证码验证返回的response.data.result:'+response.data.result);
+                    _this.veri_success=response.data.result;
+                    
+                    if(_this.veri_success==false){
+                        _this.errorMessage='验证码错误';  
                     }
-                    else {
-                        _this.veri_success=true
-                    }
-                    return _this.veri_success;
+                    console.log('验证码验证最后,_this.veri_success:'+_this.veri_success);
+                    
+                    _this.Reg();
+                    
                 })
+                
             },
             //注册信息发送
             Reg(){
@@ -177,10 +193,10 @@ import baseUrl from './baseUrl'
                 
 
                 //验证验证码正确性
-                //if(_this.verify_verificationCode()==false){
-                //    return;
-                //}
-                //console.log('verificationCode verified!');
+                if(_this.veri_success==false){
+                    return;
+                }
+                console.log('verificationCode verified!');
                 let data = new FormData();
                 data.append('userName', _this.nickname);
                 data.append('password',md5password);
@@ -201,7 +217,7 @@ import baseUrl from './baseUrl'
                     }
                 })
             },
-            //发送验证码
+          //发送验证码
           askVerificationCode() {
             let _this = this;
             //计时器

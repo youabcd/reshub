@@ -65,7 +65,7 @@ export default {
 
                         if(pa.length<6||pa.length==0){
 
-                            this.errorMessage='密码长度必须大于6';
+                            this.errorMessage='密码长度必须大于5';
                         }
                         else if(pa.length>18){
                             this.errorMessage='密码长度必须小于18';
@@ -106,6 +106,7 @@ export default {
             localStorage.setItem("portalId",response.data.portalId);
             localStorage.setItem("isAdministrator",response.data.isAdministrator);
             localStorage.setItem("label",response.data.label);
+            //管理员
             if(_this.userID!='root@root'){
               _this.$router.push({
                 path:'/',

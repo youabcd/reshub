@@ -137,7 +137,7 @@
     methods:{
       getEhartsData(){
         let _this=this;
-        axios.get(baseUrl+"/home")
+        axios.get(baseUrl+"/hotWords")
             .then(function (response) {
               console.log(response);
               this.hotWords=response.data;

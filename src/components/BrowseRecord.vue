@@ -106,7 +106,7 @@
         getBrowseRecord(){//url很想加个get
           axios.get(baseUrl+'/getBrowseRecord',{
             params:{
-              userId:localStorage.getItem('myId')
+              UserEmail:localStorage.getItem('myId')
             }
           }).then(function (response) {
             for (let i=0, length=response.data.results.length; i<length; i++) {
@@ -118,7 +118,7 @@
                 pid: this.temp.pid,
                 browse_time: this.temp.browse_time,
                 paper_name: this.temp.paper_name,
-                paperLinke: this.temp.paperLink,
+                paperLink: this.temp.paperLink,
               })
             }
           })

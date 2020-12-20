@@ -11,24 +11,11 @@
       <el-main>
         <!--输入信息框-->
         <div id="insert_information">
-          <!--真实姓名-->
-          <div class="real_name">
-            <label><span style="color: red">*</span>真实姓名：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="PortalForm.realname" placeholder="请输入您的真实姓名"></el-input>
-            <br><br>
-          </div>
-
-          <!--所属机构-->
-          <div class="research_institute">
-            <label><span style="color: red">*</span>所属机构：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="PortalForm.institude" placeholder="请输入您目前所在的单位名称"></el-input>
-            <br><br>
-          </div>
 
           <!--联系方式-->
           <div class="communicate_email">
-            <label><span style="color: red">*</span>联系邮箱：</label>     <!--需要加id吗？-->
-            <el-input style="width: 300px" v-model="PortalForm.cemail" placeholder="请输入可以联系到您的电子邮箱"></el-input>
+            <label><span style="color: red">*</span>教育邮箱：</label>
+            <el-input style="width: 300px" v-model="PortalForm.ProEmail" placeholder="请输入您的教育邮箱"></el-input>
             <br><br>
           </div>
 
@@ -68,7 +55,7 @@
           <!--认证按钮-->
           <br>
           <div class="form-group">
-            <el-button type="success" round onclick="submit()">认证门户</el-button>
+            <el-button type="success" round @click="submit()">认证门户</el-button>
           </div>
         </div>
       </el-main>
@@ -87,19 +74,15 @@
     export default {
         name: "CatchPortal",
       data(){
-          //let comfirmpassword =
-
-          //以下内容参考了https://www.php.cn/js-tutorial-401539.html
-          //https://blog.csdn.net/qq_41800649/article/details/106507224
-
         //自定义的邮箱和手机验证规则
         var checkEmail = (rule, value, callback) => {
           //var email = $(".email").val();
-          const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const regEmail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
           //if(!email.match(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/) || email.indexOf('edu')==-1){
           //  callback(new Error("请输入正确的教育邮箱！"));
-          //}
-          if (regEmail.test(value) && value.indexOf('edu')!=-1) {
+          ///^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          // }
+          if (regEmail.test(value) && value.indexOf('.edu.cn')!==-1) {
             return callback();
           }
           callback(new Error("请输入正确的教育邮箱！"));
@@ -107,39 +90,23 @@
 
 
           return{
-
+            resId:'',
             dialogVisible: false,
             timeContent: '发送验证码',
 
             PortalForm:{
-              realname:'',
-              institude:'',
-              cemail:''
+              ProEmail:''
             },
             sendAuthCode:true,
               auth_time:0,
               auth_code:"",
 
             rule:{
-              realname:[
-                {
-                  requied:true,
-                  message:'请输入真实姓名！',
-                  trigger:'blur'
-                }
-              ],
-              institude:[
-                {
-                  requied:true,
-                  message:'请输入所在机构！',
-                  trigger:'blur'
-                }
-              ],
-              cemail:[
+              ProEmail:[
                 {
                   validator:checkEmail,
-                  requied:true,
-                  message:'请输入自己的邮箱！',
+                  required:true,
+                  message:'请输入教育邮箱！',
                   trigger:'blur'
                 },
 
@@ -180,7 +147,7 @@
           console.log('这个就是Email:'+_this.mail);
           axios.get(baseUrl+'/passwordLost',{// need this?
             params:{
-              mailAddress:this.PortalForm.cemail
+              mailAddress:this.PortalForm.ProEmail
             }
           })
 
@@ -198,13 +165,17 @@
         //上传信息，用户认领门户
         submit(){
           let _this=this;
-          axios.get(baseUrl+'/CatchPortal',{  //按接口列表写的
-            realName: this.PortalForm.realname,
-            personCommunication: this.PortalForm.cemail,
-            researchInstitute: this.PortalForm.institude
+          console.log(this.PortalForm.ProEmail);
+          axios.post(baseUrl+'/CatchPortal',{
+
+              UserEmail:localStorage.getItem('myId'),
+              ResEmail: this.PortalForm.ProEmail,
+              ResId: this.resId
+            //按接口列表写的
 
           }).then(res =>{
-           if(res.data.message === 'SUCCESS'){
+            console.log(res.data.status);
+           if(res.data.status === 1){
              this.$notify({
                title: '提示',
                message: '提交门户认领申请成功',
@@ -243,13 +214,13 @@
         realname:'',
               idnumber:'',
               institude:'',
-              cemail:''
+              ProEmail:''
          */
         /*thisAjax(){
           const realnameData = this.PortalForm.realname;
           const usernameData = this.PortalForm.usernamenumber;
           const institudeData = this.PortalForm.institude;
-          const cemailData = this.PortalForm.cemail;
+          const ProEmailData = this.PortalForm.ProEmail;
 
           //网上写的注册
           //emulateJSON:true 设置后post可跨域？
@@ -265,6 +236,10 @@
       components:{
           TopBar
       },
+
+      created() {
+          this.resId=this.$route.query.resId;
+      }
     }
 </script>
 
