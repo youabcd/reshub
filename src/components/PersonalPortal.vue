@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 1152px;margin:0 auto">
+    <el-container v-if="isHave" style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
@@ -160,6 +160,12 @@
         </el-col>
       </el-main>
     </el-container>
+    <div v-if="!isHave">
+      你还没有个人门户</br>
+      <el-button @click="gotoCatch()">去认证</el-button></br>
+      或者</br>
+      <el-button>去搜索你自己</el-button></br>
+    </div>
   </div>
 </template>
 
@@ -186,7 +192,7 @@
           resId:2,
           menuIndex: '0',
           avatar:'trump.jpg',
-          isHave: true,
+          isHave: false,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
@@ -291,22 +297,32 @@
       },
       mounted() {
         this.userId=localStorage.getItem('myId');
-        this.resId=localStorage.getItem('authorId');
         this.getPersonalPortal();
       },
       methods:{
+        gotoCatch() {
+          _this.$router.push({
+            path:'/CatchPortal',
+            quer:{resId:this.resId}
+          });
+        },
         gotoAuthor(authorId) {
-          window.open(webUrl+'PersonalPortal');
           localStorage.setItem('authorId',authorId);
+          _this.$router.push({
+            path:'/PersonalPortal',
+          });
         },
         gotoInstitution(institutionId){
-          window.open(webUrl+'ResearchInstitute');
           localStorage.setItem('institutionId',institutionId);
+          _this.$router.push({
+            path:'/ResearchInstitute',
+          });
         },
         getPersonalPortal() {
           var that = this;
           this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+this.resId
           ).then(function (response) {
+            that.resId=response.data.authorId;
             that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
             that.isClaimed=response.data.isclaimed;
