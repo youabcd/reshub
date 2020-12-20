@@ -23,7 +23,7 @@
         <a href="javascript:;" class="log-btn" @click="login">登录</a>
         <a href="javascript:;" class="log-btn" @click="reg">注册</a>
     </div>
-    
+
 </div>
 </template>
 
@@ -106,12 +106,6 @@ export default {
             localStorage.setItem("portalId",response.portalId);
             localStorage.setItem("isAdministrator",response.isAdministrator);
             localStorage.setItem("label",response.label);
-            localStorage.setItem("nowActive",response.nowActive);
-            localStorage.setItem("keyWords",response.keyWords);
-            localStorage.setItem("whichFriend",response.whichFriend);
-            localStorage.setItem("authorId",response.authorId);
-            localStorage.setItem("institutionId",response.institutionId);
-            
             _this.$router.push({
               path:'/',
             });
