@@ -181,12 +181,12 @@ import baseUrl from './baseUrl'
                     return;
                 }
                 console.log('verificationCode verified!');
-                axios.post(baseUrl+'/registerInformation',{
-                    userName: _this.nickname,
-                    password: md5password,
-                    mailAddress: _this.mail,
-                    userDescription: _this.descrip
-                })
+                let data = new FormData();
+                data.append('userName', _this.nickname);
+                data.append('password',md5password);
+                data.append('mailAddress',_this.mail);
+                data.append('userDescription',_this.descrip);
+                axios.post(baseUrl+'/registerInformation',data)
                 .then(function(response){
                     console.log(response);
                     var success;
