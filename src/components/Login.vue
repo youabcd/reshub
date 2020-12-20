@@ -92,7 +92,7 @@ export default {
 
       let _this=this;
       let data = new FormData();
-      data.append('userId', this.userID);
+      data.append('userId', _this.userID);
       data.append('password', md5password);
 
       axios.post(baseUrl+'/identityCheck',data)
@@ -106,9 +106,17 @@ export default {
             localStorage.setItem("portalId",response.data.portalId);
             localStorage.setItem("isAdministrator",response.data.isAdministrator);
             localStorage.setItem("label",response.data.label);
-            _this.$router.push({
-              path:'/',
-            });
+            if(_this.userID!='root@root'){
+              _this.$router.push({
+                path:'/',
+              });
+            }
+            else {
+              _this.$router.push({
+                path:'/Administrator',
+              });
+            }
+            
           }
           else {
             _this.errorMessage='账号或密码错误';
@@ -160,7 +168,7 @@ border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow: 
 .login .cloud4{top:150px; left: -40px;transform: scale(.4);animation: cloud4 19s linear infinite;}
 .reg-bg{background: url(../assets/login-bg.jpg); width: 100%; height: 312px; overflow: hidden;}
 /*color: #1fcab3;*/
-.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #d86454; font-weight: bold; font-size: 40px; cursor: pointer;}
+.log-logo{height: 80px; margin: 120px auto 25px; text-align: center; color: #1fcab3; font-weight: bold; font-size: 40px; cursor: pointer;}
 .log-text{color: #57d4c3; font-size: 13px; text-align: center; margin: 0 auto;}
 .log-logo,.log-text{z-index: 2}
 .icons{background:url(../assets/icons.png) no-repeat; display: inline-block;}
