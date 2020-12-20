@@ -175,6 +175,7 @@
 
           }).then(res =>{
             console.log(res.data.status);
+            console.log(this.resId);
            if(res.data.status === 1){
              this.$notify({
                title: '提示',
@@ -238,7 +239,7 @@
       },
 
       created() {
-          this.resId=this.$route.query.resId;
+          this.resId=this.$route.query.ResId;
       }
     }
 </script>
