@@ -1176,7 +1176,10 @@
         _this.drawer=true;
         if(this.menuIndex==='0'){
           this.tableData00=this.tableData0[index];
-          axios.post(baseUrl+'/openPaper',{id:_this.tableData00.paperId,type:'paper'})
+          let data = new FormData();
+          data.append('id', _this.tableData00.paperId);
+          data.append('type', 'paper');
+          axios.post(baseUrl+'/openPaper',data)
           .then(function (response) {
             console.log(response);
             _this.tableData00=response.data;
@@ -1185,7 +1188,10 @@
         }
         else if(this.menuIndex==='1'){
           this.tableData01=this.tableData1[index];
-          axios.post(baseUrl+'/openPaper',{id:_this.tableData01.paperId,type:'project'})
+          let data = new FormData();
+          data.append('id', _this.tableData01.paperId);
+          data.append('type', 'project');
+          axios.post(baseUrl+'/openPaper',data)
             .then(function (response) {
               console.log(response);
               _this.tableData01=response.data;
@@ -1194,7 +1200,10 @@
         }
         else if(this.menuIndex==='2'){
           this.tableData02=this.tableData2[index];
-          axios.post(baseUrl+'/openPaper',{id:_this.tableData02.id,type:'patent'})
+          let data = new FormData();
+          data.append('id', _this.tableData02.paperId);
+          data.append('type', 'patent');
+          axios.post(baseUrl+'/openPaper',data)
             .then(function (response) {
               console.log(response);
               _this.tableData02=response.data;

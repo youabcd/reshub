@@ -137,10 +137,11 @@
         },
         cancelConcern(item){//取关
           let _this=this;
-          axios.post(baseUrl+'/getMyConcern',{
-            UserEmail:localStorage.getItem('myId'),
-            ResearchId:item.id,
-          }).then(function (response) {
+          let data = new FormData();
+          data.append('UserEmail', localStorage.getItem('myId'));
+          data.append('ResearchId', item.id);
+          axios.post(baseUrl+'/getMyConcern',data).
+          then(function (response) {
               console.log(response);
               if(response.data.status==1){
                 this.myConcern.splice(item.index,1);
