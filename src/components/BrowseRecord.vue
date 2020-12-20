@@ -36,7 +36,7 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <!--555我打不开链接 SOS-->
+            <!--链接终于能点了 感谢大佬们的帮助-->
             <el-link >{{scope.row.paper_name}}</el-link>
           </template>
         </el-table-column>
