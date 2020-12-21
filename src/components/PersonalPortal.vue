@@ -5,14 +5,14 @@
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
-        			<a href="#" class="my_portraitwr">
+        			<div class="my_portraitwr">
         				<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
-        			</a>
+        			</div>
         		</div>
             <div v-if="!isMyPortal" class="person_image">
-            	<a href="#" class="person_portraitwr">
+            	<div class="person_portraitwr">
             		<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
-            	</a>
+            	</div>
             	<div style="margin: auto;">
                 <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要申诉</el-button>
                 <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
@@ -188,111 +188,108 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          menuIndex: '0',
           message:'',
           userId:1,
           resId:1,
-          menuIndex: '0',
-          avatar:'trump.jpg',
+          avatar:'head00.jpg',
           isHave: true,
           isClaimed: true,
           isFollowing: true,
           isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
           visitNum:'1400',
           followNum:'0',
-          realName:'Trump名字最多可以这么长',
-          insName:'White House名字可以很长很长很长很长很长很长很长很长最多可以这么长',
+          realName:'研究员',
+          insName:'机构',
           insId:1,
-          mail:'邮箱大概也就这么@长吧.别太长了',
-          quoteNum:'132',
-          paperNum:'321',
-          resField:'吹牛',
-          coopList:['Nissa','Gedion','Jaca','Liliana','Chandra'],
+          mail:'a@b.c',
+          quoteNum:'0',
+          paperNum:'0',
+          resField:'未知',
           resCount:['3', '5', '4', '2', '3', '9', '2','3'],
           quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
           magCount:50,
           magPar:'50%',
-          patCount:20,
-          patPar:'20%',
           confCount:30,
           confPar:'30%',
           coopData:[
             {
-              name:'钱诚',
-              institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'head01.png',
+              name:'研究员',
+              institute:'机构',
+              avatar:'head00.jpg',
               link:'https://trump.com/', //resid门户id
             },
             {
-              name:'钱诚',
-              institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'head01.png',
-              link:'https://trump.com/',
+              name:'研究员',
+              institute:'机构',
+              avatar:'head00.jpg',
+              link:'https://trump.com/', //resid门户id
             },
             {
-              name:'钱诚',
-              institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'head07.png',
-              link:'https://trump.com/',
+              name:'研究员',
+              institute:'机构',
+              avatar:'head00.jpg',
+              link:'https://trump.com/', //resid门户id
             },
             {
-              name:'钱诚',
-              institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'head01.png',
-              link:'https://trump.com/',
+              name:'研究员',
+              institute:'机构',
+              avatar:'head00.jpg',
+              link:'https://trump.com/', //resid门户id
             },
             {
-              name:'钱诚',
-              institute:'中国科学院计算技术研究所微处理器中心',
-              avatar:'head01.png',
-              link:'https://trump.com/',
-            }
+              name:'研究员',
+              institute:'机构',
+              avatar:'head00.jpg',
+              link:'https://trump.com/', //resid门户id
+            },
           ],
           tableData: [
             {
               paperId:'0',
-              title:'MAGA',
-              msg:'Make America Great Again的简介可以很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长最多这么长',
-              type:"扯淡",
+              title:'论文',
+              msg:'摘要',
+              type:"期刊",
               collectStatus:true,
-              collectionSum:666,
+              collectionSum:0,
               link:'https://trump.com/',
             },
             {
-              paperId:'1',
-              title:'MAGA',
-              msg:'Make America Great Again1',
-              type:"扯淡",
+              paperId:'0',
+              title:'论文',
+              msg:'摘要',
+              type:"期刊",
               collectStatus:true,
-              collectionSum:666,
+              collectionSum:0,
               link:'https://trump.com/',
             },
             {
-              paperId:'2',
-              title:'MAGA',
-              msg:'Make America Great Again2',
-              type:"扯淡",
+              paperId:'0',
+              title:'论文',
+              msg:'摘要',
+              type:"期刊",
               collectStatus:true,
-              collectionSum:666,
+              collectionSum:0,
               link:'https://trump.com/',
             },
             {
-              paperId:'3',
-              title:'MAGA',
-              msg:'Make America Great Again3',
-              type:"扯淡",
+              paperId:'0',
+              title:'论文',
+              msg:'摘要',
+              type:"期刊",
               collectStatus:true,
-              collectionSum:666,
+              collectionSum:0,
               link:'https://trump.com/',
             },
             {
-              paperId:'4',
-              title:'MAGA',
-              msg:'Make America Great Again4',
-              type:"扯淡",
+              paperId:'0',
+              title:'论文',
+              msg:'摘要',
+              type:"期刊",
               collectStatus:true,
-              collectionSum:666,
+              collectionSum:0,
               link:'https://trump.com/',
-            }
+            },
           ],
         }
       },
@@ -389,7 +386,7 @@
             that.coopList=response.data.cooplist;
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
-            // that.tableData=response.data.tabledata;
+            that.tableData=response.data.tabledata;
             
             that.magCount=response.data.magcount;
             that.magPar=response.data.magpar;
@@ -397,6 +394,7 @@
             that.confPar=response.data.confpar;
             
             that.coopData=response.data.coopdata;
+            console.log(response);
             that.drawLine();
           })
         },
@@ -656,7 +654,7 @@
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.patCount+this.confCount,
+                  value:this.confCount,
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -778,7 +776,7 @@
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.magCount+this.patCount,
+                  value:this.magCount,
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
