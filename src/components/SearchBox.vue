@@ -197,13 +197,18 @@
           else{
             localStorage.setItem("dateEnd",this.getTime());
           }
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('keyWords',k);
-          axios.post(baseUrl+'/addSearchRecord',data)
-          .then(function (response) {
+          if(localStorage.getItem("myId").length>0){
+            let data = new FormData();
+            data.append('userId',localStorage.getItem("myId"));
+            data.append('keyWords',k);
+            axios.post(baseUrl+'/addSearchRecord',data)
+              .then(function (response) {
+                window.open(webUrl+"SearchResult");
+              })
+          }
+          else{
             window.open(webUrl+"SearchResult");
-          })
+          }
         }
       },//搜索
       getTime(){
