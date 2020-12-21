@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container v-if="isHave" style="width: 1152px;margin:0 auto">
+    <el-container v-loading="loading" v-if="isHave" style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
@@ -16,8 +16,8 @@
             	<div style="margin: auto;">
                 <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要申诉</el-button>
                 <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
-            	  <el-button v-if="this.isFollowing == false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing == true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
+            	  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
+                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
             	</div>
             </div>
         		<div class="person_baseinfo">
@@ -188,6 +188,7 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          loading:true,
           menuIndex: '0',
           message:'',
           userId:1,
@@ -196,7 +197,7 @@
           isHave: true,
           isClaimed: true,
           isFollowing: true,
-          isMyPortal: false,        //如果是我自己的门户则不显示关注取消关注按钮
+          isMyPortal: true,        //如果是我自己的门户则不显示关注取消关注按钮
           visitNum:'1400',
           followNum:'0',
           realName:'研究员',
@@ -245,51 +246,7 @@
             },
           ],
           tableData: [
-            {
-              paperId:'0',
-              title:'论文',
-              msg:'摘要',
-              type:"期刊",
-              collectStatus:true,
-              collectionSum:0,
-              link:'https://trump.com/',
-            },
-            {
-              paperId:'0',
-              title:'论文',
-              msg:'摘要',
-              type:"期刊",
-              collectStatus:true,
-              collectionSum:0,
-              link:'https://trump.com/',
-            },
-            {
-              paperId:'0',
-              title:'论文',
-              msg:'摘要',
-              type:"期刊",
-              collectStatus:true,
-              collectionSum:0,
-              link:'https://trump.com/',
-            },
-            {
-              paperId:'0',
-              title:'论文',
-              msg:'摘要',
-              type:"期刊",
-              collectStatus:true,
-              collectionSum:0,
-              link:'https://trump.com/',
-            },
-            {
-              paperId:'0',
-              title:'论文',
-              msg:'摘要',
-              type:"期刊",
-              collectStatus:true,
-              collectionSum:0,
-              link:'https://trump.com/',
-            },
+            
           ],
         }
       },
@@ -315,12 +272,14 @@
           this.$router.push({
             path:'/PersonalPortal',
           });
+          window.location.reload()
         },
         gotoInstitution(institutionId){
           localStorage.setItem('institutionId',institutionId);
           this.$router.push({
             path:'/ResearchInstitute',
           });
+          window.location.reload()
         },
         addlConcern(item){//关注
           let _this=this;
@@ -368,6 +327,7 @@
           var that = this;
           this.$axios.get(baseUrl+'/getPersonalPortal?userId='+this.userId+'&resId='+localStorage.getItem('authorId')
           ).then(function (response) {
+            that.loading=false;
             that.resId=response.data.authorid;
             that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
