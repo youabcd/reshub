@@ -65,7 +65,7 @@
             </div>
           </el-card>
           <el-divider content-position="left">合作专家</el-divider>
-          <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
+          <el-card shadow="hover" v-if="!loading" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">{{item.name}}</span>
               <el-popover
@@ -156,14 +156,14 @@
           // avatar:require('../assets/white.jpg'),
           visitNum:'1400',
           loading:true,
-          insName:'White House名字最多可以这么长',
+          insName:'研究机构',
           insId:1,
           // institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
-          quoted:'132',
-          paperNum:'321',
-          researchers:'32123',
-          domain:'政治',
+          quoted:'0',
+          paperNum:'0',
+          researchers:'0',
+          domain:'未知',
           resCount:['3', '5', '4', '2', '3', '9', '2','3'],
           quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
           magCount:50,
@@ -173,67 +173,44 @@
           resData: [
             {
               resId:'0',
-              name:'MAGA',
-              avatar:'trump.jpg',
+              name:'研究员',
+              avatar:'head00.jpg',
               mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
+              domain:'未知',
               collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
+              collectionSum:0,
+              viewSum:0,
             },
             {
-              resId:'1',
-              name:'MAGA',
-              avatar:'trump.jpg',
+              resId:'0',
+              name:'研究员',
+              avatar:'head00.jpg',
               mail:'romeo.yang.zheng@centralepekin.cn',
-              domain:'吹牛',
+              domain:'未知',
               collectStatus:true,
-              collectionSum:666,
-              viewSum:777,
+              collectionSum:0,
+              viewSum:0,
             },
             
           ],
           hotData: [
             {
               paperId:'1',
-              title:'Google1',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-              author: ['Li Ming','Zhang San'],
-              authorId: ['1','2'],
+              title:'文章标题',
+              msg:'摘要',
+              author: ['作者'],
+              authorId: ['1'],
               link:'https://www.google.com.hk/',
             },
             {
-              paperId:'2',
-              title:'Google1',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-              author: ['Li Ming','Zhang San'],
-              authorId: ['1','2'],
+              paperId:'1',
+              title:'文章标题',
+              msg:'摘要',
+              author: ['作者'],
+              authorId: ['1'],
               link:'https://www.google.com.hk/',
             },
-            {
-              paperId:'3',
-              title:'Google1',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-              author: ['Li Ming','Zhang San'],
-              authorId: ['1','2'],
-              link:'https://www.google.com.hk/',
-            },
-            {
-              paperId:'4',
-              title:'Google1',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-              author: ['Li Ming','Zhang San'],
-              authorId: ['1','2'],
-              link:'https://www.google.com.hk/',
-            },
-            {
-              paperId:'5',
-              title:'Google1',
-              msg:'文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
-              author: ['Li Ming','Zhang San'],
-              authorId: ['1','2'],
-              link:'https://www.google.com.hk/',
-            },
+            
           ],
         }
       },
