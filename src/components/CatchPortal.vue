@@ -1,10 +1,10 @@
 <template>
   <div>
     <TopBar></TopBar>
-    认领门户
+    <h1 style="font-family:Helvetica">认领门户</h1>
 
     <el-container style="width: 60%;margin:0 auto">
-      <el-header  height=20px>  <!--需要这么高吗？-->
+      <el-header  height=5px>  <!--需要这么高吗？-->
 
       </el-header>
 
@@ -44,8 +44,8 @@
                 :before-close="handleClose">
                 <span>请仔细阅读以下内容......</span>
                 <span slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+                  <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                </span>
               </el-dialog>
 
               <!--<a class="xy" href="/Agreement/ServiceAgreement" target="_blank">《门户认领用户协议》</a>-->
@@ -56,6 +56,21 @@
           <br>
           <div class="form-group">
             <el-button type="success" round @click="submit()">认证门户</el-button>
+          </div>
+
+          <br>
+          <div>
+            <br>
+            <span>
+              <span style="font-family:verdana;font-size: medium;color: #409eff;width: 50px">想创建一个新门户？请点击</span>
+              <el-button type="primary" round @click="create()">创建门户</el-button>
+            </span>
+            <br>
+            <br>
+            <span>
+              <span style="font-family:verdana;font-size: medium;color:red;width: 50px">需要申诉应属于自己的门户？请点击</span>
+              <el-button type="danger" round @click="appeal()">申诉门户</el-button>
+            </span>
           </div>
         </div>
       </el-main>
@@ -169,7 +184,8 @@
             ResId: this.resId,
             ResEmail: this.PortalForm.ProEmail,
             UserEmail:localStorage.getItem('myId'),
-          }).then(res=>{
+          }).then(function (res){
+            console.log(res);
             console.log(res.data.status);
             if(res.data.status === 2){
               this.$notify({
@@ -184,6 +200,13 @@
                 duration: 3000
               });
             }
+          }).catch(err=>{
+            this.$notify({
+              title: '提示',
+              message: '门户创建出现错误',
+              duration: 3000
+            });
+            console.log(err)
           })
         },
 
@@ -191,10 +214,10 @@
         appeal(){
           let _this=this;
           axios.post(baseUrl+'/appealPortal',{
-            ResId: this.resId,
+            ResearchId: this.resId,
             ResEmail: this.PortalForm.ProEmail,
             UserEmail:localStorage.getItem('myId'),
-          }).then(res=>{
+          }).then(function (res){
             console.log(res.data.status);
             if(res.data.status === 4){
               this.$notify({
@@ -209,6 +232,13 @@
                 duration: 3000
               });
             }
+          }).catch(err=>{
+            this.$notify({
+              title: '提示',
+              message: '提交申诉出现错误',
+              duration: 3000
+            });
+            console.log(err)
           })
         },
 
@@ -235,7 +265,7 @@
            }else{
              this.$notify({
                title: '提示',
-               message: '提交失败',
+               message: '提交门户认领失败',
                duration: 3000
              });
            }
@@ -243,7 +273,7 @@
           .catch(err=>{
             this.$notify({
               title: '提示',
-              message: '提交出现错误',
+              message: '提交门户认领出现错误',
               duration: 3000
             });
             console.log(err)
