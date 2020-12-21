@@ -67,7 +67,7 @@
           <el-divider content-position="left">合作专家</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPortal(item.resId)">{{item.name}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">{{item.name}}</span>
               <el-popover
                 placement="right"
                 title="邮箱"
@@ -87,7 +87,7 @@
               <p style="height: 7px" >领域：{{item.domain}}</p>
             </div>
             <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
-              <el-button style="width: 79px;" size="mini" type="primary" @click="gotoAuthor(item.link)" round>查看详情</el-button>
+              <el-button style="width: 79px;" size="mini" type="primary" @click="gotoAuthor(item.resId)" round>查看详情</el-button>
               <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
               <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
             </div>
@@ -104,19 +104,6 @@
             </div>
           </el-card>
           <div>
-            <!-- <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-size="pageSize"
-                hide-on-single-page = true
-                layout="total, prev, pager, next, jumper"
-                :total="totalPage"
-                prev-text="上一页"
-                next-text="下一页">
-              </el-pagination>
-            </div> -->
           </div>
         </el-col>
         <el-col :span="7">
@@ -275,7 +262,7 @@
        },
         getResearchInstitute() {
           var that = this;
-          this.$axios.get(baseUrl+'/getResearchInstitute?instituteId=1'
+          this.$axios.get(baseUrl+'/getResearchInstitute?instituteId='+localStorage.getItem('institutionId')
           ).then(function (response) {
             that.loading=false;
             console.log(that.loading);
@@ -287,15 +274,15 @@
             that.paperNum=response.data.papernum;
             that.researchers=response.data.researchers;
             that.domain=response.data.domain;
-            console.log(response);
+           
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
             that.confCount=response.data.confcount;
             that.confPar=response.data.confpar;
             
             that.resData=response.data.resdata;
-            that.hotData=response.data.hotdata;
-            console.log(that.insName);
+            that.hotData=response.data.hotdata; 
+            console.log(response);
             that.drawLine();
           })
         },
@@ -953,6 +940,7 @@
   .box-res {
     display:inline-block;
     position: relative;
+    float:left;
     margin-top: 2px;
     margin-left: 2.5px;
     margin-right: 2.5px;
