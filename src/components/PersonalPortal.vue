@@ -433,7 +433,7 @@
             },
             series: [
               {
-                name: '成果数',
+                name: '期刊数',
                 type: 'line',
                 data: this.resCount,
                 smooth: true,
