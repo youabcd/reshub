@@ -241,6 +241,7 @@
           var that = this;
           this.$axios.get(baseUrl+'/getResearchInstitute?instituteId='+localStorage.getItem('institutionId')
           ).then(function (response) {
+            console.log(response);
             that.loading=false;
             console.log(that.loading);
             that.visitNum=response.data.visitnum;

@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container v-loading="loading" v-if="isHave" style="width: 1152px;margin:0 auto">
+    <el-container v-loading="loading"style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <div v-if="isMyPortal" class="person_image">
@@ -160,12 +160,12 @@
         </el-col>
       </el-main>
     </el-container>
-    <div v-if="!isHave" style="padding-top: 15%;">
+    <!-- <div v-if="!isHave" style="padding-top: 15%;">
       <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
       <!-- <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
-      <font style="font:  bold italic 40px  arial">或者</font></br> -->
+      <font style="font:  bold italic 40px  arial">或者</font></br>
       <el-button style="width:200px;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -329,7 +329,7 @@
           ).then(function (response) {
             that.loading=false;
             that.resId=response.data.authorid;
-            that.isHave=response.data.ishave;
+            //that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
             that.isClaimed=response.data.isclaimed;
             that.isFollowing=response.data.isfollowing;
