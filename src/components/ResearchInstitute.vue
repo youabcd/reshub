@@ -1,7 +1,7 @@
 <template>
   <div style="background-color:white;">
     <TopBar></TopBar>
-    <el-container style="width: 1152px;margin:0 auto">
+    <el-container  v-loading="loading" style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
             <!-- <div class="person_image">
@@ -62,7 +62,7 @@
           <el-card class="box-card" shadow="never">
             <div slot="header" style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
-              <div class="pie" ref="dPie" id="deux"></div>
+              <!-- <div class="pie" ref="dPie" id="deux"></div> -->
               <div class="pie" ref="tPie" id="trois"></div>
               <div class="textinpie">
                 共</br>
@@ -159,6 +159,9 @@
 <script>
     import TopBar from "./TopBar";
     import Clipboard from 'clipboard';
+    import baseUrl from "./baseUrl";
+    import webUrl from "./webUrl";
+    import axios from 'axios';
     let echarts = require('echarts/lib/echarts')
     require('echarts/lib/chart/line')
     require('echarts/lib/chart/pie')
@@ -175,6 +178,7 @@
           menuIndex: '0',
           // avatar:require('../assets/white.jpg'),
           visitNum:'1400',
+          loading:true,
           insName:'White House名字最多可以这么长',
           insId:1,
           // institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
@@ -281,24 +285,24 @@
        },
         getResearchInstitute() {
           var that = this;
-          this.$axios.get(baseUrl+'/getResearchInstitute?instituteId='+'1'
+          this.$axios.get(baseUrl+'/getResearchInstitute?instituteId=1'
           ).then(function (response) {
-            
+            that.loading=false;
             that.visitNum=response.data.visitnum;
             that.realName=response.data.realname;
             that.insName=response.data.insname;
             //that.mail=response.data.mail;
-            that.quoteNum=response.data.quoted;
+            that.quoted=response.data.quoted;
             that.paperNum=response.data.papernum;
-            that.paperNum=response.data.researchers;
+            that.researchers=response.data.researchers;
             that.domain=response.data.domain;
-            
+            console.log(response);
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
             that.confCount=response.data.confcount;
             that.confPar=response.data.confpar;
             
-            that.resdata=response.data.resdata;
+            that.resData=response.data.resdata;
             that.hotData=response.data.hotdata;
             
             that.drawLine();
@@ -379,7 +383,7 @@
             },
             series: [
               {
-                name: '成果数',
+                name: '期刊数',
                 type: 'line',
                 data: this.resCount,
                 smooth: true,
