@@ -4,16 +4,6 @@
     <el-container  v-loading="loading" style="width: 1152px;margin:0 auto">
       <el-header height=283px>
         	<div id="author_intro_wr">
-            <!-- <div class="person_image">
-        			<a href="#" class="person_portraitwr">
-        				<img :src="avatar" alt="学者头像" class="" width="112" height="112">
-        			</a>
-        			<div style="margin: auto;">
-                <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary">我要加入</el-button></br>
-        			  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" round plain>关注</el-button>
-                <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" round plain>取消关注</el-button>
-        			</div>
-        		</div> -->
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{insName}}
@@ -30,7 +20,7 @@
         				{{visitNum}}人看过
         			</div>
         			<div class="p_affiliate">
-        				<!-- {{institute}} -->
+        				
         			</div>
               </br>
         			<div class="p_ach_wr">
@@ -288,6 +278,7 @@
           this.$axios.get(baseUrl+'/getResearchInstitute?instituteId=1'
           ).then(function (response) {
             that.loading=false;
+            console.log(that.loading);
             that.visitNum=response.data.visitnum;
             that.realName=response.data.realname;
             that.insName=response.data.insname;
@@ -304,7 +295,7 @@
             
             that.resData=response.data.resdata;
             that.hotData=response.data.hotdata;
-            
+            console.log(that.insName);
             that.drawLine();
           })
         },
