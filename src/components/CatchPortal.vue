@@ -166,9 +166,9 @@
         create(){
           let _this=this;
           axios.post(baseUrl+'/newPortal',{
-            resId: this.resId,
-            resEmail: this.PortalForm.ProEmail,
-            userEmail:localStorage.getItem('myId'),
+            ResId: this.resId,
+            ResEmail: this.PortalForm.ProEmail,
+            UserEmail:localStorage.getItem('myId'),
           }).then(res=>{
             console.log(res.data.status);
             if(res.data.status === 2){
@@ -191,9 +191,9 @@
         appeal(){
           let _this=this;
           axios.post(baseUrl+'/appealPortal',{
-            resId: this.resId,
-            resEmail: this.PortalForm.ProEmail,
-            userEmail:localStorage.getItem('myId'),
+            ResId: this.resId,
+            ResEmail: this.PortalForm.ProEmail,
+            UserEmail:localStorage.getItem('myId'),
           }).then(res=>{
             console.log(res.data.status);
             if(res.data.status === 4){

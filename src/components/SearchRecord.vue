@@ -24,13 +24,13 @@
           width="55">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="SearchTime"
           label="日期"
           width="200">
           <!--          <template slot-scope="scope">{{ scope.row.date }}</template>-->
         </el-table-column>
         <el-table-column
-          prop="history"
+          prop="SearchContent"
           label="搜索记录"
           show-overflow-tooltip>
         </el-table-column>
@@ -86,94 +86,14 @@
           visible: false,
           temp: [{
             id: '',
-            date: '',
-            history: '',
+            SearchTime: '',
+            SearchContent: '',
           }],
           tableData: [{
-            id: '1',
-            date: '2016-05-01 16:00',
-            history: '上海市普陀区金江路'
-          }, {
-            id: '2',
-            date: '2016-05-02',
-            history: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            id: '3',
-            date: '2016-05-03',
-            history: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            id: '4',
-            date: '2016-05-04',
-            history: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            id: '5',
-            date: '2016-05-05',
-            history: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            id: '6',
-            date: '2016-05-06',
-            history: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            id: '7',
-            date: '2016-05-07',
-            history: '上海市普陀区金沙江路 1518 弄'
-          },{
-            id: '12',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '13',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '14',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '15',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '16',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '17',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '18',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '19',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '111',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '122',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '133',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '144',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '155',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, {
-            id: '166',
-            date: '2016/05/01 16:00',
-            history: '上海市普陀区金江路 151沙江路 151沙江路 151沙江路 151沙江路 151沙江路 151'
-          }, ],
+            id: 0,
+            SearchTime: '',
+            SearchContent: ''
+          }],
           multipleSelection: [],
           post: []
         }
@@ -189,16 +109,10 @@
               userId:localStorage.getItem('myId')
             }
           }).then(function (response) {
-            for (let i=0, length=response.data.results.length; i<length; i++) {
-              _this.temp.id=response.data.results[i].id;
-              _this.temp.date=response.data.results[i].searchTime;
-              _this.temp.history=response.data.results[i].keyword;
-              _this.tableData.push({
-                id: _this.temp.id,
-                date: _this.temp.date,
-                history: _this.temp.history,
-              })
-            }
+            // console.log(response.data.list)
+
+            _this.tableData=response.data.list;
+            // console.log(_this.tableData)
           })
         },
         handleSizeChange: function(size) {
@@ -210,7 +124,7 @@
         },
 
         search(row){
-          localStorage.setItem("keyWords",row.history);
+          localStorage.setItem("keyWords",row.SearchContent);
           this.$router.push({
             path:'/SearchResult',
           });
@@ -220,15 +134,17 @@
         },
         deleteHistory(index) {
           //传递数据
-          // console.log([this.tableData[index].id])
           let _this=this
+          // console.log([this.tableData[index].id])
+          let deleteList=_this.tableData[index].id.toString()
+          console.log(deleteList)
           axios.get(baseUrl+'/deleteSearchRecord',{
             params:{
               userId: localStorage.getItem('myId'),
-              Id: [_this.tableData[index].id]
+              Id: deleteList
             }
           }).then(function (response) {
-            if (response.data.succeed===true) {
+            if (response.data.succeed === true) {
               _this.tableData.splice(index,1);
               _this.$message({
                 type: 'success',
@@ -236,7 +152,7 @@
               });
             }
             else {
-              this.$message({
+              _this.$message({
                 type: 'error',
                 message: '删除失败'
               });
@@ -246,13 +162,19 @@
         },
         deleteSelectHistory() {
           let _this=this
-          for (let i=0; i<this.multipleSelection.length; i++) {
-            this.post.push(this.multipleSelection[i].id)
+          let deleteList=''
+          // for (let i=0; i<this.multipleSelection.length; i++) {
+          //   this.post.push(this.multipleSelection[i].id)
+          // }
+          for (let i=0; i<_this.multipleSelection.length-1; i++) {
+            deleteList+=_this.multipleSelection[i].id+','
           }
+          deleteList+=_this.multipleSelection[_this.multipleSelection.length-1].id
+          console.log(deleteList)
           axios.get(baseUrl+'/deleteSearchRecord',{
             params:{
               userId: localStorage.getItem('myId'),
-              Id: _this.post
+              Id: deleteList
             }
           }).then(function (response) {
             if (response.data.succeed === true) {
@@ -287,10 +209,6 @@
             type: 'warning'
           }).then(() => {
             this.deleteSelectHistory();
-            this.$message({
-              type: 'success',
-              message: '删除成功'
-            });
           })
         }
       }
