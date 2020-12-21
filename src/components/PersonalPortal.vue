@@ -325,40 +325,45 @@
             path:'/ResearchInstitute',
           });
         },
-        addConcern(){
-          var that = this;
-          axios.post(baseUrl+'/addConcern',{
-            userId:localStorage.getItem('myId'),
-            resId:localStorage.getItem('authorId')
-          }).then(function (response) {
-            if(response.data.status==1) {
-              that.isFollowing=true;
-            }
-            else if(response.data.status==3) {
-              that.message='不能重复关注';
-              this.$notify({
-                        title: '警告',
-                        message: that.message,
-                        type: 'warning'
-                      });
-              callback(new Error(that.message));
-            }
-            else {
-              that.message='oh no';
+        addlConcern(item){//关注
+          let _this=this;
+          let data = new FormData();
+          data.append('UserEmail', localStorage.getItem('myId'));
+          data.append('ResearchId', localStorage.getItem('resId'));
+          console.log(localStorage.getItem('resId'));
+          axios.post(baseUrl+'/addlConcern',data).
+          then(function (response) {
+            console.log(response);
+            if(response.data.status===1){
+              _this.isFollowing=true;
+              this.$message({
+                  message:response.data.message,
+                  type:'success'
+                });
+              }
+            else{
+              this.$message.error('出错啦！');
             }
           })
         },
-        cancelConcern(){
-          var that = this;
-          axios.post(baseUrl+'/cancelConcern',{
-            userId:localStorage.getItem('myId'),
-            resId:localStorage.getItem('authorId')
-          }).then(function (response) {
-            if(response.data.status==1) {
-              that.isFollowing=false;
-            }
-            else {
-              that.message='oh no';
+        cancelConcern(item){//取关
+          let _this=this;
+          let data = new FormData();
+          data.append('UserEmail', localStorage.getItem('myId'));
+          data.append('ResearchId', localStorage.getItem('resId'));
+          console.log(localStorage.getItem('resId'));
+          axios.post(baseUrl+'/cancelConcern',data).
+          then(function (response) {
+            console.log(response);
+            if(response.data.status===1){
+              _this.isFollowing=false;
+              this.$message({
+                  message:response.data.message,
+                  type:'success'
+                });
+              }
+            else{
+              this.$message.error('出错啦！');
             }
           })
         },
