@@ -114,7 +114,7 @@
             </div>
           </el-card>
           <div>
-            <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
+            <!-- <div style="margin-top: 30px;margin-bottom: 30px" v-if="menuIndex === '0'">
               <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -126,7 +126,7 @@
                 prev-text="上一页"
                 next-text="下一页">
               </el-pagination>
-            </div>
+            </div> -->
           </div>
         </el-col>
         <el-col :span="7">
@@ -169,13 +169,14 @@
       name: "ResearchInstitute",
       data() {
         return {
-          currentPage: 1,
-          pageSize: 10,
-          totalPage: 100,
+          // currentPage: 1,
+          // pageSize: 10,
+          // totalPage: 100,
           menuIndex: '0',
           // avatar:require('../assets/white.jpg'),
           visitNum:'1400',
           insName:'White House名字最多可以这么长',
+          insId:1,
           // institute:'America名字可以很长很长很长很长很长很长很长很长最多可以这么长',
           mail:'1@2.3',
           quoted:'132',
@@ -260,27 +261,34 @@
       },
       mounted() {
         this.userId=localStorage.getItem('myId');
+        this.insId=localStorage.getItem('institutionId');
         this.getResearchInstitute();
       },
       methods:{
-        gotoAuthor(authorId) {
-          window.open(webUrl+'PersonalPortal');
-          localStorage.setItem('authorId',authorId);
-        },
-        gotoInstitution(institutionId){
-          window.open(webUrl+'ResearchInstitute');
-          localStorage.setItem('institutionId',institutionId);
-        },
+       gotoAuthor(authorId) {
+         localStorage.setItem('authorId',authorId);
+         this.$router.push({
+           path:'/PersonalPortal',
+         });
+         window.location.reload()
+       },
+       gotoInstitution(institutionId){
+         localStorage.setItem('institutionId',institutionId);
+         this.$router.push({
+           path:'/ResearchInstitute',
+         });
+         window.location.reload()
+       },
         getResearchInstitute() {
           var that = this;
-          this.$axios.get(baseUrl+'/getResearchInstitute?userId='+this.userId
+          this.$axios.get(baseUrl+'/getResearchInstitute?instituteId='+'1'
           ).then(function (response) {
             
             that.visitNum=response.data.visitnum;
             that.realName=response.data.realname;
             that.insName=response.data.insname;
-            that.mail=response.data.mail;
-            that.quoteNum=response.data.quotenum;
+            //that.mail=response.data.mail;
+            that.quoteNum=response.data.quoted;
             that.paperNum=response.data.papernum;
             that.paperNum=response.data.researchers;
             that.domain=response.data.domain;
