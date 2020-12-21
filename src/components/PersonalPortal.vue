@@ -81,7 +81,7 @@
               <div class="charts" ref="sChart" id="second"></div>
             </div>
           </el-card>
-          <el-divider content-position="left">发表作品</el-divider>
+          <el-divider content-position="left">部分发表作品</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData" :key="index" class="text-item" >
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
