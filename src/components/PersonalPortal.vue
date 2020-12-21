@@ -364,7 +364,7 @@
           let uPie=echarts.init(document.getElementById('une'))
           // let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
-          var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
+          var xd=['1980-1985', '1985-1990', '1990-1995','1995-2000', '2000-2005', '2005-2010', '2010-2015','2015-2020'];
           fChart.setOption({
             backgroundColor:"",
             tooltip: {              //设置tip提示
