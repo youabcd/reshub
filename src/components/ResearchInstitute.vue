@@ -186,8 +186,6 @@
           quoCount:['47', '72', '38', '64', '36', '23', '86','23'],
           magCount:50,
           magPar:'50%',
-          patCount:20,
-          patPar:'20%',
           confCount:30,
           confPar:'30%',
           resData: [
@@ -277,23 +275,23 @@
           var that = this;
           this.$axios.get(baseUrl+'/getResearchInstitute?userId='+this.userId
           ).then(function (response) {
-            //that.avatar=response.data.results.avatar;
-            that.visitNum=response.data.results.visitnum;
-            that.realName=response.data.results.realname;
-            that.insName=response.data.results.insname;
-            that.mail=response.data.results.mail;
-            that.quoteNum=response.data.results.quotenum;
-            that.paperNum=response.data.results.papernum;
-            that.paperNum=response.data.results.researchers;
-            that.domain=response.data.results.domain;
             
-            that.resCount=response.data.results.rescount;
-            that.quoCount=response.data.results.quocount;
-            that.confCount=response.data.results.confcount;
-            that.confPar=response.data.results.confpar;
+            that.visitNum=response.data.visitnum;
+            that.realName=response.data.realname;
+            that.insName=response.data.insname;
+            that.mail=response.data.mail;
+            that.quoteNum=response.data.quotenum;
+            that.paperNum=response.data.papernum;
+            that.paperNum=response.data.researchers;
+            that.domain=response.data.domain;
             
-            that.resdata=response.data.results.resdata;
-            that.hotData=response.data.results.hotdata;
+            that.resCount=response.data.rescount;
+            that.quoCount=response.data.quocount;
+            that.confCount=response.data.confcount;
+            that.confPar=response.data.confpar;
+            
+            that.resdata=response.data.resdata;
+            that.hotData=response.data.hotdata;
             
             that.drawLine();
           })
@@ -302,7 +300,7 @@
           let fChart=echarts.init(document.getElementById('first'))
           let sChart=echarts.init(document.getElementById('second'))
           let uPie=echarts.init(document.getElementById('une'))
-          let dPie=echarts.init(document.getElementById('deux'))
+          //let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
           var xd=['2013', '2014', '2015', '2016', '2017', '2018', '2019','2020'];
           fChart.setOption({
@@ -554,7 +552,7 @@
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.patCount+this.confCount, 
+                  value:this.confCount, 
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
@@ -562,67 +560,67 @@
             }
             ]
           });
-          dPie.setOption({
-            title: {//标题组件
-              textStyle: {    
-                color: "#333333",    
-                fontSize: 12,   
-              }
-            },
-            graphic:[		       	       
-            {
-              type: 'text',              
-              top: '37%',           
-              left: 'center',          
-              style: {
-                text: this.patPar,      
-                fill: '#333333',       
-                fontSize: 20,          
-                fontWeight: 'normal'
-              }  		      		        
-            },{
-              type: 'text',              
-              top: '50%',           
-              left: 'center',          
-              style: {
-                text: '专利',      
-                fill: '#A6A8B6',       
-                fontSize: 12,          
-                fontWeight: 'normal'
-              }  		      		        
-            },      
-            ],
-            //圆环的颜色
-            color:['#66b1ff','#dfe6ee'], 		  
-            series: [
-            {
-              name:'工资占比图',//代表a的值，系列名称
-              type:'pie',
-              center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
-              radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
-              avoidLabelOverlap: false,
-              hoverAnimation: false,
-              label: {
-                normal: {
-                	show: false  //视觉引导项第二段的长度。
-                }
-              },
-              // 系列中的数据内容数组。
-              data:[
-                {
-                  value:this.patCount, 
-                  name:'专利',
-                  itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
-                },
-                {
-                  value:this.confCount+this.magCount, 
-                  name:'其他',
-                  itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
-                },
-              ]
-            }
-            ]
-          });
+          // dPie.setOption({
+          //   title: {//标题组件
+          //     textStyle: {    
+          //       color: "#333333",    
+          //       fontSize: 12,   
+          //     }
+          //   },
+          //   graphic:[		       	       
+          //   {
+          //     type: 'text',              
+          //     top: '37%',           
+          //     left: 'center',          
+          //     style: {
+          //       text: this.patPar,      
+          //       fill: '#333333',       
+          //       fontSize: 20,          
+          //       fontWeight: 'normal'
+          //     }  		      		        
+          //   },{
+          //     type: 'text',              
+          //     top: '50%',           
+          //     left: 'center',          
+          //     style: {
+          //       text: '专利',      
+          //       fill: '#A6A8B6',       
+          //       fontSize: 12,          
+          //       fontWeight: 'normal'
+          //     }  		      		        
+          //   },      
+          //   ],
+          //   //圆环的颜色
+          //   color:['#66b1ff','#dfe6ee'], 		  
+          //   series: [
+          //   {
+          //     name:'工资占比图',//代表a的值，系列名称
+          //     type:'pie',
+          //     center:['50%','45%'], //饼图的中心（圆心）坐标，数组的第一项是横坐标，第二项是纵坐标。
+          //     radius: ['45%', '60%'],//饼图的半径，数组的第一项是内半径，第二项是外半径。[ default: [0, '75%'] ]
+          //     avoidLabelOverlap: false,
+          //     hoverAnimation: false,
+          //     label: {
+          //       normal: {
+          //       	show: false  //视觉引导项第二段的长度。
+          //       }
+          //     },
+          //     // 系列中的数据内容数组。
+          //     data:[
+          //       {
+          //         value:this.patCount, 
+          //         name:'专利',
+          //         itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
+          //       },
+          //       {
+          //         value:this.confCount+this.magCount, 
+          //         name:'其他',
+          //         itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
+          //       },
+          //     ]
+          //   }
+          //   ]
+          // });
           tPie.setOption({
             title: {//标题组件
               textStyle: {    
@@ -676,7 +674,7 @@
                   itemStyle: {normal: {color: '#66b1ff'},emphasis: {color: '#66b1ff'}}
                 },
                 {
-                  value:this.magCount+this.patCount, 
+                  value:this.magCount, 
                   name:'其他',
                   itemStyle: {normal: {color: '#dfe6ee'},emphasis: {color: '#dfe6ee'}}
                 },
