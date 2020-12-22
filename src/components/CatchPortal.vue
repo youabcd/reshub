@@ -143,7 +143,7 @@
         askVerificationCode() {
           let _this = this;
           //计时器
-          if(this.timeContent=='发送验证码'){
+          if(this.timeContent==='发送验证码'){
             let time=59;
             let timer=setInterval(()=>{
               if(time>0){
