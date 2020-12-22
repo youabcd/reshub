@@ -148,6 +148,9 @@ import baseUrl from './baseUrl'
                 _this.veri_success=false;
                 //要求验证码必须为6位数字
                 let verificationCode_pattern=/^[0-9]{6}$/;
+                
+                
+                
                 if(verificationCode_pattern.test(_this.verificationCode)==false){
                     console.log('verificationCode_pattern error');
                     this.errorMessage='验证码为6位数字';
@@ -164,12 +167,16 @@ import baseUrl from './baseUrl'
                     console.log('验证码验证返回的response.data.result:'+response.data.result);
                     _this.veri_success=response.data.result;
                     
-                    if(_this.veri_success==false){
+                    if(_this.veri_success==true){
+                        _this.Reg();
+                        
+                    }
+                    else {
                         _this.errorMessage='验证码错误';  
                     }
                     console.log('验证码验证最后,_this.veri_success:'+_this.veri_success);
                     
-                    _this.Reg();
+                    
                     
                 })
                 
@@ -220,6 +227,14 @@ import baseUrl from './baseUrl'
           //发送验证码
           askVerificationCode() {
             let _this = this;
+            //Email地址
+            let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            //验证邮箱格式
+            if(mail_pattern.test(_this.mail)==false){
+                console.log('mail_pattern error (in askVerificationCode)');
+                this.errorMessage='邮件格式错误';
+                return false;
+            }
             //计时器
             if(this.timeContent=='发送验证码'){
               let time=59;

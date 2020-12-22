@@ -67,6 +67,14 @@
           //发送验证码
           askVerificationCode() {
             let _this = this;
+            //Email地址
+            let mail_pattern=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            //验证邮箱格式
+            if(mail_pattern.test(_this.mail)==false){
+                console.log('mail_pattern error (in askVerificationCode)');
+                this.errorMessage='邮件格式错误';
+                return false;
+            }
             //计时器
             if(this.timeContent=='发送验证码'){
               let time=59;
