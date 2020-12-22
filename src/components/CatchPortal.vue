@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopBar></TopBar>
-    <h1 style="font-family:Helvetica">认领门户</h1>
+    <h1 style="font-family:Helvetica;margin-top: 100px">认领门户</h1>
 
     <el-container style="width: 60%;margin:0 auto">
       <el-header  height=5px>  <!--需要这么高吗？-->
@@ -10,20 +10,19 @@
 
       <el-main>
         <!--输入信息框-->
-        <div id="insert_information">
-
+        <div id="insert_information" style="">
           <!--联系方式-->
-          <div class="communicate_email">
+          <div class="communicate_email" style="margin-left: -80px;">
             <label><span style="color: red">*</span>教育邮箱：</label>
-            <el-input style="width: 300px" v-model="PortalForm.ProEmail" placeholder="请输入您的教育邮箱"></el-input>
+            <el-input style="width: 300px" v-model="PortalForm.ProEmail" placeholder="请输入您的教育邮箱" ></el-input>
             <br><br>
           </div>
 
           <!--验证码-->
-          <div class="identify_code">
+          <div class="identify_code" style="margin-left: 20px">
             <label><span style="color: red">*</span>邮箱验证码：</label>
             <el-input style="width: 300px" v-model="auth_code" placeholder="请输入验证码"></el-input>
-            <el-button @click="askVerificationCode()" type="primary" plain>
+            <el-button @click="askVerificationCode()" type="primary" plain style="width: 112px" :disabled="PortalForm.ProEmail===''">
               {{timeContent}}
             </el-button>
 
@@ -59,19 +58,19 @@
           </div>
 
           <br>
-          <div>
-            <br>
-            <span>
-              <span style="font-family:verdana;font-size: medium;color: #409eff;width: 50px">想创建一个新门户？请点击</span>
-              <el-button type="primary" round @click="create()">创建门户</el-button>
-            </span>
-            <br>
-            <br>
-            <span>
-              <span style="font-family:verdana;font-size: medium;color:red;width: 50px">需要申诉应属于自己的门户？请点击</span>
-              <el-button type="danger" round @click="appeal()">申诉门户</el-button>
-            </span>
-          </div>
+<!--          <div>-->
+<!--            <br>-->
+<!--            <span>-->
+<!--              <span style="font-family:verdana;font-size: medium;color: #409eff;width: 50px">想创建一个新门户？请点击</span>-->
+<!--              <el-button type="primary" round @click="create()">创建门户</el-button>-->
+<!--            </span>-->
+<!--            <br>-->
+<!--            <br>-->
+<!--            <span>-->
+<!--              <span style="font-family:verdana;font-size: medium;color:red;width: 50px;margin-left: -64px">需要申诉应属于自己的门户？请点击</span>-->
+<!--              <el-button type="danger" round @click="appeal()">申诉门户</el-button>-->
+<!--            </span>-->
+<!--          </div>-->
         </div>
       </el-main>
       <el-footer></el-footer>
@@ -180,28 +179,29 @@
         //用户创建门户
         create(){
           let _this=this;
-          axios.post(baseUrl+'/newPortal',{
-            ResId: this.resId,
-            ResEmail: this.PortalForm.ProEmail,
-            UserEmail:localStorage.getItem('myId'),
-          }).then(function (res){
+          let data=new FormData();
+          data.append('UserEmail',localStorage.getItem('myId'));
+          data.append('ResEmail',_this.PortalForm.ProEmail);
+          data.append('ResId',_this.resId);
+          axios.post(baseUrl+'/newPortal',data)
+            .then(function (res){
             console.log(res);
             console.log(res.data.status);
             if(res.data.status === 2){
-              this.$notify({
+              _this.$notify({
                 title: '提示',
                 message: '门户创建成功',
                 duration: 3000
               });
             }else{
-              this.$notify({
+              _this.$notify({
                 title: '提示',
                 message: '门户创建失败',
                 duration: 3000
               });
             }
           }).catch(err=>{
-            this.$notify({
+            _this.$notify({
               title: '提示',
               message: '门户创建出现错误',
               duration: 3000
@@ -213,70 +213,54 @@
         //用户申诉门户
         appeal(){
           let _this=this;
-          axios.post(baseUrl+'/appealPortal',{
-            ResearchId: this.resId,
-            ResEmail: this.PortalForm.ProEmail,
-            UserEmail:localStorage.getItem('myId'),
-          }).then(function (res){
+          let data=new FormData();
+          data.append('UserEmail',localStorage.getItem('myId'));
+          data.append('ResEmail',_this.PortalForm.ProEmail);
+          data.append('ResId',_this.resId);
+          axios.post(baseUrl+'/appealPortal',data)
+            .then(function (res){
             console.log(res.data.status);
             if(res.data.status === 4){
-              this.$notify({
+              _this.$notify({
                 title: '提示',
                 message: '提交门户申诉成功',
                 duration: 3000
               });
             }else{
-              this.$notify({
+              _this.$notify({
                 title: '提示',
                 message: '提交申诉失败',
                 duration: 3000
               });
             }
-          }).catch(err=>{
-            this.$notify({
-              title: '提示',
-              message: '提交申诉出现错误',
-              duration: 3000
-            });
-            console.log(err)
           })
         },
 
         //上传信息，用户认领门户
         submit(){
           let _this=this;
-          console.log(this.PortalForm.ProEmail);
-          axios.post(baseUrl+'/CatchPortal',{
-
-              UserEmail:localStorage.getItem('myId'),
-              ResEmail: this.PortalForm.ProEmail,
-              ResId: this.resId
-            //按接口列表写的
-
-          }).then(res =>{
+          console.log(_this.PortalForm.ProEmail);
+          let data=new FormData();
+          data.append('UserEmail',localStorage.getItem('myId'));
+          data.append('ResEmail',_this.PortalForm.ProEmail);
+          data.append('ResId',_this.resId);
+          axios.post(baseUrl+'/CatchPortal',data)
+            .then(res =>{
             console.log(res.data.status);
-            console.log(this.resId);
+            console.log(_this.resId);
            if(res.data.status === 1){
-             this.$notify({
+             _this.$notify({
                title: '提示',
                message: '提交门户认领申请成功',
                duration: 3000
              });
            }else{
-             this.$notify({
+             _this.$notify({
                title: '提示',
                message: '提交门户认领失败',
                duration: 3000
              });
            }
-          })
-          .catch(err=>{
-            this.$notify({
-              title: '提示',
-              message: '提交门户认领出现错误',
-              duration: 3000
-            });
-            console.log(err)
           })
         },
 
@@ -298,7 +282,8 @@
       },
 
       created() {
-          this.resId=this.$route.query.ResId;
+          this.resId=this.$route.query.resId;
+          console.log(this.$route.query.resId)
       }
     }
 </script>

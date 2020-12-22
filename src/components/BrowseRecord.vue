@@ -36,7 +36,6 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <!--链接终于能点了 感谢大佬们的帮助-->
             <el-link >{{scope.row.paper_name}}</el-link>
           </template>
         </el-table-column>
@@ -76,25 +75,20 @@
           RecordForm:{
             pid:'',
             paper_name:'',
-            paperLink:'',
+            paperLink:[],
             browse_time:''
           },
           temp: {      //use this
             pid:'',
             paper_name:'',
-            paperLink:'',
+            paperLink:[],
             browse_time:''
           },
           tableData: [{
-            pid: '001',
-            browse_time: '2020/01/01 15:00',
-            paperLink:'https://www.bilibili.com',
-            paper_name: '我是paper的名字'
-          }, {
-            pid: '002',
-            browse_time: '2020/01/01 15:00',
-            paperLink:'https://www.bilibili.com',
-            paper_name: '关于为何文档浏览记录的代码和搜索记录这么像的研究成果'
+            pid: '',
+            browse_time: '',
+            paperLink:[],
+            paper_name: ''
           }],
           multipleSelection: [],
           post: [],
@@ -125,6 +119,7 @@
               _this.temp.paperLink = response.data.PaperUrlList[i];
               _this.tableData.push(_this.temp);
             }
+            console.log(_this.tableData)
           })
         },
         handleSizeChange: function(size) {
@@ -224,7 +219,15 @@
         },
 
         gotoPaper(row){
-          window.open(row.paperLink,row.paperLink)
+          let str=''
+          for (let i=2; i<row.paperLink.length;i++) {
+            if (row.paperLink[i]!=='\'') {
+              str+=row.paperLink[i]
+            }
+            else break;
+          }
+          console.log(str)
+          window.open(str)
         },
         openDialog(){
 
