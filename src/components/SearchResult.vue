@@ -1210,7 +1210,7 @@
         let data=new FormData();
         data.append('searchAuthor',_this.searchAuthor);
         data.append('Radio',_this.radio);
-        data.append('orderBy',_this.orderBy);
+        data.append('orderBy',_this.whichSortAuthor);//0 按发文数量降序 1 按被引数量降序
         data.append('page',currentPage01);
         axios.post(baseUrl+'/searchAuthors',data)
         .then(function (response) {
