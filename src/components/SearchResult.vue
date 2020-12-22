@@ -655,7 +655,7 @@
                 </van-row>
 
                   <!--排序-->
-                <van-row>
+                <van-row v-if="sizeOfAuthor>0">
                     <van-row></van-row>
                     <van-row style="margin-top: 30px;">
                       <van-col span="8" style="font-size: 13px;font-weight: bold;">
