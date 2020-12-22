@@ -201,6 +201,7 @@
             let data = new FormData();
             data.append('userId',localStorage.getItem("myId"));
             data.append('keyWords',k);
+            data.append('keywordList',localStorage.getItem("keyWordsList"))
             axios.post(baseUrl+'/addSearchRecord',data)
               .then(function (response) {
                 window.open(webUrl+"SearchResult");

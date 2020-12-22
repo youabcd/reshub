@@ -151,7 +151,7 @@
         },
 
         goPersonalPortal(){
-          localStorage.setItem("authorId",this.userId);
+          localStorage.setItem("authorId",localStorage.getItem("portalId"));
           this.$router.push({
             path:'/PersonalPortal',
           })
