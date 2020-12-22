@@ -636,7 +636,7 @@
           <div style="position: absolute;left: 81%;top: 0;width: 18%;display: inline;">
             <div>
               <div>
-                <h4>学者</h4>
+                <h4>学者<span v-if="sizeOfAuthor>-1">({{sizeOfAuthor}})</span></h4>
               </div>
               <div style="margin-top: 15px;">
                 <el-input placeholder="搜索学者" v-model="searchAuthor">
@@ -682,11 +682,11 @@
                     </van-row>
                 </van-row>
               </div>
-              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-top: 24px;">
+              <div v-if="authorTable.length > 0"  style="text-align: left;margin-top: 24px;">
                 <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
                   <div>
                     <i class="el-icon-user"></i>
-                    <el-link :href="item.link" target="_blank" style="font-size: 18px">
+                    <el-link style="font-size: 18px" @click="gotoAuthor(item.id)">
                       {{item.name}}
                     </el-link>
                   </div>
@@ -696,9 +696,7 @@
                     </div>
                     <div style="position: absolute;float: right;left: 20px">
                       <span>
-                      <el-link>
-                        {{item.institution}}
-                      </el-link>
+                        {{item.Institution}}
                     </span>
                     </div>
                   </div>
@@ -746,7 +744,7 @@
       return {
         whichSortAuthor:0,
         radio:false,
-        sizeOfAuthor:0,
+        sizeOfAuthor:-1,
         currentPage01:1,
         searchAuthor:'',
         commentWidth:'620',
@@ -1215,7 +1213,8 @@
         axios.post(baseUrl+'/searchAuthors',data)
         .then(function (response) {
           console.log(response);
-          _this.authorTable=response.data;
+          _this.authorTable=response.data.result;
+          _this.sizeOfAuthor=response.data.num;
         })
       },
 
