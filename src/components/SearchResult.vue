@@ -187,7 +187,7 @@
           </div>
           <div v-if="menuIndex==='1'">
             <!--项目类型+发表年份+文献操作（分享等）-->
-            <div style="margin-top: -30px;">
+            <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData01.category}}&nbsp;&nbsp;&nbsp;</span>
@@ -280,7 +280,7 @@
           </div>
           <div v-if="menuIndex==='2'">
             <!--日期+文献操作（分享等）-->
-            <div style="margin-top: -30px;">
+            <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData02.date}}</span>
@@ -355,9 +355,9 @@
                 <van-col span="12">
                   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                    <el-menu-item index="0" style="width: 120px">●论文({{sizeOfTable0}})</el-menu-item>
-                    <el-menu-item index="1" style="width: 120px">●项目({{sizeOfTable1}})</el-menu-item>
-                    <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
+                    <el-menu-item index="0" style="width: 120px">●论文<span v-if="sizeOfTable0>-1">({{sizeOfTable0}})</span></el-menu-item>
+                    <el-menu-item index="1" style="width: 120px">●项目<span v-if="sizeOfTable1>-1">({{sizeOfTable1}})</span></el-menu-item>
+                    <el-menu-item index="2" style="width: 120px">●专利<span v-if="sizeOfTable2>-1">({{sizeOfTable2}})</span></el-menu-item>
                   </el-menu>
                 </van-col>
 
@@ -632,12 +632,57 @@
 
           </div>
 
+          <!--学者-->
           <div style="position: absolute;left: 81%;top: 0;width: 18%;display: inline;">
             <div>
               <div>
-                <h4>学者推荐</h4>
+                <h4>学者</h4>
               </div>
-              <div v-if="authorTable.length !== 0"  style="text-align: left;">
+              <div style="margin-top: 15px;">
+                <el-input placeholder="搜索学者" v-model="searchAuthor">
+                  <el-button slot="append" icon="el-icon-search" @click="searchForAuthor"></el-button>
+                </el-input>
+              </div>
+              <div>
+
+              </div>
+              <div>
+                <van-row>
+                  <van-col span="12"></van-col>
+                  <van-col span="12">
+                    <el-checkbox style="margin-top: 15px;text-align: right;" v-model="radio">中英文扩展</el-checkbox>
+                  </van-col>
+                </van-row>
+
+                  <!--排序-->
+                <van-row>
+                    <van-row></van-row>
+                    <van-row style="margin-top: 30px;">
+                      <van-col span="8" style="font-size: 13px;font-weight: bold;">
+                        <span><i class="el-icon-sort"></i></span>
+                        <span>排序:</span>
+                      </van-col>
+                      <van-col span="8" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortNum">
+                      <span v-if="whichSortAuthor===0" style="color: #3a8ee6">
+                        <span>发文数量<i class="el-icon-bottom"></i></span>
+                      </span>
+                        <span v-if="whichSortAuthor===1">
+                        <span>发文数量</span>
+                      </span>
+                      </van-col>
+                      <van-col span="8" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortCited">
+                      <span v-if="whichSortAuthor===1" style="color: #3a8ee6">
+                        <span>被引频次<i class="el-icon-bottom"></i></span>
+                      </span>
+                        <span v-if="whichSortAuthor===0">
+                        <span>被引频次</span>
+                      </span>
+                      </van-col>
+                      <van-col span="2"></van-col>
+                    </van-row>
+                </van-row>
+              </div>
+              <div v-if="authorTable.length !== 0"  style="text-align: left;margin-top: 24px;">
                 <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
                   <div>
                     <i class="el-icon-user"></i>
@@ -651,15 +696,26 @@
                     </div>
                     <div style="position: absolute;float: right;left: 20px">
                       <span>
-                      <el-link :href="item.link" target="_blank">
+                      <el-link>
                         {{item.institution}}
                       </el-link>
                     </span>
                     </div>
-
-
                   </div>
                 </div>
+              </div>
+              <!--学者页码-->
+              <div style="margin-top: 30px;margin-bottom: 30px" v-if="sizeOfAuthor>0">
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange01"
+                  :current-page="currentPage01"
+                  :page-size="pageSize"
+                  layout="total, prev, pager, next, jumper"
+                  :total="sizeOfAuthor"
+                  prev-text="上一页"
+                  next-text="下一页">
+                </el-pagination>
               </div>
             </div>
           </div>
@@ -688,14 +744,19 @@
     },
     data() {
       return {
+        whichSortAuthor:0,
+        radio:false,
+        sizeOfAuthor:0,
+        currentPage01:1,
+        searchAuthor:'',
         commentWidth:'620',
         changeSortTime:0,
         changeSortCited:0,
         whichSort:0,
         isLoading:false,
-        sizeOfTable0:0,
-        sizeOfTable1:0,
-        sizeOfTable2:0,
+        sizeOfTable0:-1,
+        sizeOfTable1:-1,
+        sizeOfTable2:-1,
         QRlink:'',
         dataStart:'',
         dataEnd:'',
@@ -762,7 +823,7 @@
           collectStatus: true,
           collectionSum:666,
           viewSum:777,
-          link:'',
+          link:[],
           collectTime:''
         },
         //专利
@@ -773,28 +834,24 @@
           viewSum:777,
           link:'https://www.youtube.com/',
           collectionSum:666,
-          isUserUpload:1,
           abstract:'文字文字字文字zhaiyao文字文字文字文字2',
           date:new Date(),
           author:'niubility',
           authorId: '2333',
           type:"专利",
           collectStatus: true,
-          collectTime:'2016-05-04'
+          collectTime:'2016-05-04',
+          institution:'',
         },
         authorTable: [
-          {
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学北京航空航天大学',
-            id:'1',
-          },
-          {
-            name:'Zhang Si',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学1',
-            id:'2',
-          },
+          /*{
+            name:'',
+            ResEmail:'',
+            CitedNum:0,
+            LiteratureNum:0,
+            institution:'',
+            id:'',
+          },*/
         ],
         tableData0: [
           {
@@ -860,7 +917,6 @@
             viewSum:777,
             link:'https://www.youtube.com/',
             collectionSum:666,
-            isUserUpload:1,
             abstract:'文字文字字文字zhaiyao文字文字文字文字2',
             date:new Date(),
             author:'niubility',
@@ -868,6 +924,7 @@
             type:"专利",
             collectStatus: true,
             collectTime:'2016-05-04',
+            institution:'',
           }],
       }
     },
@@ -897,6 +954,8 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'paper',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -918,6 +977,9 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'paper',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
+            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
           }
         })
         .then(function (response) {
@@ -938,6 +1000,9 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'project',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
+            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -958,6 +1023,9 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'patent',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
+            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -1078,39 +1146,45 @@
 
       //排序
       sortDefault(){
-        let _this=this;
-        _this.whichSort=0;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':0,//默认排序
-            'howSort':-1,
-          }
-        }).then(function (response) {
-        })
+        this.whichSort=0;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
       sortByTime(){
-        let _this=this;
-        _this.changeSortTime++;
-        _this.whichSort=1;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':1,//按时间排序
-            'howSort':_this.changeSortTime%2,//0为升序 1为降序
-          }
-        }).then(function (response) {
-        })
+        this.changeSortTime++;
+        this.whichSort=1;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
       sortByCited(){
-        let _this=this;
-        _this.changeSortCited++;
-        _this.whichSort=2;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':2,//按被引频次排序
-            'howSort':_this.changeSortCited%2,//0为升序 1为降序
-          }
-        }).then(function (response) {
-        })
+        this.changeSortCited++;
+        this.whichSort=2;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
 
       //年限选择
@@ -1131,6 +1205,20 @@
         }
       },
 
+      searchForAuthor(currentPage01){
+        let _this=this;
+        let data=new FormData();
+        data.append('searchAuthor',_this.searchAuthor);
+        data.append('Radio',_this.radio);
+        data.append('orderBy',_this.orderBy);
+        data.append('page',currentPage01);
+        axios.post(baseUrl+'/searchAuthors',data)
+        .then(function (response) {
+          console.log(response);
+          _this.authorTable=response.data;
+        })
+      },
+
       handleSizeChange: function(size) {
         this.pageSize = size;
       },
@@ -1146,6 +1234,10 @@
         else{
           this.getTable2(currentPage);
         }
+      },
+      handleCurrentChange01: function(currentPage01) {
+        this.currentPage01 = currentPage01;
+        this.searchForAuthor(currentPage01);
       },
       // 点击图片回到顶部方法，加计时器是为了过渡顺滑
       backTop () {
@@ -1226,9 +1318,13 @@
 
       open(index) {
         let _this=this;
+        _this.tableData00=[];
+        _this.tableData01=[];
+        _this.tableData02=[];
         _this.drawer=true;
         if(this.menuIndex==='0'){
           //this.tableData00=this.tableData0[index];
+
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData0[index].paperId);

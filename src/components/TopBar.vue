@@ -71,6 +71,17 @@
         </div>
       </van-popup>
     </div>
+    <div style="z-index: 999999999999999;position: absolute;">
+      <van-popup v-model="showGotoPortal" closeable style="width: 500px;height: 300px;border-radius: 10px;">
+        <div style="margin-top: 15px;font-size: 20px;">您还没有个人门户，您可以选择</div>
+        <div style="margin-top: 30px;">
+          <el-button type="primary" @click="newPortal">新建门户</el-button>
+        </div>
+        <div style="margin-top: 30px;">
+          <el-button type="primary" @click="catchPortal">认领门户</el-button>
+        </div>
+      </van-popup>
+    </div>
   </div>
 </template>
 
@@ -105,9 +116,35 @@
               'head15.jpg',
               'head16.jpg',
             ],
+            showGotoPortal:false,
           }
       },
       methods:{
+        newPortal(){
+          let _this=this;
+          let data=new FormData();
+          data.append('UserEmail',localStorage.getItem('myId'));
+          axios.post(baseUrl+'/newPortal',data)
+          .then(function (response) {
+            if(response.data.status===2){
+            _this.$message({
+              message:'恭喜您有了自己的门户',
+              type:'success'
+            });
+            localStorage.setItem("portalId",response.data.ResId);
+            localStorage.setItem("authorId",localStorage.getItem("portalId"));
+            _this.$router.push({
+              path:'/PersonalPortal'
+            })
+          }})
+        },
+        catchPortal(){
+          this.showGotoPortal=false;
+          this.$message({
+            message:'您需要自己搜索想要认领的门户',
+            type:'warning'
+          });
+        },
         goHome(){
           this.$router.push({
             path:'/',
@@ -151,10 +188,15 @@
         },
 
         goPersonalPortal(){
-          localStorage.setItem("authorId",localStorage.getItem("portalId"));
-          this.$router.push({
-            path:'/PersonalPortal',
-          })
+          if(localStorage.getItem("portalId").length>0){
+            localStorage.setItem("authorId",localStorage.getItem("portalId"));
+            this.$router.push({
+              path:'/PersonalPortal',
+            })
+          }
+          else{
+            this.showGotoPortal=true;
+          }
         },
         goMessage(){
           this.$router.push({
