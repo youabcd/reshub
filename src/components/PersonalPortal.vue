@@ -160,9 +160,35 @@
         </el-col>
       </el-main>
     </el-container>
+
+    <div style="z-index: 999999999999999;position: absolute;">
+      <van-popup v-model="showAppeal" closeable style="width: 500px;height: 300px;border-radius: 10px;">
+        <div style="margin-top: 15px;font-size: 20px;">申诉</div>
+        <div style="margin-top: 30px;">
+          <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+            <el-form-item
+              prop="email"
+              label="登录邮箱"
+              :rules="[{ required: true, message: '请输入邮箱地址', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}]">
+              <el-input v-model="appealForm.email01"></el-input>
+            </el-form-item>
+            <el-form-item
+              prop="email"
+              label="教育邮箱"
+              :rules="[{ required: true, message: '请输入邮箱地址', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}]">
+              <el-input v-model="appealForm.email02"></el-input>
+            </el-form-item>
+            <el-form-item label="活动形式">
+              <el-input v-model="appealForm.message"></el-input>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="submitAppeal">提交申诉</el-button>
+        </div>
+      </van-popup>
+    </div>
     <!-- <div v-if="!isHave" style="padding-top: 15%;">
       <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
-      <!-- <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
+       <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
       <font style="font:  bold italic 40px  arial">或者</font></br>
       <el-button style="width:200px;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
     </div> -->
@@ -188,6 +214,12 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          showAppeal:false,
+          appealForm: {
+            email01: '',
+            email02:'',
+            message:'',
+          },
           loading:true,
           menuIndex: '0',
           message:'',
@@ -246,7 +278,7 @@
             },
           ],
           tableData: [
-            
+
           ],
         }
       },
@@ -257,10 +289,47 @@
       },
       methods:{
         gotoCatch() {
-          this.$router.push({
-            path:'/CatchPortal',
-            query:{resId:this.resId}
-          });
+          if(localStorage.getItem('myId').length>0){
+            this.showAppeal=true;
+          }
+          else{
+            this.$message({
+              message:'请先登入',
+              type:'error'
+            });
+          }
+        },
+        submitAppeal(){
+          if(this.appealForm.email01===localStorage.getItem('myId')){
+            let _this=this;
+            let data=new FormData();
+            data.append('UserEmail',_this.appealForm.email01);
+            data.append('ResEmail',_this.appealForm.email02);
+            data.append('ConTent',_this.appealForm.message);
+            data.append('ReserchId',_this.resId);
+            axios.post(baseUrl+'appealPortal',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===4){
+                _this.$message({
+                  message:'提交成功，请等待管理员审核',
+                  type:'success'
+                })
+              }
+              else{
+                _this.$message({
+                  message:response.data.message,
+                  type:'error'
+                })
+              }
+            })
+          }
+          else{
+            this.$message({
+              message:'请正确输入登入使用的邮箱',
+              type:'error'
+            });
+          }
         },
         gotoSearch() {
           this.$router.push({
@@ -347,12 +416,12 @@
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
             that.tableData=response.data.tabledata;
-            
+
             that.magCount=response.data.magcount;
             that.magPar=response.data.magpar;
             that.confCount=response.data.confcount;
             that.confPar=response.data.confpar;
-            
+
             that.coopData=response.data.coopdata;
             console.log(response);
             that.drawLine();
@@ -807,11 +876,11 @@
             clipboard.destroy()
           })
         },
-        
+
         gotoWeibo(url,title) {
           window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
         },
-        
+
         openQRcode(url) {
           this.QRlink=url;
           this.dialogVisible=true;

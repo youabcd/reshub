@@ -17,7 +17,7 @@
         tooltip-effect="dark"
         @cell-click="search"
         stripe
-        style="width: 100%;margin-top: 10px;margin-bottom: 50px"
+        style="width: 100%;margin-top: 10px;margin-bottom: 50px;cursor: pointer;"
         @selection-change="handleSelectionChange">
         <el-table-column
           type="selection"
