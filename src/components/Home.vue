@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <div style="margin-left: 12%;margin-top: 50px;margin-bottom: 20px;">
+    <div v-if="isFinish" style="margin-left: 12%;margin-top: 50px;margin-bottom: 20px;">
       <WordCloudChart
         id="05"
         title="热门搜索词"
@@ -34,7 +34,7 @@
     name: "Home",
     data() {
       return {
-        hotWords: [
+        /*hotWords: [
           {
             name: "十九大精神",
             value: 15000
@@ -131,7 +131,9 @@
             name: "特色社会主义思想",
             value: 700
           },
-        ],
+        ],*/
+        hotWords:[],
+        isFinish:false,
       }
     },
     methods:{
@@ -140,7 +142,9 @@
         axios.get(baseUrl+"/hotWords")
             .then(function (response) {
               console.log(response);
-              this.hotWords=response.data;
+              _this.hotWords=response.data.hotWords;
+              console.log(_this.hotWords);
+              _this.isFinish=true;
             })
       }
     },
@@ -148,10 +152,10 @@
       TopBar,SearchBox,WordCloudChart
     },
     created() {
-
+      this.getEhartsData();
     },
     mounted() {
-      this.getEhartsData();
+
     }
   }
 </script>
