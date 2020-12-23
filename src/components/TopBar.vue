@@ -30,7 +30,8 @@
         </div>
 
         <div v-if="userId.length>0">
-          <van-col span="6">
+          <van-col span="6" style="margin-top:15px;text-align: left">
+            <el-link v-if="userId==='root@root'" :underline="false"><span style="font-size: 20px" clickable @click="goAd"><i class="el-icon-s-home"/>管理员</span></el-link>
           </van-col>
           <van-col span="10" style="margin-top:18px;text-align: right;">
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goPersonalPortal"><i class="el-icon-paperclip"/>个人门户</span></el-link>
@@ -120,6 +121,11 @@
           }
       },
       methods:{
+        goAd(){
+          this.$router.push({
+            path:'/Administrator'
+          })
+        },
         newPortal(){
           let _this=this;
           let data=new FormData();

@@ -690,7 +690,7 @@
     border-radius: 30px;
     width:50px;
     height:50px;
-    background: url("../assets/jiang.jpg") no-repeat center;
+    background: url("../assets/Head/head00.jpg") no-repeat center;
     background-size:auto 100%;
   }
 
@@ -698,7 +698,7 @@
     border-radius: 50%;
     width:100px;
     height:100px;
-    background: url("../assets/jiang.jpg") no-repeat center;
+    background: url("../assets/Head/head00.jpg") no-repeat center;
     background-size:auto 100%;
     border: solid #3B5999 2px;
   }
