@@ -90,7 +90,7 @@
             SearchContent: '',
           }],
           tableData: [{
-            id: 0,
+            id: '',
             SearchTime: '',
             SearchContent: ''
           }],
@@ -112,7 +112,7 @@
             // console.log(response.data.list)
 
             _this.tableData=response.data.list;
-            // console.log(_this.tableData)
+            console.log(_this.tableData)
           })
         },
         handleSizeChange: function(size) {
@@ -137,7 +137,7 @@
           let _this=this
           // console.log([this.tableData[index].id])
           let deleteList=_this.tableData[index].id.toString()
-          console.log(deleteList)
+          console.log(localStorage.getItem('myId'))
           axios.get(baseUrl+'/deleteSearchRecord',{
             params:{
               userId: localStorage.getItem('myId'),
