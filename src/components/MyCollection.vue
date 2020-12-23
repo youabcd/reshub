@@ -652,7 +652,7 @@
             userId:localStorage.getItem('myId')
           }
         }).then(function (response) {
-          // console.log(response.data.list)
+          console.log(response.data.list)
           _this.tableData0=response.data.list;
         })
       },

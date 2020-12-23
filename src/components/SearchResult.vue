@@ -85,8 +85,8 @@
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <!--收藏-->
-                  <span>
-                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
+                  <span v-if="myId.length>0">
+                    <el-tooltip v-if="tableData00.collectStatus === true>0" class="item" effect="dark" content="取消收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(0)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
@@ -173,14 +173,14 @@
           <!--参考文献 clickable-->
           <div v-if="tableData00.reference.length>0" class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
-            <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index])">
+            <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index],-1)">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link></span>
           </div>
           <!--文献查看  可点击-->
           <div class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">查看原文：</span>
-            <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index])">
+            <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index],tableData00.paperId)">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link>
           </div>
@@ -195,7 +195,7 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <span>
+                  <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(1)"></i>
                     </el-tooltip>
@@ -204,16 +204,16 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link[0],tableData01.title)" style="height: 20px;">
                 </span>
                   <!--微信-->
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData01.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData01.link[0])" style="height: 20px;">
                 </span>
                   <!--复制连接-->
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData01.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData01.link[0]" @click="Copy"></i>
                     </el-tooltip>
                 </span>
                 </van-col>
@@ -275,7 +275,7 @@
 
             <!--文献查看   可点击-->
             <div class="Details" style="">
-              <el-button type="primary" plain @click="gotoPaper(tableData01.link)">查看原文</el-button>
+              <el-button type="primary" plain @click="gotoPaper(tableData01.link[0],tableData01.paperId)">查看原文</el-button>
             </div>
           </div>
           <div v-if="menuIndex==='2'">
@@ -287,7 +287,7 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <span>
+                  <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData02.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
                       <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(2)"></i>
                     </el-tooltip>
@@ -296,16 +296,16 @@
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link,tableData02.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link[0],tableData02.title)" style="height: 20px;">
                 </span>
                   <!--微信-->
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData02.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData02.link[0])" style="height: 20px;">
                 </span>
                   <!--复制连接-->
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData02.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData02.link[0]" @click="Copy"></i>
                     </el-tooltip>
                 </span>
                 </van-col>
@@ -342,7 +342,7 @@
 
             <!--文献查看   可点击-->
             <div class="Details" style="">
-              <el-button type="primary" plain @click="gotoPaper(tableData02.link)">查看原文</el-button>
+              <el-button type="primary" plain @click="gotoPaper(tableData02.link[0],tableData02.id)">查看原文</el-button>
             </div>
           </div>
         </van-popup>
@@ -430,23 +430,23 @@
                 <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 70%">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -484,23 +484,23 @@
               <!--项目-->
                 <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -536,23 +536,23 @@
               <!--专利-->
                 <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
                 <div style="display: inline;position: absolute;right: 20px;top: 0">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
                   </span>
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
                     </el-tooltip>
                   </span>
                 </div>
@@ -742,6 +742,7 @@
     },
     data() {
       return {
+        myId:localStorage.getItem('myId'),
         whichSortAuthor:0,
         radio:false,
         sizeOfAuthor:-1,
@@ -824,13 +825,12 @@
           link:[],
           collectTime:''
         },
-        //专利
         tableData02:{
           id:123,
           paperId:'2',
           title:'Google2',
           viewSum:777,
-          link:'https://www.youtube.com/',
+          link:['https://www.youtube.com/'],
           collectionSum:666,
           abstract:'文字文字字文字zhaiyao文字文字文字文字2',
           date:new Date(),
@@ -903,7 +903,7 @@
             collectStatus: true,
             collectionSum:666,
             viewSum:777,
-            link:'https://www.google.com.hk/',
+            link:['https://www.google.com.hk/'],
             collectTime:'2016-05-04'
           },
         ],
@@ -913,7 +913,7 @@
             paperId:'2',
             title:'Google2',
             viewSum:777,
-            link:'https://www.youtube.com/',
+            link:['https://www.youtube.com/'],
             collectionSum:666,
             abstract:'文字文字字文字zhaiyao文字文字文字文字2',
             date:new Date(),
@@ -1094,11 +1094,11 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData00.paperId);
-          data.append('type', 'paper');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '1');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
-              if(response.data.status===true){
+              if(response.data.succeed===true){
                 _this.tableData00.collectStatus=true;
               }
               else{
@@ -1111,8 +1111,8 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData01.paperId);
-          data.append('type', 'project');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '2');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
               if(response.data.status===true){
@@ -1128,8 +1128,8 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData02.id);
-          data.append('type', 'patent');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '3');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
               if(response.data.status===true){
@@ -1203,6 +1203,7 @@
         }
       },
 
+      //搜索作者
       searchForAuthor(currentPage01){
         let _this=this;
         let data=new FormData();
@@ -1280,9 +1281,17 @@
         }
       },
 
-      gotoPaper(url) {
+      gotoPaper(url,id) {
         //发送点击数据
-        window.open(url,url)
+        let _this=this;
+        let data=new FormData();
+        data.append('userId',localStorage.getItem('myId'));
+        data.append('paperId',id);
+        axios.post(baseUrl+'/addBrowseHistory',data)
+        .then(function (response) {
+          //及增加浏览记录，又增加文献的浏览数量
+          window.open(url,url);
+        })
       },
 
       gotoAuthor(authorId) {
@@ -1371,6 +1380,7 @@
         this.dataEnd='';
       },
 
+      //筛选
       filter() {
         let _this=this;
         let type='';
