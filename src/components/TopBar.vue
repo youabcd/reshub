@@ -4,7 +4,7 @@
       <van-row></van-row>
       <van-row>
         <van-col span="3" style="margin-top: 5px;">
-          <van-image src="./static/logo4.png" width="145" height="45" style="cursor: pointer;" @click="changeColour">
+          <van-image v-if="showPic" :src="require('../assets/logo4.jpg')" width="145" height="45" style="cursor: pointer;" @click="changeColour">
             <template v-slot:loading>
               <van-loading type="spinner" size="20" />
             </template>
@@ -97,6 +97,7 @@
             userImage:localStorage.getItem("userHead"),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
+            showPic:false,
             isReNew:true,
             showChangeHead:false,
             headImage:[
@@ -258,7 +259,13 @@
         if(localStorage.getItem("userHead")==null){
           localStorage.setItem("userHead",'head01.png');
         }
+        // this.showPic=true;
+        this.showPic=false;
+        // window.location.reload();
+        this.showPic=true;
       },
+      created() {
+      }
     }
 </script>
 
