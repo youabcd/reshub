@@ -178,7 +178,7 @@
             </el-link></span>
           </div>
           <!--文献查看  可点击-->
-          <div class="Details" style="">
+          <div class="Details" style="margin-bottom: 20px;">
             <span style="font-family: 黑体;font-weight: 700">查看原文：</span>
             <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index],tableData00.paperId)">
               {{item}}&nbsp;&nbsp;&nbsp;
@@ -274,7 +274,7 @@
             </div>
 
             <!--文献查看   可点击-->
-            <div class="Details" style="">
+            <div class="Details" style="margin-bottom: 20px;">
               <el-button type="primary" plain @click="gotoPaper(tableData01.link[0],tableData01.paperId)">查看原文</el-button>
             </div>
           </div>
@@ -341,7 +341,7 @@
             </div>
 
             <!--文献查看   可点击-->
-            <div class="Details" style="">
+            <div class="Details" style="margin-bottom: 20px;">
               <el-button type="primary" plain @click="gotoPaper(tableData02.link[0],tableData02.id)">查看原文</el-button>
             </div>
           </div>

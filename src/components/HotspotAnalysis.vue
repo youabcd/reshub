@@ -252,10 +252,6 @@
                 _this.scholarName=response.data.scholarName;//学者姓名
                 _this.paperTable=response.data.paperTable;//热门文章
                 _this.hotSearch=response.data.hotSearach;//热门搜索词
-                console.log(_this.hotSearch);
-                console.log(_this.scholarName);
-                console.log(_this.scholarUsed);
-                console.log(_this.scholarCited);
                 _this.isFinish=true;
                 _this.drawLine();
               })
