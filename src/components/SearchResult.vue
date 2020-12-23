@@ -87,7 +87,7 @@
                   <!--收藏-->
                   <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData00.collectStatus === true>0" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(0)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData00)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(0)"></i>
@@ -197,7 +197,7 @@
                 <van-col span="10" style="margin-top: -8px;">
                   <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(1)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData01)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(1)"></i>
@@ -289,7 +289,7 @@
                 <van-col span="10" style="margin-top: -8px;">
                   <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData02.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(2)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData02)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData02.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(2)"></i>
@@ -1035,58 +1035,41 @@
       },
 
       //取消/收藏
-      deleteCollection(i){
-        if(i===0){
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData00.paperId);
-          data.append('type', 'paper');
-          axios.post(baseUrl+'/cancelCollection',data)
-          .then(function (response) {
-            console.log(response);
-            if(response.data.status===true){
-              _this.tableData00.collectStatus=false;
-            }
-            else{
-              console.log('失败')
-            }
-          })
+      deleteCollection(tableData){
+        let _this=this;
+        console.log(tableData.paperId)
+
+        let type;
+        if (_this.menuIndex==='0') {
+          type='1';
+        } else if (_this.menuIndex==='1') {
+          type='2';
+        } else {
+          type='3';
         }
-        else if(i===1){
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData01.paperId);
-          data.append('type', 'project');
-          axios.post(baseUrl+'/cancelCollection',data)
-            .then(function (response) {
-              console.log(response);
-              if(response.data.status===true){
-                _this.tableData01.collectStatus=false;
-              }
-              else{
-                console.log('失败')
-              }
-            })
-        }
-        else{
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData02.id);
-          data.append('type', 'patent');
-          axios.post(baseUrl+'/cancelCollection',data)
-            .then(function (response) {
-              console.log(response);
-              if(response.data.status===true){
-                _this.tableData02.collectStatus=false;
-              }
-              else{
-                console.log('失败')
-              }
-            })
-        }
+        console.log(type)
+        axios.get(baseUrl+'/cancelCollection',{
+          params:{
+            paperId: tableData.paperId,
+            type:type,
+            userId:localStorage.getItem('myId'),
+          }
+        }).then(function (response) {
+          if (response.data.succeed===true) {
+            _this.$message({
+              showClose: true,
+              message: '取消收藏成功',
+              type: 'success'
+            });
+            // _this.tableData0.splice(index, 1);
+          } else {
+            _this.$message({
+              showClose: true,
+              message: '取消收藏失败，请重试',
+              type: 'error'
+            });
+          }
+        })
       },
       Collection(i){
         if(i===0){

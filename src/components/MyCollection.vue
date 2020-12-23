@@ -79,9 +79,9 @@
 <!--                    </span>-->
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
-                    <span v-if="item.type===1">论文</span>
-                    <span v-if="item.type===2">专利</span>
-                    <span v-if="item.type===3">项目</span>
+                    <span v-if="item.type==='1'">论文</span>
+                    <span v-if="item.type==='2'">专利</span>
+                    <span v-if="item.type==='3'">项目</span>
                   </el-tag>
                   <i class="el-icon-star-on" style="position: absolute;right: 95px;top: 130px">
                     <span> {{item.collectionSum}}</span>
@@ -152,12 +152,11 @@
             paperId:'',
             title:'',
             msg:'',
-            author: [],
-            author_link: [],
-            type:0,
+            author: '',
+            type:'',
             collectionSum:0,
             viewSum:0,
-            link:[],
+            link:'',
             collectTime:'',
           },
         ],
@@ -175,12 +174,13 @@
     methods: {
       getMyCollection () {
         let _this=this;
+        // console.log(localStorage.getItem('myId'))
         axios.get(baseUrl+'/getMyCollection',{
           params:{
             userId:localStorage.getItem('myId')
           }
         }).then(function (response) {
-          console.log(response.data.list)
+          // console.log(response.data.list)
           _this.tableData0=response.data.list;
         })
       },
@@ -233,6 +233,8 @@
       deleteCollection0 (index, paperId) {
         //发送请求
         let _this=this;
+        console.log(paperId)
+        console.log(_this.tableData0[index].type)
         axios.get(baseUrl+'/cancelCollection',{
           params:{
             paperId: paperId,
