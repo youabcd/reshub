@@ -283,7 +283,7 @@
             <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
-                  <span>{{tableData02.date}}</span>
+                  <span>{{tableData02.year}}</span>
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
@@ -437,23 +437,21 @@
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
-<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
-<!--                  <span>-->
-<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
-<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span>-->
-<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
-<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
-<!--                    </el-tooltip>-->
-<!--                  </span>-->
-<!--                </div>-->
+                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <span>
+                    发表时间：{{item.year}}
+                  </span>
+                  <span style="margin-left: 5px;margin-right: 2px">
+                    被引次数：{{item.citation}}
+                  </span>
+                </div>
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</p>
-                  <p style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</p>
+                  <span style="font-weight: 700;margin-left: 15px">
+                      摘要:
+                  </span>
+                  <span style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</span>
+                  <span style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</span>
                 </div>
 
                   <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
@@ -491,24 +489,27 @@
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</p>
-                  <p style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</p>
+                  <span style="font-weight: 700;margin-left: 15px">
+                      摘要:
+                    </span>
+                  <span style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</span>
+                  <span style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</span>
                 </div>
 
                 <div>
@@ -516,10 +517,12 @@
                     <span style="margin-left: 15px;">
                       {{tableData1[index].author}}
                     </span>
-                    <span style="font-weight: 700;margin-left: 20px">
+                  </div>
+                  <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
+                    <span style="font-weight: 700;margin-left: 15px">
                       关键词:
                     </span>
-                    <span>{{item.keyword}}</span>
+                    <span>{{item.zhKeywords}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>项目</span>
@@ -543,19 +546,19 @@
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
@@ -568,10 +571,6 @@
                     <span style="margin-left: 15px;">
                         {{item.author}}
                     </span>
-                    <span style="font-weight: 700;margin-left: 20px">
-                      关键词:
-                    </span>
-                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>专利</span>
@@ -788,12 +787,13 @@
           institutionId:[],
           type:"",
           collectStatus: false,
-          collectionSum:0,
-          viewSum:0,
           link:[],
           collectTime:'',
           paperDoi: '',
+          year:'',
           citation: 5, // 引用数量
+          viewSum:0,//浏览数量
+          collectionSum:0,//收藏数量
           paperStart: 0, // 论文开始页
           paperEnd: 4, // 论文结束页
           paperLang: 'en', // 英文
@@ -822,6 +822,7 @@
           collectStatus: true,
           collectionSum:666,
           viewSum:777,
+          citation:0,
           link:[],
           collectTime:''
         },
@@ -829,11 +830,12 @@
           id:123,
           paperId:'2',
           title:'Google2',
-          viewSum:777,
           link:['https://www.youtube.com/'],
           collectionSum:666,
+          viewSum:777,
+          citation:0,
+          year:'',
           abstract:'文字文字字文字zhaiyao文字文字文字文字2',
-          date:new Date(),
           author:'niubility',
           authorId: '2333',
           type:"专利",
@@ -885,6 +887,7 @@
         tableData1: [ // 国家自然基金项目
           {
             paperId:'1',
+            citation:0,
             title:'Google1',
             zhAbstract:'GGG文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             // 中文摘要
@@ -910,13 +913,14 @@
         tableData2: [
           {
             id:123,
+            citation:0,
             paperId:'2',
             title:'Google2',
             viewSum:777,
             link:['https://www.youtube.com/'],
             collectionSum:666,
             abstract:'文字文字字文字zhaiyao文字文字文字文字2',
-            date:new Date(),
+            year:'',
             author:'niubility',
             authorId: '2333',
             type:"专利",
