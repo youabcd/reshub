@@ -22,7 +22,7 @@
           <div class="identify_code" style="margin-left: 20px">
             <label><span style="color: red">*</span>邮箱验证码：</label>
             <el-input style="width: 300px" v-model="auth_code" placeholder="请输入验证码"></el-input>
-            <el-button @click="askVerificationCode()" type="primary" plain style="width: 112px" :disabled="PortalForm.ProEmail===''">
+            <el-button @click="askVerificationCode()" type="primary" plain style="width: 112px" :disabled="disabled||PortalForm.ProEmail.length===0">
               {{timeContent}}
             </el-button>
 
@@ -47,7 +47,6 @@
                 </span>
               </el-dialog>
 
-              <!--<a class="xy" href="/Agreement/ServiceAgreement" target="_blank">《门户认领用户协议》</a>-->
             </label>
           </div>
 
@@ -58,19 +57,6 @@
           </div>
 
           <br>
-<!--          <div>-->
-<!--            <br>-->
-<!--            <span>-->
-<!--              <span style="font-family:verdana;font-size: medium;color: #409eff;width: 50px">想创建一个新门户？请点击</span>-->
-<!--              <el-button type="primary" round @click="create()">创建门户</el-button>-->
-<!--            </span>-->
-<!--            <br>-->
-<!--            <br>-->
-<!--            <span>-->
-<!--              <span style="font-family:verdana;font-size: medium;color:red;width: 50px;margin-left: -64px">需要申诉应属于自己的门户？请点击</span>-->
-<!--              <el-button type="danger" round @click="appeal()">申诉门户</el-button>-->
-<!--            </span>-->
-<!--          </div>-->
         </div>
       </el-main>
       <el-footer></el-footer>
@@ -107,7 +93,7 @@
             resId:'',
             dialogVisible: false,
             timeContent: '发送验证码',
-
+            disabled:false,
             PortalForm:{
               ProEmail:''
             },
@@ -249,11 +235,15 @@
             console.log(res.data.status);
             console.log(_this.resId);
            if(res.data.status === 1){
+             localStorage.setItem('portalId',_this.resId);
              _this.$notify({
                title: '提示',
                message: '提交门户认领申请成功',
-               duration: 3000
+               duration: 3000,
              });
+             _this.$router.push({
+               path:'/PersonalPortal',
+             })
            }else{
              _this.$notify({
                title: '提示',

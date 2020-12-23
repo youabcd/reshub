@@ -14,7 +14,7 @@
             		<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
             	</div>
             	<div style="margin: auto;">
-                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要申诉</el-button>
+                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch01()">我要申诉</el-button>
                 <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
             	  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
                 <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
@@ -162,26 +162,23 @@
     </el-container>
 
     <div style="z-index: 999999999999999;position: absolute;">
-      <van-popup v-model="showAppeal" closeable style="width: 500px;height: 300px;border-radius: 10px;">
+      <van-popup v-model="showAppeal" closeable style="width: 600px;height: 400px;border-radius: 10px;">
         <div style="margin-top: 15px;font-size: 20px;">申诉</div>
-        <div style="margin-top: 30px;">
-          <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+        <div style="margin-top: 30px;width: 80%;margin-left: 10%">
+          <el-form :model="appealForm" label-width="100px" class="demo-dynamic">
             <el-form-item
-              prop="email"
-              label="登录邮箱"
-              :rules="[{ required: true, message: '请输入邮箱地址', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}]">
+              label="登录邮箱">
               <el-input v-model="appealForm.email01"></el-input>
             </el-form-item>
             <el-form-item
-              prop="email"
-              label="教育邮箱"
-              :rules="[{ required: true, message: '请输入邮箱地址', trigger: 'blur' },{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}]">
+              label="教育邮箱">
               <el-input v-model="appealForm.email02"></el-input>
             </el-form-item>
-            <el-form-item label="活动形式">
+            <el-form-item label="申诉补充说明">
               <el-input v-model="appealForm.message"></el-input>
             </el-form-item>
           </el-form>
+          <div style="color: red;margin-bottom: 15px;">{{err}}</div>
           <el-button type="primary" @click="submitAppeal">提交申诉</el-button>
         </div>
       </van-popup>
@@ -215,6 +212,7 @@
           // pageSize: 5,
           // totalPage: 100,
           showAppeal:false,
+          err:'',
           appealForm: {
             email01: '',
             email02:'',
@@ -289,6 +287,12 @@
       },
       methods:{
         gotoCatch() {
+          this.$router.push({
+            path:'/CatchPortal',
+            query:{resId:this.resId}
+          });
+        },
+        gotoCatch01(){
           if(localStorage.getItem('myId').length>0){
             this.showAppeal=true;
           }
@@ -307,16 +311,20 @@
             data.append('ResEmail',_this.appealForm.email02);
             data.append('ConTent',_this.appealForm.message);
             data.append('ReserchId',_this.resId);
-            axios.post(baseUrl+'appealPortal',data)
+            console.log(_this.appealForm.email01);
+            console.log(_this.resId);
+            axios.post(baseUrl+'/appealPortal',data)
             .then(function (response) {
               console.log(response);
               if(response.data.status===4){
+                _this.showAppeal=false;
                 _this.$message({
                   message:'提交成功，请等待管理员审核',
                   type:'success'
                 })
               }
               else{
+                _this.showAppeal=false;
                 _this.$message({
                   message:response.data.message,
                   type:'error'
@@ -325,10 +333,7 @@
             })
           }
           else{
-            this.$message({
-              message:'请正确输入登入使用的邮箱',
-              type:'error'
-            });
+            this.err='请正确输入登录邮箱'
           }
         },
         gotoSearch() {
