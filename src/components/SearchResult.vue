@@ -430,14 +430,14 @@
                 <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 70%">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                <div style="display: inline;position: absolute;right: 20px;top: 25px">
                   <span>
                     发表时间：{{item.year}}
                   </span>
@@ -447,7 +447,7 @@
                 </div>
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <span style="font-weight: 700;margin-left: 15px">
+                  <span style="font-weight: 700;margin-left: 0">
                       摘要:
                   </span>
                   <span style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</span>
@@ -463,7 +463,10 @@
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 140px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 5px;">
                         {{author_item}}
                     </span>
                   </div>
@@ -482,11 +485,11 @@
               <!--项目-->
                 <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
 <!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
@@ -505,7 +508,7 @@
 
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <span style="font-weight: 700;margin-left: 15px">
+                  <span style="font-weight: 700;margin-left: 0">
                       摘要:
                     </span>
                   <span style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</span>
@@ -513,8 +516,11 @@
                 </div>
 
                 <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
+                  <div style="position: absolute;left: 5px;top: 140px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span style="margin-left: 5px;">
                       {{tableData1[index].author}}
                     </span>
                   </div>
@@ -539,11 +545,11 @@
               <!--专利-->
                 <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
 <!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
@@ -567,8 +573,11 @@
                 </div>
 
                 <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
+                  <div style="position: absolute;left: 5px;top: 140px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span style="margin-left: 5px;">
                         {{item.author}}
                     </span>
                   </div>
