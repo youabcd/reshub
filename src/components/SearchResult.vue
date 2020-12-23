@@ -437,19 +437,19 @@
                     {{item.title.substring(0,40)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
-                  <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</p>
@@ -1038,7 +1038,6 @@
       deleteCollection(tableData){
         let _this=this;
         console.log(tableData.paperId)
-
         let type;
         if (_this.menuIndex==='0') {
           type='1';
@@ -1056,6 +1055,13 @@
           }
         }).then(function (response) {
           if (response.data.succeed===true) {
+            if (_this.menuIndex==='0') {
+              _this.tableData00.collectStatus=false;
+            } else if (_this.menuIndex==='1') {
+              _this.tableData01.collectStatus=false;
+            } else {
+              _this.tableData02.collectStatus=false;
+            }
             _this.$message({
               showClose: true,
               message: '取消收藏成功',
@@ -1083,6 +1089,11 @@
               console.log(response);
               if(response.data.succeed===true){
                 _this.tableData00.collectStatus=true;
+                _this.$message({
+                  showClose: true,
+                  message: '收藏成功',
+                  type: 'success'
+                });
               }
               else{
                 console.log('失败')
