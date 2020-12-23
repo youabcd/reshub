@@ -105,8 +105,6 @@
             textLength:'450',
 
             myConcern:[
-              {name:'youabcd',headImage:'head02.png',userEmail:'',label:'这是一个人',id:'123'},
-              {name:'youabcd',headImage:'head01.png',userEmail:'',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ],
 
             myFans:[

@@ -155,7 +155,9 @@
       this.getEhartsData();
     },
     mounted() {
-
+      if(localStorage.getItem('myId')===null){
+        localStorage.setItem('myId','')
+      }
     }
   }
 </script>
