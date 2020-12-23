@@ -426,8 +426,9 @@
               </div>
 
               <div v-if="isLoading===false">
+
               <!--论文-->
-                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 70%">
                   <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
@@ -483,7 +484,7 @@
               </el-card>
 
               <!--项目-->
-                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
@@ -492,6 +493,14 @@
                     {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
+                  <div style="display: inline;position: absolute;right: 20px;top: 25px">
+                  <span>
+                    发表时间：{{item.year}}
+                  </span>
+                    <span style="margin-left: 5px;margin-right: 2px">
+                    项目类型：{{item.category}}
+                  </span>
+                  </div>
 <!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
 <!--                  <span>-->
 <!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
@@ -505,8 +514,6 @@
 <!--                    </el-tooltip>-->
 <!--                  </span>-->
 <!--                </div>-->
-
-
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <span style="font-weight: 700;margin-left: 0">
                       摘要:
@@ -543,7 +550,7 @@
               </el-card>
 
               <!--专利-->
-                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
                   <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
@@ -552,6 +559,14 @@
                     {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
+                  <div style="display: inline;position: absolute;right: 20px;top: 25px">
+                  <span>
+                    发表时间：{{item.year}}
+                  </span>
+                    <span style="margin-left: 5px;margin-right: 2px">
+                    所属机构：{{item.institution}}
+                  </span>
+                  </div>
 <!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
 <!--                  <span>-->
 <!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
@@ -565,8 +580,6 @@
 <!--                    </el-tooltip>-->
 <!--                  </span>-->
 <!--                </div>-->
-
-
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>
                   <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>
@@ -989,8 +1002,7 @@
             'page':page,
             'type':'paper',
             'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
-            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
-            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
         .then(function (response) {
@@ -1012,8 +1024,7 @@
             'page':page,
             'type':'project',
             'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
-            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
-            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -1035,8 +1046,7 @@
             'page':page,
             'type':'patent',
             'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
-            'howTOSort1':_this.changeSortTime,//如果为时间排序 奇数 降序 偶数 升序
-            'howToSort2':_this.changeSortCited,//如果为频次排序 奇数 降序 偶数 升序
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -1213,12 +1223,14 @@
       //搜索作者
       searchForAuthor(currentPage01){
         let _this=this;
-        let data=new FormData();
-        data.append('searchAuthor',_this.searchAuthor);
-        data.append('Radio',_this.radio);
-        data.append('orderBy',_this.whichSortAuthor);//0 按发文数量降序 1 按被引数量降序
-        data.append('page',currentPage01);
-        axios.post(baseUrl+'/searchAuthors',data)
+        axios.get(baseUrl+'/searchAuthors',{
+          params:{
+            'name':_this.searchAuthor,
+            'Radio':_this.radio,
+            'orderBy':_this.whichSortAuthor,//0 按发文数量降序 1 按被引数量降序
+            'page':currentPage01
+          }
+        })
         .then(function (response) {
           console.log(response);
           _this.authorTable=response.data.result;
@@ -1294,10 +1306,19 @@
         let data=new FormData();
         data.append('userId',localStorage.getItem('myId'));
         data.append('paperId',id);
+        if(_this.menuIndex==='0'){
+          data.append('type','1');
+        }
+        else if(_this.menuIndex==='1'){
+          data.append('type','2');
+        }
+        else{
+          data.append('type','3');
+        }
         axios.post(baseUrl+'/addBrowseHistory',data)
         .then(function (response) {
           //及增加浏览记录，又增加文献的浏览数量
-          window.open(url,url);
+          window.open(url);
         })
       },
 
