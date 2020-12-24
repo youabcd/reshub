@@ -129,8 +129,8 @@
           </div>
           <!--机构 可点击-->
           <div style="margin-top: 10px;">
-            <el-link v-for="(item,index) in tableData00.institution" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData00.institutionId[index])">
-              {{item}}&nbsp;&nbsp;&nbsp;
+            <el-link v-for="(item,index) in tableData00.authorOrg" :key="index" type="primary" :underline="false" @click="gotoInstitution(tableData00.authorOrg[index])">
+              <span v-if="item!=='无'">{{item}}&nbsp;&nbsp;&nbsp;</span>
             </el-link>
           </div>
           <!--摘要-->
