@@ -363,9 +363,9 @@
                 <van-col span="12">
                   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                    <el-menu-item index="0" style="width: 120px">●论文<span v-if="sizeOfTable0>-1">({{sizeOfTable0}})</span></el-menu-item>
-                    <el-menu-item index="1" style="width: 120px">●项目<span v-if="sizeOfTable1>-1">({{sizeOfTable1}})</span></el-menu-item>
-                    <el-menu-item index="2" style="width: 120px">●专利<span v-if="sizeOfTable2>-1">({{sizeOfTable2}})</span></el-menu-item>
+                    <el-menu-item index="0" :disabled="sizeOfTable0===0" style="width: 120px">●论文<span v-if="sizeOfTable0>-1">({{sizeOfTable0}})</span></el-menu-item>
+                    <el-menu-item index="1" :disabled="sizeOfTable1===0" style="width: 120px">●项目<span v-if="sizeOfTable1>-1">({{sizeOfTable1}})</span></el-menu-item>
+                    <el-menu-item index="2" :disabled="sizeOfTable2===0" style="width: 120px">●专利<span v-if="sizeOfTable2>-1">({{sizeOfTable2}})</span></el-menu-item>
                   </el-menu>
                 </van-col>
 
