@@ -1316,7 +1316,7 @@
           this.getTable2(1);
         }
 
-        let time=10;
+        let time=15;
         let timer=setInterval(()=>{
           if(time>0){
             this.isLoading=true;
