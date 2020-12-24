@@ -50,7 +50,7 @@
       <el-main>
         <el-col :span="17">
           <el-card class="box-card" shadow="never">
-            <div slot="header" style="display:inline-block">
+            <!-- <div slot="header" style="display:inline-block"> -->
               <div class="pie" ref="uPie" id="une"></div>
               <!-- <div class="pie" ref="dPie" id="deux"></div> -->
               <div class="pie" ref="tPie" id="trois"></div>
@@ -58,11 +58,11 @@
                 共</br>
                 <font style="font:  bold italic 27px  arial">{{paperNum}}</font><font>篇</font>
               </div>
-            </div>
+            <!-- </div>
             <div style="display:inline-block">
               <div class="charts" ref="fChart" id="first"></div>
               <div class="charts" ref="sChart" id="second"></div>
-            </div>
+            </div> -->
           </el-card>
           <el-divider content-position="left">部分合作专家</el-divider>
           <el-card shadow="hover" v-if="!loading" v-for="(item,index) in resData" :key="index" class="box-res">
@@ -107,7 +107,7 @@
           </div>
         </el-col>
         <el-col :span="7">
-          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">最新作品</p>
+          <p style="font-family: '微软雅黑', sans-serif;font-weight: bold;margin-bottom: 23px">部分作品</p>
           <el-card class="box-card" shadow="never" v-for="(item,index) in hotData" :key="index" >
             <div style="text-align: left;margin-top: -20px;cursor: pointer">
               <p style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</p>
@@ -264,208 +264,208 @@
           })
         },
         drawLine(){
-          let fChart=echarts.init(document.getElementById('first'))
-          let sChart=echarts.init(document.getElementById('second'))
+          // let fChart=echarts.init(document.getElementById('first'))
+          // let sChart=echarts.init(document.getElementById('second'))
           let uPie=echarts.init(document.getElementById('une'))
           //let dPie=echarts.init(document.getElementById('deux'))
           let tPie=echarts.init(document.getElementById('trois'))
           var xd=['1980-1985', '1985-1990', '1990-1995','1995-2000', '2000-2005', '2005-2010', '2010-2015','2015-2020'];
-          fChart.setOption({
-            backgroundColor:"",
-            tooltip: {              //设置tip提示
-              trigger: 'axis',
-              alwaysShowContent: true ,
-              formatter: function (params, ticket, callback) {
-                var htmlStr = '';
-                for(var i=0;i<params.length;i++){
-                	var param = params[i];
-                  var xName = param.name;//x轴的名称
-                  var seriesName = param.seriesName;//图例名称
-                  var value = param.value;//y轴值
-                  var color = param.color;//图例颜色
-                  if(i===0){
-                    htmlStr += xName + '年';//x轴的名称
-                  }
-                  htmlStr += seriesName + '</br>'
-                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
-                  htmlStr += value;
-                  htmlStr += '</div>';
-                }
-                return htmlStr;
-              }
-            },
-            grid: {
-              x:5,
-              y:0,
-              x2:5,
-              y2:1
-            },
-            color: ['#59c4e6'],
-            xAxis: {                //设置x轴
-              boundaryGap: false,     //坐标轴两边不留白
-              data: xd,
-              type: 'category',
-              axisLine: {             //坐标轴轴线相关设置。
-                show: true,
-                lineStyle: {
-                  color: '#e2e2e2',
-                }
-              },
-              axisLabel: {
-                show: false,
-              },
-              axisTick: {
-                show: false
-              },
-              splitline: {
-                show: true,
-              }
-            },
-            yAxis: {
-              type: 'value',
-              axisLine: {             //坐标轴轴线相关设置。
-                show: false,
-              },
-              axisLabel: {
-                show: false,
-              },
-              axisTick: {
-                show: false
-              },
-              splitLine:{
-                show:false//不显示网格线
-              },
-            },
-            series: [
-              {
-                name: '期刊数',
-                type: 'line',
-                data: this.resCount,
-                smooth: true,
-                areaStyle: {
-                  normal: {
-                    color: {
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [{
-                        offset: 0,
-                        color: "#59c4e6" // 0% 处的颜色
-                      }, {
-                        offset: 1,
-                        color: "rgba(89,196,230,0)" // 100% 处的颜色
-                      }],
-                      globalCoord: false // 缺省为 false
-                    }
-                  }
-                },
-                lineStyle: {                // 线条样式 => 必须使用normal属性
-                  normal: {
-                    color: '#59c4e6',
-                  }
-                },
-              }
-            ]
-          });
-          sChart.setOption({
-            backgroundColor:"",
-            tooltip: {              //设置tip提示
-              trigger: 'axis',
-              alwaysShowContent: true ,
-              formatter: function (params, ticket, callback) {
-                var htmlStr = '';
-                for(var i=0;i<params.length;i++){
-                	var param = params[i];
-                  var xName = param.name;//x轴的名称
-                  var seriesName = param.seriesName;//图例名称
-                  var value = param.value;//y轴值
-                  var color = param.color;//图例颜色
-                  if(i===0){
-                    htmlStr += xName + '年';//x轴的名称
-                  }
-                  htmlStr += seriesName + '</br>'
-                  htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
-                  htmlStr += value;
-                  htmlStr += '</div>';
-                }
-                return htmlStr;
-              }
-            },
-            grid: {
-              x:5,
-              y:0,
-              x2:5,
-              y2:1
-            },
-            color: ['#59c4e6'],
-            xAxis: {                //设置x轴
-              boundaryGap: false,     //坐标轴两边不留白
-              data: xd,
-              type: 'category',
-              axisLine: {             //坐标轴轴线相关设置。
-                show: true,
-                lineStyle: {
-                  color: '#e2e2e2',
-                }
-              },
-              axisLabel: {
-                show: false,
-              },
-              axisTick: {
-                show: false
-              },
-              splitline: {
-                show: true,
-              }
-            },
-            yAxis: {
-              type: 'value',
-              axisLine: {             //坐标轴轴线相关设置。
-                show: false,
-              },
-              axisLabel: {
-                show: false,
-              },
-              axisTick: {
-                show: false
-              },
-              splitLine:{
-                show:false//不显示网格线
-              },
-            },
-            series: [
-              {
-                name: '被引数',
-                type: 'line',
-                data: this.quoCount,
-                smooth: true,
-                areaStyle: {
-                  normal: {
-                    color: {
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [{
-                        offset: 0,
-                        color: "#59c4e6" // 0% 处的颜色
-                      }, {
-                        offset: 1,
-                        color: "rgba(89,196,230,0)" // 100% 处的颜色
-                      }],
-                      globalCoord: false // 缺省为 false
-                    }
-                  }
-                },
-                lineStyle: {                // 线条样式 => 必须使用normal属性
-                  normal: {
-                    color: '#59c4e6',
-                  }
-                },
-              }
-            ]
-          });
+          // fChart.setOption({
+          //   backgroundColor:"",
+          //   tooltip: {              //设置tip提示
+          //     trigger: 'axis',
+          //     alwaysShowContent: true ,
+          //     formatter: function (params, ticket, callback) {
+          //       var htmlStr = '';
+          //       for(var i=0;i<params.length;i++){
+          //       	var param = params[i];
+          //         var xName = param.name;//x轴的名称
+          //         var seriesName = param.seriesName;//图例名称
+          //         var value = param.value;//y轴值
+          //         var color = param.color;//图例颜色
+          //         if(i===0){
+          //           htmlStr += xName + '年';//x轴的名称
+          //         }
+          //         htmlStr += seriesName + '</br>'
+          //         htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+          //         htmlStr += value;
+          //         htmlStr += '</div>';
+          //       }
+          //       return htmlStr;
+          //     }
+          //   },
+          //   grid: {
+          //     x:5,
+          //     y:0,
+          //     x2:5,
+          //     y2:1
+          //   },
+          //   color: ['#59c4e6'],
+          //   xAxis: {                //设置x轴
+          //     boundaryGap: false,     //坐标轴两边不留白
+          //     data: xd,
+          //     type: 'category',
+          //     axisLine: {             //坐标轴轴线相关设置。
+          //       show: true,
+          //       lineStyle: {
+          //         color: '#e2e2e2',
+          //       }
+          //     },
+          //     axisLabel: {
+          //       show: false,
+          //     },
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     splitline: {
+          //       show: true,
+          //     }
+          //   },
+          //   yAxis: {
+          //     type: 'value',
+          //     axisLine: {             //坐标轴轴线相关设置。
+          //       show: false,
+          //     },
+          //     axisLabel: {
+          //       show: false,
+          //     },
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     splitLine:{
+          //       show:false//不显示网格线
+          //     },
+          //   },
+          //   series: [
+          //     {
+          //       name: '期刊数',
+          //       type: 'line',
+          //       data: this.resCount,
+          //       smooth: true,
+          //       areaStyle: {
+          //         normal: {
+          //           color: {
+          //             x: 0,
+          //             y: 0,
+          //             x2: 0,
+          //             y2: 1,
+          //             colorStops: [{
+          //               offset: 0,
+          //               color: "#59c4e6" // 0% 处的颜色
+          //             }, {
+          //               offset: 1,
+          //               color: "rgba(89,196,230,0)" // 100% 处的颜色
+          //             }],
+          //             globalCoord: false // 缺省为 false
+          //           }
+          //         }
+          //       },
+          //       lineStyle: {                // 线条样式 => 必须使用normal属性
+          //         normal: {
+          //           color: '#59c4e6',
+          //         }
+          //       },
+          //     }
+          //   ]
+          // });
+          // sChart.setOption({
+          //   backgroundColor:"",
+          //   tooltip: {              //设置tip提示
+          //     trigger: 'axis',
+          //     alwaysShowContent: true ,
+          //     formatter: function (params, ticket, callback) {
+          //       var htmlStr = '';
+          //       for(var i=0;i<params.length;i++){
+          //       	var param = params[i];
+          //         var xName = param.name;//x轴的名称
+          //         var seriesName = param.seriesName;//图例名称
+          //         var value = param.value;//y轴值
+          //         var color = param.color;//图例颜色
+          //         if(i===0){
+          //           htmlStr += xName + '年';//x轴的名称
+          //         }
+          //         htmlStr += seriesName + '</br>'
+          //         htmlStr += '<div style="float:left;font:  bold italic 27px  arial">';
+          //         htmlStr += value;
+          //         htmlStr += '</div>';
+          //       }
+          //       return htmlStr;
+          //     }
+          //   },
+          //   grid: {
+          //     x:5,
+          //     y:0,
+          //     x2:5,
+          //     y2:1
+          //   },
+          //   color: ['#59c4e6'],
+          //   xAxis: {                //设置x轴
+          //     boundaryGap: false,     //坐标轴两边不留白
+          //     data: xd,
+          //     type: 'category',
+          //     axisLine: {             //坐标轴轴线相关设置。
+          //       show: true,
+          //       lineStyle: {
+          //         color: '#e2e2e2',
+          //       }
+          //     },
+          //     axisLabel: {
+          //       show: false,
+          //     },
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     splitline: {
+          //       show: true,
+          //     }
+          //   },
+          //   yAxis: {
+          //     type: 'value',
+          //     axisLine: {             //坐标轴轴线相关设置。
+          //       show: false,
+          //     },
+          //     axisLabel: {
+          //       show: false,
+          //     },
+          //     axisTick: {
+          //       show: false
+          //     },
+          //     splitLine:{
+          //       show:false//不显示网格线
+          //     },
+          //   },
+          //   series: [
+          //     {
+          //       name: '被引数',
+          //       type: 'line',
+          //       data: this.quoCount,
+          //       smooth: true,
+          //       areaStyle: {
+          //         normal: {
+          //           color: {
+          //             x: 0,
+          //             y: 0,
+          //             x2: 0,
+          //             y2: 1,
+          //             colorStops: [{
+          //               offset: 0,
+          //               color: "#59c4e6" // 0% 处的颜色
+          //             }, {
+          //               offset: 1,
+          //               color: "rgba(89,196,230,0)" // 100% 处的颜色
+          //             }],
+          //             globalCoord: false // 缺省为 false
+          //           }
+          //         }
+          //       },
+          //       lineStyle: {                // 线条样式 => 必须使用normal属性
+          //         normal: {
+          //           color: '#59c4e6',
+          //         }
+          //       },
+          //     }
+          //   ]
+          // });
           uPie.setOption({
             title: {//标题组件
               textStyle: {    
