@@ -19,6 +19,9 @@
                     <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch01()">我要申诉</el-button>
                     <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
                   </div>
+                  <div v-if="isHave">
+                    <el-button style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="info" disabled>不能重复认证</el-button>
+                  </div>
                   <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
                   <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
                 </div>
