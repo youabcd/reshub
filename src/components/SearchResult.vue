@@ -1387,24 +1387,6 @@
       },
 
       open(index) {
-        // if(this.menuIndex==='0'){
-        //   this.$router.push({
-        //     path:'/paperDetail',
-        //     query:{'menuIndex':'0','id':this.tableData0[index].paperId,'type':'paper'}
-        //     })
-        // }
-        // else if(this.menuIndex==='1'){
-        //   this.$router.push({
-        //     path:'/paperDetail',
-        //     query:{'menuIndex':'1','id':this.tableData1[index].paperId,'type':'project'}
-        //   })
-        // }
-        // else if(this.menuIndex==='3'){
-        //   this.$router.push({
-        //     path:'/paperDetail',
-        //     query:{'menuIndex':'3','id':this.tableData2[index].paperId,'type':'patent'}
-        //   })
-        // }
         let _this=this;
         _this.tableData00=[];
         _this.tableData01=[];
@@ -1469,7 +1451,8 @@
           type='patent';
         }
         let searchList=localStorage.getItem("keyWordsList");
-
+        let searchKey=localStorage.getItem("keyWords");
+        
       },
 
       gotoWeibo(url,title) {

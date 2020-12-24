@@ -254,7 +254,7 @@
 
         // websocket 相关
         initWebSocket() {//初始化websocket
-          const wsuri = "ws://121.196.149.183/websocket"+this.userId;//用自己的id构成websock链接 改
+          const wsuri = "ws://121.196.149.183/websocket/"+this.userId;//用自己的id构成websock链接 改
           this.websock = new WebSocket(wsuri);
           this.websock.onopen = this.websocketopen;
           this.websock.onmessage = this.websocketonmessage;
