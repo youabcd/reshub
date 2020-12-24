@@ -281,7 +281,7 @@
           });
           window.location.reload()
         },
-        addlConcern(item){//关注
+        addConcern(){//关注
           let _this=this;
           let data = new FormData();
           data.append('UserEmail', localStorage.getItem('myId'));
@@ -300,9 +300,10 @@
             else{
               this.$message.error('出错啦！');
             }
+            window.location.reload()
           })
         },
-        cancelConcern(item){//取关
+        cancelConcern(){//取关
           let _this=this;
           let data = new FormData();
           data.append('UserEmail', localStorage.getItem('myId'));
@@ -321,6 +322,7 @@
             else{
               this.$message.error('出错啦！');
             }
+            window.location.reload()
           })
         },
         getPersonalPortal() {
@@ -989,7 +991,7 @@
   }
   .coop-item{
     text-align: left;
-    height: 42px;
+    height: 47px;
     width:100%;
   }
   .avatar{

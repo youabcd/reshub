@@ -16,9 +16,9 @@
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
         			</div>
-        			<div class="p_volume">
+        			<!-- <div class="p_volume">
         				{{visitNum}}人看过
-        			</div>
+        			</div> -->
         			<div class="p_affiliate">
         				
         			</div>
@@ -67,7 +67,7 @@
           <el-divider content-position="left">合作专家</el-divider>
           <el-card shadow="hover" v-if="!loading" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
-              <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold">{{item.name}}</span>
+              <span style="font-family: '微软雅黑', sans-serif;overflow: hidden;font-size: 20px;font-weight: bold">{{item.name}}</span>
               <el-popover
                 placement="right"
                 title="邮箱"
@@ -88,8 +88,8 @@
             </div>
             <div style="display:inline;text-align: left;position: absolute;left:20px;top: 103px;">
               <el-button style="width: 79px;" size="mini" type="primary" @click="gotoAuthor(item.resId)" round>查看详情</el-button>
-              <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
-              <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button>
+              <!-- <el-button v-if="item.collectStatus === false" style="width: 79px;" size="mini" type="primary" round plain>关注</el-button>
+              <el-button v-if="item.collectStatus === true" style="width: 79px;" size="mini" type="primary" round plain>取消关注</el-button> -->
             </div>
             <div style="text-align: left;position: absolute;">
               <img class="avatar" :src="require('../assets/Head/'+item.avatar)" ></img>
@@ -154,7 +154,7 @@
           // totalPage: 100,
           menuIndex: '0',
           // avatar:require('../assets/white.jpg'),
-          visitNum:'1400',
+          // visitNum:'1400',
           loading:true,
           insName:'研究机构',
           insId:1,
@@ -225,10 +225,7 @@
       methods:{
        gotoAuthor(authorId) {
          localStorage.setItem('authorId',authorId);
-         this.$router.push({
-           path:'/PersonalPortal',
-         });
-         window.location.reload()
+         window.open(webUrl+'PersonalPortal');
        },
        gotoInstitution(institutionId){
          localStorage.setItem('institutionId',institutionId);
@@ -244,7 +241,7 @@
             console.log(response);
             that.loading=false;
             console.log(that.loading);
-            that.visitNum=response.data.visitnum;
+            // that.visitNum=response.data.visitnum;
             that.realName=response.data.realname;
             that.insName=response.data.insname;
             //that.mail=response.data.mail;
@@ -255,6 +252,8 @@
            
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
+            that.magCount=response.data.magcount;
+            that.magPar=response.data.magpar;
             that.confCount=response.data.confcount;
             that.confPar=response.data.confpar;
             
