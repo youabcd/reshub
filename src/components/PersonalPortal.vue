@@ -359,7 +359,7 @@
           data.append('UserEmail', localStorage.getItem('myId'));
           data.append('ResearchId', localStorage.getItem('resId'));
           //console.log(localStorage.getItem('resId'));
-          axios.post(baseUrl+'/addlConcern',data).
+          axios.post(baseUrl+'/addConcern',data).
           then(function (response) {
             console.log(response);
             if(response.data.status===1){
