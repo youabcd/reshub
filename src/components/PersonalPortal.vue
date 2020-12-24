@@ -98,7 +98,7 @@
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
             </div>
             <div style="display: inline;position: absolute;right: 20px;top: 5px">
-              <span>
+              <!-- <span>
                 <el-tooltip v-if="item.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                   <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="addCollection(index)"></i>
                 </el-tooltip>
@@ -107,7 +107,7 @@
                 <el-tooltip v-if="item.collectStatus === true" class="item" effect="dark" content="已收藏" placement="bottom">
                   <i class="el-icon-star-on" style="font-size: 25px;width: 30px"></i>
                 </el-tooltip>
-              </span>
+              </span>  -->
               <span>
                 <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;">
               </span>
