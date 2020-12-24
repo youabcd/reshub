@@ -17,6 +17,7 @@
             <div v-for="(item,index) in paperTable" :key="index"
                  style="vertical-align: top;padding: 10px;width: 40%;height: 20px;
                  text-align: left;display:inline-block;margin-top: 15px;">
+              <el-tooltip class="item" effect="dark" :content="item.title" placement="bottom-start">
               <div class="van-ellipsis" style="width: 270px;">
                 <el-link :href="item.link" target="_blank">
                   <span style="font-size: 20px;">
@@ -25,6 +26,7 @@
                   </span>
                 </el-link>
               </div>
+              </el-tooltip>
             </div>
           </div>
         </van-col>
@@ -86,82 +88,8 @@
         return{
           isFinish:false,
           paperTable: [
-            {
-            id:'1',
-            title: 'kasdlflkas11djkfklasjfksjdlkfjksdfskldf车klsjdkfksdfkj',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'2',
-            title: 'kasdlflkas1111房价快速搭建安抚看见撒旦分教师',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },{
-            id:'3',
-            title: 'kasdlflkas11111',
-            link: 'https://www.bilibili.com',
-          },
-
           ],
           hotSearch:[
-            {name:"人工智能",value:10000},
-            {name:"大数据",value:9000},
-            {name:"软件工程",value:8000},
-            {name:"人工智障",value:7000},
-            {name:"大数据泄露",value:6000},
-            {name:"假的软件工程",value:5000},
-            {name:"人",value:4000},
-            {name:"数据",value:3000},
-            {name:"没意思",value:2000},
-            {name:"搜个锤子",value:1000},
-            {name:"无敌",value:900},
-            {name:"吃饭",value:800},
-            {name:"数据库设计",value:700},
-            {name:"编译",value:600},
-            {name:"操作系统",value:500},
-            {name:"PINTOS",value:400},
-            {name:"毕业论文",value:300},
-            {name:"求职",value:200},
-            {name:"高数",value:100},
-            {name:"睡觉",value:90},
-            {name:"摸鱼",value:80},
-            {name:"打游戏",value:70},
-            {name:"reshub",value:60},
-            {name:"项目",value: 50},
           ],
           scholarName:['y1','y2','y3','y4','y5','y6','y7','y8','y9','y10','y11'],
           scholarCited:[120,110,100,90,80,70,60,50,80,60,100,90],//发文数量

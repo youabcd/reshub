@@ -1289,6 +1289,7 @@
       handleSelect (key) {
         this.menuIndex = key;
         this.currentPage = 1;
+        this.isLoading=true;
         if(key=='0'){
           this.getTable0(1);
         }
@@ -1317,6 +1318,7 @@
         }
         axios.post(baseUrl+'/addBrowseHistory',data)
         .then(function (response) {
+          console.log(response);
           //及增加浏览记录，又增加文献的浏览数量
           window.open(url);
         })
