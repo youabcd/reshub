@@ -1439,20 +1439,37 @@
 
       //筛选
       filter() {
-        let _this=this;
-        let type='';
-        if(_this.menuIndex==='0'){
-          type='paper';
+        let searchList=JSON.parse(localStorage.getItem("keyWordsList"));
+        //let searchKey=localStorage.getItem("keyWords");
+        localStorage.setItem('dateStart',this.dataStart);
+        localStorage.setItem('dateEnd',this.dataEnd);
+        for(let i=0;i<this.checkedSubject.length;i++){
+          let list={};
+          list.type='6'
+          list.words=this.checkedSubject[i];
+          list.isFuzzy=false;
+          list.boolType='2';
+          searchList.push(list);
         }
-        else if(_this.menuIndex==='1'){
-          type='project';
+        for(let i=0;i<this.checkedAuthor.length;i++){
+          let list={};
+          list.type='3'
+          list.words=this.checkedAuthor[i];
+          list.isFuzzy=false;
+          list.boolType='2';
+          searchList.push(list);
         }
-        else if(_this.menuIndex==='2'){
-          type='patent';
+        localStorage.setItem("keyWordsList",JSON.stringify(searchList));
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
         }
-        let searchList=localStorage.getItem("keyWordsList");
-        let searchKey=localStorage.getItem("keyWords");
-        
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else if(this.menuIndex==='2'){
+          this.getTable2(1);
+        }
       },
 
       gotoWeibo(url,title) {

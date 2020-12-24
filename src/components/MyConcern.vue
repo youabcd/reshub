@@ -108,8 +108,6 @@
             ],
 
             myFans:[
-              {headImage:'head02.png',name:'youabcd_fans',state:'已关注',label:'这是一个人',id:'123'},
-              {headImage:'head01.png',name:'youabcd_fans',state:'已关注',label:'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',id:'123'},
             ]
           }
       },
