@@ -363,7 +363,7 @@
           let _this=this;
           let data = new FormData();
           data.append('UserEmail', localStorage.getItem('myId'));
-          data.append('ResearchId', localStorage.getItem('resId'));
+          data.append('ResearchId', _this.resId);
           //console.log(localStorage.getItem('resId'));
           axios.post(baseUrl+'/addConcern',data).
           then(function (response) {
@@ -388,7 +388,7 @@
           let _this=this;
           let data = new FormData();
           data.append('UserEmail', localStorage.getItem('myId'));
-          data.append('ResearchId', localStorage.getItem('resId'));
+          data.append('ResearchId', _this.resId);
           //console.log(localStorage.getItem('resId'));
           axios.post(baseUrl+'/cancelConcern',data).
           then(function (response) {
