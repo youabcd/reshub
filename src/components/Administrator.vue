@@ -37,8 +37,8 @@
             <i class="el-icon-chat-dot-round" style="margin-left: 25px"></i>
             <span>申诉</span>
           </template>
-          <el-menu-item index="3-1"><span style="margin-left: 38px">未审核</span></el-menu-item>
-          <el-menu-item index="3-2"><span style="margin-left: 38px">已审核</span></el-menu-item>
+          <el-menu-item index="3-1"><span style="margin-left: 38px">未处理</span></el-menu-item>
+          <el-menu-item index="3-2"><span style="margin-left: 38px">已处理</span></el-menu-item>
         </el-submenu>
 <!--        <el-menu-item index="4">-->
 <!--          <i class="el-icon-document" style="margin-left: 25px"></i>-->
@@ -191,7 +191,7 @@
           <!--          </div>-->
 <!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData.id)">通过</el-button>-->
 <!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData.id)">拒绝</el-button>-->
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData1.id,drawerData1.UserEmail)">通过</el-button>
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData1.id,drawerData1.UserEmail,drawerData1.ResearchId)">通过</el-button>
           <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData1.id)">拒绝</el-button>
         </el-drawer>
 <!--        <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">-->
@@ -392,6 +392,7 @@
         },
         drawerData1: {
           id: '',
+          ResearchId:'',
           UserEmail:'',
           AppealState:'',
           AppealTime:'',
@@ -419,6 +420,7 @@
         }],
         tableData3: [{
           id: '',
+          ResearchId:'',
           UserEmail:'',
           AppealState:'',
           AppealTime:'',
@@ -458,7 +460,7 @@
         })
       },
       getList() {
-        console.log(this.tableData1)
+
         let _this=this
         axios.get(baseUrl+'/getList',{
           params:{
@@ -472,6 +474,10 @@
           _this.tableData2=response.data.ReviewList1
           _this.tableData3=response.data.AppealList0
           _this.tableData4=response.data.AppealList1
+          console.log(_this.tableData1)
+          console.log(_this.tableData2)
+          console.log(_this.tableData3)
+          console.log(_this.tableData4)
         })
       },
       handleSelect (key) {
@@ -495,6 +501,7 @@
         this.drawerData1.AppealTime=this.tableData3[index].AppealTime;
         this.drawerData1.AppealState=this.tableData3[index].AppealState;
         this.drawerData1.content=this.tableData3[index].content;
+        this.drawerData1.ResearchId=this.tableData3[index].ResearchId;
         this.drawer1=true;
         // console.log(this.drawerData);
       },
@@ -560,14 +567,16 @@
           }
         })
       },
-      pass2(id,email) {
+      pass2(id,email,resId) {
         //发送数据
         let _this=this
+        console.log(resId.toString())
         axios.get(baseUrl+'/pass2',{
           params:{
             userId: localStorage.getItem('myId'),
             id: id,
-            email:email
+            email:email,
+            ResId:resId.toString(),
           }
         }).then(function (response) {
           _this.drawer1=false;

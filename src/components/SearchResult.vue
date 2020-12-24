@@ -510,19 +510,6 @@
                     项目类型：{{item.category}}
                   </span>
                   </div>
-<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
-<!--                  <span>-->
-<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
-<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span>-->
-<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
-<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
-<!--                    </el-tooltip>-->
-<!--                  </span>-->
-<!--                </div>-->
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <span style="font-weight: 700;margin-left: 0">
                       摘要:
@@ -576,19 +563,6 @@
                     所属机构：{{item.institution}}
                   </span>
                   </div>
-<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
-<!--                  <span>-->
-<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
-<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
-<!--                  </span>-->
-<!--                  <span>-->
-<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
-<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
-<!--                    </el-tooltip>-->
-<!--                  </span>-->
-<!--                </div>-->
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>
                   <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>
@@ -1082,9 +1056,9 @@
         if (_this.menuIndex==='0') {
           type='1';
         } else if (_this.menuIndex==='1') {
-          type='2';
-        } else {
           type='3';
+        } else {
+          type='2';
         }
         console.log(type)
         axios.get(baseUrl+'/cancelCollection',{
@@ -1149,8 +1123,13 @@
           axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
-              if(response.data.status===true){
+              if(response.data.succeed===true){
                 _this.tableData01.collectStatus=true;
+                _this.$message({
+                  showClose: true,
+                  message: '收藏成功',
+                  type: 'success'
+                });
               }
               else{
                 console.log('失败')
@@ -1166,8 +1145,13 @@
           axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
-              if(response.data.status===true){
+              if(response.data.succeed===true){
                 _this.tableData02.collectStatus=true;
+                _this.$message({
+                  showClose: true,
+                  message: '收藏成功',
+                  type: 'success'
+                });
               }
               else{
                 console.log('失败')
