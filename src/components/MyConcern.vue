@@ -116,6 +116,7 @@
       components: {TopBar},
       methods:{
         toPersonalPortal(item){
+          localStorage.setItem('authorId',item);
           this.$router.push({
             path:'/PersonalPortal',
           });
