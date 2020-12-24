@@ -19,11 +19,11 @@
             	  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
                 <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
             	</div>
-            </div>
+            </div>"
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{realName}}
-                <el-popover v-if="!isMyPortal"
+                <el-popover v-if= "isClaimed == true"
                     placement="bottom"
                     title="邮箱"
                     width="250"
@@ -39,7 +39,7 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-                <el-link v-if="insName!='暂无'" :underline="false" @click="gotoInstitution(this.insId)">
+                <el-link v-if="insName!='暂无'" :underline="false" @click.native="gotoInstitution(this.insId)">
                   <div v-if="insName!='暂无'">{{insName}}</div>
                 </el-link>
                 <div v-if="insName === '暂无'">{{insName}}</div>
@@ -349,8 +349,8 @@
           });
           window.location.reload()
         },
-        gotoInstitution(institutionId){
-          localStorage.setItem('institutionId',institutionId);
+        gotoInstitution(insId){
+          localStorage.setItem('institutionId',insId);
           window.open(webUrl+'ResearchInstitute');
         },
         addConcern(){//关注

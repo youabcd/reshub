@@ -7,14 +7,14 @@
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{insName}}
-                <el-popover
+                <!-- <el-popover
                     placement="bottom"
                     title="邮箱"
                     width="200"
                     trigger="hover"
                     :content="mail">
                 <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
-                </el-popover>
+                </el-popover> -->
         			</div>
         			<!-- <div class="p_volume">
         				{{visitNum}}人看过
@@ -51,6 +51,7 @@
         <el-col :span="17">
           <el-card class="box-card" shadow="never">
             <!-- <div slot="header" style="display:inline-block"> -->
+            <div style="display:inline-block">
               <div class="pie" ref="uPie" id="une"></div>
               <!-- <div class="pie" ref="dPie" id="deux"></div> -->
               <div class="pie" ref="tPie" id="trois"></div>
@@ -58,6 +59,7 @@
                 共</br>
                 <font style="font:  bold italic 27px  arial">{{paperNum}}</font><font>篇</font>
               </div>
+            </div>
             <!-- </div>
             <div style="display:inline-block">
               <div class="charts" ref="fChart" id="first"></div>
