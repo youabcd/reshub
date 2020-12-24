@@ -14,8 +14,10 @@
             		<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
             	</div>
             	<div style="margin: auto;">
-                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch01()">我要申诉</el-button>
-                <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
+                <div v-if="!isHave">
+                  <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch01()">我要申诉</el-button>
+                  <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
+                </div>
             	  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
                 <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
             	</div>
@@ -408,7 +410,7 @@
           ).then(function (response) {
             that.loading=false;
             that.resId=response.data.authorid;
-            //that.isHave=response.data.ishave;
+            that.isHave=response.data.ishave;
             that.avatar=response.data.avatar;
             that.isClaimed=response.data.isclaimed;
             that.isFollowing=response.data.isfollowing;
