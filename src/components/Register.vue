@@ -14,7 +14,7 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="log-logo" @click="backToHome">Welcome to reshub!</div>
+        <div class="log-logo" @click="backToHome">回到首页</div>
         <div class="log-text">@reshub team</div>
     </div>
     <div class="reg-email">
