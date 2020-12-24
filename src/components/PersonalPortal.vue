@@ -23,7 +23,7 @@
         		<div class="person_baseinfo">
         			<div class="p_name">
         				{{realName}}
-                <el-popover
+                <el-popover v-if="!isMyPortal"
                     placement="bottom"
                     title="邮箱"
                     width="250"
@@ -31,9 +31,9 @@
                     :content="mail">
                   <el-button class="commun" slot="reference" type="info" icon="el-icon-message" :data-clipboard-text="mail" @click="Copy" circle></el-button>
                 </el-popover>
-                <el-tooltip class="item" effect="dark" content="私信ta" placement="bottom">
+                <!-- <el-tooltip class="item" effect="dark" content="私信ta" placement="bottom">
                   <el-button type="info" icon="el-icon-chat-dot-square" circle ></el-button>
-                </el-tooltip>
+                </el-tooltip> -->
         			</div>
         			<div class="p_volume">
         				{{visitNum}}人看过|{{followNum}}人正在关注
@@ -81,7 +81,7 @@
               <div class="charts" ref="sChart" id="second"></div>
             </div>
           </el-card>
-          <el-divider content-position="left">部分发表作品</el-divider>
+          <el-divider content-position="left">发表作品</el-divider>
           <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData" :key="index" class="text-item" >
             <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
               <span style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">{{item.title}}</span>
@@ -350,10 +350,7 @@
         },
         gotoInstitution(institutionId){
           localStorage.setItem('institutionId',institutionId);
-          this.$router.push({
-            path:'/ResearchInstitute',
-          });
-          window.location.reload()
+          window.open(webUrl+'ResearchInstitute');
         },
         addConcern(){//关注
           let _this=this;

@@ -64,7 +64,7 @@
               <div class="charts" ref="sChart" id="second"></div>
             </div>
           </el-card>
-          <el-divider content-position="left">合作专家</el-divider>
+          <el-divider content-position="left">部分合作专家</el-divider>
           <el-card shadow="hover" v-if="!loading" v-for="(item,index) in resData" :key="index" class="box-res">
             <div style="display: inline;position: absolute;left: 95px;top: 20px;text-align: left;">
               <span style="font-family: '微软雅黑', sans-serif;overflow: hidden;font-size: 20px;font-weight: bold">{{item.name}}</span>
