@@ -78,12 +78,6 @@
             paperLink:[],
             browse_time:''
           },
-          temp: {      //use this
-            pid:'',
-            paper_name:'',
-            paperLink:[],
-            browse_time:''
-          },
           tableData: [{
             pid: '',
             browse_time: '',
@@ -111,13 +105,20 @@
           })
             .then(function (response) {
             console.log(response.data.status)
+              console.log(response);
               _this.tableData=[];
             for (let i=0,length=response.data.Timelist.length; i<length; i++) {
-              _this.temp.pid=i;
-              _this.temp.browse_time=response.data.Timelist[i];
-              _this.temp.paper_name=response.data.PaperTitleList[i];
-              _this.temp.paperLink = response.data.PaperUrlList[i];
-              _this.tableData.push(_this.temp);
+              let t={};
+              console.log(i);
+              console.log(response.data.Timelist[i]);
+              console.log(response.data.PaperTitleList[i]);
+              console.log(response.data.PaperUrlList[i]);
+              t.pid=i;
+              t.browse_time=response.data.Timelist[i];
+              t.paper_name=response.data.PaperTitleList[i];
+              t.paperLink = response.data.PaperUrlList[i];
+              console.log(t);
+              _this.tableData.push(t);
             }
             console.log(_this.tableData)
           })

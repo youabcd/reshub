@@ -121,7 +121,7 @@
     methods:{
       //搜索框部分函数
       search(){
-        if(this.searchKey[0].words.length==0){
+        if(this.searchKey[0].words.length===0){
           this.$message({
             message: '请输入搜索关键词',
             type: 'error'

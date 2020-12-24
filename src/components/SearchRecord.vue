@@ -92,7 +92,8 @@
           tableData: [{
             id: '',
             SearchTime: '',
-            SearchContent: ''
+            SearchContent: '',
+            searchList:''
           }],
           multipleSelection: [],
           post: []
@@ -109,7 +110,7 @@
               userId:localStorage.getItem('myId')
             }
           }).then(function (response) {
-            // console.log(response.data.list)
+            console.log(response.data)
 
             _this.tableData=response.data.list;
             console.log(_this.tableData)
@@ -125,6 +126,7 @@
 
         search(row){
           localStorage.setItem("keyWords",row.SearchContent);
+          localStorage.setItem("keyWordsList",row.searchList);
           this.$router.push({
             path:'/SearchResult',
           });
