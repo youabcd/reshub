@@ -78,7 +78,7 @@
                           <van-row></van-row>
                           <van-row>
                             <van-col style="margin-top: 0px;">
-                              <van-image round fit="cover" width="35px" height="35px" :src="item.friendHead">
+                              <van-image round fit="cover" width="35px" height="35px" :src="require('../assets/Head/'+item.friendHead)">
                                 <template v-slot:loading>
                                   <van-loading type="spinner" size="20" />
                                 </template>
@@ -112,7 +112,7 @@
                             </div>
                           </van-col>
                           <van-col span="4">
-                            <van-image round fit="cover" width="35px" height="35px" :src="userImage" clickable>
+                            <van-image round fit="cover" width="35px" height="35px" :src="require('../assets/Head/'+userImage)" clickable>
                               <template v-slot:loading>
                                 <van-loading type="spinner" size="20" />
                               </template>
@@ -122,7 +122,7 @@
                         <!--别人发的消息-->
                         <van-row v-if="item.sendId!=userId">
                           <van-col span="4">
-                            <van-image round fit="cover" width="35px" height="35px" :src="chatImage" clickable>
+                            <van-image round fit="cover" width="35px" height="35px" :src="require('../assets/Head/'+chatImage)" clickable>
                               <template v-slot:loading>
                                 <van-loading type="spinner" size="20" />
                               </template>
@@ -177,8 +177,8 @@
             textarea:'',
             websock: null,
             userId: localStorage.getItem('myId'),
-            userImage:require('../../static/logo2.png'),
-            chatImage:require('../../static/logo2.png'),
+            userImage:localStorage.getItem('userHead'),
+            chatImage:'',
             nowActive:'1',
             newChatWindows:{friendName:'',newMessage:'',friendHead:''},
             whichFriend:'',
@@ -200,7 +200,7 @@
         openChats(item, index){
           this.scrollToBottom();
           this.whichFriend=index;
-
+          this.chatImage=item.friendHead;
           localStorage.setItem("whichFriend",this.whichFriend.toString());
 
           console.log(localStorage.getItem("whichFriend"));

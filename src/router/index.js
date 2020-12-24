@@ -19,6 +19,7 @@ const SearchBox = resolve => require(["@/components/SearchBox"],resolve)
 const MyConcern = resolve => require(["@/components/MyConcern"],resolve)
 const BrowseRecord = resolve => require(["@/components/BrowseRecord"],resolve)
 const Administrator = resolve => require(["@/components/Administrator"],resolve)
+const paperDetail =resolve => require(["@/components/paperDetail"],resolve)
 
 Vue.use(Router)
 
@@ -119,6 +120,11 @@ export default new Router({
       path: '/Administrator',
       name: 'Administrator',
       component: Administrator
+    },
+    {
+      path:'/paperDetail',
+      name:'paperDetail',
+      component:paperDetail
     },
   ]
 })

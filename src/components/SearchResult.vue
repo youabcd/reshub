@@ -68,10 +68,11 @@
       </el-aside>
 
       <div style="width: 85%;margin-left: 7px;margin-top: 30px">
-
+        <div style="z-index: 99999999999999;position: absolute;">
         <van-popup
           closeable
           @closed="closedPopup"
+          @close="closePopup"
           position="right"
           :style="{ height: '100%',width:'750px' }"
           v-model="drawer">
@@ -348,8 +349,9 @@
             </div>
           </div>
         </van-popup>
+        </div>
 
-        <div style="position: relative">
+        <div style="position: relative" v-if="showMid">
           <div style="background-color: white;border-width: 1px;border-color: #666666;margin-left: 0;width: 80%;position: relative;">
 
             <div>
@@ -766,6 +768,7 @@
     },
     data() {
       return {
+        showMid:true,
         myId:localStorage.getItem('myId'),
         whichSortAuthor:0,
         radio:false,
@@ -1060,6 +1063,13 @@
           })
       },
 
+      closedPopup(){
+        //this.drawer=false;
+      },
+      closePopup(){
+        this.drawer=false;
+      },
+
       //取消/收藏
       deleteCollection(tableData){
         let _this=this;
@@ -1292,16 +1302,29 @@
       handleSelect (key) {
         this.menuIndex = key;
         this.currentPage = 1;
-        this.isLoading=true;
-        if(key=='0'){
+        if(key==='0'){
           this.getTable0(1);
         }
-        else if(key=='1'){
+        else if(key==='1'){
           this.getTable1(1);
         }
         else{
           this.getTable2(1);
         }
+
+        let time=10;
+        let timer=setInterval(()=>{
+          if(time>0){
+            this.isLoading=true;
+            time--;
+          }
+          else{
+            window.clearInterval(timer);
+            this.open(0);
+            this.drawer=false;
+            this.isLoading=false;
+          }
+        },10);
       },
 
       gotoPaper(url,id) {
@@ -1360,14 +1383,30 @@
       },
 
       open(index) {
+        // if(this.menuIndex==='0'){
+        //   this.$router.push({
+        //     path:'/paperDetail',
+        //     query:{'menuIndex':'0','id':this.tableData0[index].paperId,'type':'paper'}
+        //     })
+        // }
+        // else if(this.menuIndex==='1'){
+        //   this.$router.push({
+        //     path:'/paperDetail',
+        //     query:{'menuIndex':'1','id':this.tableData1[index].paperId,'type':'project'}
+        //   })
+        // }
+        // else if(this.menuIndex==='3'){
+        //   this.$router.push({
+        //     path:'/paperDetail',
+        //     query:{'menuIndex':'3','id':this.tableData2[index].paperId,'type':'patent'}
+        //   })
+        // }
         let _this=this;
         _this.tableData00=[];
         _this.tableData01=[];
         _this.tableData02=[];
         _this.drawer=true;
         if(this.menuIndex==='0'){
-          //this.tableData00=this.tableData0[index];
-
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData0[index].paperId);
@@ -1377,33 +1416,30 @@
             console.log(response);
             _this.tableData00=response.data;
             console.log(_this.tableData00)
-            //_this.tableData0[index]=response.data;
           })
         }
         else if(this.menuIndex==='1'){
-          this.tableData01=this.tableData1[index];
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
-          data.append('id', _this.tableData01.paperId);
+          data.append('id', _this.tableData1[index].paperId);
           data.append('type', 'project');
           axios.post(baseUrl+'/openPaper',data)
             .then(function (response) {
               console.log(response);
               _this.tableData01=response.data;
-              _this.tableData1[index]=response.data;
+              //_this.tableData1[index]=response.data;
             })
         }
         else if(this.menuIndex==='2'){
-          this.tableData02=this.tableData2[index];
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
-          data.append('id', _this.tableData02.paperId);
+          data.append('id', _this.tableData2[index].paperId);
           data.append('type', 'patent');
           axios.post(baseUrl+'/openPaper',data)
             .then(function (response) {
               console.log(response);
               _this.tableData02=response.data;
-              _this.tableData2[index]=response.data;
+              //_this.tableData2[index]=response.data;
             })
         }
       },
@@ -1428,28 +1464,8 @@
         else if(_this.menuIndex==='2'){
           type='patent';
         }
-        axios.get(baseUrl+'/filter',{
-          params:{
-            'keyWords':(localStorage.getItem("keyWordsList")),
-            'dateStart':_this.dataStart,
-            'dateEnd':_this.dataEnd,
-            'checkedSubject':_this.checkedSubject,
-            'checkedAuthor':_this.checkedAuthor,
-            'type':type,
-          }
-        })
-          .then(function (response) {
-            console.log(response);
-            if(type==='paper'){
-              _this.tableData0=response.data.tableData0;
-            }
-            else if(type==='project'){
-              _this.tableData1=response.data.tableData1;
-            }
-            else if(type==='patent'){
-              _this.tableData2=response.data.tableData2;
-            }
-          })
+        let searchList=localStorage.getItem("keyWordsList");
+
       },
 
       gotoWeibo(url,title) {
