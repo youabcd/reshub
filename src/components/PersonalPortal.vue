@@ -363,15 +363,18 @@
             console.log(response);
             if(response.data.status===1){
               _this.isFollowing=true;
-              this.$message({
+              _this.$message({
                   message:response.data.message,
                   type:'success'
                 });
               }
             else{
-              this.$message.error('出错啦！');
+              _this.$message({
+                message:response.data.message,
+                type:'error'
+              });
             }
-            window.location.reload()
+            //window.location.reload()
           })
         },
         cancelConcern(){//取关
@@ -385,15 +388,18 @@
             console.log(response);
             if(response.data.status===1){
               _this.isFollowing=false;
-              this.$message({
+              _this.$message({
                   message:response.data.message,
                   type:'success'
                 });
               }
             else{
-              this.$message.error('出错啦！');
+              _this.$message({
+                message:response.data.message,
+                type:'error'
+              });
             }
-            window.location.reload()
+            //window.location.reload()
           })
         },
         getPersonalPortal() {
