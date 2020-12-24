@@ -38,6 +38,7 @@
           </van-row>
           <div style="height: 400px;width: 100%;">
             <WordCloudChart
+              v-if="isFinish"
               height="100%" width="100%"
               title="" id="01"
               :data="hotSearch"></WordCloudChart>
@@ -83,6 +84,7 @@
       name: "HotspotAnalysis",
       data(){
         return{
+          isFinish:false,
           paperTable: [
             {
             id:'1',
@@ -161,14 +163,13 @@
             {name:"reshub",value:60},
             {name:"项目",value: 50},
           ],
-          scholarName:['y1','y2','y3','y4','y5','y6','y7','y8',],
-          scholarCited:[120,110,100,90,80,70,60,50,],//发文数量
-          scholarUsed:[120, 200, 150, 80, 70, 110, 130,260],//被引次数
+          scholarName:['y1','y2','y3','y4','y5','y6','y7','y8','y9','y10','y11'],
+          scholarCited:[120,110,100,90,80,70,60,50,80,60,100,90],//发文数量
+          scholarUsed:[120, 200, 150, 80, 70, 110, 130,260,80,60,100,90],//被引次数
         }
       },
       mounted() {
         this.getHot();
-        this.drawLine();
       },
       methods: {
         drawLine(){
@@ -250,7 +251,9 @@
                 _this.scholarCited=response.data.scholarCited;//发文数量
                 _this.scholarName=response.data.scholarName;//学者姓名
                 _this.paperTable=response.data.paperTable;//热门文章
-                _this.hotSearch=response.data.hotSearch;//热门搜索词
+                _this.hotSearch=response.data.hotSearach;//热门搜索词
+                _this.isFinish=true;
+                _this.drawLine();
               })
         },
       },

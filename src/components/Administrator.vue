@@ -191,7 +191,7 @@
           <!--          </div>-->
 <!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass1(drawerData.id)">通过</el-button>-->
 <!--          <el-button v-if="menuIndex === '2-1'||menuIndex === '2-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject1(drawerData.id)">拒绝</el-button>-->
-          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData1.id)">通过</el-button>
+          <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="primary" plain style="position: absolute;left: 150px;bottom: 20px" @click="pass2(drawerData1.id,drawerData1.UserEmail)">通过</el-button>
           <el-button v-if="menuIndex === '3-1'||menuIndex === '3-2'" type="danger" plain style="position: absolute;right: 150px;bottom: 20px" @click="reject2(drawerData1.id)">拒绝</el-button>
         </el-drawer>
 <!--        <div v-if="menuIndex === '1'" class="info" style="position: relative;top: 50%;transform: translate(0, -50%);">-->
@@ -538,7 +538,7 @@
         axios.get(baseUrl+'/reject1',{
           params:{
             userId: localStorage.getItem('myId'),
-            id: id
+            id: id,
           }
         }).then(function (response) {
           _this.drawer0=false;
@@ -560,13 +560,14 @@
           }
         })
       },
-      pass2(id) {
+      pass2(id,email) {
         //发送数据
         let _this=this
         axios.get(baseUrl+'/pass2',{
           params:{
             userId: localStorage.getItem('myId'),
-            id: id
+            id: id,
+            email:email
           }
         }).then(function (response) {
           _this.drawer1=false;
@@ -690,7 +691,7 @@
     border-radius: 30px;
     width:50px;
     height:50px;
-    background: url("../assets/jiang.jpg") no-repeat center;
+    background: url("../assets/Head/head00.jpg") no-repeat center;
     background-size:auto 100%;
   }
 
@@ -698,7 +699,7 @@
     border-radius: 50%;
     width:100px;
     height:100px;
-    background: url("../assets/jiang.jpg") no-repeat center;
+    background: url("../assets/Head/head00.jpg") no-repeat center;
     background-size:auto 100%;
     border: solid #3B5999 2px;
   }

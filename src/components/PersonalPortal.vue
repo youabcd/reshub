@@ -14,7 +14,7 @@
             		<img :src="require('../assets/Head/'+avatar)" alt="学者头像" class="" width="112" height="112">
             	</div>
             	<div style="margin: auto;">
-                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要申诉</el-button>
+                <el-button v-if= "isClaimed == true" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch01()">我要申诉</el-button>
                 <el-button v-if= "isClaimed == false" style="text-align:center;margin-top: 10px;margin-bottom: 10px;" type="primary" @click="gotoCatch()">我要认证</el-button></br>
             	  <el-button v-if="this.isFollowing === false" style="width: 70%;" size="mini" type="primary" @click="addConcern()" round plain>关注</el-button>
                 <el-button v-if="this.isFollowing === true" style="width: 70%;" size="mini" type="primary" @click="cancelConcern()" round plain>取消关注</el-button>
@@ -160,9 +160,32 @@
         </el-col>
       </el-main>
     </el-container>
+
+    <div style="z-index: 999999999999999;position: absolute;">
+      <van-popup v-model="showAppeal" closeable style="width: 600px;height: 400px;border-radius: 10px;">
+        <div style="margin-top: 15px;font-size: 20px;">申诉</div>
+        <div style="margin-top: 30px;width: 80%;margin-left: 10%">
+          <el-form :model="appealForm" label-width="100px" class="demo-dynamic">
+            <el-form-item
+              label="登录邮箱">
+              <el-input v-model="appealForm.email01"></el-input>
+            </el-form-item>
+            <el-form-item
+              label="教育邮箱">
+              <el-input v-model="appealForm.email02"></el-input>
+            </el-form-item>
+            <el-form-item label="申诉补充说明">
+              <el-input v-model="appealForm.message"></el-input>
+            </el-form-item>
+          </el-form>
+          <div style="color: red;margin-bottom: 15px;">{{err}}</div>
+          <el-button type="primary" @click="submitAppeal">提交申诉</el-button>
+        </div>
+      </van-popup>
+    </div>
     <!-- <div v-if="!isHave" style="padding-top: 15%;">
       <font style="font:  bold italic 40px  arial;">你还没有个人门户!</font></br>
-      <!-- <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
+       <el-button style="width:10%;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoCatch()" type="success">创建新门户</el-button></br>
       <font style="font:  bold italic 40px  arial">或者</font></br>
       <el-button style="width:200px;height: 50px;margin-top: 15px;margin-bottom:15px;font:bold 20px arial;" @click="gotoSearch()" type="warning">去搜索你自己</el-button></br>
     </div> -->
@@ -188,6 +211,13 @@
           // currentPage: 1,
           // pageSize: 5,
           // totalPage: 100,
+          showAppeal:false,
+          err:'',
+          appealForm: {
+            email01: '',
+            email02:'',
+            message:'',
+          },
           loading:true,
           menuIndex: '0',
           message:'',
@@ -246,7 +276,7 @@
             },
           ],
           tableData: [
-            
+
           ],
         }
       },
@@ -261,6 +291,50 @@
             path:'/CatchPortal',
             query:{resId:this.resId}
           });
+        },
+        gotoCatch01(){
+          if(localStorage.getItem('myId').length>0){
+            this.showAppeal=true;
+          }
+          else{
+            this.$message({
+              message:'请先登入',
+              type:'error'
+            });
+          }
+        },
+        submitAppeal(){
+          if(this.appealForm.email01===localStorage.getItem('myId')){
+            let _this=this;
+            let data=new FormData();
+            data.append('UserEmail',_this.appealForm.email01);
+            data.append('ResEmail',_this.appealForm.email02);
+            data.append('ConTent',_this.appealForm.message);
+            data.append('ReserchId',_this.resId);
+            console.log(_this.appealForm.email01);
+            console.log(_this.resId);
+            axios.post(baseUrl+'/appealPortal',data)
+            .then(function (response) {
+              console.log(response);
+              if(response.data.status===4){
+                _this.showAppeal=false;
+                _this.$message({
+                  message:'提交成功，请等待管理员审核',
+                  type:'success'
+                })
+              }
+              else{
+                _this.showAppeal=false;
+                _this.$message({
+                  message:response.data.message,
+                  type:'error'
+                })
+              }
+            })
+          }
+          else{
+            this.err='请正确输入登录邮箱'
+          }
         },
         gotoSearch() {
           this.$router.push({
@@ -349,12 +423,12 @@
             that.resCount=response.data.rescount;
             that.quoCount=response.data.quocount;
             that.tableData=response.data.tabledata;
-            
+
             that.magCount=response.data.magcount;
             that.magPar=response.data.magpar;
             that.confCount=response.data.confcount;
             that.confPar=response.data.confpar;
-            
+
             that.coopData=response.data.coopdata;
             console.log(response);
             that.drawLine();
@@ -809,11 +883,11 @@
             clipboard.destroy()
           })
         },
-        
+
         gotoWeibo(url,title) {
           window.open("http://service.weibo.com/share/share.php?url="+url+"&sharesource=weibo&title="+title);
         },
-        
+
         openQRcode(url) {
           this.QRlink=url;
           this.dialogVisible=true;

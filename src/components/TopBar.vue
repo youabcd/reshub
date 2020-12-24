@@ -4,7 +4,7 @@
       <van-row></van-row>
       <van-row>
         <van-col span="3" style="margin-top: 5px;">
-          <van-image src="./static/logo4.png" width="145" height="45" style="cursor: pointer;" @click="changeColour">
+          <van-image v-if="showPic" :src="require('../assets/logo4.jpg')" width="145" height="45" style="cursor: pointer;" @click="changeColour">
             <template v-slot:loading>
               <van-loading type="spinner" size="20" />
             </template>
@@ -30,7 +30,8 @@
         </div>
 
         <div v-if="userId.length>0">
-          <van-col span="6">
+          <van-col span="6" style="margin-top:15px;text-align: left">
+            <el-link v-if="userId==='root@root'" :underline="false"><span style="font-size: 20px" clickable @click="goAd"><i class="el-icon-s-home"/>管理员</span></el-link>
           </van-col>
           <van-col span="10" style="margin-top:18px;text-align: right;">
             <el-link :underline="false"><span style="font-size: 16px;margin-left: 20px;" clickable @click="goPersonalPortal"><i class="el-icon-paperclip"/>个人门户</span></el-link>
@@ -71,6 +72,17 @@
         </div>
       </van-popup>
     </div>
+    <div style="z-index: 999999999999999;position: absolute;">
+      <van-popup v-model="showGotoPortal" closeable style="width: 500px;height: 300px;border-radius: 10px;">
+        <div style="margin-top: 15px;font-size: 20px;">您还没有个人门户，您可以选择</div>
+        <div style="margin-top: 30px;">
+          <el-button type="primary" @click="newPortal">新建门户</el-button>
+        </div>
+        <div style="margin-top: 30px;">
+          <el-button type="primary" @click="catchPortal">认领门户</el-button>
+        </div>
+      </van-popup>
+    </div>
   </div>
 </template>
 
@@ -85,6 +97,7 @@
             userImage:localStorage.getItem("userHead"),
             colour:['#e6f1f4','#D5F4D5','#F4DCDF','#E3E3E3'],
             clickNum:0,
+            showPic:false,
             isReNew:true,
             showChangeHead:false,
             headImage:[
@@ -105,9 +118,40 @@
               'head15.jpg',
               'head16.jpg',
             ],
+            showGotoPortal:false,
           }
       },
       methods:{
+        goAd(){
+          this.$router.push({
+            path:'/Administrator'
+          })
+        },
+        newPortal(){
+          let _this=this;
+          let data=new FormData();
+          data.append('UserEmail',localStorage.getItem('myId'));
+          axios.post(baseUrl+'/newPortal',data)
+          .then(function (response) {
+            if(response.data.status===2){
+            _this.$message({
+              message:'恭喜您有了自己的门户',
+              type:'success'
+            });
+            localStorage.setItem("portalId",response.data.ResId);
+            localStorage.setItem("authorId",localStorage.getItem("portalId"));
+            _this.$router.push({
+              path:'/PersonalPortal'
+            })
+          }})
+        },
+        catchPortal(){
+          this.showGotoPortal=false;
+          this.$message({
+            message:'您需要自己搜索想要认领的门户',
+            type:'warning'
+          });
+        },
         goHome(){
           this.$router.push({
             path:'/',
@@ -151,10 +195,15 @@
         },
 
         goPersonalPortal(){
-          localStorage.setItem("authorId",localStorage.getItem("portalId"));
-          this.$router.push({
-            path:'/PersonalPortal',
-          })
+          if(localStorage.getItem("portalId").length>0){
+            localStorage.setItem("authorId",localStorage.getItem("portalId"));
+            this.$router.push({
+              path:'/PersonalPortal',
+            })
+          }
+          else{
+            this.showGotoPortal=true;
+          }
         },
         goMessage(){
           this.$router.push({
@@ -210,7 +259,13 @@
         if(localStorage.getItem("userHead")==null){
           localStorage.setItem("userHead",'head01.png');
         }
+        // this.showPic=true;
+        this.showPic=false;
+        // window.location.reload();
+        this.showPic=true;
       },
+      created() {
+      }
     }
 </script>
 

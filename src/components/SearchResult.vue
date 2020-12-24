@@ -85,9 +85,9 @@
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
                   <!--收藏-->
-                  <span>
-                    <el-tooltip v-if="tableData00.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(0)"></i>
+                  <span v-if="myId.length>0">
+                    <el-tooltip v-if="tableData00.collectStatus === true>0" class="item" effect="dark" content="取消收藏" placement="bottom">
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData00)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData00.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(0)"></i>
@@ -173,21 +173,21 @@
           <!--参考文献 clickable-->
           <div v-if="tableData00.reference.length>0" class="Details" style="">
             <span style="font-family: 黑体;font-weight: 700">参考文献：</span>
-            <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index])">
+            <span><el-link v-for="(item,index) in tableData00.reference" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.referenceLink[index],-1)">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link></span>
           </div>
           <!--文献查看  可点击-->
-          <div class="Details" style="">
+          <div class="Details" style="margin-bottom: 20px;">
             <span style="font-family: 黑体;font-weight: 700">查看原文：</span>
-            <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index])">
+            <el-link v-for="(item,index) in tableData00.link" :key="index" type="primary" :underline="false" @click="gotoPaper(tableData00.link[index],tableData00.paperId)">
               {{item}}&nbsp;&nbsp;&nbsp;
             </el-link>
           </div>
           </div>
           <div v-if="menuIndex==='1'">
             <!--项目类型+发表年份+文献操作（分享等）-->
-            <div style="margin-top: -30px;">
+            <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
                   <span>{{tableData01.category}}&nbsp;&nbsp;&nbsp;</span>
@@ -195,25 +195,25 @@
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <span>
+                  <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData01.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(1)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData01)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData01.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(1)"></i>
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link,tableData01.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData01.link[0],tableData01.title)" style="height: 20px;">
                 </span>
                   <!--微信-->
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData01.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData01.link[0])" style="height: 20px;">
                 </span>
                   <!--复制连接-->
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData01.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData01.link[0]" @click="Copy"></i>
                     </el-tooltip>
                 </span>
                 </van-col>
@@ -274,38 +274,38 @@
             </div>
 
             <!--文献查看   可点击-->
-            <div class="Details" style="">
-              <el-button type="primary" plain @click="gotoPaper(tableData01.link)">查看原文</el-button>
+            <div class="Details" style="margin-bottom: 20px;">
+              <el-button type="primary" plain @click="gotoPaper(tableData01.link[0],tableData01.paperId)">查看原文</el-button>
             </div>
           </div>
           <div v-if="menuIndex==='2'">
             <!--日期+文献操作（分享等）-->
-            <div style="margin-top: -30px;">
+            <div style="margin-top: 20px;">
               <van-row>
                 <van-col span="6">
-                  <span>{{tableData02.date}}</span>
+                  <span>{{tableData02.year}}</span>
                 </van-col>
                 <van-col span="8"></van-col>
                 <van-col span="10" style="margin-top: -8px;">
-                  <span>
+                  <span v-if="myId.length>0">
                     <el-tooltip v-if="tableData02.collectStatus === true" class="item" effect="dark" content="取消收藏" placement="bottom">
-                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(2)"></i>
+                      <i class="el-icon-star-on" style="font-size: 25px;width: 30px" @click="deleteCollection(tableData02)"></i>
                     </el-tooltip>
                     <el-tooltip v-if="tableData02.collectStatus === false" class="item" effect="dark" content="收藏" placement="bottom">
                       <i class="el-icon-star-off" style="font-size: 25px;width: 30px" @click="Collection(2)"></i>
                     </el-tooltip>
                   </span>
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link,tableData02.title)" style="height: 20px;">
+                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(tableData02.link[0],tableData02.title)" style="height: 20px;">
                 </span>
                   <!--微信-->
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData02.link)" style="height: 20px;">
+                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(tableData02.link[0])" style="height: 20px;">
                 </span>
                   <!--复制连接-->
                   <span>
                     <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData02.link" @click="Copy"></i>
+                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px" :data-clipboard-text="tableData02.link[0]" @click="Copy"></i>
                     </el-tooltip>
                 </span>
                 </van-col>
@@ -341,8 +341,8 @@
             </div>
 
             <!--文献查看   可点击-->
-            <div class="Details" style="">
-              <el-button type="primary" plain @click="gotoPaper(tableData02.link)">查看原文</el-button>
+            <div class="Details" style="margin-bottom: 20px;">
+              <el-button type="primary" plain @click="gotoPaper(tableData02.link[0],tableData02.id)">查看原文</el-button>
             </div>
           </div>
         </van-popup>
@@ -355,9 +355,9 @@
                 <van-col span="12">
                   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                        active-text-color="#0079fe" >
-                    <el-menu-item index="0" style="width: 120px">●论文({{sizeOfTable0}})</el-menu-item>
-                    <el-menu-item index="1" style="width: 120px">●项目({{sizeOfTable1}})</el-menu-item>
-                    <el-menu-item index="2" style="width: 120px">●专利({{sizeOfTable2}})</el-menu-item>
+                    <el-menu-item index="0" style="width: 120px">●论文<span v-if="sizeOfTable0>-1">({{sizeOfTable0}})</span></el-menu-item>
+                    <el-menu-item index="1" style="width: 120px">●项目<span v-if="sizeOfTable1>-1">({{sizeOfTable1}})</span></el-menu-item>
+                    <el-menu-item index="2" style="width: 120px">●专利<span v-if="sizeOfTable2>-1">({{sizeOfTable2}})</span></el-menu-item>
                   </el-menu>
                 </van-col>
 
@@ -426,34 +426,33 @@
               </div>
 
               <div v-if="isLoading===false">
+
               <!--论文-->
-                <el-card shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '0'" v-for="(item,index) in tableData0" :key="index"
                        class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer;width: 70%">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link[0])">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                <div style="display: inline;position: absolute;right: 20px;top: 25px">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    发表时间：{{item.year}}
                   </span>
                   <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
-                  </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
+                    被引次数：{{item.citation}}
                   </span>
                 </div>
 
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</p>
-                  <p style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</p>
+                  <span style="font-weight: 700;margin-left: 0">
+                      摘要:
+                  </span>
+                  <span style="height: 20px" v-if="item.msg.length<=120">{{item.msg}}</span>
+                  <span style="height: 20px" v-if="item.msg.length>120">{{item.msg.substring(0,120)+'...'}}</span>
                 </div>
 
                   <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
@@ -465,7 +464,10 @@
 
                 <div>
                   <div style="position: absolute;left: 5px;top: 140px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
-                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 15px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span v-for="(author_item,author_index) in item.author" :key="author_index" style="margin-left: 5px;">
                         {{author_item}}
                     </span>
                   </div>
@@ -482,44 +484,58 @@
               </el-card>
 
               <!--项目-->
-                <el-card shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '1'" v-for="(item,index) in tableData1" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <div style="display: inline;position: absolute;right: 20px;top: 25px">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    发表时间：{{item.year}}
                   </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
+                    <span style="margin-left: 5px;margin-right: 2px">
+                    项目类型：{{item.category}}
                   </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
-
-
+                  </div>
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
-                  <p style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</p>
-                  <p style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</p>
+                  <span style="font-weight: 700;margin-left: 0">
+                      摘要:
+                    </span>
+                  <span style="height: 20px" v-if="item.zhAbstract.length<=120">{{item.zhAbstract}}</span>
+                  <span style="height: 20px" v-if="item.zhAbstract.length>120">{{item.zhAbstract.substring(0,120)+'...'}}</span>
                 </div>
 
                 <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
+                  <div style="position: absolute;left: 5px;top: 140px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span style="margin-left: 5px;">
                       {{tableData1[index].author}}
                     </span>
-                    <span style="font-weight: 700;margin-left: 20px">
+                  </div>
+                  <div style="position: absolute;left: 5px;top: 115px;text-align: left;" v-bind:style="{width: commentWidth+'px'}" class="van-ellipsis">
+                    <span style="font-weight: 700;margin-left: 15px">
                       关键词:
                     </span>
-                    <span>{{item.keyword}}</span>
+                    <span>{{item.zhKeywords}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>项目</span>
@@ -534,44 +550,49 @@
               </el-card>
 
               <!--专利-->
-                <el-card shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
+                <el-card @click="open(index)" shadow="hover" v-if="menuIndex === '2'" v-for="(item,index) in tableData2" :key="index" class="text item" style="height: 140px;border-bottom:1px solid #d4dde4;border-top:1px solid #d4dde4;position: relative" >
                 <div style="text-align: left;display: inline;position: absolute;left: 20px;top: 20px;cursor: pointer">
-                  <span v-if="item.title.length<=40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
+                  <span v-if="item.title.length<=33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
                     {{item.title}}
                   </span>
-                  <span v-if="item.title.length>40" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="gotoPaper(item.link)">
-                    {{item.title.substring(0,40)+'...'}}
+                  <span v-if="item.title.length>33" style="font-family: '微软雅黑', sans-serif;font-size: 20px;font-weight: bold" @click="open(index)">
+                    {{item.title.substring(0,33)+'...'}}
                   </span>
                 </div>
-                <div style="display: inline;position: absolute;right: 20px;top: 0">
+                  <div style="display: inline;position: absolute;right: 20px;top: 25px">
                   <span>
-                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link,item.title)" style="height: 20px;cursor: pointer;">
+                    发表时间：{{item.year}}
                   </span>
-                  <span style="margin-left: 5px;margin-right: 2px">
-                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link)" style="height: 20px;cursor: pointer;">
+                    <span style="margin-left: 5px;margin-right: 2px">
+                    所属机构：{{item.institution}}
                   </span>
-                  <span>
-                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">
-                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link" @click="Copy"></i>
-                    </el-tooltip>
-                  </span>
-                </div>
-
-
+                  </div>
+<!--                <div style="display: inline;position: absolute;right: 20px;top: 0">-->
+<!--                  <span>-->
+<!--                    <img src="../assets/Weibo.png" alt="" @click="gotoWeibo(item.link[0],item.title)" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span style="margin-left: 5px;margin-right: 2px">-->
+<!--                    <img src="../assets/WeChat.png" alt="" @click="openQRcode(item.link[0])" style="height: 20px;cursor: pointer;">-->
+<!--                  </span>-->
+<!--                  <span>-->
+<!--                    <el-tooltip class="item" effect="dark" content="复制链接" placement="bottom">-->
+<!--                      <i class="el-icon-document-copy" style="font-size: 25px;width: 30px;cursor: pointer;" :data-clipboard-text="item.link[0]" @click="Copy"></i>-->
+<!--                    </el-tooltip>-->
+<!--                  </span>-->
+<!--                </div>-->
                 <div style="text-align: left;position: absolute;top: 60px;width: 96%;cursor: pointer;" @click="open(index)">
                   <p style="height: 20px" v-if="item.abstract.length<=120">{{item.abstract}}</p>
                   <p style="height: 20px" v-if="item.abstract.length>120">{{item.abstract.substring(0,120)+'...'}}</p>
                 </div>
 
                 <div>
-                  <div style="position: absolute;left: 5px;top: 130px;">
-                    <span style="margin-left: 15px;">
+                  <div style="position: absolute;left: 5px;top: 140px;">
+                    <span style="font-weight: 700;margin-left: 15px">
+                      作者:
+                    </span>
+                    <span style="margin-left: 5px;">
                         {{item.author}}
                     </span>
-                    <span style="font-weight: 700;margin-left: 20px">
-                      关键词:
-                    </span>
-                    <span>{{item.keyword}}</span>
                   </div>
                   <el-tag type="info" style="position: absolute;right: 170px;top: 120px;width: 50px;text-align: center;margin-top: 0">
                     <span>专利</span>
@@ -632,16 +653,61 @@
 
           </div>
 
+          <!--学者-->
           <div style="position: absolute;left: 81%;top: 0;width: 18%;display: inline;">
             <div>
               <div>
-                <h4>学者推荐</h4>
+                <h4>学者<span v-if="sizeOfAuthor>-1">({{sizeOfAuthor}})</span></h4>
               </div>
-              <div v-if="authorTable.length !== 0"  style="text-align: left;">
+              <div style="margin-top: 15px;">
+                <el-input placeholder="搜索学者" v-model="searchAuthor">
+                  <el-button slot="append" icon="el-icon-search" @click="searchForAuthor"></el-button>
+                </el-input>
+              </div>
+              <div>
+
+              </div>
+              <div>
+                <van-row>
+                  <van-col span="12"></van-col>
+                  <van-col span="12">
+                    <el-checkbox style="margin-top: 15px;text-align: right;" v-model="radio">中英文扩展</el-checkbox>
+                  </van-col>
+                </van-row>
+
+                  <!--排序-->
+                <van-row v-if="sizeOfAuthor>0">
+                    <van-row></van-row>
+                    <van-row style="margin-top: 30px;">
+                      <van-col span="8" style="font-size: 13px;font-weight: bold;">
+                        <span><i class="el-icon-sort"></i></span>
+                        <span>排序:</span>
+                      </van-col>
+                      <van-col span="8" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortNum">
+                      <span v-if="whichSortAuthor===0" style="color: #3a8ee6">
+                        <span>发文数量<i class="el-icon-bottom"></i></span>
+                      </span>
+                        <span v-if="whichSortAuthor===1">
+                        <span>发文数量</span>
+                      </span>
+                      </van-col>
+                      <van-col span="8" style="font-size: 13px;cursor: pointer;text-align: left" @click="sortCited">
+                      <span v-if="whichSortAuthor===1" style="color: #3a8ee6">
+                        <span>被引频次<i class="el-icon-bottom"></i></span>
+                      </span>
+                        <span v-if="whichSortAuthor===0">
+                        <span>被引频次</span>
+                      </span>
+                      </van-col>
+                      <van-col span="2"></van-col>
+                    </van-row>
+                </van-row>
+              </div>
+              <div v-if="authorTable.length > 0"  style="text-align: left;margin-top: 24px;">
                 <div v-for="(item,index) in authorTable" :key="index" style="margin-bottom: 10px;margin-right: 10px;vertical-align: top;padding: 10px;width: 200px;height: 90px;text-align: left;border: solid 2px #e9e9e9;border-radius: 10px;display:inline-block;">
                   <div>
                     <i class="el-icon-user"></i>
-                    <el-link :href="item.link" target="_blank" style="font-size: 18px">
+                    <el-link style="font-size: 18px" @click="gotoAuthor(item.id)">
                       {{item.name}}
                     </el-link>
                   </div>
@@ -651,15 +717,24 @@
                     </div>
                     <div style="position: absolute;float: right;left: 20px">
                       <span>
-                      <el-link :href="item.link" target="_blank">
-                        {{item.institution}}
-                      </el-link>
+                        {{item.Institution}}
                     </span>
                     </div>
-
-
                   </div>
                 </div>
+              </div>
+              <!--学者页码-->
+              <div style="margin-top: 30px;margin-bottom: 30px" v-if="sizeOfAuthor>0">
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange01"
+                  :current-page="currentPage01"
+                  :page-size="pageSize"
+                  layout="total, prev, pager, next, jumper"
+                  :total="sizeOfAuthor"
+                  prev-text="上一页"
+                  next-text="下一页">
+                </el-pagination>
               </div>
             </div>
           </div>
@@ -688,14 +763,20 @@
     },
     data() {
       return {
+        myId:localStorage.getItem('myId'),
+        whichSortAuthor:0,
+        radio:false,
+        sizeOfAuthor:-1,
+        currentPage01:1,
+        searchAuthor:'',
         commentWidth:'620',
         changeSortTime:0,
         changeSortCited:0,
         whichSort:0,
         isLoading:false,
-        sizeOfTable0:0,
-        sizeOfTable1:0,
-        sizeOfTable2:0,
+        sizeOfTable0:-1,
+        sizeOfTable1:-1,
+        sizeOfTable2:-1,
         QRlink:'',
         dataStart:'',
         dataEnd:'',
@@ -728,12 +809,13 @@
           institutionId:[],
           type:"",
           collectStatus: false,
-          collectionSum:0,
-          viewSum:0,
           link:[],
           collectTime:'',
           paperDoi: '',
+          year:'',
           citation: 5, // 引用数量
+          viewSum:0,//浏览数量
+          collectionSum:0,//收藏数量
           paperStart: 0, // 论文开始页
           paperEnd: 4, // 论文结束页
           paperLang: 'en', // 英文
@@ -762,39 +844,36 @@
           collectStatus: true,
           collectionSum:666,
           viewSum:777,
-          link:'',
+          citation:0,
+          link:[],
           collectTime:''
         },
-        //专利
         tableData02:{
           id:123,
           paperId:'2',
           title:'Google2',
-          viewSum:777,
-          link:'https://www.youtube.com/',
+          link:['https://www.youtube.com/'],
           collectionSum:666,
-          isUserUpload:1,
+          viewSum:777,
+          citation:0,
+          year:'',
           abstract:'文字文字字文字zhaiyao文字文字文字文字2',
-          date:new Date(),
           author:'niubility',
           authorId: '2333',
           type:"专利",
           collectStatus: true,
-          collectTime:'2016-05-04'
+          collectTime:'2016-05-04',
+          institution:'',
         },
         authorTable: [
-          {
-            name:'Zhang San',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学北京航空航天大学',
-            id:'1',
-          },
-          {
-            name:'Zhang Si',
-            link:'https://www.bilibili.com',
-            institution:'北京航空航天大学1',
-            id:'2',
-          },
+          /*{
+            name:'',
+            ResEmail:'',
+            CitedNum:0,
+            LiteratureNum:0,
+            institution:'',
+            id:'',
+          },*/
         ],
         tableData0: [
           {
@@ -830,6 +909,7 @@
         tableData1: [ // 国家自然基金项目
           {
             paperId:'1',
+            citation:0,
             title:'Google1',
             zhAbstract:'GGG文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字1',
             // 中文摘要
@@ -848,26 +928,27 @@
             collectStatus: true,
             collectionSum:666,
             viewSum:777,
-            link:'https://www.google.com.hk/',
+            link:['https://www.google.com.hk/'],
             collectTime:'2016-05-04'
           },
         ],
         tableData2: [
           {
             id:123,
+            citation:0,
             paperId:'2',
             title:'Google2',
             viewSum:777,
-            link:'https://www.youtube.com/',
+            link:['https://www.youtube.com/'],
             collectionSum:666,
-            isUserUpload:1,
             abstract:'文字文字字文字zhaiyao文字文字文字文字2',
-            date:new Date(),
+            year:'',
             author:'niubility',
             authorId: '2333',
             type:"专利",
             collectStatus: true,
             collectTime:'2016-05-04',
+            institution:'',
           }],
       }
     },
@@ -897,6 +978,8 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'paper',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -918,6 +1001,8 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'paper',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
         .then(function (response) {
@@ -938,6 +1023,8 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'project',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -958,6 +1045,8 @@
             'Radio':localStorage.getItem("Radio"),
             'page':page,
             'type':'patent',
+            'sort':_this.whichSort,//0 默认 1 时间 2 被引频次
+            'howToSort':_this.whichSort===1?_this.changeSortTime:_this.changeSortCited,//如果为时间排序 奇数 降序 偶数 升序
           }
         })
           .then(function (response) {
@@ -969,58 +1058,47 @@
       },
 
       //取消/收藏
-      deleteCollection(i){
-        if(i===0){
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData00.paperId);
-          data.append('type', 'paper');
-          axios.post(baseUrl+'/cancelCollection',data)
-          .then(function (response) {
-            console.log(response);
-            if(response.data.status===true){
+      deleteCollection(tableData){
+        let _this=this;
+        console.log(tableData.paperId)
+        let type;
+        if (_this.menuIndex==='0') {
+          type='1';
+        } else if (_this.menuIndex==='1') {
+          type='2';
+        } else {
+          type='3';
+        }
+        console.log(type)
+        axios.get(baseUrl+'/cancelCollection',{
+          params:{
+            paperId: tableData.paperId,
+            type:type,
+            userId:localStorage.getItem('myId'),
+          }
+        }).then(function (response) {
+          if (response.data.succeed===true) {
+            if (_this.menuIndex==='0') {
               _this.tableData00.collectStatus=false;
+            } else if (_this.menuIndex==='1') {
+              _this.tableData01.collectStatus=false;
+            } else {
+              _this.tableData02.collectStatus=false;
             }
-            else{
-              console.log('失败')
-            }
-          })
-        }
-        else if(i===1){
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData01.paperId);
-          data.append('type', 'project');
-          axios.post(baseUrl+'/cancelCollection',data)
-            .then(function (response) {
-              console.log(response);
-              if(response.data.status===true){
-                _this.tableData01.collectStatus=false;
-              }
-              else{
-                console.log('失败')
-              }
-            })
-        }
-        else{
-          let _this=this;
-          let data = new FormData();
-          data.append('userId',localStorage.getItem("myId"));
-          data.append('paperId',_this.tableData02.id);
-          data.append('type', 'patent');
-          axios.post(baseUrl+'/cancelCollection',data)
-            .then(function (response) {
-              console.log(response);
-              if(response.data.status===true){
-                _this.tableData02.collectStatus=false;
-              }
-              else{
-                console.log('失败')
-              }
-            })
-        }
+            _this.$message({
+              showClose: true,
+              message: '取消收藏成功',
+              type: 'success'
+            });
+            // _this.tableData0.splice(index, 1);
+          } else {
+            _this.$message({
+              showClose: true,
+              message: '取消收藏失败，请重试',
+              type: 'error'
+            });
+          }
+        })
       },
       Collection(i){
         if(i===0){
@@ -1028,12 +1106,17 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData00.paperId);
-          data.append('type', 'paper');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '1');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
-              if(response.data.status===true){
+              if(response.data.succeed===true){
                 _this.tableData00.collectStatus=true;
+                _this.$message({
+                  showClose: true,
+                  message: '收藏成功',
+                  type: 'success'
+                });
               }
               else{
                 console.log('失败')
@@ -1045,8 +1128,8 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData01.paperId);
-          data.append('type', 'project');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '2');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
               if(response.data.status===true){
@@ -1062,8 +1145,8 @@
           let data = new FormData();
           data.append('userId',localStorage.getItem("myId"));
           data.append('paperId',_this.tableData02.id);
-          data.append('type', 'patent');
-          axios.post(baseUrl+'/cancelCollection',data)
+          data.append('type', '3');
+          axios.post(baseUrl+'/addCollection',data)
             .then(function (response) {
               console.log(response);
               if(response.data.status===true){
@@ -1078,39 +1161,45 @@
 
       //排序
       sortDefault(){
-        let _this=this;
-        _this.whichSort=0;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':0,//默认排序
-            'howSort':-1,
-          }
-        }).then(function (response) {
-        })
+        this.whichSort=0;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
       sortByTime(){
-        let _this=this;
-        _this.changeSortTime++;
-        _this.whichSort=1;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':1,//按时间排序
-            'howSort':_this.changeSortTime%2,//0为升序 1为降序
-          }
-        }).then(function (response) {
-        })
+        this.changeSortTime++;
+        this.whichSort=1;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
       sortByCited(){
-        let _this=this;
-        _this.changeSortCited++;
-        _this.whichSort=2;
-        axios.get(baseUrl+'sort',{
-          params:{
-            'sortType':2,//按被引频次排序
-            'howSort':_this.changeSortCited%2,//0为升序 1为降序
-          }
-        }).then(function (response) {
-        })
+        this.changeSortCited++;
+        this.whichSort=2;
+        this.currentPage=1;
+        if(this.menuIndex==='0'){
+          this.getTable0(1);
+        }
+        else if(this.menuIndex==='1'){
+          this.getTable1(1);
+        }
+        else {
+          this.getTable2(1);
+        }
       },
 
       //年限选择
@@ -1131,6 +1220,24 @@
         }
       },
 
+      //搜索作者
+      searchForAuthor(currentPage01){
+        let _this=this;
+        axios.get(baseUrl+'/searchAuthors',{
+          params:{
+            'name':_this.searchAuthor,
+            'Radio':_this.radio,
+            'orderBy':_this.whichSortAuthor,//0 按发文数量降序 1 按被引数量降序
+            'page':currentPage01
+          }
+        })
+        .then(function (response) {
+          console.log(response);
+          _this.authorTable=response.data.result;
+          _this.sizeOfAuthor=response.data.num;
+        })
+      },
+
       handleSizeChange: function(size) {
         this.pageSize = size;
       },
@@ -1146,6 +1253,10 @@
         else{
           this.getTable2(currentPage);
         }
+      },
+      handleCurrentChange01: function(currentPage01) {
+        this.currentPage01 = currentPage01;
+        this.searchForAuthor(currentPage01);
       },
       // 点击图片回到顶部方法，加计时器是为了过渡顺滑
       backTop () {
@@ -1189,9 +1300,26 @@
         }
       },
 
-      gotoPaper(url) {
+      gotoPaper(url,id) {
         //发送点击数据
-        window.open(url,url)
+        let _this=this;
+        let data=new FormData();
+        data.append('userId',localStorage.getItem('myId'));
+        data.append('paperId',id);
+        if(_this.menuIndex==='0'){
+          data.append('type','1');
+        }
+        else if(_this.menuIndex==='1'){
+          data.append('type','2');
+        }
+        else{
+          data.append('type','3');
+        }
+        axios.post(baseUrl+'/addBrowseHistory',data)
+        .then(function (response) {
+          //及增加浏览记录，又增加文献的浏览数量
+          window.open(url);
+        })
       },
 
       gotoAuthor(authorId) {
@@ -1226,9 +1354,13 @@
 
       open(index) {
         let _this=this;
+        _this.tableData00=[];
+        _this.tableData01=[];
+        _this.tableData02=[];
         _this.drawer=true;
         if(this.menuIndex==='0'){
           //this.tableData00=this.tableData0[index];
+
           let data = new FormData();
           data.append('userId',localStorage.getItem('myId'));
           data.append('id', _this.tableData0[index].paperId);
@@ -1276,6 +1408,7 @@
         this.dataEnd='';
       },
 
+      //筛选
       filter() {
         let _this=this;
         let type='';
