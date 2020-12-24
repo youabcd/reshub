@@ -40,8 +40,9 @@
         			</div>
         			<div class="p_affiliate">
                 <el-link v-if="insName!='暂无'" :underline="false" @click="gotoInstitution(this.insId)">
-                  <div>{{insName}}</div>
+                  <div v-if="insName!='暂无'">{{insName}}</div>
                 </el-link>
+                <div v-if="insName === '暂无'">{{insName}}</div>
         			</div>
               </br>
         			<div class="p_ach_wr">
