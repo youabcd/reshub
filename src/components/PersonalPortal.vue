@@ -39,7 +39,7 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-                <el-link v-if="insName!='暂无'" :underline="false" @click.native="gotoInstitution(this.insId)">
+                <el-link v-if="insName!='暂无'" :underline="false" @click.native="gotoInstitution(this.insName)">
                   <div v-if="insName!='暂无'">{{insName}}</div>
                 </el-link>
                 <div v-if="insName === '暂无'">{{insName}}</div>
@@ -233,7 +233,6 @@
           followNum:'0',
           realName:'研究员',
           insName:'机构',
-          insId:1,
           mail:'a@b.c',
           quoteNum:'0',
           paperNum:'0',
@@ -412,7 +411,6 @@
             that.followNum=response.data.follownum;
             that.realName=response.data.realname;
             that.insName=response.data.insname;
-            that.insId=response.data.insid;
             that.mail=response.data.mail;
             that.quoteNum=response.data.quotenum;
             that.paperNum=response.data.papernum;
