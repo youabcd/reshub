@@ -76,6 +76,7 @@
           position="right"
           :style="{ height: '100%',width:'750px' }"
           v-model="drawer">
+
           <div v-if="menuIndex==='0'">
             <!--期刊 期号+文献操作（分享等）-->
             <div style="margin-top: 20px;">
@@ -188,6 +189,7 @@
             </el-link>
           </div>
           </div>
+
           <div v-if="menuIndex==='1'">
             <!--项目类型+发表年份+文献操作（分享等）-->
             <div style="margin-top: 20px;">
@@ -281,6 +283,7 @@
               <el-button type="primary" plain @click="gotoPaper(tableData01.link[0],tableData01.paperId)">查看原文</el-button>
             </div>
           </div>
+
           <div v-if="menuIndex==='2'">
             <!--日期+文献操作（分享等）-->
             <div style="margin-top: 20px;">
@@ -348,6 +351,7 @@
               <el-button type="primary" plain @click="gotoPaper(tableData02.link[0],tableData02.id)">查看原文</el-button>
             </div>
           </div>
+
         </van-popup>
         </div>
 
