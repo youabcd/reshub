@@ -11,7 +11,7 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="log-logo" @click="backToHome">Welcome back!<br />首页</div>
+        <div class="log-logo" @click="backToHome">Welcome back!<br />返回首页</div>
         <div class="log-text">@reshub team</div>
     </div>
     <div class="log-email">
@@ -117,7 +117,7 @@ export default {
                 path:'/Administrator',
               });
             }
-            
+
           }
           else {
             _this.errorMessage='账号或密码错误';
