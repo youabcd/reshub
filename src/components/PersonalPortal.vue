@@ -39,7 +39,7 @@
         				{{visitNum}}人看过|{{followNum}}人正在关注
         			</div>
         			<div class="p_affiliate">
-                <el-link v-if="insName!='暂无'" :underline="false" @click="gotoInstitution(this.insName)">
+                <el-link v-if="insName!='暂无'" :underline="false" @click.native="gotoInstitution(this.insId)">
                   <div v-if="insName!='暂无'">{{insName}}</div>
                 </el-link>
                 <div v-if="insName === '暂无'">{{insName}}</div>
