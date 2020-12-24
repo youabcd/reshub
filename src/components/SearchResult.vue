@@ -70,6 +70,8 @@
       <div style="width: 85%;margin-left: 7px;margin-top: 30px">
 
         <van-popup
+          closeable
+          @closed="closedPopup"
           position="right"
           :style="{ height: '100%',width:'750px' }"
           v-model="drawer">
@@ -409,6 +411,7 @@
               :visible.sync="dialogVisible"
               v-if="dialogVisible"
               show-close="false"
+              style="z-index: 999999999999999;position: absolute;"
               width="30%">
               <div>
                 <img :src="'https://www.lofter.com/genBitmaxImage?url='+QRlink" alt="" width="150" height="150">
@@ -1289,6 +1292,7 @@
       handleSelect (key) {
         this.menuIndex = key;
         this.currentPage = 1;
+        this.isLoading=true;
         if(key=='0'){
           this.getTable0(1);
         }
@@ -1315,8 +1319,11 @@
         else{
           data.append('type','3');
         }
+        console.log(_this.menuIndex);
         axios.post(baseUrl+'/addBrowseHistory',data)
         .then(function (response) {
+          console.log(response);
+
           //及增加浏览记录，又增加文献的浏览数量
           window.open(url);
         })
