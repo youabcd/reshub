@@ -11,7 +11,7 @@
         <div class="log-cloud cloud3"></div>
         <div class="log-cloud cloud4"></div>
 
-        <div class="findPa-logo" @click="backToHome">Waiting for you!</div>
+        <div class="findPa-logo" @click="backToHome">回到首页</div>
         <div class="findPa-text">@reshub team</div>
     </div>
     <div class="findPa-email">
